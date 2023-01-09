@@ -35,6 +35,7 @@ message Profile {
   int64 create_time_unix = 17;
   int64 remain_time_input_ref_code = 18;
   repeated LangCode lang_availables = 19;
+  string playing_match = 20;
 }
 
 message ListProfile {
