@@ -22,16 +22,11 @@ message BetResult {
 }
 
 message ColorGameFinish {
-  repeated CellInfo roll_cells = 1;  
+  repeated int32 roll_cells = 1;  
   repeated BetResult bet_results = 2;
 }
 
-message CellInfo {
-  uint32 cell = 1;
-  int32 pos = 2;
-  int32 hit_roll = 3;
-  repeated Color colors = 4;
-}
+
 
 message ColorBet {
   int32 id = 1;
@@ -41,11 +36,11 @@ message ColorBet {
   string desp = 5;
 }
 
-message Deck {
-  repeated Color colors = 1;
-  repeated CellInfo cell_infos = 2;
-  repeated ColorBet bets = 3;
-}
+// message Deck {
+//   repeated Color colors = 1;
+//   repeated CellInfo cell_infos = 2;
+//   repeated ColorBet bets = 3;
+// }
 
 message UpdateDesk {
   int32 n_player = 1;
