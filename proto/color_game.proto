@@ -17,7 +17,7 @@ enum Color {
 
 message BetResult {
   string user_id = 1;
-  repeated ColorBet bets = 2;
+  repeated InfoBet bets = 2;
   bool is_win = 3;  
 }
 
@@ -28,7 +28,7 @@ message ColorGameFinish {
 
 
 
-message ColorBet {
+message InfoBet {
   int32 id = 1;
   int64 chips = 2;
   int32 n_user_bet = 3;
@@ -44,7 +44,7 @@ message ColorBet {
 message UpdateDesk {
   int32 n_player = 1;
   bool update_user_bets = 2;
-  repeated ColorBet user_bets = 3;
-  bool update_cell_bets = 4;
-  repeated ColorBet cell_bets = 5;
+  bool update_cell_bets = 3;
+  repeated InfoBet user_bets = 4;
+  repeated InfoBet cell_bets = 5;
 }
