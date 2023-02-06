@@ -83,6 +83,7 @@ enum OpCodeRequest {
   OPCODE_REQUEST_BET = 8;
   OPCODE_REQUEST_USER_IN_TABLE = 9; // get table info
   OPCODE_REQUEST_INFO_TABLE = 10; //
+  OPCODE_REQUEST_HISTORY_RESULT = 11; //
 }
 
 // The complete set of opcodes used for communication between clients and server.

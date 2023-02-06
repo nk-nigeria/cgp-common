@@ -22,17 +22,23 @@ message BetResult {
 }
 
 message ColorGameFinish {
-  repeated int32 roll_colors = 1;  
+  ListColor roll_color = 1;
   repeated BetResult bet_results = 2;
 }
 
-
+message ListColor {
+  repeated int32 colors = 1;  
+}
 
 message InfoBet {
   int32 id = 1;
   int64 chips = 2;
   int32 n_user_bet = 3;
   string desp = 4;
+}
+
+message ListInfoBet {
+  repeated InfoBet list_bets = 1;
 }
 
 // message Deck {
@@ -47,4 +53,6 @@ message UpdateDesk {
   bool update_cell_bets = 3;
   repeated InfoBet user_bets = 4;
   repeated InfoBet cell_bets = 5;
+  bool update_history_roll = 6;
+  repeated ListColor history_rolls = 7;
 }
