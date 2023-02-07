@@ -24,6 +24,7 @@ message BetResult {
 message ColorGameFinish {
   ListColor roll_color = 1;
   repeated BetResult bet_results = 2;
+  repeated ListColor history_rolls = 3;
 }
 
 message ListColor {
