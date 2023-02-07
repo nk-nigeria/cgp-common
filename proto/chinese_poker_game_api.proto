@@ -279,21 +279,6 @@ message Player {
   string avatar_id = 13;
 }
 
-message SimpleProfile {
-  string user_id = 1;
-  string user_name = 2;
-  string display_name = 3;
-  string status = 5;
-  int64 account_chip = 6;
-  string avatar_id = 13;
-  int64 vip_level = 15;
-  string playing_match = 16; 
-}
-
-message ListSimpleProfile {
-  repeated SimpleProfile profiles = 1;
-}
-
 message Jackpot {
   int64 id = 1;
   string user_id = 2;
