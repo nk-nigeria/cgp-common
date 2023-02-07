@@ -137,26 +137,26 @@ type Profile struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserId                 string      `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	UserName               string      `protobuf:"bytes,2,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
-	DisplayName            string      `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
-	AvatarUrl              string      `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
-	Status                 string      `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
-	AccountChip            int64       `protobuf:"varint,6,opt,name=account_chip,json=accountChip,proto3" json:"account_chip,omitempty"`
-	BankChip               int64       `protobuf:"varint,7,opt,name=bank_chip,json=bankChip,proto3" json:"bank_chip,omitempty"`
-	RefCode                string      `protobuf:"bytes,8,opt,name=ref_code,json=refCode,proto3" json:"ref_code,omitempty"`
-	LangTag                string      `protobuf:"bytes,9,opt,name=lang_tag,json=langTag,proto3" json:"lang_tag,omitempty"`
-	LinkGroup              string      `protobuf:"bytes,10,opt,name=link_group,json=linkGroup,proto3" json:"link_group,omitempty"`
-	LinkFanpageFb          string      `protobuf:"bytes,11,opt,name=link_fanpage_fb,json=linkFanpageFb,proto3" json:"link_fanpage_fb,omitempty"`
-	AppConfig              string      `protobuf:"bytes,12,opt,name=app_config,json=appConfig,proto3" json:"app_config,omitempty"`
-	AvatarId               string      `protobuf:"bytes,13,opt,name=avatar_id,json=avatarId,proto3" json:"avatar_id,omitempty"`
-	Registrable            bool        `protobuf:"varint,14,opt,name=registrable,proto3" json:"registrable,omitempty"`
-	VipLevel               int64       `protobuf:"varint,15,opt,name=vip_level,json=vipLevel,proto3" json:"vip_level,omitempty"`
-	LastOnlineTimeUnix     int64       `protobuf:"varint,16,opt,name=last_online_time_unix,json=lastOnlineTimeUnix,proto3" json:"last_online_time_unix,omitempty"`
-	CreateTimeUnix         int64       `protobuf:"varint,17,opt,name=create_time_unix,json=createTimeUnix,proto3" json:"create_time_unix,omitempty"`
-	RemainTimeInputRefCode int64       `protobuf:"varint,18,opt,name=remain_time_input_ref_code,json=remainTimeInputRefCode,proto3" json:"remain_time_input_ref_code,omitempty"`
-	LangAvailables         []*LangCode `protobuf:"bytes,19,rep,name=lang_availables,json=langAvailables,proto3" json:"lang_availables,omitempty"`
-	PlayingMatch           string      `protobuf:"bytes,20,opt,name=playing_match,json=playingMatch,proto3" json:"playing_match,omitempty"`
+	UserId                 string        `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserName               string        `protobuf:"bytes,2,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
+	DisplayName            string        `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	AvatarUrl              string        `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	Status                 string        `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
+	AccountChip            int64         `protobuf:"varint,6,opt,name=account_chip,json=accountChip,proto3" json:"account_chip,omitempty"`
+	BankChip               int64         `protobuf:"varint,7,opt,name=bank_chip,json=bankChip,proto3" json:"bank_chip,omitempty"`
+	RefCode                string        `protobuf:"bytes,8,opt,name=ref_code,json=refCode,proto3" json:"ref_code,omitempty"`
+	LangTag                string        `protobuf:"bytes,9,opt,name=lang_tag,json=langTag,proto3" json:"lang_tag,omitempty"`
+	LinkGroup              string        `protobuf:"bytes,10,opt,name=link_group,json=linkGroup,proto3" json:"link_group,omitempty"`
+	LinkFanpageFb          string        `protobuf:"bytes,11,opt,name=link_fanpage_fb,json=linkFanpageFb,proto3" json:"link_fanpage_fb,omitempty"`
+	AppConfig              string        `protobuf:"bytes,12,opt,name=app_config,json=appConfig,proto3" json:"app_config,omitempty"`
+	AvatarId               string        `protobuf:"bytes,13,opt,name=avatar_id,json=avatarId,proto3" json:"avatar_id,omitempty"`
+	Registrable            bool          `protobuf:"varint,14,opt,name=registrable,proto3" json:"registrable,omitempty"`
+	VipLevel               int64         `protobuf:"varint,15,opt,name=vip_level,json=vipLevel,proto3" json:"vip_level,omitempty"`
+	LastOnlineTimeUnix     int64         `protobuf:"varint,16,opt,name=last_online_time_unix,json=lastOnlineTimeUnix,proto3" json:"last_online_time_unix,omitempty"`
+	CreateTimeUnix         int64         `protobuf:"varint,17,opt,name=create_time_unix,json=createTimeUnix,proto3" json:"create_time_unix,omitempty"`
+	RemainTimeInputRefCode int64         `protobuf:"varint,18,opt,name=remain_time_input_ref_code,json=remainTimeInputRefCode,proto3" json:"remain_time_input_ref_code,omitempty"`
+	LangAvailables         []*LangCode   `protobuf:"bytes,19,rep,name=lang_availables,json=langAvailables,proto3" json:"lang_availables,omitempty"`
+	PlayingMatch           *PlayingMatch `protobuf:"bytes,20,opt,name=playing_match,json=playingMatch,proto3" json:"playing_match,omitempty"`
 }
 
 func (x *Profile) Reset() {
@@ -324,9 +324,64 @@ func (x *Profile) GetLangAvailables() []*LangCode {
 	return nil
 }
 
-func (x *Profile) GetPlayingMatch() string {
+func (x *Profile) GetPlayingMatch() *PlayingMatch {
 	if x != nil {
 		return x.PlayingMatch
+	}
+	return nil
+}
+
+type PlayingMatch struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	MatchId string `protobuf:"bytes,2,opt,name=match_id,json=matchId,proto3" json:"match_id,omitempty"`
+}
+
+func (x *PlayingMatch) Reset() {
+	*x = PlayingMatch{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_auth_api_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PlayingMatch) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlayingMatch) ProtoMessage() {}
+
+func (x *PlayingMatch) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_api_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PlayingMatch.ProtoReflect.Descriptor instead.
+func (*PlayingMatch) Descriptor() ([]byte, []int) {
+	return file_auth_api_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PlayingMatch) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *PlayingMatch) GetMatchId() string {
+	if x != nil {
+		return x.MatchId
 	}
 	return ""
 }
@@ -342,7 +397,7 @@ type ListProfile struct {
 func (x *ListProfile) Reset() {
 	*x = ListProfile{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_auth_api_proto_msgTypes[3]
+		mi := &file_auth_api_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -355,7 +410,7 @@ func (x *ListProfile) String() string {
 func (*ListProfile) ProtoMessage() {}
 
 func (x *ListProfile) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_api_proto_msgTypes[3]
+	mi := &file_auth_api_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -368,7 +423,7 @@ func (x *ListProfile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProfile.ProtoReflect.Descriptor instead.
 func (*ListProfile) Descriptor() ([]byte, []int) {
-	return file_auth_api_proto_rawDescGZIP(), []int{3}
+	return file_auth_api_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListProfile) GetProfiles() []*Profile {
@@ -389,7 +444,7 @@ type QuickChatUpdateRequest struct {
 func (x *QuickChatUpdateRequest) Reset() {
 	*x = QuickChatUpdateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_auth_api_proto_msgTypes[4]
+		mi := &file_auth_api_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -402,7 +457,7 @@ func (x *QuickChatUpdateRequest) String() string {
 func (*QuickChatUpdateRequest) ProtoMessage() {}
 
 func (x *QuickChatUpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_api_proto_msgTypes[4]
+	mi := &file_auth_api_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -415,7 +470,7 @@ func (x *QuickChatUpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuickChatUpdateRequest.ProtoReflect.Descriptor instead.
 func (*QuickChatUpdateRequest) Descriptor() ([]byte, []int) {
-	return file_auth_api_proto_rawDescGZIP(), []int{4}
+	return file_auth_api_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *QuickChatUpdateRequest) GetTexts() []string {
@@ -436,7 +491,7 @@ type QuickChatResponse struct {
 func (x *QuickChatResponse) Reset() {
 	*x = QuickChatResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_auth_api_proto_msgTypes[5]
+		mi := &file_auth_api_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -449,7 +504,7 @@ func (x *QuickChatResponse) String() string {
 func (*QuickChatResponse) ProtoMessage() {}
 
 func (x *QuickChatResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_api_proto_msgTypes[5]
+	mi := &file_auth_api_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -462,7 +517,7 @@ func (x *QuickChatResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuickChatResponse.ProtoReflect.Descriptor instead.
 func (*QuickChatResponse) Descriptor() ([]byte, []int) {
-	return file_auth_api_proto_rawDescGZIP(), []int{5}
+	return file_auth_api_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *QuickChatResponse) GetTexts() []string {
@@ -485,7 +540,7 @@ type LangCode struct {
 func (x *LangCode) Reset() {
 	*x = LangCode{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_auth_api_proto_msgTypes[6]
+		mi := &file_auth_api_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -498,7 +553,7 @@ func (x *LangCode) String() string {
 func (*LangCode) ProtoMessage() {}
 
 func (x *LangCode) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_api_proto_msgTypes[6]
+	mi := &file_auth_api_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -511,7 +566,7 @@ func (x *LangCode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LangCode.ProtoReflect.Descriptor instead.
 func (*LangCode) Descriptor() ([]byte, []int) {
-	return file_auth_api_proto_rawDescGZIP(), []int{6}
+	return file_auth_api_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *LangCode) GetIsoCode() string {
@@ -549,7 +604,7 @@ var file_auth_api_proto_rawDesc = []byte{
 	0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a,
 	0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x22, 0xc7, 0x05, 0x0a, 0x07, 0x50, 0x72,
+	0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x22, 0xda, 0x05, 0x0a, 0x07, 0x50, 0x72,
 	0x6f, 0x66, 0x69, 0x6c, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b,
 	0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
@@ -591,30 +646,35 @@ var file_auth_api_proto_rawDesc = []byte{
 	0x65, 0x66, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x36, 0x0a, 0x0f, 0x6c, 0x61, 0x6e, 0x67, 0x5f, 0x61,
 	0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x73, 0x18, 0x13, 0x20, 0x03, 0x28, 0x0b, 0x32,
 	0x0d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61, 0x6e, 0x67, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x0e,
-	0x6c, 0x61, 0x6e, 0x67, 0x41, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x73, 0x12, 0x23,
+	0x6c, 0x61, 0x6e, 0x67, 0x41, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x73, 0x12, 0x36,
 	0x0a, 0x0d, 0x70, 0x6c, 0x61, 0x79, 0x69, 0x6e, 0x67, 0x5f, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x18,
-	0x14, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x70, 0x6c, 0x61, 0x79, 0x69, 0x6e, 0x67, 0x4d, 0x61,
-	0x74, 0x63, 0x68, 0x22, 0x37, 0x0a, 0x0b, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69,
-	0x6c, 0x65, 0x12, 0x28, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x72, 0x6f, 0x66, 0x69,
-	0x6c, 0x65, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x22, 0x2e, 0x0a, 0x16,
-	0x51, 0x75, 0x69, 0x63, 0x6b, 0x43, 0x68, 0x61, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x65, 0x78, 0x74, 0x73, 0x18,
-	0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x74, 0x65, 0x78, 0x74, 0x73, 0x22, 0x29, 0x0a, 0x11,
-	0x51, 0x75, 0x69, 0x63, 0x6b, 0x43, 0x68, 0x61, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x65, 0x78, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09,
-	0x52, 0x05, 0x74, 0x65, 0x78, 0x74, 0x73, 0x22, 0x67, 0x0a, 0x08, 0x4c, 0x61, 0x6e, 0x67, 0x43,
-	0x6f, 0x64, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x69, 0x73, 0x6f, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x69, 0x73, 0x6f, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x21,
-	0x0a, 0x0c, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x4e, 0x61, 0x6d,
-	0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x55, 0x72, 0x6c,
-	0x42, 0x38, 0x5a, 0x36, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63,
-	0x69, 0x61, 0x6f, 0x6c, 0x69, 0x6e, 0x6b, 0x2d, 0x67, 0x61, 0x6d, 0x65, 0x2d, 0x70, 0x6c, 0x61,
-	0x74, 0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x63, 0x67, 0x62, 0x2d, 0x6c, 0x6f, 0x62, 0x62, 0x79, 0x2d,
-	0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x14, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6c, 0x61, 0x79,
+	0x69, 0x6e, 0x67, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x52, 0x0c, 0x70, 0x6c, 0x61, 0x79, 0x69, 0x6e,
+	0x67, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x22, 0x3d, 0x0a, 0x0c, 0x50, 0x6c, 0x61, 0x79, 0x69, 0x6e,
+	0x67, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x6d, 0x61,
+	0x74, 0x63, 0x68, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x61,
+	0x74, 0x63, 0x68, 0x49, 0x64, 0x22, 0x37, 0x0a, 0x0b, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f,
+	0x66, 0x69, 0x6c, 0x65, 0x12, 0x28, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x72, 0x6f,
+	0x66, 0x69, 0x6c, 0x65, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x22, 0x2e,
+	0x0a, 0x16, 0x51, 0x75, 0x69, 0x63, 0x6b, 0x43, 0x68, 0x61, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x65, 0x78, 0x74,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x74, 0x65, 0x78, 0x74, 0x73, 0x22, 0x29,
+	0x0a, 0x11, 0x51, 0x75, 0x69, 0x63, 0x6b, 0x43, 0x68, 0x61, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x65, 0x78, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x05, 0x74, 0x65, 0x78, 0x74, 0x73, 0x22, 0x67, 0x0a, 0x08, 0x4c, 0x61, 0x6e,
+	0x67, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x69, 0x73, 0x6f, 0x5f, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x69, 0x73, 0x6f, 0x43, 0x6f, 0x64, 0x65,
+	0x12, 0x21, 0x0a, 0x0c, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x75, 0x72,
+	0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x55,
+	0x72, 0x6c, 0x42, 0x38, 0x5a, 0x36, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2f, 0x63, 0x69, 0x61, 0x6f, 0x6c, 0x69, 0x6e, 0x6b, 0x2d, 0x67, 0x61, 0x6d, 0x65, 0x2d, 0x70,
+	0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x63, 0x67, 0x62, 0x2d, 0x6c, 0x6f, 0x62, 0x62,
+	0x79, 0x2d, 0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -629,24 +689,26 @@ func file_auth_api_proto_rawDescGZIP() []byte {
 	return file_auth_api_proto_rawDescData
 }
 
-var file_auth_api_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_auth_api_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_auth_api_proto_goTypes = []interface{}{
 	(*ChangePasswordRequest)(nil),  // 0: api.ChangePasswordRequest
 	(*RegisterRequest)(nil),        // 1: api.RegisterRequest
 	(*Profile)(nil),                // 2: api.Profile
-	(*ListProfile)(nil),            // 3: api.ListProfile
-	(*QuickChatUpdateRequest)(nil), // 4: api.QuickChatUpdateRequest
-	(*QuickChatResponse)(nil),      // 5: api.QuickChatResponse
-	(*LangCode)(nil),               // 6: api.LangCode
+	(*PlayingMatch)(nil),           // 3: api.PlayingMatch
+	(*ListProfile)(nil),            // 4: api.ListProfile
+	(*QuickChatUpdateRequest)(nil), // 5: api.QuickChatUpdateRequest
+	(*QuickChatResponse)(nil),      // 6: api.QuickChatResponse
+	(*LangCode)(nil),               // 7: api.LangCode
 }
 var file_auth_api_proto_depIdxs = []int32{
-	6, // 0: api.Profile.lang_availables:type_name -> api.LangCode
-	2, // 1: api.ListProfile.profiles:type_name -> api.Profile
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	7, // 0: api.Profile.lang_availables:type_name -> api.LangCode
+	3, // 1: api.Profile.playing_match:type_name -> api.PlayingMatch
+	2, // 2: api.ListProfile.profiles:type_name -> api.Profile
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_auth_api_proto_init() }
@@ -692,7 +754,7 @@ func file_auth_api_proto_init() {
 			}
 		}
 		file_auth_api_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListProfile); i {
+			switch v := v.(*PlayingMatch); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -704,7 +766,7 @@ func file_auth_api_proto_init() {
 			}
 		}
 		file_auth_api_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuickChatUpdateRequest); i {
+			switch v := v.(*ListProfile); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -716,7 +778,7 @@ func file_auth_api_proto_init() {
 			}
 		}
 		file_auth_api_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuickChatResponse); i {
+			switch v := v.(*QuickChatUpdateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -728,6 +790,18 @@ func file_auth_api_proto_init() {
 			}
 		}
 		file_auth_api_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QuickChatResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_auth_api_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LangCode); i {
 			case 0:
 				return &v.state
@@ -746,7 +820,7 @@ func file_auth_api_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_auth_api_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
