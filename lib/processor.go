@@ -16,8 +16,9 @@ type Processor interface {
 	NotifyUpdateGameState(
 		logger runtime.Logger,
 		dispatcher runtime.MatchDispatcher,
+		updateState proto.Message,
 		matchState interface{},
-		updateState proto.Message)
+	)
 
 	ProcessApplyPresencesLeave(ctx context.Context,
 		logger runtime.Logger,
@@ -49,21 +50,22 @@ type Processor interface {
 		nk runtime.NakamaModule,
 		db *sql.DB,
 		dispatcher runtime.MatchDispatcher,
-		matchState interface{},
 		presences []runtime.Presence,
+		matchState interface{},
 	)
 	ProcessPresencesLeave(ctx context.Context,
 		logger runtime.Logger,
 		nk runtime.NakamaModule,
 		db *sql.DB,
 		dispatcher runtime.MatchDispatcher,
-		matchState interface{},
 		presences []runtime.Presence,
+		matchState interface{},
 	)
 	ProcessPresencesLeavePending(ctx context.Context,
 		logger runtime.Logger,
 		nk runtime.NakamaModule,
 		dispatcher runtime.MatchDispatcher,
 		presences []runtime.Presence,
+		matchState interface{},
 	)
 }
