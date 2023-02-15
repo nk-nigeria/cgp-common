@@ -19,17 +19,17 @@ const (
 )
 
 const (
-	triggerIdle            = "GameIdle"
-	triggerMatching        = "GameMatching"
-	triggerPresenceReady   = "GamePresenceReady"
-	triggerPreparingDone   = "GamePreparingDone"
-	triggerPreparingFailed = "GamePreparingFailed"
-	triggerPlayTimeout     = "GamePlayTimeout"
-	triggerPlayCombineAll  = "GamePlayCombineAll"
-	triggerRewardTimeout   = "GameRewardTimeout"
-	triggerNoOne           = "GameNoOne"
+	TriggerIdle            = "GameIdle"
+	TriggerMatching        = "GameMatching"
+	TriggerPresenceReady   = "GamePresenceReady"
+	TriggerPreparingDone   = "GamePreparingDone"
+	TriggerPreparingFailed = "GamePreparingFailed"
+	TriggerPlayTimeout     = "GamePlayTimeout"
+	TriggerPlayCombineAll  = "GamePlayCombineAll"
+	TriggerRewardTimeout   = "GameRewardTimeout"
+	TriggerNoOne           = "GameNoOne"
 
-	triggerProcess = "GameProcess"
+	TriggerProcess = "GameProcess"
 )
 
 type StateHandler interface {
@@ -100,7 +100,7 @@ func (m *Machine) GetPbState() pb.GameState {
 }
 
 func (m *Machine) FireProcessEvent(ctx context.Context, args ...interface{}) error {
-	return m.state.FireCtx(ctx, triggerProcess, args...)
+	return m.state.FireCtx(ctx, TriggerProcess, args...)
 }
 
 func (m *Machine) MustState() stateless.State {
@@ -112,7 +112,7 @@ func (m *Machine) Trigger(ctx context.Context, trigger stateless.Trigger, args .
 }
 
 func (m *Machine) TriggerIdle(ctx context.Context, args ...interface{}) error {
-	return m.state.FireCtx(ctx, triggerIdle, args...)
+	return m.state.FireCtx(ctx, TriggerIdle, args...)
 }
 
 func (m *Machine) IsPlayingState() bool {
@@ -125,7 +125,7 @@ func (m *Machine) IsReward() bool {
 
 func configure(m *Machine, stateMachineState StateMachineState) {
 	m.state.Configure(StateInit).
-		Permit(triggerIdle, StateIdle)
+		Permit(TriggerIdle, StateIdle)
 	fireCtx := m.state.FireCtx
 	m.state.OnTransitioning(func(ctx context.Context, t stateless.Transition) {
 		// procPkg := GetProcessorPackagerFromContext(ctx)
@@ -141,9 +141,9 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StateIdle).
 			OnEntry(idle.Enter).
 			OnExit(idle.Exit).
-			InternalTransition(triggerProcess, idle.Process).
-			Permit(triggerMatching, StateMatching).
-			Permit(triggerNoOne, StateFinish)
+			InternalTransition(TriggerProcess, idle.Process).
+			Permit(TriggerMatching, StateMatching).
+			Permit(TriggerNoOne, StateFinish)
 	}
 	//matching state: wait for reach min user
 	// => switch to preparing, check no one and timeout
@@ -153,9 +153,9 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StateMatching).
 			OnEntry(matching.Enter).
 			OnExit(matching.Exit).
-			InternalTransition(triggerProcess, matching.Process).
-			Permit(triggerPresenceReady, StatePreparing).
-			Permit(triggerIdle, StateIdle)
+			InternalTransition(TriggerProcess, matching.Process).
+			Permit(TriggerPresenceReady, StatePreparing).
+			Permit(TriggerIdle, StateIdle)
 	}
 	// preparing state: init point of three dice
 	{
@@ -163,9 +163,9 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StatePreparing).
 			OnEntry(preparing.Enter).
 			OnExit(preparing.Exit).
-			InternalTransition(triggerProcess, preparing.Process).
-			Permit(triggerPreparingDone, StatePlay).
-			Permit(triggerPreparingFailed, StateMatching)
+			InternalTransition(TriggerProcess, preparing.Process).
+			Permit(TriggerPreparingDone, StatePlay).
+			Permit(TriggerPreparingFailed, StateMatching)
 	}
 	// state allow user bet
 	//
@@ -174,9 +174,9 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StatePlay).
 			OnEntry(play.Enter).
 			OnExit(play.Exit).
-			InternalTransition(triggerProcess, play.Process).
-			Permit(triggerPlayTimeout, StateReward).
-			Permit(triggerPlayCombineAll, StateReward)
+			InternalTransition(TriggerProcess, play.Process).
+			Permit(TriggerPlayTimeout, StateReward).
+			Permit(TriggerPlayCombineAll, StateReward)
 	}
 	// result of game
 	// timout ==> matching
@@ -185,8 +185,8 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StateReward).
 			OnEntry(reward.Enter).
 			OnExit(reward.Exit).
-			InternalTransition(triggerProcess, reward.Process).
-			Permit(triggerRewardTimeout, StateMatching)
+			InternalTransition(TriggerProcess, reward.Process).
+			Permit(TriggerRewardTimeout, StateMatching)
 	}
 	m.state.ToGraph()
 }
