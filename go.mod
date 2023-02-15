@@ -3,6 +3,7 @@ module github.com/ciaolink-game-platform/cgp-common
 go 1.18
 
 require (
+	github.com/emirpasic/gods v1.18.1
 	github.com/heroiclabs/nakama-common v1.26.0
 	github.com/qmuntal/stateless v1.6.2
 	go.uber.org/zap v1.24.0
