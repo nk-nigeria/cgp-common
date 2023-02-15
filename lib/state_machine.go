@@ -54,6 +54,12 @@ type StateBase struct {
 	fireFn FireFn
 }
 
+func NewStateBase(fn FireFn) StateBase {
+	return StateBase{
+		fireFn: fn,
+	}
+}
+
 func (s *StateBase) Trigger(ctx context.Context, trigger stateless.Trigger, args ...interface{}) error {
 	return s.fireFn(ctx, trigger, args...)
 }
