@@ -9,13 +9,13 @@ import (
 )
 
 const (
-	stateInit      = pb.GameState_GameStateUnknown // Only for initialize
-	stateIdle      = pb.GameState_GameStateIdle
-	stateMatching  = pb.GameState_GameStateMatching
-	statePreparing = pb.GameState_GameStatePreparing
-	statePlay      = pb.GameState_GameStatePlay
-	stateReward    = pb.GameState_GameStateReward
-	stateFinish    = pb.GameState_GameStateFinish
+	StateInit      = pb.GameState_GameStateUnknown // Only for initialize
+	StateIdle      = pb.GameState_GameStateIdle
+	StateMatching  = pb.GameState_GameStateMatching
+	StatePreparing = pb.GameState_GameStatePreparing
+	StatePlay      = pb.GameState_GameStatePlay
+	StateReward    = pb.GameState_GameStateReward
+	StateFinish    = pb.GameState_GameStateFinish
 )
 
 const (
@@ -42,10 +42,11 @@ type StateHandler interface {
 
 type FireFn func(ctx context.Context, trigger stateless.Trigger, args ...interface{}) error
 
-func NewGameStateMachine() UseCase {
+func NewGameStateMachine(stateMachineState StateMachineState) UseCase {
 	gs := &Machine{
-		state: stateless.NewStateMachine(stateInit),
+		state: stateless.NewStateMachine(StateInit),
 	}
+	configure(gs, stateMachineState)
 	return gs
 }
 
@@ -77,15 +78,15 @@ type Machine struct {
 
 func (m *Machine) GetPbState() pb.GameState {
 	switch m.state.MustState() {
-	case stateIdle:
+	case StateIdle:
 		return pb.GameState_GameStateIdle
-	case stateMatching:
+	case StateMatching:
 		return pb.GameState_GameStateMatching
-	case statePreparing:
+	case StatePreparing:
 		return pb.GameState_GameStatePreparing
-	case statePlay:
+	case StatePlay:
 		return pb.GameState_GameStatePlay
-	case stateReward:
+	case StateReward:
 		return pb.GameState_GameStateReward
 	default:
 		return pb.GameState_GameStateUnknown
@@ -114,4 +115,72 @@ func (m *Machine) IsPlayingState() bool {
 
 func (m *Machine) IsReward() bool {
 	return m.GetPbState() == pb.GameState_GameStateReward
+}
+
+func configure(m *Machine, stateMachineState StateMachineState) {
+	m.state.Configure(StateInit).
+		Permit(triggerIdle, StateIdle)
+	fireCtx := m.state.FireCtx
+	m.state.OnTransitioning(func(ctx context.Context, t stateless.Transition) {
+		// procPkg := GetProcessorPackagerFromContext(ctx)
+		// state := procPkg.GetMatchState()
+		// state.SetAllowBet(false)
+		stateMachineState.OnTransitioning(ctx, t)
+	})
+	// idle state: wait for first user
+	// init data of match if empty
+	// => timeout trigger and no user join -> close match
+	{
+		idle := stateMachineState.NewIdleState(fireCtx)
+		m.state.Configure(StateIdle).
+			OnEntry(idle.Enter).
+			OnExit(idle.Exit).
+			InternalTransition(triggerProcess, idle.Process).
+			Permit(triggerMatching, StateMatching).
+			Permit(triggerNoOne, StateFinish)
+	}
+	//matching state: wait for reach min user
+	// => switch to preparing, check no one and timeout
+	// => switch to idle
+	{
+		matching := stateMachineState.NewStateMatching(fireCtx)
+		m.state.Configure(StateMatching).
+			OnEntry(matching.Enter).
+			OnExit(matching.Exit).
+			InternalTransition(triggerProcess, matching.Process).
+			Permit(triggerPresenceReady, StatePreparing).
+			Permit(triggerIdle, StateIdle)
+	}
+	// preparing state: init point of three dice
+	{
+		preparing := stateMachineState.NewStatePreparing(fireCtx)
+		m.state.Configure(StatePreparing).
+			OnEntry(preparing.Enter).
+			OnExit(preparing.Exit).
+			InternalTransition(triggerProcess, preparing.Process).
+			Permit(triggerPreparingDone, StatePlay).
+			Permit(triggerPreparingFailed, StateMatching)
+	}
+	// state allow user bet
+	//
+	{
+		play := stateMachineState.NewStatePlay(fireCtx)
+		m.state.Configure(StatePlay).
+			OnEntry(play.Enter).
+			OnExit(play.Exit).
+			InternalTransition(triggerProcess, play.Process).
+			Permit(triggerPlayTimeout, StateReward).
+			Permit(triggerPlayCombineAll, StateReward)
+	}
+	// result of game
+	// timout ==> matching
+	{
+		reward := stateMachineState.NewStateReward(fireCtx)
+		m.state.Configure(StateReward).
+			OnEntry(reward.Enter).
+			OnExit(reward.Exit).
+			InternalTransition(triggerProcess, reward.Process).
+			Permit(triggerRewardTimeout, StateMatching)
+	}
+	m.state.ToGraph()
 }
