@@ -107,3 +107,11 @@ func (m *Machine) Trigger(ctx context.Context, trigger stateless.Trigger, args .
 func (m *Machine) TriggerIdle(ctx context.Context, args ...interface{}) error {
 	return m.state.FireCtx(ctx, triggerIdle, args...)
 }
+
+func (m *Machine) IsPlayingState() bool {
+	return m.GetPbState() == pb.GameState_GameStatePlay
+}
+
+func (m *Machine) IsReward() bool {
+	return m.GetPbState() == pb.GameState_GameStateReward
+}
