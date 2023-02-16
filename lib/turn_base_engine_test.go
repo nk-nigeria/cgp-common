@@ -15,7 +15,7 @@ func TestNewTurnBaseEngine(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *turnBaseEngine
+		want *TurnBaseEngine
 	}{
 		// TODO: Add test cases.
 		{

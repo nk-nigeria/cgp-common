@@ -8,7 +8,7 @@ var FnDefaultNextTurnIndex FnNextIndex = func(currentIdx int, val string, numOcc
 	return currentIdx + 1
 }
 
-type turnBaseEngine struct {
+type TurnBaseEngine struct {
 	listPlayers         []string
 	sizePlayers         int
 	timePerTurn         time.Duration
@@ -22,14 +22,14 @@ type turnBaseEngine struct {
 	userData            interface{}
 }
 
-func NewTurnBaseEngine() *turnBaseEngine {
-	engine := turnBaseEngine{}
+func NewTurnBaseEngine() *TurnBaseEngine {
+	engine := TurnBaseEngine{}
 	// set default callback next turn index
 	engine.RegisterNextTurnIndexFn(FnDefaultNextTurnIndex, nil)
 	return &engine
 }
 
-func (t *turnBaseEngine) Config(listPlayers []string, timePerTurn time.Duration) {
+func (t *TurnBaseEngine) Config(listPlayers []string, timePerTurn time.Duration) {
 	t.listPlayers = listPlayers
 	t.timePerTurn = timePerTurn
 	t.sizePlayers = len(t.listPlayers)
@@ -42,7 +42,7 @@ func (t *turnBaseEngine) Config(listPlayers []string, timePerTurn time.Duration)
 
 // loop and trigger new turn if timeout
 // return user in turn
-func (t *turnBaseEngine) Loop() string {
+func (t *TurnBaseEngine) Loop() string {
 	if !t.isInit {
 		return ""
 	}
@@ -57,12 +57,12 @@ func (t *turnBaseEngine) Loop() string {
 	return t.listPlayers[t.idxCurrentTurn]
 }
 
-func (t *turnBaseEngine) IsNewTurn() bool {
+func (t *TurnBaseEngine) IsNewTurn() bool {
 	return t.isNewTurn
 }
 
 // force next turn
-func (t *turnBaseEngine) NextTurn() string {
+func (t *TurnBaseEngine) NextTurn() string {
 	t.countDownReachTime = time.Now().Add(t.timePerTurn)
 
 	nextIdx := 0
@@ -86,19 +86,19 @@ func (t *turnBaseEngine) NextTurn() string {
 	return t.listPlayers[t.idxCurrentTurn]
 }
 
-func (t *turnBaseEngine) GetRemainCountDown() int {
+func (t *TurnBaseEngine) GetRemainCountDown() int {
 	currentTime := time.Now()
 	difference := t.countDownReachTime.Sub(currentTime)
 	return int(difference.Seconds())
 }
 
 // Get num occur turn index sequent
-func (t *turnBaseEngine) GetOccurTurnSequentInfo() (int, int) {
+func (t *TurnBaseEngine) GetOccurTurnSequentInfo() (int, int) {
 	return t.idxCurrentTurn, t.numOccurTurnSequent
 }
 
 // override default next turn logic
-func (t *turnBaseEngine) RegisterNextTurnIndexFn(fn FnNextIndex, userData interface{}) {
+func (t *TurnBaseEngine) RegisterNextTurnIndexFn(fn FnNextIndex, userData interface{}) {
 	if fn != nil {
 		t.fnNexIndex = fn
 		t.userData = userData
