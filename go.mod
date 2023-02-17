@@ -6,7 +6,7 @@ require (
 	github.com/emirpasic/gods v1.12.0
 	github.com/heroiclabs/nakama-common v1.24.0
 	github.com/qmuntal/stateless v1.5.3
-	go.uber.org/zap v1.19.1
+	go.uber.org/zap v1.24.0
 	google.golang.org/protobuf v1.27.1
 )
 
