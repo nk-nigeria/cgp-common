@@ -36,12 +36,20 @@ type Processor interface {
 		matchState interface{},
 	)
 
-	ProcessGame(ctx context.Context,
+	ProcessMessageFromUser(ctx context.Context,
 		logger runtime.Logger,
 		nk runtime.NakamaModule,
 		db *sql.DB,
 		dispatcher runtime.MatchDispatcher,
 		messages []runtime.MatchData,
+		matchState interface{},
+	)
+
+	ProcessGame(ctx context.Context,
+		logger runtime.Logger,
+		nk runtime.NakamaModule,
+		db *sql.DB,
+		dispatcher runtime.MatchDispatcher,
 		matchState interface{},
 	)
 
