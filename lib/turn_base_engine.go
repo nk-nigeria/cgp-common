@@ -104,3 +104,10 @@ func (t *TurnBaseEngine) RegisterNextTurnIndexFn(fn FnNextIndex, userData interf
 		t.userData = userData
 	}
 }
+
+func (t *TurnBaseEngine) Reset() {
+	t.idxCurrentTurn = -1
+	t.idxPrevTurn = -1
+	t.isInit = true
+	t.numOccurTurnSequent = 0
+}

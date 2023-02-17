@@ -22,3 +22,4 @@ package api
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative auth_api.proto
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative wallet.proto
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative bandarqq_api.proto
+//go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative slots_game.proto
