@@ -2,18 +2,18 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
+option go_package = "github.com/io6696/cgp-bing-module/api";
 
 enum QQBetCell {
-  RED = 0;
-  RED_TWIN = 1;
-  RED_QIU = 2;
-  BLUE = 3;
-  BLUE_TWIN = 4;
-  BLUE_QIU = 5;
-  DRAW = 6;
-  QIU_QIU = 7;
-  SIX_TWINS = 8;
+  CELL_RED = 0;
+  CELL_RED_TWIN = 1;
+  CELL_RED_QIU = 2;
+  CELL_BLUE = 3;
+  CELL_BLUE_TWIN = 4;
+  CELL_BLUE_QIU = 5;
+  CELL_DRAW = 6;
+  CELL_QIU_QIU = 7;
+  CELL_SIX_TWINS = 8;
 }
 
 enum QQHandType {
@@ -26,13 +26,20 @@ enum QQHandType {
 message Domino {
   int32 top = 1;
   int32 bottom = 2;
-  int32 total = 3;
+}
+
+message DominoList {
+  repeated Domino dominos = 1;
 }
 
 message QQBet {
-  string user_id = 1;
   int64 chips = 2;
   QQBetCell cell = 3;
+}
+
+message QQBetResult {
+  QQBet bet = 1;
+  bool is_win = 2;
 }
 
 // message from client to server indicate user placing bet
@@ -43,11 +50,12 @@ message QQPlayerBets {
 
 // endgame result for 1 player
 // win_bets contains the bets in the cell that player win
+// in_chip is total of bet chips
+// win_chip is raw
 // chip is amount of win chip, if it's negative then player lost that game
 message QQPlayerBetResult {
   string user_id = 1;
-  repeated QQBet win_bets = 2;
-  int64 chip = 3;
+  repeated QQBetResult bet_results = 2;
 }
 
 // endgame result for all user playing in that game
@@ -56,29 +64,29 @@ message QQListPlayerBetResult {
 }
 
 // info of 1 hand
-message Hand {
+message QQHand {
   repeated Domino dominos = 1;
   QQHandType type = 2;
+  int32 point = 3;
 }
 
 // message from server to client when the game end
 // red's and blue's hand
 // win_cells is list of winning cells
 message QQGameFinish {
-  Hand red_hand = 1;
-  Hand blue_hand = 2;
-  QQBetCell win_cells = 3;
+  QQGameFinishHand hands = 1;
+  repeated QQBetCell win_cells = 3;
   QQListPlayerBetResult result = 4;
 }
 
-message QQHistoryHand {
-  Hand red_hand = 1;
-  Hand blue_hand = 2;
+message QQGameFinishHand {
+  QQHand red_hand = 1;
+  QQHand blue_hand = 2;
 }
 
 // game history of prev hands
 message QQHistory {
-  repeated QQHistoryHand hand_history = 1;
+  repeated QQGameFinishHand hand_histories = 1;
 }
 
 // amount and number of user placed bet in a cell
@@ -104,7 +112,7 @@ message QQUpdateDesk {
   bool update_user_bets = 2;
   bool update_cell_bets = 3;
   bool update_game_history = 4;
-  repeated QQPlayerBets player_list_bet = 5;
-  repeated QQDeskListCellBet list_cell_bet = 6;
+  QQPlayerBets user_bets = 5;
+  QQDeskListCellBet list_cell_bet = 6;
   QQHistory history = 7;
 }
