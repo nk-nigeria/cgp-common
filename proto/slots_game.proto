@@ -6,7 +6,64 @@ package api;
 option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
 
 message SlotDesk {
-  repeated int32 matrices = 1;
-  int64 chips = 2;
-  repeated int32 matrix_wins  = 3;
+  SlotMatrix matrix = 1;
+  SlotMatrix spread_matrix = 4;
+  repeated Payline paylines = 5;
+  int64 chips_mcb = 6;  
+  SiXiangGame sixiang_game = 7;
+  repeated SiXiangSymbol special_symbols = 8;
+  int64 win_jp = 9;
+  int64 win_jp_ratio = 10;
+  BigWin big_win = 11;
+  int64 chips_in_special_game = 12;
+  int64 total_chips_win = 13;
+  int64 balance_chips_wallet_before = 14;
+  int64 balance_chips_wallet_after = 15;
+
+}
+
+message SlotMatrix {
+  repeated SiXiangSymbol lists = 1;  
+  int32 rows = 2;
+  int32 cols = 3;
+  
+}
+
+enum SiXiangSymbol {  
+  SI_XIANG_SYMBOL_UNSPECIFIED = 0x000;
+  SI_XIANG_SYMBOL_10 = 0x001;
+  SI_XIANG_SYMBOL_J = 0x002;
+  SI_XIANG_SYMBOL_Q = 0x004;
+  SI_XIANG_SYMBOL_K = 0x008;
+  SI_XIANG_SYMBOL_A = 0x010;
+  SI_XIANG_SYMBOL_BLUE_DRAGON = 0x20;
+  SI_XIANG_SYMBOL_WHITE_TIGER = 0x40;
+  SI_XIANG_SYMBOL_VERMILION_BIRD = 0x80;
+  SI_XIANG_SYMBOL_WARRIOR = 0x100;
+  SI_XIANG_SYMBOL_SCATTER = 0x800;
+  SI_XIANG_SYMBOL_WILD = 0xfff;
+}
+
+enum SiXiangGame {
+  SI_XIANG_GAME_UNSPECIFIED = 0;
+  SI_XIANG_GAME_NOMAL = 1;
+  SI_XIANG_GAME_BONUS = 2;
+  SI_XIANG_GAME_DRAGON_PEARL = 3;
+  SI_XIANG_GAME_LUCKDRAW = 4;
+  SI_XIANG_GAME_GOLDPICK = 5;
+  SI_XIANG_GAME_RAPIDPAY = 6;
+  SI_XIANG_GAME_SIXANGBONUS = 7;
+}
+
+enum BigWin {
+  BIG_WIN_UNSPECIFIED = 0;
+  BIG_WIN_NICE = 1;
+}
+
+message Payline {
+  int32 id = 1;
+  SiXiangSymbol symbol = 2;
+  int32 num_occur = 3;
+  double rate = 4;
+  int64 chips = 5;
 }

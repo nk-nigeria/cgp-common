@@ -50,6 +50,7 @@ type Processor interface {
 		nk runtime.NakamaModule,
 		db *sql.DB,
 		dispatcher runtime.MatchDispatcher,
+		messages []runtime.MatchData,
 		matchState interface{},
 	)
 
