@@ -15,11 +15,10 @@ message SlotDesk {
   int64 win_jp = 9;
   int64 win_jp_ratio = 10;
   BigWin big_win = 11;
-  int64 chips_in_special_game = 12;
-  int64 total_chips_win = 13;
+  int64 chips_win_in_special_game = 12;
+  int64 chips_win_in_spin = 13;
   int64 balance_chips_wallet_before = 14;
   int64 balance_chips_wallet_after = 15;
-
 }
 
 message SlotMatrix {
