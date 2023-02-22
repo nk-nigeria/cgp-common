@@ -9,7 +9,10 @@ import (
 )
 
 type Processor interface {
-	ProcessNewGame(logger runtime.Logger,
+	ProcessNewGame(ctx context.Context,
+		logger runtime.Logger,
+		nk runtime.NakamaModule,
+		db *sql.DB,
 		dispatcher runtime.MatchDispatcher,
 		matchState interface{})
 
