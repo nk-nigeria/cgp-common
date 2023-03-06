@@ -46,6 +46,7 @@ message InfoBet {
   int64 chips = 2;
   int32 n_user_bet = 3;
   string desp = 4;
+  int32 req_spec_game = 5;
 }
 
 message ListInfoBet {

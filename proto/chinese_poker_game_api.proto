@@ -289,4 +289,3 @@ message Jackpot {
   int64 chips = 4;
   int64 create_time_unix = 5;
 }
-
