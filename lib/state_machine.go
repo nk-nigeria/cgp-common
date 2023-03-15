@@ -128,9 +128,11 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		Permit(TriggerIdle, StateIdle)
 	fireCtx := m.state.FireCtx
 	m.state.OnTransitioning(func(ctx context.Context, t stateless.Transition) {
-		// procPkg := GetProcessorPackagerFromContext(ctx)
+		procPkg := GetProcessorPackagerFromContext(ctx)
 		// state := procPkg.GetMatchState()
 		// state.SetAllowBet(false)
+    logger := procPkg.GetLogger()
+    logger.WithField("source", t.Source).WithField("destination", t.Destination).WithField("transition", t.Trigger).Info("OnTransitioning")
 		stateMachineState.OnTransitioning(ctx, t)
 	})
 	// idle state: wait for first user
