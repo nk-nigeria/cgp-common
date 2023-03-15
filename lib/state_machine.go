@@ -3,6 +3,7 @@ package lib
 import (
 	"context"
 
+	"github.com/heroiclabs/nakama-common/runtime"
 	"github.com/qmuntal/stateless"
 
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
@@ -19,17 +20,19 @@ const (
 )
 
 const (
-	TriggerIdle            = "GameIdle"
-	TriggerMatching        = "GameMatching"
-	TriggerPresenceReady   = "GamePresenceReady"
-	TriggerPreparingDone   = "GamePreparingDone"
-	TriggerPreparingFailed = "GamePreparingFailed"
-	TriggerPlayTimeout     = "GamePlayTimeout"
-	TriggerPlayCombineAll  = "GamePlayCombineAll"
-	TriggerRewardTimeout   = "GameRewardTimeout"
-	TriggerNoOne           = "GameNoOne"
+	TriggerInit               = "TriggerInit"
+	TriggerStateFinishSuccess = "TriggerStateFinishSuccess"
+	TriggerStateFinishFailed  = "TriggerStateFinishFailed"
+	TriggerExit               = "TriggerExit"
+)
 
-	TriggerProcess = "GameProcess"
+var (
+	ErrStateMachineFinish = runtime.NewError("state machine finish", -1)
+)
+
+// Trigger InternalTransition
+const (
+	triggerProcess = "triggerProcess"
 )
 
 type StateHandler interface {
@@ -100,7 +103,7 @@ func (m *Machine) GetPbState() pb.GameState {
 }
 
 func (m *Machine) FireProcessEvent(ctx context.Context, args ...interface{}) error {
-	return m.state.FireCtx(ctx, TriggerProcess, args...)
+	return m.state.FireCtx(ctx, triggerProcess, args...)
 }
 
 func (m *Machine) MustState() stateless.State {
@@ -112,7 +115,7 @@ func (m *Machine) Trigger(ctx context.Context, trigger stateless.Trigger, args .
 }
 
 func (m *Machine) TriggerIdle(ctx context.Context, args ...interface{}) error {
-	return m.state.FireCtx(ctx, TriggerIdle, args...)
+	return m.state.FireCtx(ctx, TriggerInit, args...)
 }
 
 func (m *Machine) IsPlayingState() bool {
@@ -125,14 +128,14 @@ func (m *Machine) IsReward() bool {
 
 func configure(m *Machine, stateMachineState StateMachineState) {
 	m.state.Configure(StateInit).
-		Permit(TriggerIdle, StateIdle)
+		Permit(TriggerInit, StateIdle)
 	fireCtx := m.state.FireCtx
 	m.state.OnTransitioning(func(ctx context.Context, t stateless.Transition) {
 		procPkg := GetProcessorPackagerFromContext(ctx)
 		// state := procPkg.GetMatchState()
 		// state.SetAllowBet(false)
-    logger := procPkg.GetLogger()
-    logger.WithField("source", t.Source).WithField("destination", t.Destination).WithField("transition", t.Trigger).Info("OnTransitioning")
+		logger := procPkg.GetLogger()
+		logger.WithField("source", t.Source).WithField("destination", t.Destination).WithField("transition", t.Trigger).Info("OnTransitioning")
 		stateMachineState.OnTransitioning(ctx, t)
 	})
 	// idle state: wait for first user
@@ -143,10 +146,19 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StateIdle).
 			OnEntry(idle.Enter).
 			OnExit(idle.Exit).
-			InternalTransition(TriggerProcess, idle.Process).
-			Permit(TriggerMatching, StateMatching).
-			Permit(TriggerNoOne, StateFinish)
+			InternalTransition(triggerProcess, idle.Process).
+			Permit(TriggerStateFinishSuccess, StateMatching).
+			Permit(TriggerStateFinishFailed, StateFinish).
+			Permit(TriggerExit, StateFinish)
 	}
+	{
+		state := defaultFinishHandler
+		m.state.Configure(StateFinish).
+			OnEntry(state.Enter).
+			OnExit(state.Exit).
+			InternalTransition(triggerProcess, state.Process)
+	}
+
 	//matching state: wait for reach min user
 	// => switch to preparing, check no one and timeout
 	// => switch to idle
@@ -155,9 +167,10 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StateMatching).
 			OnEntry(matching.Enter).
 			OnExit(matching.Exit).
-			InternalTransition(TriggerProcess, matching.Process).
-			Permit(TriggerPresenceReady, StatePreparing).
-			Permit(TriggerIdle, StateIdle)
+			InternalTransition(triggerProcess, matching.Process).
+			Permit(TriggerStateFinishSuccess, StatePreparing).
+			Permit(TriggerStateFinishFailed, StateIdle).
+			Permit(TriggerInit, StateIdle)
 	}
 	// preparing state: init point of three dice
 	{
@@ -165,9 +178,9 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StatePreparing).
 			OnEntry(preparing.Enter).
 			OnExit(preparing.Exit).
-			InternalTransition(TriggerProcess, preparing.Process).
-			Permit(TriggerPreparingDone, StatePlay).
-			Permit(TriggerPreparingFailed, StateMatching)
+			InternalTransition(triggerProcess, preparing.Process).
+			Permit(TriggerStateFinishSuccess, StatePlay).
+			Permit(TriggerStateFinishFailed, StateMatching)
 	}
 	// state allow user bet
 	//
@@ -176,9 +189,9 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StatePlay).
 			OnEntry(play.Enter).
 			OnExit(play.Exit).
-			InternalTransition(TriggerProcess, play.Process).
-			Permit(TriggerPlayTimeout, StateReward).
-			Permit(TriggerPlayCombineAll, StateReward)
+			InternalTransition(triggerProcess, play.Process).
+			Permit(TriggerStateFinishSuccess, StateReward).
+			Permit(TriggerStateFinishFailed, StateReward)
 	}
 	// result of game
 	// timout ==> matching
@@ -187,8 +200,34 @@ func configure(m *Machine, stateMachineState StateMachineState) {
 		m.state.Configure(StateReward).
 			OnEntry(reward.Enter).
 			OnExit(reward.Exit).
-			InternalTransition(TriggerProcess, reward.Process).
-			Permit(TriggerRewardTimeout, StateMatching)
+			InternalTransition(triggerProcess, reward.Process).
+			Permit(TriggerStateFinishSuccess, StateMatching).
+			Permit(TriggerStateFinishFailed, StatePreparing)
 	}
 	m.state.ToGraph()
+}
+
+/* Private */
+var defaultFinishHandler StateHandler = &finishHandler{}
+
+type finishHandler struct{}
+
+// Enter implements StateHandler
+func (*finishHandler) Enter(ctx context.Context, _ ...interface{}) error {
+	return nil
+}
+
+// Exit implements StateHandler
+func (*finishHandler) Exit(_ context.Context, _ ...interface{}) error {
+	return ErrStateMachineFinish
+}
+
+// Process implements StateHandler
+func (*finishHandler) Process(ctx context.Context, args ...interface{}) error {
+	return ErrStateMachineFinish
+}
+
+// Trigger implements StateHandler
+func (*finishHandler) Trigger(ctx context.Context, trigger interface{}, args ...interface{}) error {
+	return nil
 }
