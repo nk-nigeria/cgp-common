@@ -106,9 +106,10 @@ message SicboUpdateDesk {
 }
 
 enum SicboBetRejectReason {
-  BALANCE_NOT_ENOUGH = 0;
-  PREVIOUS_BET_NOT_EXIST = 1;
-  ALREADY_BET = 2;
+  UNSPECIFIED = 0;
+  BALANCE_NOT_ENOUGH = 1;
+  PREVIOUS_BET_NOT_EXIST = 2;
+  ALREADY_BET = 3;
 }
 
 message SicboActionReject {
