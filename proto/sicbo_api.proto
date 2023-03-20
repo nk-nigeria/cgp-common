@@ -105,6 +105,12 @@ message SicboUpdateDesk {
   repeated SicboHand history = 7;
 }
 
+enum SicboBetRejectReason {
+  BALANCE_NOT_ENOUGH = 0;
+  PREVIOUS_BET_NOT_EXIST = 1;
+  ALREADY_BET = 2;
+}
+
 message SicboActionReject {
-  string reason = 1;
+  SicboBetRejectReason reason = 1;
 }
