@@ -25,3 +25,4 @@ package api
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative slots_game.proto
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative gaple_api.proto
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative dragontiger_api.proto
+//go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative sicbo_api.proto
