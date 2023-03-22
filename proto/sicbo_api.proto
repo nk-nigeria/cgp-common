@@ -74,9 +74,9 @@ message SicboPlayerBetResult {
 }
 
 enum SicboBetAction {
-  NORMAL = 0;
-  REBET = 1;
-  DOUBLE = 2;
+  SICBO_BET_NORMAL = 0;
+  SICBO_BET_REBET = 1;
+  SICBO_BET_DOUBLE = 2;
 }
 
 message SicboHand {
