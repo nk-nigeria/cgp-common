@@ -28,7 +28,7 @@ message Profile {
   string link_group = 10;
   string link_fanpage_fb = 11;
   string app_config = 12;
-  string avatar_id =13;
+  string avatar_id = 13;
   bool registrable = 14;
   int64 vip_level = 15;
   int64 last_online_time_unix = 16;
@@ -55,7 +55,7 @@ message SimpleProfile {
   int64 account_chip = 6;
   string avatar_id = 13;
   int64 vip_level = 15;
-  PlayingMatch playing_match = 16; 
+  PlayingMatch playing_match = 16;
 }
 
 message ListSimpleProfile {

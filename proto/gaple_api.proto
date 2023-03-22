@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
-
 import "bandarqq_api.proto";
 import "chinese_poker_game_api.proto";
+
+option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
 
 // solely for update desk state
 // [chain] is in the form of 5-6-1-5 for example, meaning that there's a chain of 5-6/6-1/1-5 dominos had been played

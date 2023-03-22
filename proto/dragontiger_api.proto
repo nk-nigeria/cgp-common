@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
-
 import "chinese_poker_game_api.proto";
+
+option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
 
 enum DragonTigerBetCell {
   CELL_UNSPECIFIED = 0; // unuse
@@ -101,7 +101,6 @@ enum DragonTigerBetAction {
   RE_BET = 1;
   DOUBLE_BET = 2;
 }
-
 
 // server->client when user bet action is illegal
 // OPCODE_UPDATE_REJECTED

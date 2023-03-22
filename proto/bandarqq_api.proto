@@ -100,7 +100,6 @@ message QQDeskListCellBet {
   repeated QQDeskCellBet list_cell_bet = 1;
 }
 
-
 // message from server to client
 // indicate changing in desk status
 // - num of playing
