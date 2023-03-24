@@ -43,8 +43,13 @@ message GapleDominoUpdateDesk {
   GapleDominoAction action = 9; //  last piece of domino, adding it to the table chain in correspond chain's end
   repeated GapleDominoAction legal_actions = 10; // for displaying playable cards
   GapleDominoPenalty penalty = 11;
-  repeated int32 remained = 12;
+  repeated GapleDominoPresenceNumRemained remained = 12;
   string in_turn = 13; // uid of player in current turn
+}
+
+message GapleDominoPresenceNumRemained {
+  string user_id = 1;
+  int32 num_card = 2;
 }
 
 message GapleDominoPresenceHand {
