@@ -33,16 +33,18 @@ message GapleDominoPenalty {
 //  - send update desk that CONTAINS CHAIN BUT NOT HAVE ACTION like normal would do
 message GapleDominoUpdateDesk {
   int32 n_players = 1;
-  bool is_update_chain = 2;
-  bool is_append_domino_to_chain = 3;
-  bool is_penalty_occur = 4;
-  bool is_update_legal_actions = 5;
-  bool is_update_num_remained_card = 6;
-  repeated int32 chain = 7; // update entire chain on tables
-  GapleDominoAction action = 8; //  last piece of domino, adding it to the table chain in correspond chain's end
-  GapleDominoAction legal_actions = 9; // for displaying playable cards
-  GapleDominoPenalty penalty = 10;
-  repeated int32 remained = 11;
+  bool is_new_turn = 2;
+  bool is_update_chain = 3;
+  bool is_append_domino_to_chain = 4;
+  bool is_penalty_occur = 5;
+  bool is_update_legal_actions = 6;
+  bool is_update_num_remained_card = 7;
+  repeated int32 chain = 8; // update entire chain on tables
+  GapleDominoAction action = 9; //  last piece of domino, adding it to the table chain in correspond chain's end
+  GapleDominoAction legal_actions = 10; // for displaying playable cards
+  GapleDominoPenalty penalty = 11;
+  repeated int32 remained = 12;
+  string in_turn = 13; // uid of player in current turn
 }
 
 message GapleDominoPresenceHand {
