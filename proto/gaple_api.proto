@@ -7,85 +7,71 @@ option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
 import "bandarqq_api.proto";
 import "chinese_poker_game_api.proto";
 
-// solely for update desk state
-// [chain] is in the form of 5-6-1-5 for example, meaning that there's a chain of 5-6/6-1/1-5 dominos had been played
-// [player_turn] is uid of current turn player
-// [hand] is information of 1 player hand, sending when player previously played 1 domino so their hand need an update
-// [player_num_remained_cards] is data of num_remained card for each player
-// [pass_penalty] indicate that a player was punished by not able to play any card, their chip being subtract by x1 bet. Player who played latest card receive that amount
-// [table] is send when there's a change in number of player (join, leave)
-// [legal_action] is send at the start of each player turn, showing them which action they can take
-message GapleUpdateDesk {
-  bool is_update_turn = 1;
-  string player_turn = 2;
-  bool is_update_chain = 3;
-  repeated int32 chain = 4;
-  bool is_update_player_hand = 5;
-  GaplePressenceCards hand = 6;
-  bool is_update_player_num_cards = 7;
-  repeated GaplePlayerNumRemained player_num_remained_cards = 8;
-  bool is_update_pass_penalty = 9;
-  GaplePassPenalty pass_penalty = 10;
-  bool is_update_table = 11;
-  UpdateTable table = 12;
-  bool is_update_legal_action = 13;
-  repeated GapleAction legal_actions = 14;
-}
 
 enum GapleDominoChainPosition {
-  CHAIN_UNSPECIFIED = 0; // not use
-  CHAIN_HEAD = 1; // can or wanna append to chain's head
-  CHAIN_TAIL = 2; // can or wanna append to chain's tail
-  CHAIN_BOTH = 3; // can do both, but this type is not available when sending from client to server cuz user need to choose 1 end
+  GAPLE_DOMINO_CHAIN_UNSPECIFIED = 0;
+  GAPLE_DOMINO_CHAIN_HEAD = 1;
+  GAPLE_DOMINO_CHAIN_TAIL = 2;
+  GAPLE_DOMINO_CHAIN_BOTH = 3; // server->client indicate possible action
 }
 
-// represent legal action that user can take,
-// also represent user playing 1 domino, send from client to server
-message GapleAction {
-  Domino domino = 1;
-  GapleDominoChainPosition position = 2;
-}
-
-// num of card remained
-message GaplePlayerNumRemained {
+message GapleDominoAction {
   string user_id = 1;
-  int32 num_remained = 2;
+  Domino domino = 2;
+  GapleDominoChainPosition position = 3;
 }
 
-// message from server to client when next player can't play any domino, they lost x1 bet to previous played one
-message GaplePassPenalty {
-  string loser = 1;
-  string gainer = 2;
+message GapleDominoPenalty {
+  string gain_player = 1;
+  string lost_player = 2;
   int32 chips = 3;
 }
 
-message GaplePressenceCards {
+// note: when user that was disconnected reenter the table and that game not yet ended
+// server will:
+//  - send the hand cards to client
+//  - send update desk that CONTAINS CHAIN BUT NOT HAVE ACTION like normal would do
+message GapleDominoUpdateDesk {
+  int32 n_players = 1;
+  bool is_new_turn = 2;
+  bool is_update_chain = 3;
+  bool is_append_domino_to_chain = 4;
+  bool is_penalty_occur = 5;
+  bool is_update_legal_actions = 6;
+  bool is_update_num_remained_card = 7;
+  repeated int32 chain = 8; // update entire chain on tables
+  GapleDominoAction action = 9; //  last piece of domino, adding it to the table chain in correspond chain's end
+  repeated GapleDominoAction legal_actions = 10; // for displaying playable cards
+  GapleDominoPenalty penalty = 11;
+  repeated GapleDominoPresenceNumRemained remained = 12;
+  string in_turn = 13; // uid of player in current turn
+}
+
+message GapleDominoPresenceNumRemained {
+  string user_id = 1;
+  int32 num_card = 2;
+}
+
+message GapleDominoPresenceHand {
   string user_id = 1;
   repeated Domino dominos = 2;
 }
 
-// message send from server to client giving information of 1 player hand
-message GapleUpdateDeal {
-  GaplePressenceCards presence_card = 1;
+// server->client at the beginning of the game, also when a disconnected player reenter
+message GapleDominoUpdateDeal {
+  GapleDominoPresenceHand hand = 1;
 }
 
-message GapleUpdateGameState {
-  GameState state = 1;
-  int64 count_down = 2;
-  repeated GaplePressenceCards presence_cards = 4;
+enum GapleDominoFinishGameType {
+  GAPLE_DOMINO_FINISHGAME_TYPE_UNSPECIFIED = 0;
+  GAPLE_DOMINO_FINISHGAME_TYPE_SINGLE = 1;
+  GAPLE_DOMINO_FINISHGAME_TYPE_DOUBLE = 2;
+  GAPLE_DOMINO_FINISHGAME_TYPE_TRIPLE = 3;
+  GAPLE_DOMINO_FINISHGAME_TYPE_QUARTET = 4;
+  GAPLE_DOMINO_FINISHGAME_TYPE_QUINTET = 5;
 }
 
-enum GapleEndameType {
-  GAPLE_ENDGAME_UNSPECIFIED = 0;
-  GAPLE_ENDGAME_SINGLE = 1;
-  GAPLE_ENDGAME_DOUBLE = 2;
-  GAPLE_ENDGAME_TRIPLE = 3;
-  GAPLE_ENDGAME_QUARTET = 4;
-  GAPLE_ENDGAME_QUINTET = 5;
-}
-
-// send from server to client when game end
-message GapleUpdateFinish {
-  GapleEndameType endgame_type = 1;
+message GapleDoninoUpdateFinish {
+  GapleDominoFinishGameType type = 1;
   string winner = 2;
 }
