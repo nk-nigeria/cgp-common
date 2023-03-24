@@ -41,7 +41,7 @@ message GapleDominoUpdateDesk {
   bool is_update_num_remained_card = 7;
   repeated int32 chain = 8; // update entire chain on tables
   GapleDominoAction action = 9; //  last piece of domino, adding it to the table chain in correspond chain's end
-  GapleDominoAction legal_actions = 10; // for displaying playable cards
+  repeated GapleDominoAction legal_actions = 10; // for displaying playable cards
   GapleDominoPenalty penalty = 11;
   repeated int32 remained = 12;
   string in_turn = 13; // uid of player in current turn

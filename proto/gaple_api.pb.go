@@ -265,19 +265,19 @@ type GapleDominoUpdateDesk struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	NPlayers                int32               `protobuf:"varint,1,opt,name=n_players,json=nPlayers,proto3" json:"n_players,omitempty"`
-	IsNewTurn               bool                `protobuf:"varint,2,opt,name=is_new_turn,json=isNewTurn,proto3" json:"is_new_turn,omitempty"`
-	IsUpdateChain           bool                `protobuf:"varint,3,opt,name=is_update_chain,json=isUpdateChain,proto3" json:"is_update_chain,omitempty"`
-	IsAppendDominoToChain   bool                `protobuf:"varint,4,opt,name=is_append_domino_to_chain,json=isAppendDominoToChain,proto3" json:"is_append_domino_to_chain,omitempty"`
-	IsPenaltyOccur          bool                `protobuf:"varint,5,opt,name=is_penalty_occur,json=isPenaltyOccur,proto3" json:"is_penalty_occur,omitempty"`
-	IsUpdateLegalActions    bool                `protobuf:"varint,6,opt,name=is_update_legal_actions,json=isUpdateLegalActions,proto3" json:"is_update_legal_actions,omitempty"`
-	IsUpdateNumRemainedCard bool                `protobuf:"varint,7,opt,name=is_update_num_remained_card,json=isUpdateNumRemainedCard,proto3" json:"is_update_num_remained_card,omitempty"`
-	Chain                   []int32             `protobuf:"varint,8,rep,packed,name=chain,proto3" json:"chain,omitempty"`                            // update entire chain on tables
-	Action                  *GapleDominoAction  `protobuf:"bytes,9,opt,name=action,proto3" json:"action,omitempty"`                                  //  last piece of domino, adding it to the table chain in correspond chain's end
-	LegalActions            *GapleDominoAction  `protobuf:"bytes,10,opt,name=legal_actions,json=legalActions,proto3" json:"legal_actions,omitempty"` // for displaying playable cards
-	Penalty                 *GapleDominoPenalty `protobuf:"bytes,11,opt,name=penalty,proto3" json:"penalty,omitempty"`
-	Remained                []int32             `protobuf:"varint,12,rep,packed,name=remained,proto3" json:"remained,omitempty"`
-	InTurn                  string              `protobuf:"bytes,13,opt,name=in_turn,json=inTurn,proto3" json:"in_turn,omitempty"` // uid of player in current turn
+	NPlayers                int32                `protobuf:"varint,1,opt,name=n_players,json=nPlayers,proto3" json:"n_players,omitempty"`
+	IsNewTurn               bool                 `protobuf:"varint,2,opt,name=is_new_turn,json=isNewTurn,proto3" json:"is_new_turn,omitempty"`
+	IsUpdateChain           bool                 `protobuf:"varint,3,opt,name=is_update_chain,json=isUpdateChain,proto3" json:"is_update_chain,omitempty"`
+	IsAppendDominoToChain   bool                 `protobuf:"varint,4,opt,name=is_append_domino_to_chain,json=isAppendDominoToChain,proto3" json:"is_append_domino_to_chain,omitempty"`
+	IsPenaltyOccur          bool                 `protobuf:"varint,5,opt,name=is_penalty_occur,json=isPenaltyOccur,proto3" json:"is_penalty_occur,omitempty"`
+	IsUpdateLegalActions    bool                 `protobuf:"varint,6,opt,name=is_update_legal_actions,json=isUpdateLegalActions,proto3" json:"is_update_legal_actions,omitempty"`
+	IsUpdateNumRemainedCard bool                 `protobuf:"varint,7,opt,name=is_update_num_remained_card,json=isUpdateNumRemainedCard,proto3" json:"is_update_num_remained_card,omitempty"`
+	Chain                   []int32              `protobuf:"varint,8,rep,packed,name=chain,proto3" json:"chain,omitempty"`                            // update entire chain on tables
+	Action                  *GapleDominoAction   `protobuf:"bytes,9,opt,name=action,proto3" json:"action,omitempty"`                                  //  last piece of domino, adding it to the table chain in correspond chain's end
+	LegalActions            []*GapleDominoAction `protobuf:"bytes,10,rep,name=legal_actions,json=legalActions,proto3" json:"legal_actions,omitempty"` // for displaying playable cards
+	Penalty                 *GapleDominoPenalty  `protobuf:"bytes,11,opt,name=penalty,proto3" json:"penalty,omitempty"`
+	Remained                []int32              `protobuf:"varint,12,rep,packed,name=remained,proto3" json:"remained,omitempty"`
+	InTurn                  string               `protobuf:"bytes,13,opt,name=in_turn,json=inTurn,proto3" json:"in_turn,omitempty"` // uid of player in current turn
 }
 
 func (x *GapleDominoUpdateDesk) Reset() {
@@ -375,7 +375,7 @@ func (x *GapleDominoUpdateDesk) GetAction() *GapleDominoAction {
 	return nil
 }
 
-func (x *GapleDominoUpdateDesk) GetLegalActions() *GapleDominoAction {
+func (x *GapleDominoUpdateDesk) GetLegalActions() []*GapleDominoAction {
 	if x != nil {
 		return x.LegalActions
 	}
@@ -611,7 +611,7 @@ var file_gaple_api_proto_rawDesc = []byte{
 	0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x61, 0x70, 0x6c, 0x65, 0x44,
 	0x6f, 0x6d, 0x69, 0x6e, 0x6f, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x06, 0x61, 0x63, 0x74,
 	0x69, 0x6f, 0x6e, 0x12, 0x3b, 0x0a, 0x0d, 0x6c, 0x65, 0x67, 0x61, 0x6c, 0x5f, 0x61, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61, 0x70, 0x69,
+	0x69, 0x6f, 0x6e, 0x73, 0x18, 0x0a, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61, 0x70, 0x69,
 	0x2e, 0x47, 0x61, 0x70, 0x6c, 0x65, 0x44, 0x6f, 0x6d, 0x69, 0x6e, 0x6f, 0x41, 0x63, 0x74, 0x69,
 	0x6f, 0x6e, 0x52, 0x0c, 0x6c, 0x65, 0x67, 0x61, 0x6c, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73,
 	0x12, 0x31, 0x0a, 0x07, 0x70, 0x65, 0x6e, 0x61, 0x6c, 0x74, 0x79, 0x18, 0x0b, 0x20, 0x01, 0x28,
