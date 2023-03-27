@@ -46,7 +46,7 @@ message SlotDesk {
   int64 balance_chips_wallet_after = 15;
   // các symbol đặc biệt thu thập được,
   // vd như eye ở sixiang, letter ở tarzan
-  SiXiangSymbol collection_symbols = 16;
+  repeated SiXiangSymbol collection_symbols = 16;
   // tổng chip win trong 1 game
   // vd trong game tarzan,
   // chip ở đây sẽ là tổng chip trong 9 lần spin
@@ -56,6 +56,7 @@ message SlotDesk {
   // chips tích lũy ở tarzan game
   bool update_chips_bonus = 19;
   int64 chips_bonus = 20;
+  int64 ts_unix = 21;
 }
 
 // Ma trận symbol
@@ -175,6 +176,28 @@ enum SiXiangSymbol {
   SI_XIANG_SYMBOL_TARZAN_RANDOM_4 = 0x01025;
   SI_XIANG_SYMBOL_TARZAN_RANDOM_5 = 0x01026;
 
+  // Juice Garden
+  SI_XIANG_SYMBOL_JUICE_STRAWBERRY = 0X01101;
+  SI_XIANG_SYMBOL_JUICE_WATERMELON = 0X01102;
+  SI_XIANG_SYMBOL_JUICE_PINAPPLE = 0X01103;
+  SI_XIANG_SYMBOL_JUICE_MANGOSTEEN = 0X01104;
+  SI_XIANG_SYMBOL_JUICE_STONE_1 = 0X01105;
+  SI_XIANG_SYMBOL_JUICE_STONE_2 = 0X01106;
+  SI_XIANG_SYMBOL_JUICE_STONE_3 = 0X01107;
+  // fruit basket game
+  SI_XIANG_SYMBOL_JUICE_FRUIT_GRAND = 0X01110;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_MAJOR = 0X01111;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_MINOR = 0X01112;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_MINI = 0X01113;
+  // fruint rain
+  SI_XIANG_SYMBOL_JUICE_FRUIT_RANDOM_1 = 0X01120;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_RANDOM_2 = 0X01121;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_RANDOM_3 = 0X01122;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_RANDOM_4 = 0X01123;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_RANDOM_5 = 0X01124;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_RANDOM_6 = 0X01125;
+  SI_XIANG_SYMBOL_JUICE_FRUIT_RANDOM_7 = 0X01126;
+
   SI_XIANG_SYMBOL_WILD = 0xffff;
 }
 
@@ -193,9 +216,13 @@ enum SiXiangGame {
   SI_XIANG_GAME_SIXANGBONUS_RAPIDPAY = 11;
 
   /* Tazan game */
-  SI_XIANG_GAME_TARZAN_NORMAL = 100;
   SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE = 101;
   SI_XIANG_GAME_TARZAN_FREESPINX9 = 102;
+  /* Juice Garden */
+  
+  SI_XIANG_GAME_JUICE_NORMAL = 200;
+  SI_XIANG_GAME_JUICE_FRUIT_BASKET = 201;
+  SI_XIANG_GAME_JUICE_FRUIT_RAIN = 202;
 }
 
 enum BigWin {
