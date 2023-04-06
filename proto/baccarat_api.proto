@@ -43,7 +43,7 @@ message BaccaratPlayerBetResult {
 }
 
 message BaccaratHand {
-  repeated Card banker = 1;
+  repeated Card cards = 1;
   int32 point = 2;
   bool is_pair = 3;
 }
