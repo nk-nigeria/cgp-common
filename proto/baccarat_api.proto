@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
+
+import "chinese_poker_game_api.proto";
+
+enum BaccaratBetCell {
+  BACCARAT_CELL_UNSPECIFIED = 0;
+  BACCARAT_CELL_PLAYER = 1;
+  BACCARAT_CELL_BANKER = 2;
+  BACCARAT_CELL_TIE = 3;
+  BACCARAT_CELL_PLAYER_PAIR = 4;
+  BACCARAT_CELL_BANKER_PAIR = 5;
+}
+
+enum BaccaratBetActionType {
+  BACCARAT_BET_NORMAL = 0;
+  BACCARAT_BET_REBET = 1;
+  BACCARAT_BET_DOUBLE = 2;
+}
+
+message BaccaratBet {
+  int64 chips = 2;
+  BaccaratBetCell cell = 3;
+}
+
+message BaccaratBetResult {
+  BaccaratBet bet = 1;
+  bool is_win = 2;
+}
+
+message BaccaratPlayerBet {
+  string user_id = 1;
+  BaccaratBetActionType action_type = 2;
+  repeated BaccaratBet bets = 3;
+}
+
+message BaccaratPlayerBetResult {
+  string user_id = 1;
+  repeated BaccaratBetResult list = 2;
+}
+
+message BaccaratHand {
+  repeated Card cards = 1;
+}
+
+message BaccaratGameFinish {
+  BaccaratHand banker = 1;
+  BaccaratHand player = 2;
+  repeated BaccaratBetCell win_cells = 3;
+  repeated BaccaratPlayerBetResult list_bet_result = 4;
+}
+
+message BaccaratUpdateDesk {
+  int32 n_players = 1;
+  bool is_update_user_bet = 2;
+  BaccaratPlayerBet bet = 3;
+  bool is_update_history = 4;
+}
+
+enum BaccaratBetRejectedReason {
+  BACCARAT_BET_REJECTED_UNSPECIFIED = 0;
+  BACCARAT_BET_REJECTED_BALANCE_NOT_ENOUGH = 1;
+  BACCARAT_BET_REJECTED_PREVIOUS_BET_NOT_EXIST = 2;
+  BACCARAT_BET_REJECTED_ALREADY_BET = 3;
+  BACCARAT_BET_REJECTED_EXCEED_MAX_BET_ALLOWED = 4;
+}
+
+message BaccaratBetActionReject {
+  BaccaratBetRejectedReason reason = 1;
+}
