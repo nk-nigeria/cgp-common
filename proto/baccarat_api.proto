@@ -62,7 +62,7 @@ message BaccaratGameFinish {
 message BaccaratBetCellInfo {
   BaccaratBetCell cell = 1;
   int64 chips = 2;
-  int32 n_user_net = 3;
+  int32 n_user_bet = 3;
 }
 
 message BaccaratSimpleHistory {
