@@ -65,7 +65,7 @@ message BaccaratBetCellInfo {
   int32 n_user_net = 3;
 }
 
-message BaccaratHistory {
+message BaccaratSimpleHistory {
   int32 banker_win = 1;
   int32 player_win = 2;
   int32 tie = 3;
@@ -78,7 +78,7 @@ message BaccaratUpdateDesk {
   bool is_update_game_history = 4;
   BaccaratPlayerBet user_bet = 5;
   repeated BaccaratBetCellInfo desk_cell = 6;
-  BaccaratHistory history = 7;
+  BaccaratSimpleHistory history = 7;
 }
 
 enum BaccaratBetRejectedReason {
