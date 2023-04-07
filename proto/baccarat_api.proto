@@ -92,3 +92,12 @@ enum BaccaratBetRejectedReason {
 message BaccaratBetActionReject {
   BaccaratBetRejectedReason reason = 1;
 }
+
+// send deal card server->client, is_player = true mean that that card is for player, else banker
+// append those card into respectively player hand
+// hands field is purely for sync between server and client, use it as u want
+message BaccaratUpdateDeal {
+  bool is_player = 1;
+  repeated Card cards = 2;
+  BaccaratHands hands = 3;
+}
