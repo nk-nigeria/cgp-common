@@ -53,9 +53,9 @@ message BlackjackBetResult {
 
 message BlackjackPlayerBet {
   string user_id = 1;
-  BlackjackBet insurance = 2;
-  BlackjackBet first = 3;
-  BlackjackBet second = 4;
+  int64 insurance = 2;
+  int64 first = 3;
+  int64 second = 4;
 }
 
 message BlackjackPLayerBetResult {
