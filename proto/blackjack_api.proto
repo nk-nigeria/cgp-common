@@ -29,7 +29,7 @@ enum BlackjackPlayerType {
   BLACKJACK_BANKER = 1;
 }
 
-enum HandType {
+enum BlackjackHandN0 {
   BLACKJACK_HAND_UNSPECIFIED = 0;
   BLACKJACK_HAND_1ST = 1;
   BLACKJACK_HAND_2ND = 2;
@@ -71,7 +71,7 @@ message BlackjackUpdateDeal {
   bool is_banker = 1;
   bool is_reveal_banker_hidden_card = 2;
   string user_id = 3;
-  HandType type_hand = 4;
+  BlackjackHandN0 hand_n0 = 4;
   repeated Card new_cards = 5;
   repeated Card all_cards = 6;
   
@@ -96,7 +96,7 @@ message BlackjackPlayerHand {
 message BlackjackPlayerTurn {
   string is_player = 1;
   string user_id = 2;
-  int32 hand_number = 3;
+  BlackjackHandN0 hand_n0 = 3;
 }
 
 message BlackjackUpdateDesk {
