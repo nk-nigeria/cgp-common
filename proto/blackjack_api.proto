@@ -112,5 +112,5 @@ message BlackjackUpdateDesk {
 }
 
 message BlackjackUpdateFinish {
-  repeated BlackjackBetResult bet_results = 1;
+  repeated BlackjackPLayerBetResult bet_results = 1;
 }
