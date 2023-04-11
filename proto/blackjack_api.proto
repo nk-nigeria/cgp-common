@@ -9,10 +9,10 @@ import "chinese_poker_game_api.proto";
 // status for each hand, user can have maximum 2 hand ( by spliting )
 enum BlackjackHandStatus {
   BLACKJACK_HAND_STATUS_UNSPECIFIED = 0;
-  BLACKJACK_HAND_STATUS_NORMAL = 1;
-  BLACKJACK_HAND_STATUS_BUSTED = 2;
-  BLACKJACK_HAND_STATUS_BLACKJACK = 3;
-  BLACKJACK_HAND_STATUS_21P = 4;
+  BLACKJACK_HAND_STATUS_BUSTED = 1;
+  BLACKJACK_HAND_STATUS_NORMAL = 2;
+  BLACKJACK_HAND_STATUS_21P = 3;
+  BLACKJACK_HAND_STATUS_BLACKJACK = 4;
 }
 
 enum BlackjackActionCode {
