@@ -7,12 +7,12 @@ option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
 import "chinese_poker_game_api.proto";
 
 // status for each hand, user can have maximum 2 hand ( by spliting )
-enum BlackjackHandStatus {
-  BLACKJACK_HAND_STATUS_UNSPECIFIED = 0;
-  BLACKJACK_HAND_STATUS_BUSTED = 1;
-  BLACKJACK_HAND_STATUS_NORMAL = 2;
-  BLACKJACK_HAND_STATUS_21P = 3;
-  BLACKJACK_HAND_STATUS_BLACKJACK = 4;
+enum BlackjackHandType {
+  BLACKJACK_HAND_TYPE_UNSPECIFIED = 0;
+  BLACKJACK_HAND_TYPE_BUSTED = 1;
+  BLACKJACK_HAND_TYPE_NORMAL = 2;
+  BLACKJACK_HAND_TYPE_21P = 3;
+  BLACKJACK_HAND_TYPE_BLACKJACK = 4;
 }
 
 enum BlackjackActionCode {
@@ -73,7 +73,7 @@ message BlackjackUpdateDeal {
   string user_id = 3;
   BlackjackHandN0 hand_n0 = 4;
   repeated Card new_cards = 5;
-  repeated Card all_cards = 6;
+  BlackjackHand hand = 6;
   
 }
 
@@ -84,6 +84,8 @@ message BlackjackLegalActions {
 
 message BlackjackHand {
   repeated Card cards = 1;
+  BlackjackHandType type = 2;
+  int32 point = 3;
 }
 
 message BlackjackPlayerHand {
