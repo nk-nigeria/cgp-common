@@ -106,12 +106,13 @@ message BlackjackUpdateDesk {
   bool is_insurance_turn = 1;
   bool is_new_turn = 2;
   string in_turn = 3;
-  bool is_update_bet = 4;
-  BlackjackPlayerBet bet = 5;
-  bool is_update_legal_action = 6;
-  BlackjackLegalActions actions = 7;
-  bool is_split_hand = 8;
-  BlackjackPlayerHand hand = 9;
+  BlackjackHandN0 hand_N0 = 4;
+  bool is_update_bet = 5;
+  BlackjackPlayerBet bet = 6;
+  bool is_update_legal_action = 7;
+  BlackjackLegalActions actions = 8;
+  bool is_split_hand = 9;
+  BlackjackPlayerHand hand = 10;
 }
 
 message BlackjackUpdateFinish {
