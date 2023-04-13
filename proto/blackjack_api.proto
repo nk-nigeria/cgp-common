@@ -24,6 +24,12 @@ enum BlackjackActionCode {
   BLACKJACK_ACTION_INSURANCE = 5;
 }
 
+enum BlackjackBetCode {
+  BLACKJACK_BET_NORMAL = 0;
+  BLACKJACK_BET_REBET = 1;
+  BLACKJACK_BET_DOUBLE =2;
+}
+
 enum BlackjackPlayerType {
   BLACKJACK_PLAYER = 0;
   BLACKJACK_BANKER = 1;
@@ -41,7 +47,9 @@ message BlackjackAction {
 }
 
 message BlackjackBet {
-  int64 chips = 1;
+  string user_id = 1;
+  int64 chips = 2;
+  BlackjackBetCode code = 3;
 }
 
 // is_win: -1 -> lost, 1 -> win, 0 -> tie
