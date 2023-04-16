@@ -57,7 +57,7 @@ message SlotDesk {
   bool update_chips_bonus = 19;
   int64 chips_bonus = 20;
   int64 ts_unix = 21;
-  int32 ratio_fruit_basket = 22;
+  int64 ratio_fruit_basket = 22;
 }
 
 // Ma trận symbol
