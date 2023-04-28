@@ -83,7 +83,7 @@ message BlackjackUpdateDeal {
   BlackjackHandN0 hand_n0 = 4;
   repeated Card new_cards = 5;
   BlackjackPlayerHand hand = 6;
-  
+  repeated BlackjackPlayerHand all_player_hand = 7; // only send when user rejoin table, use it to restore the game state, one with userId = "" is banker
 }
 
 message BlackjackLegalActions {
