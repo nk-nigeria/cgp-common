@@ -82,7 +82,7 @@ message BlackjackUpdateDeal {
   string user_id = 3;
   BlackjackHandN0 hand_n0 = 4;
   repeated Card new_cards = 5;
-  BlackjackHand hand = 6;
+  BlackjackPlayerHand hand = 6;
   
 }
 
@@ -111,7 +111,7 @@ message BlackjackPlayerTurn {
 }
 
 message BlackjackUpdateDesk {
-  bool is_insurance_turn = 1;
+  bool is_insurance_turn_enter = 1;
   bool is_new_turn = 2;
   string in_turn = 3;
   BlackjackHandN0 hand_N0 = 4;
@@ -121,6 +121,7 @@ message BlackjackUpdateDesk {
   BlackjackLegalActions actions = 8;
   bool is_split_hand = 9;
   BlackjackPlayerHand hand = 10;
+  bool is_banker_not_blackjack = 11;
 }
 
 message BlackjackUpdateFinish {
