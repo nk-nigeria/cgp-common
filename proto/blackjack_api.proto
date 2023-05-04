@@ -122,6 +122,7 @@ message BlackjackUpdateDesk {
   bool is_split_hand = 9;
   BlackjackPlayerHand hand = 10;
   bool is_banker_not_blackjack = 11;
+  repeated BlackjackPlayerBet players_bet = 12;
 }
 
 message BlackjackUpdateFinish {
