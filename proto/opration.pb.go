@@ -519,7 +519,7 @@ func (x *PlayerData) GetChipAdd() int64 {
 	return 0
 }
 
-type PlayerDatas struct {
+type PlayersData struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -527,8 +527,8 @@ type PlayerDatas struct {
 	PlayerDatas []*PlayerData `protobuf:"bytes,1,rep,name=player_datas,json=playerDatas,proto3" json:"player_datas,omitempty"`
 }
 
-func (x *PlayerDatas) Reset() {
-	*x = PlayerDatas{}
+func (x *PlayersData) Reset() {
+	*x = PlayersData{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_opration_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -536,13 +536,13 @@ func (x *PlayerDatas) Reset() {
 	}
 }
 
-func (x *PlayerDatas) String() string {
+func (x *PlayersData) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PlayerDatas) ProtoMessage() {}
+func (*PlayersData) ProtoMessage() {}
 
-func (x *PlayerDatas) ProtoReflect() protoreflect.Message {
+func (x *PlayersData) ProtoReflect() protoreflect.Message {
 	mi := &file_opration_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -554,12 +554,12 @@ func (x *PlayerDatas) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PlayerDatas.ProtoReflect.Descriptor instead.
-func (*PlayerDatas) Descriptor() ([]byte, []int) {
+// Deprecated: Use PlayersData.ProtoReflect.Descriptor instead.
+func (*PlayersData) Descriptor() ([]byte, []int) {
 	return file_opration_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *PlayerDatas) GetPlayerDatas() []*PlayerData {
+func (x *PlayersData) GetPlayerDatas() []*PlayerData {
 	if x != nil {
 		return x.PlayerDatas
 	}
@@ -805,8 +805,8 @@ var file_opration_proto_rawDesc = []byte{
 	0x72, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x68, 0x69, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28,
 	0x03, 0x52, 0x04, 0x63, 0x68, 0x69, 0x70, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x68, 0x69, 0x70, 0x5f,
 	0x61, 0x64, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x63, 0x68, 0x69, 0x70, 0x41,
-	0x64, 0x64, 0x22, 0x41, 0x0a, 0x0b, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x44, 0x61, 0x74, 0x61,
-	0x73, 0x12, 0x32, 0x0a, 0x0c, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x5f, 0x64, 0x61, 0x74, 0x61,
+	0x64, 0x64, 0x22, 0x41, 0x0a, 0x0b, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x73, 0x44, 0x61, 0x74,
+	0x61, 0x12, 0x32, 0x0a, 0x0c, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x5f, 0x64, 0x61, 0x74, 0x61,
 	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6c,
 	0x61, 0x79, 0x65, 0x72, 0x44, 0x61, 0x74, 0x61, 0x52, 0x0b, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72,
 	0x44, 0x61, 0x74, 0x61, 0x73, 0x22, 0xcc, 0x01, 0x0a, 0x12, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x44,
@@ -857,13 +857,13 @@ var file_opration_proto_goTypes = []interface{}{
 	(*OpPlayerResponse)(nil),    // 2: api.OpPlayerResponse
 	(*MatchDetail)(nil),         // 3: api.MatchDetail
 	(*PlayerData)(nil),          // 4: api.PlayerData
-	(*PlayerDatas)(nil),         // 5: api.PlayerDatas
+	(*PlayersData)(nil),         // 5: api.PlayersData
 	(*MatchDetailRequest)(nil),  // 6: api.MatchDetailRequest
 	(*MatchDetailResponse)(nil), // 7: api.MatchDetailResponse
 }
 var file_opration_proto_depIdxs = []int32{
 	0, // 0: api.OpPlayerResponse.op_players:type_name -> api.OpPlayer
-	4, // 1: api.PlayerDatas.player_datas:type_name -> api.PlayerData
+	4, // 1: api.PlayersData.player_datas:type_name -> api.PlayerData
 	3, // 2: api.MatchDetailResponse.match_details:type_name -> api.MatchDetail
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
@@ -939,7 +939,7 @@ func file_opration_proto_init() {
 			}
 		}
 		file_opration_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PlayerDatas); i {
+			switch v := v.(*PlayersData); i {
 			case 0:
 				return &v.state
 			case 1:

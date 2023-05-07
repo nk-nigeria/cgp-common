@@ -58,7 +58,7 @@ message PlayerData {
   int64 chip_add = 3;
 }
 
-message PlayerDatas { repeated PlayerData player_datas = 1; }
+message PlayersData { repeated PlayerData player_datas = 1; }
 
 message MatchDetailRequest {
     int64 game_id = 1;
