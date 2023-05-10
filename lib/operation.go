@@ -12,7 +12,7 @@ import (
 )
 
 var httpClient *http.Client
-var defaultHttpKey string = ""
+var DefaultHttpKey string = "defaulthttpkey"
 
 func init() {
 	t := http.DefaultTransport.(*http.Transport).Clone()
@@ -27,28 +27,32 @@ func init() {
 }
 
 type reportGame struct {
-	users []*pb.PlayerData
-	game  *pb.Game
-	match *pb.Match
-	fee   int64
+	Users []*pb.PlayerData `json:"users"`
+	Game  *pb.Game         `json:"game"`
+	Match *pb.MatchData    `json:"match"`
+	Fee   int64            `json:"fee"`
 }
 
 func NewReportGame() *reportGame {
 	o := &reportGame{
-		users: make([]*pb.PlayerData, 0),
+		Users: make([]*pb.PlayerData, 0),
 	}
 	return o
 }
 
 // call persistent data
 func (o *reportGame) Commit(host string) ([]byte, int, error) {
-	targetUrl := fmt.Sprintf("%s/v2/console/api/endpoints/rpc/op-report", host)
+	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", host)
 	data, _ := json.Marshal(o)
 	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(data))
 	if err != nil {
 		return nil, 0, err
 	}
-	req.Header.Add("defaultkey", defaultHttpKey)
+
+	query := req.URL.Query()
+	query.Add("http_key", DefaultHttpKey)
+	query.Add("unwrap", "true")
+	req.URL.RawQuery = query.Encode()
 	// res, err := httpClient.Post(targetUrl, http.DetectContentType(data), bytes.NewReader(data))
 	res, err := httpClient.Do(req)
 	if err != nil {
@@ -63,21 +67,21 @@ func (o *reportGame) Commit(host string) ([]byte, int, error) {
 }
 
 func (o *reportGame) AddPlayerDate(data *pb.PlayerData) *reportGame {
-	o.users = append(o.users, data)
+	o.Users = append(o.Users, data)
 	return o
 }
 
 func (o *reportGame) AddGame(data *pb.Game) *reportGame {
-	o.game = data
+	o.Game = data
 	return o
 }
 
-func (o *reportGame) AddMatch(data *pb.Match) *reportGame {
-	o.match = data
+func (o *reportGame) AddMatch(data *pb.MatchData) *reportGame {
+	o.Match = data
 	return o
 }
 
 func (o *reportGame) AddFee(fee int64) *reportGame {
-	o.fee += fee
+	o.Fee += fee
 	return o
 }

@@ -7,11 +7,10 @@ require (
 	github.com/heroiclabs/nakama-common v1.22.0
 	github.com/qmuntal/stateless v1.5.3
 	go.uber.org/zap v1.19.1
-	google.golang.org/protobuf v1.30.0
+	google.golang.org/protobuf v1.27.1
 )
 
 require (
-	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/stretchr/testify v1.7.2 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
