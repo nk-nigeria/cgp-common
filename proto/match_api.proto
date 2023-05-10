@@ -34,6 +34,7 @@ message RpcFindMatchRequest {
   bool with_non_open = 3;
   bool create = 4;
   int32 mock_code_card = 5;
+  string user_data = 6;
 }
 
 message Match {
@@ -44,6 +45,7 @@ message Match {
   int32 mark_unit = 5;
   bool open = 6;
   int32 mock_code_card = 7;
+   string user_data = 8;
 }
 
 // Payload for an RPC response containing match IDs the user can join.
