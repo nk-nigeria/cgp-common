@@ -14,6 +14,10 @@ import (
 var httpClient *http.Client
 var DefaultHttpKey string = "defaulthttpkey"
 
+// dev http://103.226.250.195:8350
+// stg  http://103.226.250.195:7350
+var HostReport = "http://103.226.250.195:8350"
+
 func init() {
 	t := http.DefaultTransport.(*http.Transport).Clone()
 	t.MaxIdleConns = 100
@@ -40,8 +44,8 @@ func NewReportGame() *reportGame {
 }
 
 // call persistent data
-func (o *reportGame) Commit(host string) ([]byte, int, error) {
-	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", host)
+func (o *reportGame) Commit() ([]byte, int, error) {
+	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", HostReport)
 	data, _ := json.Marshal(o)
 	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(data))
 	if err != nil {
