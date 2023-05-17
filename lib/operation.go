@@ -32,6 +32,7 @@ func init() {
 
 type reportGame struct {
 	Users []*pb.PlayerData `json:"users"`
+	Game  *pb.Game         `json:"game"`
 	Match *pb.MatchData    `json:"match"`
 	Fee   int64            `json:"fee"`
 }
@@ -69,12 +70,22 @@ func (o *reportGame) Commit() ([]byte, int, error) {
 	return bodyRes, res.StatusCode, err
 }
 
-func (o *reportGame) AddPlayerDate(data *pb.PlayerData) *reportGame {
+func (o *reportGame) AddPlayerData(data *pb.PlayerData) *reportGame {
 	o.Users = append(o.Users, data)
+	return o
+}
+
+func (o *reportGame) AddGame(data *pb.Game) *reportGame {
+	o.Game = data
 	return o
 }
 
 func (o *reportGame) AddMatch(data *pb.MatchData) *reportGame {
 	o.Match = data
+	return o
+}
+
+func (o *reportGame) AddFee(fee int64) *reportGame {
+	o.Fee += fee
 	return o
 }
