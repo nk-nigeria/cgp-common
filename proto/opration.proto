@@ -85,3 +85,41 @@ message OpReport {
   repeated PlayerData player_data = 1;
   MatchData match_data = 2;
 }
+
+message GoldStatistic {
+  int64 time_update_unix = 1;
+  int64 pay = 2;
+  int64 promotion = 3;
+  repeated MatchData match_data = 4;
+  int64 ag_cashout = 5;
+  int64 ag_bank = 6;
+  int64 chips = 7;
+}
+
+message GoldStatisticRequest {
+  int64 from_unix = 1;
+  int64 to_unix = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+}
+
+message GoldStatisticResponse {
+  repeated GoldStatistic gold_statistics = 1;
+  int64 limit = 2;
+  int64 offset = 3;
+  int64 total = 4;
+}
+
+message UserStatistic {
+  int64 total_chip_deposit = 1;
+  int64 total_chip_with_draw = 2;
+  int64 total_chip_win = 3;
+  int64 total_chip_lose = 4;
+  int64 total_chip_promotion = 5;
+  int64 total_chip_send = 6;
+  int64 total_chip_recv = 7;
+  int64 co_ratio = 8;
+  int64 total_chip_deposit_in3d = 9;
+  int64 total_chip_with_draw_in3d = 10;
+  int64 luck = 11;
+}
