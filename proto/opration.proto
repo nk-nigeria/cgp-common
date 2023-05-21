@@ -1,5 +1,8 @@
 syntax = "proto3";
+
 package api;
+
+import "auth_api.proto";
 
 option go_package = "github.com/ciaolink-game-platform/cgp-common-module/api";
 
@@ -122,4 +125,32 @@ message UserStatistic {
   int64 total_chip_deposit_in3d = 9;
   int64 total_chip_with_draw_in3d = 10;
   int64 luck = 11;
+  repeated UserStatGameHistory user_stat_game_histories = 12;
+  repeated UserTransferGoldStat recv_chip_stats = 13;
+  repeated UserTransferGoldStat send_chip_stats = 14;
+}
+
+message UserStatisticRequest {
+  string user_id = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
+}
+
+message UserStatGameHistory {
+  int64 game_id = 1;
+  string game_name = 2;
+  int64 total_chip_win = 3;
+  int64 total_chip_lost = 4;
+}
+
+message UserTransferGoldStat {
+  string user_id_send = 1;
+  string user_id_recv = 2;
+  int64 chip = 3;
+}
+
+message UserInfo {
+  Profile profile = 1;
+  int64 total_in = 2;
+  int64 total_out = 3;
 }
