@@ -4,7 +4,7 @@ package api;
 
 import "auth_api.proto";
 
-option go_package = "github.com/ciaolink-game-platform/cgp-common-module/api";
+option go_package = "github.com/ciaolink-game-platform/cgb-lobby-module/api";
 
 message OpPlayer {
   string user_id = 1;

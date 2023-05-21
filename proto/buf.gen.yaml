@@ -1,0 +1,10 @@
+version: v1
+plugins:
+  - name: ts
+    out: ./ts
+    strategy: all
+    path: /home/sondq/Documents/cgp-console/node_modules/.bin/protoc-gen-ts_proto
+  - plugin: go
+    path: ["go", "run", "google.golang.org/protobuf/cmd/protoc-gen-go"]
+    out: ./
+    opt: paths=source_relative
