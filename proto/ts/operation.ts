@@ -121,9 +121,10 @@ export interface UserStatistic {
   totalChipSend: number;
   totalChipRecv: number;
   coRatio: number;
-  totalChipDepositIn3d: number;
-  totalChipWithDrawIn3d: number;
+  totalChipDeposit3d: number;
+  totalChipWithDraw3d: number;
   luck: number;
+  userCreateTimeUnix: number;
   userStatGameHistories: UserStatGameHistory[];
   recvChipStats: UserTransferGoldStat[];
   sendChipStats: UserTransferGoldStat[];
@@ -1669,9 +1670,10 @@ function createBaseUserStatistic(): UserStatistic {
     totalChipSend: 0,
     totalChipRecv: 0,
     coRatio: 0,
-    totalChipDepositIn3d: 0,
-    totalChipWithDrawIn3d: 0,
+    totalChipDeposit3d: 0,
+    totalChipWithDraw3d: 0,
     luck: 0,
+    userCreateTimeUnix: 0,
     userStatGameHistories: [],
     recvChipStats: [],
     sendChipStats: [],
@@ -1704,23 +1706,26 @@ export const UserStatistic = {
     if (message.coRatio !== 0) {
       writer.uint32(64).int64(message.coRatio);
     }
-    if (message.totalChipDepositIn3d !== 0) {
-      writer.uint32(72).int64(message.totalChipDepositIn3d);
+    if (message.totalChipDeposit3d !== 0) {
+      writer.uint32(72).int64(message.totalChipDeposit3d);
     }
-    if (message.totalChipWithDrawIn3d !== 0) {
-      writer.uint32(80).int64(message.totalChipWithDrawIn3d);
+    if (message.totalChipWithDraw3d !== 0) {
+      writer.uint32(80).int64(message.totalChipWithDraw3d);
     }
     if (message.luck !== 0) {
       writer.uint32(88).int64(message.luck);
     }
+    if (message.userCreateTimeUnix !== 0) {
+      writer.uint32(96).int64(message.userCreateTimeUnix);
+    }
     for (const v of message.userStatGameHistories) {
-      UserStatGameHistory.encode(v!, writer.uint32(98).fork()).ldelim();
+      UserStatGameHistory.encode(v!, writer.uint32(106).fork()).ldelim();
     }
     for (const v of message.recvChipStats) {
-      UserTransferGoldStat.encode(v!, writer.uint32(106).fork()).ldelim();
+      UserTransferGoldStat.encode(v!, writer.uint32(114).fork()).ldelim();
     }
     for (const v of message.sendChipStats) {
-      UserTransferGoldStat.encode(v!, writer.uint32(114).fork()).ldelim();
+      UserTransferGoldStat.encode(v!, writer.uint32(122).fork()).ldelim();
     }
     return writer;
   },
@@ -1793,14 +1798,14 @@ export const UserStatistic = {
             break;
           }
 
-          message.totalChipDepositIn3d = longToNumber(reader.int64() as Long);
+          message.totalChipDeposit3d = longToNumber(reader.int64() as Long);
           continue;
         case 10:
           if (tag !== 80) {
             break;
           }
 
-          message.totalChipWithDrawIn3d = longToNumber(reader.int64() as Long);
+          message.totalChipWithDraw3d = longToNumber(reader.int64() as Long);
           continue;
         case 11:
           if (tag !== 88) {
@@ -1810,21 +1815,28 @@ export const UserStatistic = {
           message.luck = longToNumber(reader.int64() as Long);
           continue;
         case 12:
-          if (tag !== 98) {
+          if (tag !== 96) {
             break;
           }
 
-          message.userStatGameHistories.push(UserStatGameHistory.decode(reader, reader.uint32()));
+          message.userCreateTimeUnix = longToNumber(reader.int64() as Long);
           continue;
         case 13:
           if (tag !== 106) {
             break;
           }
 
-          message.recvChipStats.push(UserTransferGoldStat.decode(reader, reader.uint32()));
+          message.userStatGameHistories.push(UserStatGameHistory.decode(reader, reader.uint32()));
           continue;
         case 14:
           if (tag !== 114) {
+            break;
+          }
+
+          message.recvChipStats.push(UserTransferGoldStat.decode(reader, reader.uint32()));
+          continue;
+        case 15:
+          if (tag !== 122) {
             break;
           }
 
@@ -1849,9 +1861,10 @@ export const UserStatistic = {
       totalChipSend: isSet(object.totalChipSend) ? Number(object.totalChipSend) : 0,
       totalChipRecv: isSet(object.totalChipRecv) ? Number(object.totalChipRecv) : 0,
       coRatio: isSet(object.coRatio) ? Number(object.coRatio) : 0,
-      totalChipDepositIn3d: isSet(object.totalChipDepositIn3d) ? Number(object.totalChipDepositIn3d) : 0,
-      totalChipWithDrawIn3d: isSet(object.totalChipWithDrawIn3d) ? Number(object.totalChipWithDrawIn3d) : 0,
+      totalChipDeposit3d: isSet(object.totalChipDeposit3d) ? Number(object.totalChipDeposit3d) : 0,
+      totalChipWithDraw3d: isSet(object.totalChipWithDraw3d) ? Number(object.totalChipWithDraw3d) : 0,
       luck: isSet(object.luck) ? Number(object.luck) : 0,
+      userCreateTimeUnix: isSet(object.userCreateTimeUnix) ? Number(object.userCreateTimeUnix) : 0,
       userStatGameHistories: Array.isArray(object?.userStatGameHistories)
         ? object.userStatGameHistories.map((e: any) => UserStatGameHistory.fromJSON(e))
         : [],
@@ -1874,10 +1887,10 @@ export const UserStatistic = {
     message.totalChipSend !== undefined && (obj.totalChipSend = Math.round(message.totalChipSend));
     message.totalChipRecv !== undefined && (obj.totalChipRecv = Math.round(message.totalChipRecv));
     message.coRatio !== undefined && (obj.coRatio = Math.round(message.coRatio));
-    message.totalChipDepositIn3d !== undefined && (obj.totalChipDepositIn3d = Math.round(message.totalChipDepositIn3d));
-    message.totalChipWithDrawIn3d !== undefined &&
-      (obj.totalChipWithDrawIn3d = Math.round(message.totalChipWithDrawIn3d));
+    message.totalChipDeposit3d !== undefined && (obj.totalChipDeposit3d = Math.round(message.totalChipDeposit3d));
+    message.totalChipWithDraw3d !== undefined && (obj.totalChipWithDraw3d = Math.round(message.totalChipWithDraw3d));
     message.luck !== undefined && (obj.luck = Math.round(message.luck));
+    message.userCreateTimeUnix !== undefined && (obj.userCreateTimeUnix = Math.round(message.userCreateTimeUnix));
     if (message.userStatGameHistories) {
       obj.userStatGameHistories = message.userStatGameHistories.map((e) =>
         e ? UserStatGameHistory.toJSON(e) : undefined
@@ -1912,9 +1925,10 @@ export const UserStatistic = {
     message.totalChipSend = object.totalChipSend ?? 0;
     message.totalChipRecv = object.totalChipRecv ?? 0;
     message.coRatio = object.coRatio ?? 0;
-    message.totalChipDepositIn3d = object.totalChipDepositIn3d ?? 0;
-    message.totalChipWithDrawIn3d = object.totalChipWithDrawIn3d ?? 0;
+    message.totalChipDeposit3d = object.totalChipDeposit3d ?? 0;
+    message.totalChipWithDraw3d = object.totalChipWithDraw3d ?? 0;
     message.luck = object.luck ?? 0;
+    message.userCreateTimeUnix = object.userCreateTimeUnix ?? 0;
     message.userStatGameHistories = object.userStatGameHistories?.map((e) => UserStatGameHistory.fromPartial(e)) || [];
     message.recvChipStats = object.recvChipStats?.map((e) => UserTransferGoldStat.fromPartial(e)) || [];
     message.sendChipStats = object.sendChipStats?.map((e) => UserTransferGoldStat.fromPartial(e)) || [];

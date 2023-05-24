@@ -122,12 +122,13 @@ message UserStatistic {
   int64 total_chip_send = 6;
   int64 total_chip_recv = 7;
   int64 co_ratio = 8;
-  int64 total_chip_deposit_in3d = 9;
-  int64 total_chip_with_draw_in3d = 10;
+  int64 total_chip_deposit_3d = 9;
+  int64 total_chip_with_draw_3d = 10;
   int64 luck = 11;
-  repeated UserStatGameHistory user_stat_game_histories = 12;
-  repeated UserTransferGoldStat recv_chip_stats = 13;
-  repeated UserTransferGoldStat send_chip_stats = 14;
+  int64 user_create_time_unix = 12;
+  repeated UserStatGameHistory user_stat_game_histories = 13;
+  repeated UserTransferGoldStat recv_chip_stats = 14;
+  repeated UserTransferGoldStat send_chip_stats = 15;
 }
 
 message UserStatisticRequest {
