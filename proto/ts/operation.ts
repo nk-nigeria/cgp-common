@@ -144,8 +144,10 @@ export interface UserStatGameHistory {
 }
 
 export interface UserTransferGoldStat {
-  userIdSend: string;
-  userIdRecv: string;
+  userSendId: string;
+  userSendName: string;
+  userRecvId: string;
+  userRecvName: string;
   chip: number;
 }
 
@@ -2118,19 +2120,25 @@ export const UserStatGameHistory = {
 };
 
 function createBaseUserTransferGoldStat(): UserTransferGoldStat {
-  return { userIdSend: "", userIdRecv: "", chip: 0 };
+  return { userSendId: "", userSendName: "", userRecvId: "", userRecvName: "", chip: 0 };
 }
 
 export const UserTransferGoldStat = {
   encode(message: UserTransferGoldStat, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.userIdSend !== "") {
-      writer.uint32(10).string(message.userIdSend);
+    if (message.userSendId !== "") {
+      writer.uint32(10).string(message.userSendId);
     }
-    if (message.userIdRecv !== "") {
-      writer.uint32(18).string(message.userIdRecv);
+    if (message.userSendName !== "") {
+      writer.uint32(18).string(message.userSendName);
+    }
+    if (message.userRecvId !== "") {
+      writer.uint32(26).string(message.userRecvId);
+    }
+    if (message.userRecvName !== "") {
+      writer.uint32(34).string(message.userRecvName);
     }
     if (message.chip !== 0) {
-      writer.uint32(24).int64(message.chip);
+      writer.uint32(40).int64(message.chip);
     }
     return writer;
   },
@@ -2147,17 +2155,31 @@ export const UserTransferGoldStat = {
             break;
           }
 
-          message.userIdSend = reader.string();
+          message.userSendId = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.userIdRecv = reader.string();
+          message.userSendName = reader.string();
           continue;
         case 3:
-          if (tag !== 24) {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.userRecvId = reader.string();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.userRecvName = reader.string();
+          continue;
+        case 5:
+          if (tag !== 40) {
             break;
           }
 
@@ -2174,16 +2196,20 @@ export const UserTransferGoldStat = {
 
   fromJSON(object: any): UserTransferGoldStat {
     return {
-      userIdSend: isSet(object.userIdSend) ? String(object.userIdSend) : "",
-      userIdRecv: isSet(object.userIdRecv) ? String(object.userIdRecv) : "",
+      userSendId: isSet(object.userSendId) ? String(object.userSendId) : "",
+      userSendName: isSet(object.userSendName) ? String(object.userSendName) : "",
+      userRecvId: isSet(object.userRecvId) ? String(object.userRecvId) : "",
+      userRecvName: isSet(object.userRecvName) ? String(object.userRecvName) : "",
       chip: isSet(object.chip) ? Number(object.chip) : 0,
     };
   },
 
   toJSON(message: UserTransferGoldStat): unknown {
     const obj: any = {};
-    message.userIdSend !== undefined && (obj.userIdSend = message.userIdSend);
-    message.userIdRecv !== undefined && (obj.userIdRecv = message.userIdRecv);
+    message.userSendId !== undefined && (obj.userSendId = message.userSendId);
+    message.userSendName !== undefined && (obj.userSendName = message.userSendName);
+    message.userRecvId !== undefined && (obj.userRecvId = message.userRecvId);
+    message.userRecvName !== undefined && (obj.userRecvName = message.userRecvName);
     message.chip !== undefined && (obj.chip = Math.round(message.chip));
     return obj;
   },
@@ -2194,8 +2220,10 @@ export const UserTransferGoldStat = {
 
   fromPartial<I extends Exact<DeepPartial<UserTransferGoldStat>, I>>(object: I): UserTransferGoldStat {
     const message = createBaseUserTransferGoldStat();
-    message.userIdSend = object.userIdSend ?? "";
-    message.userIdRecv = object.userIdRecv ?? "";
+    message.userSendId = object.userSendId ?? "";
+    message.userSendName = object.userSendName ?? "";
+    message.userRecvId = object.userRecvId ?? "";
+    message.userRecvName = object.userRecvName ?? "";
     message.chip = object.chip ?? 0;
     return message;
   },

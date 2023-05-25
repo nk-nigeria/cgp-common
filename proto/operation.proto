@@ -145,9 +145,11 @@ message UserStatGameHistory {
 }
 
 message UserTransferGoldStat {
-  string user_id_send = 1;
-  string user_id_recv = 2;
-  int64 chip = 3;
+  string user_send_id = 1;
+  string user_send_name = 2;
+  string user_recv_id = 3;
+  string user_recv_name = 4;
+  int64 chip = 5;
 }
 
 message UserInfo {
