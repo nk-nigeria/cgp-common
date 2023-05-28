@@ -40,6 +40,10 @@ message Profile {
   string last_device_id = 22;
   string ref_game = 23;
   string current_ip = 24;
+  int64 vip_point = 25;
+  bool is_online = 26;
+  bool is_banned = 27;
+  int64 last_login_unix = 28;
 }
 
 message PlayingMatch {

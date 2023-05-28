@@ -39,6 +39,10 @@ export interface Profile {
   lastDeviceId: string;
   refGame: string;
   currentIp: string;
+  vipPoint: number;
+  isOnline: boolean;
+  isBanned: boolean;
+  lastLoginUnix: number;
 }
 
 export interface PlayingMatch {
@@ -247,6 +251,10 @@ function createBaseProfile(): Profile {
     lastDeviceId: "",
     refGame: "",
     currentIp: "",
+    vipPoint: 0,
+    isOnline: false,
+    isBanned: false,
+    lastLoginUnix: 0,
   };
 }
 
@@ -323,6 +331,18 @@ export const Profile = {
     }
     if (message.currentIp !== "") {
       writer.uint32(194).string(message.currentIp);
+    }
+    if (message.vipPoint !== 0) {
+      writer.uint32(200).int64(message.vipPoint);
+    }
+    if (message.isOnline === true) {
+      writer.uint32(208).bool(message.isOnline);
+    }
+    if (message.isBanned === true) {
+      writer.uint32(216).bool(message.isBanned);
+    }
+    if (message.lastLoginUnix !== 0) {
+      writer.uint32(224).int64(message.lastLoginUnix);
     }
     return writer;
   },
@@ -502,6 +522,34 @@ export const Profile = {
 
           message.currentIp = reader.string();
           continue;
+        case 25:
+          if (tag !== 200) {
+            break;
+          }
+
+          message.vipPoint = longToNumber(reader.int64() as Long);
+          continue;
+        case 26:
+          if (tag !== 208) {
+            break;
+          }
+
+          message.isOnline = reader.bool();
+          continue;
+        case 27:
+          if (tag !== 216) {
+            break;
+          }
+
+          message.isBanned = reader.bool();
+          continue;
+        case 28:
+          if (tag !== 224) {
+            break;
+          }
+
+          message.lastLoginUnix = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -539,6 +587,10 @@ export const Profile = {
       lastDeviceId: isSet(object.lastDeviceId) ? String(object.lastDeviceId) : "",
       refGame: isSet(object.refGame) ? String(object.refGame) : "",
       currentIp: isSet(object.currentIp) ? String(object.currentIp) : "",
+      vipPoint: isSet(object.vipPoint) ? Number(object.vipPoint) : 0,
+      isOnline: isSet(object.isOnline) ? Boolean(object.isOnline) : false,
+      isBanned: isSet(object.isBanned) ? Boolean(object.isBanned) : false,
+      lastLoginUnix: isSet(object.lastLoginUnix) ? Number(object.lastLoginUnix) : 0,
     };
   },
 
@@ -574,6 +626,10 @@ export const Profile = {
     message.lastDeviceId !== undefined && (obj.lastDeviceId = message.lastDeviceId);
     message.refGame !== undefined && (obj.refGame = message.refGame);
     message.currentIp !== undefined && (obj.currentIp = message.currentIp);
+    message.vipPoint !== undefined && (obj.vipPoint = Math.round(message.vipPoint));
+    message.isOnline !== undefined && (obj.isOnline = message.isOnline);
+    message.isBanned !== undefined && (obj.isBanned = message.isBanned);
+    message.lastLoginUnix !== undefined && (obj.lastLoginUnix = Math.round(message.lastLoginUnix));
     return obj;
   },
 
@@ -609,6 +665,10 @@ export const Profile = {
     message.lastDeviceId = object.lastDeviceId ?? "";
     message.refGame = object.refGame ?? "";
     message.currentIp = object.currentIp ?? "";
+    message.vipPoint = object.vipPoint ?? 0;
+    message.isOnline = object.isOnline ?? false;
+    message.isBanned = object.isBanned ?? false;
+    message.lastLoginUnix = object.lastLoginUnix ?? 0;
     return message;
   },
 };
