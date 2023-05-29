@@ -157,6 +157,75 @@ export interface UserInfo {
   totalOut: number;
 }
 
+export interface CashOut {
+  userId: string;
+  userName: string;
+  ci: number;
+  cio: number;
+  co: number;
+  coo: number;
+  luckyPercent: number;
+}
+
+export interface TopCashOut {
+  cashouts: CashOut[];
+  fromUnix: number;
+  toUnix: number;
+  limit: number;
+  offset: number;
+  total: number;
+}
+
+export interface Vip {
+  userId: string;
+  userName: string;
+  cio: number;
+  totalChip: number;
+  lastLoginTimeUnix: number;
+  createdTimeUnix: number;
+  refGame: string;
+  ci: number;
+  co: number;
+  ci2d: number;
+  co2d: number;
+  luckyPercent: number;
+  isBanned: boolean;
+  isOnline: boolean;
+}
+
+export interface TopVip {
+  vips: Vip[];
+  fromUnix: number;
+  toUnix: number;
+  limit: number;
+  offset: number;
+  refGame: string;
+  total: number;
+}
+
+export interface Win {
+  userId: string;
+  userName: string;
+  vip: number;
+  gold: number;
+  ag: number;
+  agWin: number;
+  co: number;
+  ci: number;
+  coRate: number;
+  luckyPercent: number;
+}
+
+export interface TopWin {
+  wins: Win[];
+  fromUnix: number;
+  toUnix: number;
+  limit: number;
+  offset: number;
+  refGame: string;
+  total: number;
+}
+
 function createBaseOpPlayer(): OpPlayer {
   return {
     userId: "",
@@ -2311,6 +2380,966 @@ export const UserInfo = {
       : undefined;
     message.totalIn = object.totalIn ?? 0;
     message.totalOut = object.totalOut ?? 0;
+    return message;
+  },
+};
+
+function createBaseCashOut(): CashOut {
+  return { userId: "", userName: "", ci: 0, cio: 0, co: 0, coo: 0, luckyPercent: 0 };
+}
+
+export const CashOut = {
+  encode(message: CashOut, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.userName !== "") {
+      writer.uint32(18).string(message.userName);
+    }
+    if (message.ci !== 0) {
+      writer.uint32(24).int64(message.ci);
+    }
+    if (message.cio !== 0) {
+      writer.uint32(32).int64(message.cio);
+    }
+    if (message.co !== 0) {
+      writer.uint32(40).int64(message.co);
+    }
+    if (message.coo !== 0) {
+      writer.uint32(48).int64(message.coo);
+    }
+    if (message.luckyPercent !== 0) {
+      writer.uint32(56).int64(message.luckyPercent);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashOut {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashOut();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userName = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.ci = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.cio = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.co = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.coo = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.luckyPercent = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashOut {
+    return {
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      userName: isSet(object.userName) ? String(object.userName) : "",
+      ci: isSet(object.ci) ? Number(object.ci) : 0,
+      cio: isSet(object.cio) ? Number(object.cio) : 0,
+      co: isSet(object.co) ? Number(object.co) : 0,
+      coo: isSet(object.coo) ? Number(object.coo) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+    };
+  },
+
+  toJSON(message: CashOut): unknown {
+    const obj: any = {};
+    message.userId !== undefined && (obj.userId = message.userId);
+    message.userName !== undefined && (obj.userName = message.userName);
+    message.ci !== undefined && (obj.ci = Math.round(message.ci));
+    message.cio !== undefined && (obj.cio = Math.round(message.cio));
+    message.co !== undefined && (obj.co = Math.round(message.co));
+    message.coo !== undefined && (obj.coo = Math.round(message.coo));
+    message.luckyPercent !== undefined && (obj.luckyPercent = Math.round(message.luckyPercent));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashOut>, I>>(base?: I): CashOut {
+    return CashOut.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<CashOut>, I>>(object: I): CashOut {
+    const message = createBaseCashOut();
+    message.userId = object.userId ?? "";
+    message.userName = object.userName ?? "";
+    message.ci = object.ci ?? 0;
+    message.cio = object.cio ?? 0;
+    message.co = object.co ?? 0;
+    message.coo = object.coo ?? 0;
+    message.luckyPercent = object.luckyPercent ?? 0;
+    return message;
+  },
+};
+
+function createBaseTopCashOut(): TopCashOut {
+  return { cashouts: [], fromUnix: 0, toUnix: 0, limit: 0, offset: 0, total: 0 };
+}
+
+export const TopCashOut = {
+  encode(message: TopCashOut, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.cashouts) {
+      CashOut.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.fromUnix !== 0) {
+      writer.uint32(16).int64(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      writer.uint32(24).int64(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(40).int64(message.offset);
+    }
+    if (message.total !== 0) {
+      writer.uint32(48).int64(message.total);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TopCashOut {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTopCashOut();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.cashouts.push(CashOut.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.toUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TopCashOut {
+    return {
+      cashouts: Array.isArray(object?.cashouts) ? object.cashouts.map((e: any) => CashOut.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      total: isSet(object.total) ? Number(object.total) : 0,
+    };
+  },
+
+  toJSON(message: TopCashOut): unknown {
+    const obj: any = {};
+    if (message.cashouts) {
+      obj.cashouts = message.cashouts.map((e) => e ? CashOut.toJSON(e) : undefined);
+    } else {
+      obj.cashouts = [];
+    }
+    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
+    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
+    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    message.total !== undefined && (obj.total = Math.round(message.total));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TopCashOut>, I>>(base?: I): TopCashOut {
+    return TopCashOut.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TopCashOut>, I>>(object: I): TopCashOut {
+    const message = createBaseTopCashOut();
+    message.cashouts = object.cashouts?.map((e) => CashOut.fromPartial(e)) || [];
+    message.fromUnix = object.fromUnix ?? 0;
+    message.toUnix = object.toUnix ?? 0;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    message.total = object.total ?? 0;
+    return message;
+  },
+};
+
+function createBaseVip(): Vip {
+  return {
+    userId: "",
+    userName: "",
+    cio: 0,
+    totalChip: 0,
+    lastLoginTimeUnix: 0,
+    createdTimeUnix: 0,
+    refGame: "",
+    ci: 0,
+    co: 0,
+    ci2d: 0,
+    co2d: 0,
+    luckyPercent: 0,
+    isBanned: false,
+    isOnline: false,
+  };
+}
+
+export const Vip = {
+  encode(message: Vip, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.userName !== "") {
+      writer.uint32(18).string(message.userName);
+    }
+    if (message.cio !== 0) {
+      writer.uint32(24).int64(message.cio);
+    }
+    if (message.totalChip !== 0) {
+      writer.uint32(32).int64(message.totalChip);
+    }
+    if (message.lastLoginTimeUnix !== 0) {
+      writer.uint32(40).int64(message.lastLoginTimeUnix);
+    }
+    if (message.createdTimeUnix !== 0) {
+      writer.uint32(48).int64(message.createdTimeUnix);
+    }
+    if (message.refGame !== "") {
+      writer.uint32(58).string(message.refGame);
+    }
+    if (message.ci !== 0) {
+      writer.uint32(64).int64(message.ci);
+    }
+    if (message.co !== 0) {
+      writer.uint32(72).int64(message.co);
+    }
+    if (message.ci2d !== 0) {
+      writer.uint32(80).int64(message.ci2d);
+    }
+    if (message.co2d !== 0) {
+      writer.uint32(88).int64(message.co2d);
+    }
+    if (message.luckyPercent !== 0) {
+      writer.uint32(96).int64(message.luckyPercent);
+    }
+    if (message.isBanned === true) {
+      writer.uint32(104).bool(message.isBanned);
+    }
+    if (message.isOnline === true) {
+      writer.uint32(112).bool(message.isOnline);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Vip {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVip();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userName = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.cio = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.totalChip = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.lastLoginTimeUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.createdTimeUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.refGame = reader.string();
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.ci = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.co = longToNumber(reader.int64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.ci2d = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.co2d = longToNumber(reader.int64() as Long);
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.luckyPercent = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.isBanned = reader.bool();
+          continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.isOnline = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Vip {
+    return {
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      userName: isSet(object.userName) ? String(object.userName) : "",
+      cio: isSet(object.cio) ? Number(object.cio) : 0,
+      totalChip: isSet(object.totalChip) ? Number(object.totalChip) : 0,
+      lastLoginTimeUnix: isSet(object.lastLoginTimeUnix) ? Number(object.lastLoginTimeUnix) : 0,
+      createdTimeUnix: isSet(object.createdTimeUnix) ? Number(object.createdTimeUnix) : 0,
+      refGame: isSet(object.refGame) ? String(object.refGame) : "",
+      ci: isSet(object.ci) ? Number(object.ci) : 0,
+      co: isSet(object.co) ? Number(object.co) : 0,
+      ci2d: isSet(object.ci2d) ? Number(object.ci2d) : 0,
+      co2d: isSet(object.co2d) ? Number(object.co2d) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+      isBanned: isSet(object.isBanned) ? Boolean(object.isBanned) : false,
+      isOnline: isSet(object.isOnline) ? Boolean(object.isOnline) : false,
+    };
+  },
+
+  toJSON(message: Vip): unknown {
+    const obj: any = {};
+    message.userId !== undefined && (obj.userId = message.userId);
+    message.userName !== undefined && (obj.userName = message.userName);
+    message.cio !== undefined && (obj.cio = Math.round(message.cio));
+    message.totalChip !== undefined && (obj.totalChip = Math.round(message.totalChip));
+    message.lastLoginTimeUnix !== undefined && (obj.lastLoginTimeUnix = Math.round(message.lastLoginTimeUnix));
+    message.createdTimeUnix !== undefined && (obj.createdTimeUnix = Math.round(message.createdTimeUnix));
+    message.refGame !== undefined && (obj.refGame = message.refGame);
+    message.ci !== undefined && (obj.ci = Math.round(message.ci));
+    message.co !== undefined && (obj.co = Math.round(message.co));
+    message.ci2d !== undefined && (obj.ci2d = Math.round(message.ci2d));
+    message.co2d !== undefined && (obj.co2d = Math.round(message.co2d));
+    message.luckyPercent !== undefined && (obj.luckyPercent = Math.round(message.luckyPercent));
+    message.isBanned !== undefined && (obj.isBanned = message.isBanned);
+    message.isOnline !== undefined && (obj.isOnline = message.isOnline);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Vip>, I>>(base?: I): Vip {
+    return Vip.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Vip>, I>>(object: I): Vip {
+    const message = createBaseVip();
+    message.userId = object.userId ?? "";
+    message.userName = object.userName ?? "";
+    message.cio = object.cio ?? 0;
+    message.totalChip = object.totalChip ?? 0;
+    message.lastLoginTimeUnix = object.lastLoginTimeUnix ?? 0;
+    message.createdTimeUnix = object.createdTimeUnix ?? 0;
+    message.refGame = object.refGame ?? "";
+    message.ci = object.ci ?? 0;
+    message.co = object.co ?? 0;
+    message.ci2d = object.ci2d ?? 0;
+    message.co2d = object.co2d ?? 0;
+    message.luckyPercent = object.luckyPercent ?? 0;
+    message.isBanned = object.isBanned ?? false;
+    message.isOnline = object.isOnline ?? false;
+    return message;
+  },
+};
+
+function createBaseTopVip(): TopVip {
+  return { vips: [], fromUnix: 0, toUnix: 0, limit: 0, offset: 0, refGame: "", total: 0 };
+}
+
+export const TopVip = {
+  encode(message: TopVip, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.vips) {
+      Vip.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.fromUnix !== 0) {
+      writer.uint32(16).int64(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      writer.uint32(24).int64(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(40).int64(message.offset);
+    }
+    if (message.refGame !== "") {
+      writer.uint32(50).string(message.refGame);
+    }
+    if (message.total !== 0) {
+      writer.uint32(56).int64(message.total);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TopVip {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTopVip();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.vips.push(Vip.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.toUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.refGame = reader.string();
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TopVip {
+    return {
+      vips: Array.isArray(object?.vips) ? object.vips.map((e: any) => Vip.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      refGame: isSet(object.refGame) ? String(object.refGame) : "",
+      total: isSet(object.total) ? Number(object.total) : 0,
+    };
+  },
+
+  toJSON(message: TopVip): unknown {
+    const obj: any = {};
+    if (message.vips) {
+      obj.vips = message.vips.map((e) => e ? Vip.toJSON(e) : undefined);
+    } else {
+      obj.vips = [];
+    }
+    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
+    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
+    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    message.refGame !== undefined && (obj.refGame = message.refGame);
+    message.total !== undefined && (obj.total = Math.round(message.total));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TopVip>, I>>(base?: I): TopVip {
+    return TopVip.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TopVip>, I>>(object: I): TopVip {
+    const message = createBaseTopVip();
+    message.vips = object.vips?.map((e) => Vip.fromPartial(e)) || [];
+    message.fromUnix = object.fromUnix ?? 0;
+    message.toUnix = object.toUnix ?? 0;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    message.refGame = object.refGame ?? "";
+    message.total = object.total ?? 0;
+    return message;
+  },
+};
+
+function createBaseWin(): Win {
+  return { userId: "", userName: "", vip: 0, gold: 0, ag: 0, agWin: 0, co: 0, ci: 0, coRate: 0, luckyPercent: 0 };
+}
+
+export const Win = {
+  encode(message: Win, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.userName !== "") {
+      writer.uint32(18).string(message.userName);
+    }
+    if (message.vip !== 0) {
+      writer.uint32(24).int64(message.vip);
+    }
+    if (message.gold !== 0) {
+      writer.uint32(32).int64(message.gold);
+    }
+    if (message.ag !== 0) {
+      writer.uint32(40).int64(message.ag);
+    }
+    if (message.agWin !== 0) {
+      writer.uint32(48).int64(message.agWin);
+    }
+    if (message.co !== 0) {
+      writer.uint32(56).int64(message.co);
+    }
+    if (message.ci !== 0) {
+      writer.uint32(64).int64(message.ci);
+    }
+    if (message.coRate !== 0) {
+      writer.uint32(72).int64(message.coRate);
+    }
+    if (message.luckyPercent !== 0) {
+      writer.uint32(80).int64(message.luckyPercent);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Win {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWin();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userName = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.vip = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.gold = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.ag = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.agWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.co = longToNumber(reader.int64() as Long);
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.ci = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.coRate = longToNumber(reader.int64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.luckyPercent = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Win {
+    return {
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      userName: isSet(object.userName) ? String(object.userName) : "",
+      vip: isSet(object.vip) ? Number(object.vip) : 0,
+      gold: isSet(object.gold) ? Number(object.gold) : 0,
+      ag: isSet(object.ag) ? Number(object.ag) : 0,
+      agWin: isSet(object.agWin) ? Number(object.agWin) : 0,
+      co: isSet(object.co) ? Number(object.co) : 0,
+      ci: isSet(object.ci) ? Number(object.ci) : 0,
+      coRate: isSet(object.coRate) ? Number(object.coRate) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+    };
+  },
+
+  toJSON(message: Win): unknown {
+    const obj: any = {};
+    message.userId !== undefined && (obj.userId = message.userId);
+    message.userName !== undefined && (obj.userName = message.userName);
+    message.vip !== undefined && (obj.vip = Math.round(message.vip));
+    message.gold !== undefined && (obj.gold = Math.round(message.gold));
+    message.ag !== undefined && (obj.ag = Math.round(message.ag));
+    message.agWin !== undefined && (obj.agWin = Math.round(message.agWin));
+    message.co !== undefined && (obj.co = Math.round(message.co));
+    message.ci !== undefined && (obj.ci = Math.round(message.ci));
+    message.coRate !== undefined && (obj.coRate = Math.round(message.coRate));
+    message.luckyPercent !== undefined && (obj.luckyPercent = Math.round(message.luckyPercent));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Win>, I>>(base?: I): Win {
+    return Win.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Win>, I>>(object: I): Win {
+    const message = createBaseWin();
+    message.userId = object.userId ?? "";
+    message.userName = object.userName ?? "";
+    message.vip = object.vip ?? 0;
+    message.gold = object.gold ?? 0;
+    message.ag = object.ag ?? 0;
+    message.agWin = object.agWin ?? 0;
+    message.co = object.co ?? 0;
+    message.ci = object.ci ?? 0;
+    message.coRate = object.coRate ?? 0;
+    message.luckyPercent = object.luckyPercent ?? 0;
+    return message;
+  },
+};
+
+function createBaseTopWin(): TopWin {
+  return { wins: [], fromUnix: 0, toUnix: 0, limit: 0, offset: 0, refGame: "", total: 0 };
+}
+
+export const TopWin = {
+  encode(message: TopWin, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.wins) {
+      Win.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.fromUnix !== 0) {
+      writer.uint32(16).int64(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      writer.uint32(24).int64(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(40).int64(message.offset);
+    }
+    if (message.refGame !== "") {
+      writer.uint32(50).string(message.refGame);
+    }
+    if (message.total !== 0) {
+      writer.uint32(56).int64(message.total);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TopWin {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTopWin();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.wins.push(Win.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.toUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.refGame = reader.string();
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TopWin {
+    return {
+      wins: Array.isArray(object?.wins) ? object.wins.map((e: any) => Win.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      refGame: isSet(object.refGame) ? String(object.refGame) : "",
+      total: isSet(object.total) ? Number(object.total) : 0,
+    };
+  },
+
+  toJSON(message: TopWin): unknown {
+    const obj: any = {};
+    if (message.wins) {
+      obj.wins = message.wins.map((e) => e ? Win.toJSON(e) : undefined);
+    } else {
+      obj.wins = [];
+    }
+    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
+    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
+    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    message.refGame !== undefined && (obj.refGame = message.refGame);
+    message.total !== undefined && (obj.total = Math.round(message.total));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TopWin>, I>>(base?: I): TopWin {
+    return TopWin.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<TopWin>, I>>(object: I): TopWin {
+    const message = createBaseTopWin();
+    message.wins = object.wins?.map((e) => Win.fromPartial(e)) || [];
+    message.fromUnix = object.fromUnix ?? 0;
+    message.toUnix = object.toUnix ?? 0;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    message.refGame = object.refGame ?? "";
+    message.total = object.total ?? 0;
     return message;
   },
 };
