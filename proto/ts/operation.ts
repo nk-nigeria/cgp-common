@@ -191,6 +191,8 @@ export interface Vip {
   luckyPercent: number;
   isBanned: boolean;
   isOnline: boolean;
+  totalIn: number;
+  totalOut: number;
 }
 
 export interface TopVip {
@@ -2663,6 +2665,8 @@ function createBaseVip(): Vip {
     luckyPercent: 0,
     isBanned: false,
     isOnline: false,
+    totalIn: 0,
+    totalOut: 0,
   };
 }
 
@@ -2709,6 +2713,12 @@ export const Vip = {
     }
     if (message.isOnline === true) {
       writer.uint32(112).bool(message.isOnline);
+    }
+    if (message.totalIn !== 0) {
+      writer.uint32(120).int64(message.totalIn);
+    }
+    if (message.totalOut !== 0) {
+      writer.uint32(128).int64(message.totalOut);
     }
     return writer;
   },
@@ -2818,6 +2828,20 @@ export const Vip = {
 
           message.isOnline = reader.bool();
           continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.totalIn = longToNumber(reader.int64() as Long);
+          continue;
+        case 16:
+          if (tag !== 128) {
+            break;
+          }
+
+          message.totalOut = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2843,6 +2867,8 @@ export const Vip = {
       luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
       isBanned: isSet(object.isBanned) ? Boolean(object.isBanned) : false,
       isOnline: isSet(object.isOnline) ? Boolean(object.isOnline) : false,
+      totalIn: isSet(object.totalIn) ? Number(object.totalIn) : 0,
+      totalOut: isSet(object.totalOut) ? Number(object.totalOut) : 0,
     };
   },
 
@@ -2862,6 +2888,8 @@ export const Vip = {
     message.luckyPercent !== undefined && (obj.luckyPercent = Math.round(message.luckyPercent));
     message.isBanned !== undefined && (obj.isBanned = message.isBanned);
     message.isOnline !== undefined && (obj.isOnline = message.isOnline);
+    message.totalIn !== undefined && (obj.totalIn = Math.round(message.totalIn));
+    message.totalOut !== undefined && (obj.totalOut = Math.round(message.totalOut));
     return obj;
   },
 
@@ -2885,6 +2913,8 @@ export const Vip = {
     message.luckyPercent = object.luckyPercent ?? 0;
     message.isBanned = object.isBanned ?? false;
     message.isOnline = object.isOnline ?? false;
+    message.totalIn = object.totalIn ?? 0;
+    message.totalOut = object.totalOut ?? 0;
     return message;
   },
 };

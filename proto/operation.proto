@@ -192,6 +192,8 @@ message Vip {
   int64 lucky_percent = 12;
   bool is_banned = 13;
   bool is_online = 14;
+  int64 total_in = 15;
+  int64 total_out = 16;
 }
 
 message TopVip {
