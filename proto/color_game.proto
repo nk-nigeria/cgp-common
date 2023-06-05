@@ -18,7 +18,7 @@ enum Color {
 message BetResult {
   string user_id = 1;
   repeated InfoBet bets = 2;
-  bool is_win = 3;  
+  bool is_win = 3;
 }
 
 message ColorGameFinish {
@@ -28,7 +28,7 @@ message ColorGameFinish {
 }
 
 message ListColor {
-  repeated int32 colors = 1; 
+  repeated int32 colors = 1;
 }
 
 message RateColor {
