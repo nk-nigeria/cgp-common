@@ -73,7 +73,57 @@ export enum SiXiangSymbol {
   SI_XIANG_SYMBOL_SIXANGBONUS_LUCKYDRAW_GAME = 2306,
   SI_XIANG_SYMBOL_SIXANGBONUS_GOLDPICK_GAME = 2307,
   SI_XIANG_SYMBOL_SIXANGBONUS_RAPIDPAY_GAME = 2308,
-  SI_XIANG_SYMBOL_WILD = 4095,
+  /** SI_XIANG_SYMBOL_GORILLE - Tazan symbol */
+  SI_XIANG_SYMBOL_GORILLE = 4097,
+  SI_XIANG_SYMBOL_ELEPHANT = 4098,
+  SI_XIANG_SYMBOL_JAGUAR = 4099,
+  SI_XIANG_SYMBOL_SNACK = 4100,
+  SI_XIANG_SYMBOL_JANE = 4101,
+  SI_XIANG_SYMBOL_JANE_FATHER = 4102,
+  SI_XIANG_SYMBOL_CLAYTON = 4103,
+  SI_XIANG_SYMBOL_FREE_SPIN = 4104,
+  SI_XIANG_SYMBOL_TARZAN = 4105,
+  SI_XIANG_SYMBOL_LETTER_J = 4112,
+  SI_XIANG_SYMBOL_LETTER_U = 4113,
+  SI_XIANG_SYMBOL_LETTER_N = 4114,
+  SI_XIANG_SYMBOL_LETTER_G = 4115,
+  SI_XIANG_SYMBOL_LETTER_L = 4116,
+  SI_XIANG_SYMBOL_LETTER_E = 4117,
+  SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2 = 4128,
+  SI_XIANG_SYMBOL_TARZAN_MORE_TURNX3 = 4129,
+  SI_XIANG_SYMBOL_TARZAN_RANDOM_1 = 4130,
+  SI_XIANG_SYMBOL_TARZAN_RANDOM_2 = 4131,
+  SI_XIANG_SYMBOL_TARZAN_RANDOM_3 = 4132,
+  SI_XIANG_SYMBOL_TARZAN_RANDOM_4 = 4133,
+  SI_XIANG_SYMBOL_TARZAN_RANDOM_5 = 4134,
+  /** SI_XIANG_SYMBOL_JUICE_STRAWBERRY - Juice Garden */
+  SI_XIANG_SYMBOL_JUICE_STRAWBERRY = 4353,
+  SI_XIANG_SYMBOL_JUICE_WATERMELON = 4354,
+  SI_XIANG_SYMBOL_JUICE_PINAPPLE = 4355,
+  SI_XIANG_SYMBOL_JUICE_MANGOSTEEN = 4356,
+  SI_XIANG_SYMBOL_JUICE_STONE_DIAMOND = 4357,
+  SI_XIANG_SYMBOL_JUICE_STONE_GREEN = 4358,
+  SI_XIANG_SYMBOL_JUICE_STONE_VIOLET = 4359,
+  SI_XIANG_SYMBOL_JUICE_SCATTERS_X3 = 4360,
+  SI_XIANG_SYMBOL_JUICE_SCATTERS_X4 = 4361,
+  SI_XIANG_SYMBOL_JUICE_SCATTERS_X5 = 4368,
+  /** SI_XIANG_SYMBOL_JUICE_FRUITBASKET_SPIN - fruit basket game */
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_SPIN = 4369,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_GRAND = 4370,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MAJOR = 4371,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINOR = 4372,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINI = 4373,
+  /** SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_1 - fruit rain */
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_1 = 4384,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_2 = 4385,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_3 = 4386,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_4 = 4387,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_5 = 4388,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_6 = 4389,
+  SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_7 = 4390,
+  SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FREE_GAME = 4391,
+  SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN = 4392,
+  SI_XIANG_SYMBOL_WILD = 65535,
   UNRECOGNIZED = -1,
 }
 
@@ -250,7 +300,145 @@ export function siXiangSymbolFromJSON(object: any): SiXiangSymbol {
     case 2308:
     case "SI_XIANG_SYMBOL_SIXANGBONUS_RAPIDPAY_GAME":
       return SiXiangSymbol.SI_XIANG_SYMBOL_SIXANGBONUS_RAPIDPAY_GAME;
-    case 4095:
+    case 4097:
+    case "SI_XIANG_SYMBOL_GORILLE":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_GORILLE;
+    case 4098:
+    case "SI_XIANG_SYMBOL_ELEPHANT":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_ELEPHANT;
+    case 4099:
+    case "SI_XIANG_SYMBOL_JAGUAR":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JAGUAR;
+    case 4100:
+    case "SI_XIANG_SYMBOL_SNACK":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_SNACK;
+    case 4101:
+    case "SI_XIANG_SYMBOL_JANE":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JANE;
+    case 4102:
+    case "SI_XIANG_SYMBOL_JANE_FATHER":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JANE_FATHER;
+    case 4103:
+    case "SI_XIANG_SYMBOL_CLAYTON":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_CLAYTON;
+    case 4104:
+    case "SI_XIANG_SYMBOL_FREE_SPIN":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_FREE_SPIN;
+    case 4105:
+    case "SI_XIANG_SYMBOL_TARZAN":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN;
+    case 4112:
+    case "SI_XIANG_SYMBOL_LETTER_J":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_J;
+    case 4113:
+    case "SI_XIANG_SYMBOL_LETTER_U":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_U;
+    case 4114:
+    case "SI_XIANG_SYMBOL_LETTER_N":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_N;
+    case 4115:
+    case "SI_XIANG_SYMBOL_LETTER_G":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_G;
+    case 4116:
+    case "SI_XIANG_SYMBOL_LETTER_L":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_L;
+    case 4117:
+    case "SI_XIANG_SYMBOL_LETTER_E":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_E;
+    case 4128:
+    case "SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2;
+    case 4129:
+    case "SI_XIANG_SYMBOL_TARZAN_MORE_TURNX3":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_MORE_TURNX3;
+    case 4130:
+    case "SI_XIANG_SYMBOL_TARZAN_RANDOM_1":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_1;
+    case 4131:
+    case "SI_XIANG_SYMBOL_TARZAN_RANDOM_2":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_2;
+    case 4132:
+    case "SI_XIANG_SYMBOL_TARZAN_RANDOM_3":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_3;
+    case 4133:
+    case "SI_XIANG_SYMBOL_TARZAN_RANDOM_4":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_4;
+    case 4134:
+    case "SI_XIANG_SYMBOL_TARZAN_RANDOM_5":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_5;
+    case 4353:
+    case "SI_XIANG_SYMBOL_JUICE_STRAWBERRY":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STRAWBERRY;
+    case 4354:
+    case "SI_XIANG_SYMBOL_JUICE_WATERMELON":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_WATERMELON;
+    case 4355:
+    case "SI_XIANG_SYMBOL_JUICE_PINAPPLE":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_PINAPPLE;
+    case 4356:
+    case "SI_XIANG_SYMBOL_JUICE_MANGOSTEEN":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_MANGOSTEEN;
+    case 4357:
+    case "SI_XIANG_SYMBOL_JUICE_STONE_DIAMOND":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STONE_DIAMOND;
+    case 4358:
+    case "SI_XIANG_SYMBOL_JUICE_STONE_GREEN":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STONE_GREEN;
+    case 4359:
+    case "SI_XIANG_SYMBOL_JUICE_STONE_VIOLET":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STONE_VIOLET;
+    case 4360:
+    case "SI_XIANG_SYMBOL_JUICE_SCATTERS_X3":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_SCATTERS_X3;
+    case 4361:
+    case "SI_XIANG_SYMBOL_JUICE_SCATTERS_X4":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_SCATTERS_X4;
+    case 4368:
+    case "SI_XIANG_SYMBOL_JUICE_SCATTERS_X5":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_SCATTERS_X5;
+    case 4369:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_SPIN":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_SPIN;
+    case 4370:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_GRAND":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_GRAND;
+    case 4371:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MAJOR":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MAJOR;
+    case 4372:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINOR":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINOR;
+    case 4373:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINI":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINI;
+    case 4384:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_1":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_1;
+    case 4385:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_2":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_2;
+    case 4386:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_3":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_3;
+    case 4387:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_4":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_4;
+    case 4388:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_5":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_5;
+    case 4389:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_6":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_6;
+    case 4390:
+    case "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_7":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_7;
+    case 4391:
+    case "SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FREE_GAME":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FREE_GAME;
+    case 4392:
+    case "SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN;
+    case 65535:
     case "SI_XIANG_SYMBOL_WILD":
       return SiXiangSymbol.SI_XIANG_SYMBOL_WILD;
     case -1:
@@ -376,6 +564,98 @@ export function siXiangSymbolToJSON(object: SiXiangSymbol): string {
       return "SI_XIANG_SYMBOL_SIXANGBONUS_GOLDPICK_GAME";
     case SiXiangSymbol.SI_XIANG_SYMBOL_SIXANGBONUS_RAPIDPAY_GAME:
       return "SI_XIANG_SYMBOL_SIXANGBONUS_RAPIDPAY_GAME";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_GORILLE:
+      return "SI_XIANG_SYMBOL_GORILLE";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_ELEPHANT:
+      return "SI_XIANG_SYMBOL_ELEPHANT";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JAGUAR:
+      return "SI_XIANG_SYMBOL_JAGUAR";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_SNACK:
+      return "SI_XIANG_SYMBOL_SNACK";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JANE:
+      return "SI_XIANG_SYMBOL_JANE";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JANE_FATHER:
+      return "SI_XIANG_SYMBOL_JANE_FATHER";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_CLAYTON:
+      return "SI_XIANG_SYMBOL_CLAYTON";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_FREE_SPIN:
+      return "SI_XIANG_SYMBOL_FREE_SPIN";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN:
+      return "SI_XIANG_SYMBOL_TARZAN";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_J:
+      return "SI_XIANG_SYMBOL_LETTER_J";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_U:
+      return "SI_XIANG_SYMBOL_LETTER_U";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_N:
+      return "SI_XIANG_SYMBOL_LETTER_N";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_G:
+      return "SI_XIANG_SYMBOL_LETTER_G";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_L:
+      return "SI_XIANG_SYMBOL_LETTER_L";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_E:
+      return "SI_XIANG_SYMBOL_LETTER_E";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2:
+      return "SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_MORE_TURNX3:
+      return "SI_XIANG_SYMBOL_TARZAN_MORE_TURNX3";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_1:
+      return "SI_XIANG_SYMBOL_TARZAN_RANDOM_1";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_2:
+      return "SI_XIANG_SYMBOL_TARZAN_RANDOM_2";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_3:
+      return "SI_XIANG_SYMBOL_TARZAN_RANDOM_3";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_4:
+      return "SI_XIANG_SYMBOL_TARZAN_RANDOM_4";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_RANDOM_5:
+      return "SI_XIANG_SYMBOL_TARZAN_RANDOM_5";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STRAWBERRY:
+      return "SI_XIANG_SYMBOL_JUICE_STRAWBERRY";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_WATERMELON:
+      return "SI_XIANG_SYMBOL_JUICE_WATERMELON";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_PINAPPLE:
+      return "SI_XIANG_SYMBOL_JUICE_PINAPPLE";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_MANGOSTEEN:
+      return "SI_XIANG_SYMBOL_JUICE_MANGOSTEEN";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STONE_DIAMOND:
+      return "SI_XIANG_SYMBOL_JUICE_STONE_DIAMOND";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STONE_GREEN:
+      return "SI_XIANG_SYMBOL_JUICE_STONE_GREEN";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_STONE_VIOLET:
+      return "SI_XIANG_SYMBOL_JUICE_STONE_VIOLET";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_SCATTERS_X3:
+      return "SI_XIANG_SYMBOL_JUICE_SCATTERS_X3";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_SCATTERS_X4:
+      return "SI_XIANG_SYMBOL_JUICE_SCATTERS_X4";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_SCATTERS_X5:
+      return "SI_XIANG_SYMBOL_JUICE_SCATTERS_X5";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_SPIN:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_SPIN";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_GRAND:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_GRAND";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MAJOR:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MAJOR";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINOR:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINOR";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINI:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINI";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_1:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_1";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_2:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_2";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_3:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_3";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_4:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_4";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_5:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_5";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_6:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_6";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_7:
+      return "SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_7";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FREE_GAME:
+      return "SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FREE_GAME";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN:
+      return "SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN";
     case SiXiangSymbol.SI_XIANG_SYMBOL_WILD:
       return "SI_XIANG_SYMBOL_WILD";
     case SiXiangSymbol.UNRECOGNIZED:
@@ -397,6 +677,14 @@ export enum SiXiangGame {
   SI_XIANG_GAME_SIXANGBONUS_LUCKDRAW = 9,
   SI_XIANG_GAME_SIXANGBONUS_GOLDPICK = 10,
   SI_XIANG_GAME_SIXANGBONUS_RAPIDPAY = 11,
+  /** SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE - Tazan game */
+  SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE = 101,
+  /** SI_XIANG_GAME_TARZAN_FREESPINX9 - Juice Garden */
+  SI_XIANG_GAME_TARZAN_FREESPINX9 = 102,
+  SI_XIANG_GAME_JUICE_NORMAL = 200,
+  SI_XIANG_GAME_JUICE_FRUIT_BASKET = 201,
+  SI_XIANG_GAME_JUICE_FRUIT_RAIN = 202,
+  SI_XIANG_GAME_JUICE_FREE_GAME = 203,
   UNRECOGNIZED = -1,
 }
 
@@ -438,6 +726,24 @@ export function siXiangGameFromJSON(object: any): SiXiangGame {
     case 11:
     case "SI_XIANG_GAME_SIXANGBONUS_RAPIDPAY":
       return SiXiangGame.SI_XIANG_GAME_SIXANGBONUS_RAPIDPAY;
+    case 101:
+    case "SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE":
+      return SiXiangGame.SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE;
+    case 102:
+    case "SI_XIANG_GAME_TARZAN_FREESPINX9":
+      return SiXiangGame.SI_XIANG_GAME_TARZAN_FREESPINX9;
+    case 200:
+    case "SI_XIANG_GAME_JUICE_NORMAL":
+      return SiXiangGame.SI_XIANG_GAME_JUICE_NORMAL;
+    case 201:
+    case "SI_XIANG_GAME_JUICE_FRUIT_BASKET":
+      return SiXiangGame.SI_XIANG_GAME_JUICE_FRUIT_BASKET;
+    case 202:
+    case "SI_XIANG_GAME_JUICE_FRUIT_RAIN":
+      return SiXiangGame.SI_XIANG_GAME_JUICE_FRUIT_RAIN;
+    case 203:
+    case "SI_XIANG_GAME_JUICE_FREE_GAME":
+      return SiXiangGame.SI_XIANG_GAME_JUICE_FREE_GAME;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -471,6 +777,18 @@ export function siXiangGameToJSON(object: SiXiangGame): string {
       return "SI_XIANG_GAME_SIXANGBONUS_GOLDPICK";
     case SiXiangGame.SI_XIANG_GAME_SIXANGBONUS_RAPIDPAY:
       return "SI_XIANG_GAME_SIXANGBONUS_RAPIDPAY";
+    case SiXiangGame.SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE:
+      return "SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE";
+    case SiXiangGame.SI_XIANG_GAME_TARZAN_FREESPINX9:
+      return "SI_XIANG_GAME_TARZAN_FREESPINX9";
+    case SiXiangGame.SI_XIANG_GAME_JUICE_NORMAL:
+      return "SI_XIANG_GAME_JUICE_NORMAL";
+    case SiXiangGame.SI_XIANG_GAME_JUICE_FRUIT_BASKET:
+      return "SI_XIANG_GAME_JUICE_FRUIT_BASKET";
+    case SiXiangGame.SI_XIANG_GAME_JUICE_FRUIT_RAIN:
+      return "SI_XIANG_GAME_JUICE_FRUIT_RAIN";
+    case SiXiangGame.SI_XIANG_GAME_JUICE_FREE_GAME:
+      return "SI_XIANG_GAME_JUICE_FREE_GAME";
     case SiXiangGame.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -631,6 +949,26 @@ export interface SlotDesk {
   balanceChipsWalletBefore: number;
   /** số chip trong wallet sau spin */
   balanceChipsWalletAfter: number;
+  /**
+   * các symbol đặc biệt thu thập được,
+   * vd như eye ở sixiang, letter ở tarzan
+   */
+  collectionSymbols: SiXiangSymbol[];
+  /**
+   * tổng chip win trong 1 game
+   * vd trong game tarzan,
+   * chip ở đây sẽ là tổng chip trong 9 lần spin
+   */
+  totalChipsWinByGame: number;
+  /** ngọc rừng xanh ở tarzan game */
+  perlGreenForest: number;
+  /** chips tích lũy ở tarzan game */
+  updateChipsBonus: boolean;
+  chipsBonus: number;
+  tsUnix: number;
+  ratioFruitBasket: number;
+  /** số lượt spin còn lại, -1 = unlimited */
+  numSpinLeft: number;
 }
 
 /** Ma trận symbol */
@@ -660,6 +998,8 @@ export interface Payline {
   numOccur: number;
   rate: number;
   chips: number;
+  /** Array contain index of symbol in matrix */
+  indexs: number[];
 }
 
 function createBaseSlotDesk(): SlotDesk {
@@ -679,6 +1019,14 @@ function createBaseSlotDesk(): SlotDesk {
     updateWallet: false,
     balanceChipsWalletBefore: 0,
     balanceChipsWalletAfter: 0,
+    collectionSymbols: [],
+    totalChipsWinByGame: 0,
+    perlGreenForest: 0,
+    updateChipsBonus: false,
+    chipsBonus: 0,
+    tsUnix: 0,
+    ratioFruitBasket: 0,
+    numSpinLeft: 0,
   };
 }
 
@@ -728,6 +1076,32 @@ export const SlotDesk = {
     }
     if (message.balanceChipsWalletAfter !== 0) {
       writer.uint32(120).int64(message.balanceChipsWalletAfter);
+    }
+    writer.uint32(130).fork();
+    for (const v of message.collectionSymbols) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    if (message.totalChipsWinByGame !== 0) {
+      writer.uint32(136).int64(message.totalChipsWinByGame);
+    }
+    if (message.perlGreenForest !== 0) {
+      writer.uint32(144).int32(message.perlGreenForest);
+    }
+    if (message.updateChipsBonus === true) {
+      writer.uint32(152).bool(message.updateChipsBonus);
+    }
+    if (message.chipsBonus !== 0) {
+      writer.uint32(160).int64(message.chipsBonus);
+    }
+    if (message.tsUnix !== 0) {
+      writer.uint32(168).int64(message.tsUnix);
+    }
+    if (message.ratioFruitBasket !== 0) {
+      writer.uint32(176).int64(message.ratioFruitBasket);
+    }
+    if (message.numSpinLeft !== 0) {
+      writer.uint32(184).int64(message.numSpinLeft);
     }
     return writer;
   },
@@ -844,6 +1218,72 @@ export const SlotDesk = {
 
           message.balanceChipsWalletAfter = longToNumber(reader.int64() as Long);
           continue;
+        case 16:
+          if (tag === 128) {
+            message.collectionSymbols.push(reader.int32() as any);
+
+            continue;
+          }
+
+          if (tag === 130) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.collectionSymbols.push(reader.int32() as any);
+            }
+
+            continue;
+          }
+
+          break;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.totalChipsWinByGame = longToNumber(reader.int64() as Long);
+          continue;
+        case 18:
+          if (tag !== 144) {
+            break;
+          }
+
+          message.perlGreenForest = reader.int32();
+          continue;
+        case 19:
+          if (tag !== 152) {
+            break;
+          }
+
+          message.updateChipsBonus = reader.bool();
+          continue;
+        case 20:
+          if (tag !== 160) {
+            break;
+          }
+
+          message.chipsBonus = longToNumber(reader.int64() as Long);
+          continue;
+        case 21:
+          if (tag !== 168) {
+            break;
+          }
+
+          message.tsUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 22:
+          if (tag !== 176) {
+            break;
+          }
+
+          message.ratioFruitBasket = longToNumber(reader.int64() as Long);
+          continue;
+        case 23:
+          if (tag !== 184) {
+            break;
+          }
+
+          message.numSpinLeft = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -870,6 +1310,16 @@ export const SlotDesk = {
       updateWallet: isSet(object.updateWallet) ? Boolean(object.updateWallet) : false,
       balanceChipsWalletBefore: isSet(object.balanceChipsWalletBefore) ? Number(object.balanceChipsWalletBefore) : 0,
       balanceChipsWalletAfter: isSet(object.balanceChipsWalletAfter) ? Number(object.balanceChipsWalletAfter) : 0,
+      collectionSymbols: Array.isArray(object?.collectionSymbols)
+        ? object.collectionSymbols.map((e: any) => siXiangSymbolFromJSON(e))
+        : [],
+      totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
+      perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
+      updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
+      chipsBonus: isSet(object.chipsBonus) ? Number(object.chipsBonus) : 0,
+      tsUnix: isSet(object.tsUnix) ? Number(object.tsUnix) : 0,
+      ratioFruitBasket: isSet(object.ratioFruitBasket) ? Number(object.ratioFruitBasket) : 0,
+      numSpinLeft: isSet(object.numSpinLeft) ? Number(object.numSpinLeft) : 0,
     };
   },
 
@@ -902,6 +1352,18 @@ export const SlotDesk = {
       (obj.balanceChipsWalletBefore = Math.round(message.balanceChipsWalletBefore));
     message.balanceChipsWalletAfter !== undefined &&
       (obj.balanceChipsWalletAfter = Math.round(message.balanceChipsWalletAfter));
+    if (message.collectionSymbols) {
+      obj.collectionSymbols = message.collectionSymbols.map((e) => siXiangSymbolToJSON(e));
+    } else {
+      obj.collectionSymbols = [];
+    }
+    message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
+    message.perlGreenForest !== undefined && (obj.perlGreenForest = Math.round(message.perlGreenForest));
+    message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
+    message.chipsBonus !== undefined && (obj.chipsBonus = Math.round(message.chipsBonus));
+    message.tsUnix !== undefined && (obj.tsUnix = Math.round(message.tsUnix));
+    message.ratioFruitBasket !== undefined && (obj.ratioFruitBasket = Math.round(message.ratioFruitBasket));
+    message.numSpinLeft !== undefined && (obj.numSpinLeft = Math.round(message.numSpinLeft));
     return obj;
   },
 
@@ -930,6 +1392,14 @@ export const SlotDesk = {
     message.updateWallet = object.updateWallet ?? false;
     message.balanceChipsWalletBefore = object.balanceChipsWalletBefore ?? 0;
     message.balanceChipsWalletAfter = object.balanceChipsWalletAfter ?? 0;
+    message.collectionSymbols = object.collectionSymbols?.map((e) => e) || [];
+    message.totalChipsWinByGame = object.totalChipsWinByGame ?? 0;
+    message.perlGreenForest = object.perlGreenForest ?? 0;
+    message.updateChipsBonus = object.updateChipsBonus ?? false;
+    message.chipsBonus = object.chipsBonus ?? 0;
+    message.tsUnix = object.tsUnix ?? 0;
+    message.ratioFruitBasket = object.ratioFruitBasket ?? 0;
+    message.numSpinLeft = object.numSpinLeft ?? 0;
     return message;
   },
 };
@@ -1119,7 +1589,7 @@ export const SpinSymbol = {
 };
 
 function createBasePayline(): Payline {
-  return { id: 0, symbol: 0, numOccur: 0, rate: 0, chips: 0 };
+  return { id: 0, symbol: 0, numOccur: 0, rate: 0, chips: 0, indexs: [] };
 }
 
 export const Payline = {
@@ -1139,6 +1609,11 @@ export const Payline = {
     if (message.chips !== 0) {
       writer.uint32(40).int64(message.chips);
     }
+    writer.uint32(50).fork();
+    for (const v of message.indexs) {
+      writer.int32(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -1184,6 +1659,23 @@ export const Payline = {
 
           message.chips = longToNumber(reader.int64() as Long);
           continue;
+        case 6:
+          if (tag === 48) {
+            message.indexs.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 50) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.indexs.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1200,6 +1692,7 @@ export const Payline = {
       numOccur: isSet(object.numOccur) ? Number(object.numOccur) : 0,
       rate: isSet(object.rate) ? Number(object.rate) : 0,
       chips: isSet(object.chips) ? Number(object.chips) : 0,
+      indexs: Array.isArray(object?.indexs) ? object.indexs.map((e: any) => Number(e)) : [],
     };
   },
 
@@ -1210,6 +1703,11 @@ export const Payline = {
     message.numOccur !== undefined && (obj.numOccur = Math.round(message.numOccur));
     message.rate !== undefined && (obj.rate = message.rate);
     message.chips !== undefined && (obj.chips = Math.round(message.chips));
+    if (message.indexs) {
+      obj.indexs = message.indexs.map((e) => Math.round(e));
+    } else {
+      obj.indexs = [];
+    }
     return obj;
   },
 
@@ -1224,6 +1722,7 @@ export const Payline = {
     message.numOccur = object.numOccur ?? 0;
     message.rate = object.rate ?? 0;
     message.chips = object.chips ?? 0;
+    message.indexs = object.indexs?.map((e) => e) || [];
     return message;
   },
 };
