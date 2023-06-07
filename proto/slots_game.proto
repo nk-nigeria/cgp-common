@@ -6,10 +6,10 @@ option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
 
 message SlotDesk {
   // ma trận rowxcol ở dạng array 1 chiều,
-  //thể hiện các symbol hiện tại của game
+  // thể hiện các symbol hiện tại của game
   SlotMatrix matrix = 1;
-  //ma trận 5x3 ở dạng array 1 chiều,
-  // thể hiện các symbol hiện tại của game, đã áp dụng rule thay thế wild
+  // ma trận 5x3 ở dạng array 1 chiều,
+  //  thể hiện các symbol hiện tại của game, đã áp dụng rule thay thế wild
   SlotMatrix spread_matrix = 4;
   // mảng chưa danh sách payline đã win.
   repeated Payline paylines = 5;
@@ -60,6 +60,7 @@ message SlotDesk {
   int64 ratio_fruit_basket = 22;
   // số lượt spin còn lại, -1 = unlimited
   int64 num_spin_left = 23;
+  repeated int64 bet_levels = 24;
 }
 
 // Ma trận symbol
@@ -196,7 +197,7 @@ enum SiXiangSymbol {
   SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MAJOR = 0X01113;
   SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINOR = 0X01114;
   SI_XIANG_SYMBOL_JUICE_FRUITBASKET_MINI = 0X01115;
-  
+
   // fruit rain
   SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_1 = 0X01120;
   SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_2 = 0X01121;
@@ -230,7 +231,7 @@ enum SiXiangGame {
   SI_XIANG_GAME_TARZAN_JUNGLE_TREASURE = 101;
   SI_XIANG_GAME_TARZAN_FREESPINX9 = 102;
   /* Juice Garden */
-  
+
   SI_XIANG_GAME_JUICE_NORMAL = 200;
   SI_XIANG_GAME_JUICE_FRUIT_BASKET = 201;
   SI_XIANG_GAME_JUICE_FRUIT_RAIN = 202;

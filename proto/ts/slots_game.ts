@@ -907,7 +907,7 @@ export interface SlotDesk {
     | undefined;
   /**
    * ma trận 5x3 ở dạng array 1 chiều,
-   * thể hiện các symbol hiện tại của game, đã áp dụng rule thay thế wild
+   *  thể hiện các symbol hiện tại của game, đã áp dụng rule thay thế wild
    */
   spreadMatrix:
     | SlotMatrix
@@ -969,6 +969,7 @@ export interface SlotDesk {
   ratioFruitBasket: number;
   /** số lượt spin còn lại, -1 = unlimited */
   numSpinLeft: number;
+  betLevels: number[];
 }
 
 /** Ma trận symbol */
@@ -1027,6 +1028,7 @@ function createBaseSlotDesk(): SlotDesk {
     tsUnix: 0,
     ratioFruitBasket: 0,
     numSpinLeft: 0,
+    betLevels: [],
   };
 }
 
@@ -1103,6 +1105,11 @@ export const SlotDesk = {
     if (message.numSpinLeft !== 0) {
       writer.uint32(184).int64(message.numSpinLeft);
     }
+    writer.uint32(194).fork();
+    for (const v of message.betLevels) {
+      writer.int64(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -1284,6 +1291,23 @@ export const SlotDesk = {
 
           message.numSpinLeft = longToNumber(reader.int64() as Long);
           continue;
+        case 24:
+          if (tag === 192) {
+            message.betLevels.push(longToNumber(reader.int64() as Long));
+
+            continue;
+          }
+
+          if (tag === 194) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.betLevels.push(longToNumber(reader.int64() as Long));
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1320,6 +1344,7 @@ export const SlotDesk = {
       tsUnix: isSet(object.tsUnix) ? Number(object.tsUnix) : 0,
       ratioFruitBasket: isSet(object.ratioFruitBasket) ? Number(object.ratioFruitBasket) : 0,
       numSpinLeft: isSet(object.numSpinLeft) ? Number(object.numSpinLeft) : 0,
+      betLevels: Array.isArray(object?.betLevels) ? object.betLevels.map((e: any) => Number(e)) : [],
     };
   },
 
@@ -1364,6 +1389,11 @@ export const SlotDesk = {
     message.tsUnix !== undefined && (obj.tsUnix = Math.round(message.tsUnix));
     message.ratioFruitBasket !== undefined && (obj.ratioFruitBasket = Math.round(message.ratioFruitBasket));
     message.numSpinLeft !== undefined && (obj.numSpinLeft = Math.round(message.numSpinLeft));
+    if (message.betLevels) {
+      obj.betLevels = message.betLevels.map((e) => Math.round(e));
+    } else {
+      obj.betLevels = [];
+    }
     return obj;
   },
 
@@ -1400,6 +1430,7 @@ export const SlotDesk = {
     message.tsUnix = object.tsUnix ?? 0;
     message.ratioFruitBasket = object.ratioFruitBasket ?? 0;
     message.numSpinLeft = object.numSpinLeft ?? 0;
+    message.betLevels = object.betLevels?.map((e) => e) || [];
     return message;
   },
 };
