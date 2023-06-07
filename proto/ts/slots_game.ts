@@ -943,28 +943,18 @@ export interface SlotDesk {
    * nếu true, có nghĩa có action cộng tiền ở wallet
    * nếu fale, 2 giá trị balance_chips_wallet_before và
    * balance_chips_wallet_after luôn = 0, nên bỏ qua
+   * bool update_wallet = 104;
    */
-  updateWallet: boolean;
-  /** số chip trong wallet trước spin */
-  balanceChipsWalletBefore: number;
-  /** số chip trong wallet sau spin */
-  balanceChipsWalletAfter: number;
+  gameReward: GameReward | undefined;
+  totalChipsWinByGame: number;
   /**
+   * số chip trong wallet trước spin
    * các symbol đặc biệt thu thập được,
    * vd như eye ở sixiang, letter ở tarzan
    */
   collectionSymbols: SiXiangSymbol[];
-  /**
-   * tổng chip win trong 1 game
-   * vd trong game tarzan,
-   * chip ở đây sẽ là tổng chip trong 9 lần spin
-   */
-  totalChipsWinByGame: number;
   /** ngọc rừng xanh ở tarzan game */
   perlGreenForest: number;
-  /** chips tích lũy ở tarzan game */
-  updateChipsBonus: boolean;
-  chipsBonus: number;
   tsUnix: number;
   ratioFruitBasket: number;
   /** số lượt spin còn lại, -1 = unlimited */
@@ -1000,7 +990,24 @@ export interface Payline {
   rate: number;
   chips: number;
   /** Array contain index of symbol in matrix */
-  indexs: number[];
+  indices: number[];
+}
+
+export interface GameReward {
+  updateWallet: boolean;
+  /** số chip trong wallet trước spin */
+  balanceChipsWalletBefore: number;
+  /** số chip trong wallet sau spin */
+  balanceChipsWalletAfter: number;
+  /**
+   * tổng chip win trong 1 game
+   * vd trong game tarzan,
+   * chip ở đây sẽ là tổng chip trong 9 lần spin
+   */
+  totalChipsWinByGame: number;
+  /** ngọc rừng xanh ở tarzan game */
+  updateChipsBonus: boolean;
+  chipsBonus: number;
 }
 
 function createBaseSlotDesk(): SlotDesk {
@@ -1017,14 +1024,10 @@ function createBaseSlotDesk(): SlotDesk {
     winJp: 0,
     bigWin: 0,
     chipsWin: 0,
-    updateWallet: false,
-    balanceChipsWalletBefore: 0,
-    balanceChipsWalletAfter: 0,
-    collectionSymbols: [],
+    gameReward: undefined,
     totalChipsWinByGame: 0,
+    collectionSymbols: [],
     perlGreenForest: 0,
-    updateChipsBonus: false,
-    chipsBonus: 0,
     tsUnix: 0,
     ratioFruitBasket: 0,
     numSpinLeft: 0,
@@ -1070,31 +1073,19 @@ export const SlotDesk = {
     if (message.chipsWin !== 0) {
       writer.uint32(104).int64(message.chipsWin);
     }
-    if (message.updateWallet === true) {
-      writer.uint32(832).bool(message.updateWallet);
+    if (message.gameReward !== undefined) {
+      GameReward.encode(message.gameReward, writer.uint32(114).fork()).ldelim();
     }
-    if (message.balanceChipsWalletBefore !== 0) {
-      writer.uint32(112).int64(message.balanceChipsWalletBefore);
-    }
-    if (message.balanceChipsWalletAfter !== 0) {
-      writer.uint32(120).int64(message.balanceChipsWalletAfter);
+    if (message.totalChipsWinByGame !== 0) {
+      writer.uint32(136).int64(message.totalChipsWinByGame);
     }
     writer.uint32(130).fork();
     for (const v of message.collectionSymbols) {
       writer.int32(v);
     }
     writer.ldelim();
-    if (message.totalChipsWinByGame !== 0) {
-      writer.uint32(136).int64(message.totalChipsWinByGame);
-    }
     if (message.perlGreenForest !== 0) {
       writer.uint32(144).int32(message.perlGreenForest);
-    }
-    if (message.updateChipsBonus === true) {
-      writer.uint32(152).bool(message.updateChipsBonus);
-    }
-    if (message.chipsBonus !== 0) {
-      writer.uint32(160).int64(message.chipsBonus);
     }
     if (message.tsUnix !== 0) {
       writer.uint32(168).int64(message.tsUnix);
@@ -1204,26 +1195,19 @@ export const SlotDesk = {
 
           message.chipsWin = longToNumber(reader.int64() as Long);
           continue;
-        case 104:
-          if (tag !== 832) {
-            break;
-          }
-
-          message.updateWallet = reader.bool();
-          continue;
         case 14:
-          if (tag !== 112) {
+          if (tag !== 114) {
             break;
           }
 
-          message.balanceChipsWalletBefore = longToNumber(reader.int64() as Long);
+          message.gameReward = GameReward.decode(reader, reader.uint32());
           continue;
-        case 15:
-          if (tag !== 120) {
+        case 17:
+          if (tag !== 136) {
             break;
           }
 
-          message.balanceChipsWalletAfter = longToNumber(reader.int64() as Long);
+          message.totalChipsWinByGame = longToNumber(reader.int64() as Long);
           continue;
         case 16:
           if (tag === 128) {
@@ -1242,33 +1226,12 @@ export const SlotDesk = {
           }
 
           break;
-        case 17:
-          if (tag !== 136) {
-            break;
-          }
-
-          message.totalChipsWinByGame = longToNumber(reader.int64() as Long);
-          continue;
         case 18:
           if (tag !== 144) {
             break;
           }
 
           message.perlGreenForest = reader.int32();
-          continue;
-        case 19:
-          if (tag !== 152) {
-            break;
-          }
-
-          message.updateChipsBonus = reader.bool();
-          continue;
-        case 20:
-          if (tag !== 160) {
-            break;
-          }
-
-          message.chipsBonus = longToNumber(reader.int64() as Long);
           continue;
         case 21:
           if (tag !== 168) {
@@ -1331,16 +1294,12 @@ export const SlotDesk = {
       winJp: isSet(object.winJp) ? winJackpotFromJSON(object.winJp) : 0,
       bigWin: isSet(object.bigWin) ? bigWinFromJSON(object.bigWin) : 0,
       chipsWin: isSet(object.chipsWin) ? Number(object.chipsWin) : 0,
-      updateWallet: isSet(object.updateWallet) ? Boolean(object.updateWallet) : false,
-      balanceChipsWalletBefore: isSet(object.balanceChipsWalletBefore) ? Number(object.balanceChipsWalletBefore) : 0,
-      balanceChipsWalletAfter: isSet(object.balanceChipsWalletAfter) ? Number(object.balanceChipsWalletAfter) : 0,
+      gameReward: isSet(object.gameReward) ? GameReward.fromJSON(object.gameReward) : undefined,
+      totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
       collectionSymbols: Array.isArray(object?.collectionSymbols)
         ? object.collectionSymbols.map((e: any) => siXiangSymbolFromJSON(e))
         : [],
-      totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
       perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
-      updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
-      chipsBonus: isSet(object.chipsBonus) ? Number(object.chipsBonus) : 0,
       tsUnix: isSet(object.tsUnix) ? Number(object.tsUnix) : 0,
       ratioFruitBasket: isSet(object.ratioFruitBasket) ? Number(object.ratioFruitBasket) : 0,
       numSpinLeft: isSet(object.numSpinLeft) ? Number(object.numSpinLeft) : 0,
@@ -1372,20 +1331,15 @@ export const SlotDesk = {
     message.winJp !== undefined && (obj.winJp = winJackpotToJSON(message.winJp));
     message.bigWin !== undefined && (obj.bigWin = bigWinToJSON(message.bigWin));
     message.chipsWin !== undefined && (obj.chipsWin = Math.round(message.chipsWin));
-    message.updateWallet !== undefined && (obj.updateWallet = message.updateWallet);
-    message.balanceChipsWalletBefore !== undefined &&
-      (obj.balanceChipsWalletBefore = Math.round(message.balanceChipsWalletBefore));
-    message.balanceChipsWalletAfter !== undefined &&
-      (obj.balanceChipsWalletAfter = Math.round(message.balanceChipsWalletAfter));
+    message.gameReward !== undefined &&
+      (obj.gameReward = message.gameReward ? GameReward.toJSON(message.gameReward) : undefined);
+    message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
     if (message.collectionSymbols) {
       obj.collectionSymbols = message.collectionSymbols.map((e) => siXiangSymbolToJSON(e));
     } else {
       obj.collectionSymbols = [];
     }
-    message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
     message.perlGreenForest !== undefined && (obj.perlGreenForest = Math.round(message.perlGreenForest));
-    message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
-    message.chipsBonus !== undefined && (obj.chipsBonus = Math.round(message.chipsBonus));
     message.tsUnix !== undefined && (obj.tsUnix = Math.round(message.tsUnix));
     message.ratioFruitBasket !== undefined && (obj.ratioFruitBasket = Math.round(message.ratioFruitBasket));
     message.numSpinLeft !== undefined && (obj.numSpinLeft = Math.round(message.numSpinLeft));
@@ -1419,14 +1373,12 @@ export const SlotDesk = {
     message.winJp = object.winJp ?? 0;
     message.bigWin = object.bigWin ?? 0;
     message.chipsWin = object.chipsWin ?? 0;
-    message.updateWallet = object.updateWallet ?? false;
-    message.balanceChipsWalletBefore = object.balanceChipsWalletBefore ?? 0;
-    message.balanceChipsWalletAfter = object.balanceChipsWalletAfter ?? 0;
-    message.collectionSymbols = object.collectionSymbols?.map((e) => e) || [];
+    message.gameReward = (object.gameReward !== undefined && object.gameReward !== null)
+      ? GameReward.fromPartial(object.gameReward)
+      : undefined;
     message.totalChipsWinByGame = object.totalChipsWinByGame ?? 0;
+    message.collectionSymbols = object.collectionSymbols?.map((e) => e) || [];
     message.perlGreenForest = object.perlGreenForest ?? 0;
-    message.updateChipsBonus = object.updateChipsBonus ?? false;
-    message.chipsBonus = object.chipsBonus ?? 0;
     message.tsUnix = object.tsUnix ?? 0;
     message.ratioFruitBasket = object.ratioFruitBasket ?? 0;
     message.numSpinLeft = object.numSpinLeft ?? 0;
@@ -1620,7 +1572,7 @@ export const SpinSymbol = {
 };
 
 function createBasePayline(): Payline {
-  return { id: 0, symbol: 0, numOccur: 0, rate: 0, chips: 0, indexs: [] };
+  return { id: 0, symbol: 0, numOccur: 0, rate: 0, chips: 0, indices: [] };
 }
 
 export const Payline = {
@@ -1641,7 +1593,7 @@ export const Payline = {
       writer.uint32(40).int64(message.chips);
     }
     writer.uint32(50).fork();
-    for (const v of message.indexs) {
+    for (const v of message.indices) {
       writer.int32(v);
     }
     writer.ldelim();
@@ -1692,7 +1644,7 @@ export const Payline = {
           continue;
         case 6:
           if (tag === 48) {
-            message.indexs.push(reader.int32());
+            message.indices.push(reader.int32());
 
             continue;
           }
@@ -1700,7 +1652,7 @@ export const Payline = {
           if (tag === 50) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.indexs.push(reader.int32());
+              message.indices.push(reader.int32());
             }
 
             continue;
@@ -1723,7 +1675,7 @@ export const Payline = {
       numOccur: isSet(object.numOccur) ? Number(object.numOccur) : 0,
       rate: isSet(object.rate) ? Number(object.rate) : 0,
       chips: isSet(object.chips) ? Number(object.chips) : 0,
-      indexs: Array.isArray(object?.indexs) ? object.indexs.map((e: any) => Number(e)) : [],
+      indices: Array.isArray(object?.indices) ? object.indices.map((e: any) => Number(e)) : [],
     };
   },
 
@@ -1734,10 +1686,10 @@ export const Payline = {
     message.numOccur !== undefined && (obj.numOccur = Math.round(message.numOccur));
     message.rate !== undefined && (obj.rate = message.rate);
     message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    if (message.indexs) {
-      obj.indexs = message.indexs.map((e) => Math.round(e));
+    if (message.indices) {
+      obj.indices = message.indices.map((e) => Math.round(e));
     } else {
-      obj.indexs = [];
+      obj.indices = [];
     }
     return obj;
   },
@@ -1753,7 +1705,139 @@ export const Payline = {
     message.numOccur = object.numOccur ?? 0;
     message.rate = object.rate ?? 0;
     message.chips = object.chips ?? 0;
-    message.indexs = object.indexs?.map((e) => e) || [];
+    message.indices = object.indices?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseGameReward(): GameReward {
+  return {
+    updateWallet: false,
+    balanceChipsWalletBefore: 0,
+    balanceChipsWalletAfter: 0,
+    totalChipsWinByGame: 0,
+    updateChipsBonus: false,
+    chipsBonus: 0,
+  };
+}
+
+export const GameReward = {
+  encode(message: GameReward, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.updateWallet === true) {
+      writer.uint32(8).bool(message.updateWallet);
+    }
+    if (message.balanceChipsWalletBefore !== 0) {
+      writer.uint32(112).int64(message.balanceChipsWalletBefore);
+    }
+    if (message.balanceChipsWalletAfter !== 0) {
+      writer.uint32(120).int64(message.balanceChipsWalletAfter);
+    }
+    if (message.totalChipsWinByGame !== 0) {
+      writer.uint32(136).int64(message.totalChipsWinByGame);
+    }
+    if (message.updateChipsBonus === true) {
+      writer.uint32(152).bool(message.updateChipsBonus);
+    }
+    if (message.chipsBonus !== 0) {
+      writer.uint32(160).int64(message.chipsBonus);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GameReward {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGameReward();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.updateWallet = reader.bool();
+          continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.balanceChipsWalletBefore = longToNumber(reader.int64() as Long);
+          continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.balanceChipsWalletAfter = longToNumber(reader.int64() as Long);
+          continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.totalChipsWinByGame = longToNumber(reader.int64() as Long);
+          continue;
+        case 19:
+          if (tag !== 152) {
+            break;
+          }
+
+          message.updateChipsBonus = reader.bool();
+          continue;
+        case 20:
+          if (tag !== 160) {
+            break;
+          }
+
+          message.chipsBonus = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameReward {
+    return {
+      updateWallet: isSet(object.updateWallet) ? Boolean(object.updateWallet) : false,
+      balanceChipsWalletBefore: isSet(object.balanceChipsWalletBefore) ? Number(object.balanceChipsWalletBefore) : 0,
+      balanceChipsWalletAfter: isSet(object.balanceChipsWalletAfter) ? Number(object.balanceChipsWalletAfter) : 0,
+      totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
+      updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
+      chipsBonus: isSet(object.chipsBonus) ? Number(object.chipsBonus) : 0,
+    };
+  },
+
+  toJSON(message: GameReward): unknown {
+    const obj: any = {};
+    message.updateWallet !== undefined && (obj.updateWallet = message.updateWallet);
+    message.balanceChipsWalletBefore !== undefined &&
+      (obj.balanceChipsWalletBefore = Math.round(message.balanceChipsWalletBefore));
+    message.balanceChipsWalletAfter !== undefined &&
+      (obj.balanceChipsWalletAfter = Math.round(message.balanceChipsWalletAfter));
+    message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
+    message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
+    message.chipsBonus !== undefined && (obj.chipsBonus = Math.round(message.chipsBonus));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GameReward>, I>>(base?: I): GameReward {
+    return GameReward.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GameReward>, I>>(object: I): GameReward {
+    const message = createBaseGameReward();
+    message.updateWallet = object.updateWallet ?? false;
+    message.balanceChipsWalletBefore = object.balanceChipsWalletBefore ?? 0;
+    message.balanceChipsWalletAfter = object.balanceChipsWalletAfter ?? 0;
+    message.totalChipsWinByGame = object.totalChipsWinByGame ?? 0;
+    message.updateChipsBonus = object.updateChipsBonus ?? false;
+    message.chipsBonus = object.chipsBonus ?? 0;
     return message;
   },
 };
