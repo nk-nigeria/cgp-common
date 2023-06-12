@@ -269,4 +269,6 @@ message GameReward {
   // ngọc rừng xanh ở tarzan game
   bool update_chips_bonus = 19;
   int64 chips_bonus = 20;
+  // save ratio win in some case
+  float ratioWin=21;
 }
