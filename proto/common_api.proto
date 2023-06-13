@@ -430,3 +430,8 @@ message WalletTransRequest {
   string meta_action = 3;
   string meta_bank_action = 4;
 }
+
+message Error {
+  int64 code = 1;
+  string error = 2;
+}

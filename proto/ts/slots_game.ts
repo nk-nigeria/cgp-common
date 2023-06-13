@@ -1008,7 +1008,8 @@ export interface GameReward {
   /** ngọc rừng xanh ở tarzan game */
   updateChipsBonus: boolean;
   chipsBonus: number;
-  rationWin: number;
+  /** save ratio win in some case */
+  ratioWin: number;
 }
 
 function createBaseSlotDesk(): SlotDesk {
@@ -1719,7 +1720,7 @@ function createBaseGameReward(): GameReward {
     totalChipsWinByGame: 0,
     updateChipsBonus: false,
     chipsBonus: 0,
-    rationWin: 0,
+    ratioWin: 0,
   };
 }
 
@@ -1743,8 +1744,8 @@ export const GameReward = {
     if (message.chipsBonus !== 0) {
       writer.uint32(160).int64(message.chipsBonus);
     }
-    if (message.rationWin !== 0) {
-      writer.uint32(173).float(message.rationWin);
+    if (message.ratioWin !== 0) {
+      writer.uint32(173).float(message.ratioWin);
     }
     return writer;
   },
@@ -1803,7 +1804,7 @@ export const GameReward = {
             break;
           }
 
-          message.rationWin = reader.float();
+          message.ratioWin = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1822,7 +1823,7 @@ export const GameReward = {
       totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
       updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
       chipsBonus: isSet(object.chipsBonus) ? Number(object.chipsBonus) : 0,
-      rationWin: isSet(object.rationWin) ? Number(object.rationWin) : 0,
+      ratioWin: isSet(object.ratioWin) ? Number(object.ratioWin) : 0,
     };
   },
 
@@ -1836,7 +1837,7 @@ export const GameReward = {
     message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
     message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
     message.chipsBonus !== undefined && (obj.chipsBonus = Math.round(message.chipsBonus));
-    message.rationWin !== undefined && (obj.rationWin = message.rationWin);
+    message.ratioWin !== undefined && (obj.ratioWin = message.ratioWin);
     return obj;
   },
 
@@ -1852,7 +1853,7 @@ export const GameReward = {
     message.totalChipsWinByGame = object.totalChipsWinByGame ?? 0;
     message.updateChipsBonus = object.updateChipsBonus ?? false;
     message.chipsBonus = object.chipsBonus ?? 0;
-    message.rationWin = object.rationWin ?? 0;
+    message.ratioWin = object.ratioWin ?? 0;
     return message;
   },
 };

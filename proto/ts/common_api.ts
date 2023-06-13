@@ -720,6 +720,11 @@ export interface WalletTransRequest {
   metaBankAction: string;
 }
 
+export interface Error {
+  code: number;
+  error: string;
+}
+
 function createBaseGame(): Game {
   return { code: "", active: false, lobbyId: "", layout: undefined };
 }
@@ -5914,6 +5919,77 @@ export const WalletTransRequest = {
     message.cusor = object.cusor ?? "";
     message.metaAction = object.metaAction ?? "";
     message.metaBankAction = object.metaBankAction ?? "";
+    return message;
+  },
+};
+
+function createBaseError(): Error {
+  return { code: 0, error: "" };
+}
+
+export const Error = {
+  encode(message: Error, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.code !== 0) {
+      writer.uint32(8).int64(message.code);
+    }
+    if (message.error !== "") {
+      writer.uint32(18).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Error {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseError();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.code = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.error = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Error {
+    return {
+      code: isSet(object.code) ? Number(object.code) : 0,
+      error: isSet(object.error) ? String(object.error) : "",
+    };
+  },
+
+  toJSON(message: Error): unknown {
+    const obj: any = {};
+    message.code !== undefined && (obj.code = Math.round(message.code));
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Error>, I>>(base?: I): Error {
+    return Error.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Error>, I>>(object: I): Error {
+    const message = createBaseError();
+    message.code = object.code ?? 0;
+    message.error = object.error ?? "";
     return message;
   },
 };
