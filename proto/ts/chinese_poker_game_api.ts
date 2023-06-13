@@ -355,6 +355,7 @@ export enum OpCodeUpdate {
   OPCODE_KICK_OFF_THE_TABLE = 8,
   OPCODE_UPDATE_USER_INFO = 9,
   OPCODE_USER_IN_TABLE_INFO = 10,
+  OPCODE_ERROR = 11,
   UNRECOGNIZED = -1,
 }
 
@@ -393,6 +394,9 @@ export function opCodeUpdateFromJSON(object: any): OpCodeUpdate {
     case 10:
     case "OPCODE_USER_IN_TABLE_INFO":
       return OpCodeUpdate.OPCODE_USER_IN_TABLE_INFO;
+    case 11:
+    case "OPCODE_ERROR":
+      return OpCodeUpdate.OPCODE_ERROR;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -424,6 +428,8 @@ export function opCodeUpdateToJSON(object: OpCodeUpdate): string {
       return "OPCODE_UPDATE_USER_INFO";
     case OpCodeUpdate.OPCODE_USER_IN_TABLE_INFO:
       return "OPCODE_USER_IN_TABLE_INFO";
+    case OpCodeUpdate.OPCODE_ERROR:
+      return "OPCODE_ERROR";
     case OpCodeUpdate.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
