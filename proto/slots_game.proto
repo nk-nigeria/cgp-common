@@ -34,14 +34,14 @@ message SlotDesk {
   // loại big win (mega, huge, big...)
   BigWin big_win = 11;
   // tổng số chip thắng trong game
-  int64 chips_win = 13;
+  // int64 chips_win = 13;
   // cap nhat bien dong so du trong wallet
   // nếu true, có nghĩa có action cộng tiền ở wallet
   // nếu fale, 2 giá trị balance_chips_wallet_before và
   // balance_chips_wallet_after luôn = 0, nên bỏ qua
   // bool update_wallet = 104;
   GameReward game_reward = 14;
-  int64 total_chips_win_by_game = 17;
+  // int64 total_chips_win_by_game = 17;
   // số chip trong wallet trước spin
   // các symbol đặc biệt thu thập được,
   // vd như eye ở sixiang, letter ở tarzan
@@ -259,16 +259,20 @@ message Payline {
 message GameReward {
   bool update_wallet = 1;
   // số chip trong wallet trước spin
-  int64 balance_chips_wallet_before = 14;
+  int64 balance_chips_wallet_before = 2;
   // số chip trong wallet sau spin
-  int64 balance_chips_wallet_after = 15;
+  int64 balance_chips_wallet_after = 3;
   // tổng chip win trong 1 game
+  int64 chips_win = 4;
   // vd trong game tarzan,
   // chip ở đây sẽ là tổng chip trong 9 lần spin
-  int64 total_chips_win_by_game = 17;
+  int64 total_chips_win_by_game = 5;
   // ngọc rừng xanh ở tarzan game
-  bool update_chips_bonus = 19;
-  int64 chips_bonus = 20;
+  bool update_chips_bonus = 6;
+  int64 chips_bonus = 7;
   // save ratio win in some case
-  float ratioWin=21;
+  float ratio_win=8;
+  int64 chip_bet_fee = 9;
+  int64 chip_fee=10;
 }
+

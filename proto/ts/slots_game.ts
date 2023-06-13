@@ -936,18 +936,20 @@ export interface SlotDesk {
   winJp: WinJackpot;
   /** loại big win (mega, huge, big...) */
   bigWin: BigWin;
-  /** tổng số chip thắng trong game */
-  chipsWin: number;
   /**
+   * tổng số chip thắng trong game
+   * int64 chips_win = 13;
    * cap nhat bien dong so du trong wallet
    * nếu true, có nghĩa có action cộng tiền ở wallet
    * nếu fale, 2 giá trị balance_chips_wallet_before và
    * balance_chips_wallet_after luôn = 0, nên bỏ qua
    * bool update_wallet = 104;
    */
-  gameReward: GameReward | undefined;
-  totalChipsWinByGame: number;
+  gameReward:
+    | GameReward
+    | undefined;
   /**
+   * int64 total_chips_win_by_game = 17;
    * số chip trong wallet trước spin
    * các symbol đặc biệt thu thập được,
    * vd như eye ở sixiang, letter ở tarzan
@@ -999,8 +1001,9 @@ export interface GameReward {
   balanceChipsWalletBefore: number;
   /** số chip trong wallet sau spin */
   balanceChipsWalletAfter: number;
+  /** tổng chip win trong 1 game */
+  chipsWin: number;
   /**
-   * tổng chip win trong 1 game
    * vd trong game tarzan,
    * chip ở đây sẽ là tổng chip trong 9 lần spin
    */
@@ -1010,6 +1013,8 @@ export interface GameReward {
   chipsBonus: number;
   /** save ratio win in some case */
   ratioWin: number;
+  chipBetFee: number;
+  chipFee: number;
 }
 
 function createBaseSlotDesk(): SlotDesk {
@@ -1025,9 +1030,7 @@ function createBaseSlotDesk(): SlotDesk {
     spinSymbols: [],
     winJp: 0,
     bigWin: 0,
-    chipsWin: 0,
     gameReward: undefined,
-    totalChipsWinByGame: 0,
     collectionSymbols: [],
     perlGreenForest: 0,
     tsUnix: 0,
@@ -1072,14 +1075,8 @@ export const SlotDesk = {
     if (message.bigWin !== 0) {
       writer.uint32(88).int32(message.bigWin);
     }
-    if (message.chipsWin !== 0) {
-      writer.uint32(104).int64(message.chipsWin);
-    }
     if (message.gameReward !== undefined) {
       GameReward.encode(message.gameReward, writer.uint32(114).fork()).ldelim();
-    }
-    if (message.totalChipsWinByGame !== 0) {
-      writer.uint32(136).int64(message.totalChipsWinByGame);
     }
     writer.uint32(130).fork();
     for (const v of message.collectionSymbols) {
@@ -1190,26 +1187,12 @@ export const SlotDesk = {
 
           message.bigWin = reader.int32() as any;
           continue;
-        case 13:
-          if (tag !== 104) {
-            break;
-          }
-
-          message.chipsWin = longToNumber(reader.int64() as Long);
-          continue;
         case 14:
           if (tag !== 114) {
             break;
           }
 
           message.gameReward = GameReward.decode(reader, reader.uint32());
-          continue;
-        case 17:
-          if (tag !== 136) {
-            break;
-          }
-
-          message.totalChipsWinByGame = longToNumber(reader.int64() as Long);
           continue;
         case 16:
           if (tag === 128) {
@@ -1295,9 +1278,7 @@ export const SlotDesk = {
       spinSymbols: Array.isArray(object?.spinSymbols) ? object.spinSymbols.map((e: any) => SpinSymbol.fromJSON(e)) : [],
       winJp: isSet(object.winJp) ? winJackpotFromJSON(object.winJp) : 0,
       bigWin: isSet(object.bigWin) ? bigWinFromJSON(object.bigWin) : 0,
-      chipsWin: isSet(object.chipsWin) ? Number(object.chipsWin) : 0,
       gameReward: isSet(object.gameReward) ? GameReward.fromJSON(object.gameReward) : undefined,
-      totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
       collectionSymbols: Array.isArray(object?.collectionSymbols)
         ? object.collectionSymbols.map((e: any) => siXiangSymbolFromJSON(e))
         : [],
@@ -1332,10 +1313,8 @@ export const SlotDesk = {
     }
     message.winJp !== undefined && (obj.winJp = winJackpotToJSON(message.winJp));
     message.bigWin !== undefined && (obj.bigWin = bigWinToJSON(message.bigWin));
-    message.chipsWin !== undefined && (obj.chipsWin = Math.round(message.chipsWin));
     message.gameReward !== undefined &&
       (obj.gameReward = message.gameReward ? GameReward.toJSON(message.gameReward) : undefined);
-    message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
     if (message.collectionSymbols) {
       obj.collectionSymbols = message.collectionSymbols.map((e) => siXiangSymbolToJSON(e));
     } else {
@@ -1374,11 +1353,9 @@ export const SlotDesk = {
     message.spinSymbols = object.spinSymbols?.map((e) => SpinSymbol.fromPartial(e)) || [];
     message.winJp = object.winJp ?? 0;
     message.bigWin = object.bigWin ?? 0;
-    message.chipsWin = object.chipsWin ?? 0;
     message.gameReward = (object.gameReward !== undefined && object.gameReward !== null)
       ? GameReward.fromPartial(object.gameReward)
       : undefined;
-    message.totalChipsWinByGame = object.totalChipsWinByGame ?? 0;
     message.collectionSymbols = object.collectionSymbols?.map((e) => e) || [];
     message.perlGreenForest = object.perlGreenForest ?? 0;
     message.tsUnix = object.tsUnix ?? 0;
@@ -1717,10 +1694,13 @@ function createBaseGameReward(): GameReward {
     updateWallet: false,
     balanceChipsWalletBefore: 0,
     balanceChipsWalletAfter: 0,
+    chipsWin: 0,
     totalChipsWinByGame: 0,
     updateChipsBonus: false,
     chipsBonus: 0,
     ratioWin: 0,
+    chipBetFee: 0,
+    chipFee: 0,
   };
 }
 
@@ -1730,22 +1710,31 @@ export const GameReward = {
       writer.uint32(8).bool(message.updateWallet);
     }
     if (message.balanceChipsWalletBefore !== 0) {
-      writer.uint32(112).int64(message.balanceChipsWalletBefore);
+      writer.uint32(16).int64(message.balanceChipsWalletBefore);
     }
     if (message.balanceChipsWalletAfter !== 0) {
-      writer.uint32(120).int64(message.balanceChipsWalletAfter);
+      writer.uint32(24).int64(message.balanceChipsWalletAfter);
+    }
+    if (message.chipsWin !== 0) {
+      writer.uint32(32).int64(message.chipsWin);
     }
     if (message.totalChipsWinByGame !== 0) {
-      writer.uint32(136).int64(message.totalChipsWinByGame);
+      writer.uint32(40).int64(message.totalChipsWinByGame);
     }
     if (message.updateChipsBonus === true) {
-      writer.uint32(152).bool(message.updateChipsBonus);
+      writer.uint32(48).bool(message.updateChipsBonus);
     }
     if (message.chipsBonus !== 0) {
-      writer.uint32(160).int64(message.chipsBonus);
+      writer.uint32(56).int64(message.chipsBonus);
     }
     if (message.ratioWin !== 0) {
-      writer.uint32(173).float(message.ratioWin);
+      writer.uint32(69).float(message.ratioWin);
+    }
+    if (message.chipBetFee !== 0) {
+      writer.uint32(72).int64(message.chipBetFee);
+    }
+    if (message.chipFee !== 0) {
+      writer.uint32(80).int64(message.chipFee);
     }
     return writer;
   },
@@ -1764,47 +1753,68 @@ export const GameReward = {
 
           message.updateWallet = reader.bool();
           continue;
-        case 14:
-          if (tag !== 112) {
+        case 2:
+          if (tag !== 16) {
             break;
           }
 
           message.balanceChipsWalletBefore = longToNumber(reader.int64() as Long);
           continue;
-        case 15:
-          if (tag !== 120) {
+        case 3:
+          if (tag !== 24) {
             break;
           }
 
           message.balanceChipsWalletAfter = longToNumber(reader.int64() as Long);
           continue;
-        case 17:
-          if (tag !== 136) {
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.chipsWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
             break;
           }
 
           message.totalChipsWinByGame = longToNumber(reader.int64() as Long);
           continue;
-        case 19:
-          if (tag !== 152) {
+        case 6:
+          if (tag !== 48) {
             break;
           }
 
           message.updateChipsBonus = reader.bool();
           continue;
-        case 20:
-          if (tag !== 160) {
+        case 7:
+          if (tag !== 56) {
             break;
           }
 
           message.chipsBonus = longToNumber(reader.int64() as Long);
           continue;
-        case 21:
-          if (tag !== 173) {
+        case 8:
+          if (tag !== 69) {
             break;
           }
 
           message.ratioWin = reader.float();
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.chipBetFee = longToNumber(reader.int64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.chipFee = longToNumber(reader.int64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1820,10 +1830,13 @@ export const GameReward = {
       updateWallet: isSet(object.updateWallet) ? Boolean(object.updateWallet) : false,
       balanceChipsWalletBefore: isSet(object.balanceChipsWalletBefore) ? Number(object.balanceChipsWalletBefore) : 0,
       balanceChipsWalletAfter: isSet(object.balanceChipsWalletAfter) ? Number(object.balanceChipsWalletAfter) : 0,
+      chipsWin: isSet(object.chipsWin) ? Number(object.chipsWin) : 0,
       totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
       updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
       chipsBonus: isSet(object.chipsBonus) ? Number(object.chipsBonus) : 0,
       ratioWin: isSet(object.ratioWin) ? Number(object.ratioWin) : 0,
+      chipBetFee: isSet(object.chipBetFee) ? Number(object.chipBetFee) : 0,
+      chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
     };
   },
 
@@ -1834,10 +1847,13 @@ export const GameReward = {
       (obj.balanceChipsWalletBefore = Math.round(message.balanceChipsWalletBefore));
     message.balanceChipsWalletAfter !== undefined &&
       (obj.balanceChipsWalletAfter = Math.round(message.balanceChipsWalletAfter));
+    message.chipsWin !== undefined && (obj.chipsWin = Math.round(message.chipsWin));
     message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
     message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
     message.chipsBonus !== undefined && (obj.chipsBonus = Math.round(message.chipsBonus));
     message.ratioWin !== undefined && (obj.ratioWin = message.ratioWin);
+    message.chipBetFee !== undefined && (obj.chipBetFee = Math.round(message.chipBetFee));
+    message.chipFee !== undefined && (obj.chipFee = Math.round(message.chipFee));
     return obj;
   },
 
@@ -1850,10 +1866,13 @@ export const GameReward = {
     message.updateWallet = object.updateWallet ?? false;
     message.balanceChipsWalletBefore = object.balanceChipsWalletBefore ?? 0;
     message.balanceChipsWalletAfter = object.balanceChipsWalletAfter ?? 0;
+    message.chipsWin = object.chipsWin ?? 0;
     message.totalChipsWinByGame = object.totalChipsWinByGame ?? 0;
     message.updateChipsBonus = object.updateChipsBonus ?? false;
     message.chipsBonus = object.chipsBonus ?? 0;
     message.ratioWin = object.ratioWin ?? 0;
+    message.chipBetFee = object.chipBetFee ?? 0;
+    message.chipFee = object.chipFee ?? 0;
     return message;
   },
 };
