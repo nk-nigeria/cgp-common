@@ -849,9 +849,9 @@ export function bigWinToJSON(object: BigWin): string {
 export enum WinJackpot {
   WIN_JACKPOT_UNSPECIFIED = 0,
   WIN_JACKPOT_MINOR = 10,
-  WIN_JACKPOT_MAJOR = 50,
-  WIN_JACKPOT_MEGA = 100,
-  WIN_JACKPOT_GRAND = 500,
+  WIN_JACKPOT_MAJOR = 20,
+  WIN_JACKPOT_MEGA = 30,
+  WIN_JACKPOT_GRAND = 150,
   UNRECOGNIZED = -1,
 }
 
@@ -863,13 +863,13 @@ export function winJackpotFromJSON(object: any): WinJackpot {
     case 10:
     case "WIN_JACKPOT_MINOR":
       return WinJackpot.WIN_JACKPOT_MINOR;
-    case 50:
+    case 20:
     case "WIN_JACKPOT_MAJOR":
       return WinJackpot.WIN_JACKPOT_MAJOR;
-    case 100:
+    case 30:
     case "WIN_JACKPOT_MEGA":
       return WinJackpot.WIN_JACKPOT_MEGA;
-    case 500:
+    case 150:
     case "WIN_JACKPOT_GRAND":
       return WinJackpot.WIN_JACKPOT_GRAND;
     case -1:
@@ -983,6 +983,7 @@ export interface SpinSymbol {
   symbol: SiXiangSymbol;
   col: number;
   row: number;
+  ratio: number;
 }
 
 export interface Payline {
@@ -1467,7 +1468,7 @@ export const SlotMatrix = {
 };
 
 function createBaseSpinSymbol(): SpinSymbol {
-  return { symbol: 0, col: 0, row: 0 };
+  return { symbol: 0, col: 0, row: 0, ratio: 0 };
 }
 
 export const SpinSymbol = {
@@ -1480,6 +1481,9 @@ export const SpinSymbol = {
     }
     if (message.row !== 0) {
       writer.uint32(24).int32(message.row);
+    }
+    if (message.ratio !== 0) {
+      writer.uint32(37).float(message.ratio);
     }
     return writer;
   },
@@ -1512,6 +1516,13 @@ export const SpinSymbol = {
 
           message.row = reader.int32();
           continue;
+        case 4:
+          if (tag !== 37) {
+            break;
+          }
+
+          message.ratio = reader.float();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1526,6 +1537,7 @@ export const SpinSymbol = {
       symbol: isSet(object.symbol) ? siXiangSymbolFromJSON(object.symbol) : 0,
       col: isSet(object.col) ? Number(object.col) : 0,
       row: isSet(object.row) ? Number(object.row) : 0,
+      ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
     };
   },
 
@@ -1534,6 +1546,7 @@ export const SpinSymbol = {
     message.symbol !== undefined && (obj.symbol = siXiangSymbolToJSON(message.symbol));
     message.col !== undefined && (obj.col = Math.round(message.col));
     message.row !== undefined && (obj.row = Math.round(message.row));
+    message.ratio !== undefined && (obj.ratio = message.ratio);
     return obj;
   },
 
@@ -1546,6 +1559,7 @@ export const SpinSymbol = {
     message.symbol = object.symbol ?? 0;
     message.col = object.col ?? 0;
     message.row = object.row ?? 0;
+    message.ratio = object.ratio ?? 0;
     return message;
   },
 };

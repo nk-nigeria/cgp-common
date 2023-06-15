@@ -72,6 +72,7 @@ message SpinSymbol {
   SiXiangSymbol symbol = 1;
   int32 col = 2;
   int32 row = 3;
+  float ratio = 4;
 }
 
 //
