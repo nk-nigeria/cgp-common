@@ -45,7 +45,7 @@ message SlotDesk {
   // số chip trong wallet trước spin
   // các symbol đặc biệt thu thập được,
   // vd như eye ở sixiang, letter ở tarzan
-  repeated SiXiangSymbol collection_symbols = 16;
+  repeated CollectSymbol collection_symbols = 16;
   // ngọc rừng xanh ở tarzan game
   int32 perl_green_forest = 18;
   int64 ts_unix = 21;
@@ -204,6 +204,11 @@ enum SiXiangSymbol {
   SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN = 0x01128;
 
   SI_XIANG_SYMBOL_WILD = 0xffff;
+}
+
+message CollectSymbol {
+  SiXiangSymbol symbol = 1;
+  int64 qty = 2; // so luong
 }
 
 enum SiXiangGame {

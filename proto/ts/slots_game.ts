@@ -954,7 +954,7 @@ export interface SlotDesk {
    * các symbol đặc biệt thu thập được,
    * vd như eye ở sixiang, letter ở tarzan
    */
-  collectionSymbols: SiXiangSymbol[];
+  collectionSymbols: CollectSymbol[];
   /** ngọc rừng xanh ở tarzan game */
   perlGreenForest: number;
   tsUnix: number;
@@ -984,6 +984,12 @@ export interface SpinSymbol {
   col: number;
   row: number;
   ratio: number;
+}
+
+export interface CollectSymbol {
+  symbol: SiXiangSymbol;
+  /** so luong */
+  qty: number;
 }
 
 export interface Payline {
@@ -1079,11 +1085,9 @@ export const SlotDesk = {
     if (message.gameReward !== undefined) {
       GameReward.encode(message.gameReward, writer.uint32(114).fork()).ldelim();
     }
-    writer.uint32(130).fork();
     for (const v of message.collectionSymbols) {
-      writer.int32(v);
+      CollectSymbol.encode(v!, writer.uint32(130).fork()).ldelim();
     }
-    writer.ldelim();
     if (message.perlGreenForest !== 0) {
       writer.uint32(144).int32(message.perlGreenForest);
     }
@@ -1196,22 +1200,12 @@ export const SlotDesk = {
           message.gameReward = GameReward.decode(reader, reader.uint32());
           continue;
         case 16:
-          if (tag === 128) {
-            message.collectionSymbols.push(reader.int32() as any);
-
-            continue;
+          if (tag !== 130) {
+            break;
           }
 
-          if (tag === 130) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.collectionSymbols.push(reader.int32() as any);
-            }
-
-            continue;
-          }
-
-          break;
+          message.collectionSymbols.push(CollectSymbol.decode(reader, reader.uint32()));
+          continue;
         case 18:
           if (tag !== 144) {
             break;
@@ -1281,7 +1275,7 @@ export const SlotDesk = {
       bigWin: isSet(object.bigWin) ? bigWinFromJSON(object.bigWin) : 0,
       gameReward: isSet(object.gameReward) ? GameReward.fromJSON(object.gameReward) : undefined,
       collectionSymbols: Array.isArray(object?.collectionSymbols)
-        ? object.collectionSymbols.map((e: any) => siXiangSymbolFromJSON(e))
+        ? object.collectionSymbols.map((e: any) => CollectSymbol.fromJSON(e))
         : [],
       perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
       tsUnix: isSet(object.tsUnix) ? Number(object.tsUnix) : 0,
@@ -1317,7 +1311,7 @@ export const SlotDesk = {
     message.gameReward !== undefined &&
       (obj.gameReward = message.gameReward ? GameReward.toJSON(message.gameReward) : undefined);
     if (message.collectionSymbols) {
-      obj.collectionSymbols = message.collectionSymbols.map((e) => siXiangSymbolToJSON(e));
+      obj.collectionSymbols = message.collectionSymbols.map((e) => e ? CollectSymbol.toJSON(e) : undefined);
     } else {
       obj.collectionSymbols = [];
     }
@@ -1357,7 +1351,7 @@ export const SlotDesk = {
     message.gameReward = (object.gameReward !== undefined && object.gameReward !== null)
       ? GameReward.fromPartial(object.gameReward)
       : undefined;
-    message.collectionSymbols = object.collectionSymbols?.map((e) => e) || [];
+    message.collectionSymbols = object.collectionSymbols?.map((e) => CollectSymbol.fromPartial(e)) || [];
     message.perlGreenForest = object.perlGreenForest ?? 0;
     message.tsUnix = object.tsUnix ?? 0;
     message.ratioFruitBasket = object.ratioFruitBasket ?? 0;
@@ -1560,6 +1554,77 @@ export const SpinSymbol = {
     message.col = object.col ?? 0;
     message.row = object.row ?? 0;
     message.ratio = object.ratio ?? 0;
+    return message;
+  },
+};
+
+function createBaseCollectSymbol(): CollectSymbol {
+  return { symbol: 0, qty: 0 };
+}
+
+export const CollectSymbol = {
+  encode(message: CollectSymbol, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.symbol !== 0) {
+      writer.uint32(8).int32(message.symbol);
+    }
+    if (message.qty !== 0) {
+      writer.uint32(16).int64(message.qty);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CollectSymbol {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCollectSymbol();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.symbol = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.qty = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CollectSymbol {
+    return {
+      symbol: isSet(object.symbol) ? siXiangSymbolFromJSON(object.symbol) : 0,
+      qty: isSet(object.qty) ? Number(object.qty) : 0,
+    };
+  },
+
+  toJSON(message: CollectSymbol): unknown {
+    const obj: any = {};
+    message.symbol !== undefined && (obj.symbol = siXiangSymbolToJSON(message.symbol));
+    message.qty !== undefined && (obj.qty = Math.round(message.qty));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CollectSymbol>, I>>(base?: I): CollectSymbol {
+    return CollectSymbol.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<CollectSymbol>, I>>(object: I): CollectSymbol {
+    const message = createBaseCollectSymbol();
+    message.symbol = object.symbol ?? 0;
+    message.qty = object.qty ?? 0;
     return message;
   },
 };
