@@ -990,6 +990,7 @@ export interface CollectSymbol {
   symbol: SiXiangSymbol;
   /** so luong */
   qty: number;
+  ratio: number;
 }
 
 export interface Payline {
@@ -1559,7 +1560,7 @@ export const SpinSymbol = {
 };
 
 function createBaseCollectSymbol(): CollectSymbol {
-  return { symbol: 0, qty: 0 };
+  return { symbol: 0, qty: 0, ratio: 0 };
 }
 
 export const CollectSymbol = {
@@ -1569,6 +1570,9 @@ export const CollectSymbol = {
     }
     if (message.qty !== 0) {
       writer.uint32(16).int64(message.qty);
+    }
+    if (message.ratio !== 0) {
+      writer.uint32(29).float(message.ratio);
     }
     return writer;
   },
@@ -1594,6 +1598,13 @@ export const CollectSymbol = {
 
           message.qty = longToNumber(reader.int64() as Long);
           continue;
+        case 3:
+          if (tag !== 29) {
+            break;
+          }
+
+          message.ratio = reader.float();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1607,6 +1618,7 @@ export const CollectSymbol = {
     return {
       symbol: isSet(object.symbol) ? siXiangSymbolFromJSON(object.symbol) : 0,
       qty: isSet(object.qty) ? Number(object.qty) : 0,
+      ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
     };
   },
 
@@ -1614,6 +1626,7 @@ export const CollectSymbol = {
     const obj: any = {};
     message.symbol !== undefined && (obj.symbol = siXiangSymbolToJSON(message.symbol));
     message.qty !== undefined && (obj.qty = Math.round(message.qty));
+    message.ratio !== undefined && (obj.ratio = message.ratio);
     return obj;
   },
 
@@ -1625,6 +1638,7 @@ export const CollectSymbol = {
     const message = createBaseCollectSymbol();
     message.symbol = object.symbol ?? 0;
     message.qty = object.qty ?? 0;
+    message.ratio = object.ratio ?? 0;
     return message;
   },
 };
