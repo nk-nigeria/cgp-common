@@ -99,6 +99,10 @@ export interface InfoBet {
   nUserBet: number;
   desp: string;
   reqSpecGame: number;
+  /** broadcast new game data */
+  emitNewgameEvent: boolean;
+  /** delay broadcast result endgame, unit 1s,1m, 1h, golang durationformat */
+  delayEmitResult: string;
 }
 
 export interface ListInfoBet {
@@ -520,7 +524,7 @@ export const HistoryRoll = {
 };
 
 function createBaseInfoBet(): InfoBet {
-  return { id: 0, chips: 0, nUserBet: 0, desp: "", reqSpecGame: 0 };
+  return { id: 0, chips: 0, nUserBet: 0, desp: "", reqSpecGame: 0, emitNewgameEvent: false, delayEmitResult: "" };
 }
 
 export const InfoBet = {
@@ -539,6 +543,12 @@ export const InfoBet = {
     }
     if (message.reqSpecGame !== 0) {
       writer.uint32(40).int32(message.reqSpecGame);
+    }
+    if (message.emitNewgameEvent === true) {
+      writer.uint32(48).bool(message.emitNewgameEvent);
+    }
+    if (message.delayEmitResult !== "") {
+      writer.uint32(58).string(message.delayEmitResult);
     }
     return writer;
   },
@@ -585,6 +595,20 @@ export const InfoBet = {
 
           message.reqSpecGame = reader.int32();
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.emitNewgameEvent = reader.bool();
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.delayEmitResult = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -601,6 +625,8 @@ export const InfoBet = {
       nUserBet: isSet(object.nUserBet) ? Number(object.nUserBet) : 0,
       desp: isSet(object.desp) ? String(object.desp) : "",
       reqSpecGame: isSet(object.reqSpecGame) ? Number(object.reqSpecGame) : 0,
+      emitNewgameEvent: isSet(object.emitNewgameEvent) ? Boolean(object.emitNewgameEvent) : false,
+      delayEmitResult: isSet(object.delayEmitResult) ? String(object.delayEmitResult) : "",
     };
   },
 
@@ -611,6 +637,8 @@ export const InfoBet = {
     message.nUserBet !== undefined && (obj.nUserBet = Math.round(message.nUserBet));
     message.desp !== undefined && (obj.desp = message.desp);
     message.reqSpecGame !== undefined && (obj.reqSpecGame = Math.round(message.reqSpecGame));
+    message.emitNewgameEvent !== undefined && (obj.emitNewgameEvent = message.emitNewgameEvent);
+    message.delayEmitResult !== undefined && (obj.delayEmitResult = message.delayEmitResult);
     return obj;
   },
 
@@ -625,6 +653,8 @@ export const InfoBet = {
     message.nUserBet = object.nUserBet ?? 0;
     message.desp = object.desp ?? "";
     message.reqSpecGame = object.reqSpecGame ?? 0;
+    message.emitNewgameEvent = object.emitNewgameEvent ?? false;
+    message.delayEmitResult = object.delayEmitResult ?? "";
     return message;
   },
 };

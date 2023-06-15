@@ -47,6 +47,10 @@ message InfoBet {
   int32 n_user_bet = 3;
   string desp = 4;
   int32 req_spec_game = 5;
+  // broadcast new game data
+  bool emit_newgame_event = 6;
+  // delay broadcast result endgame, unit 1s,1m, 1h, golang durationformat
+  string delay_emit_result = 7;
 }
 
 message ListInfoBet {
