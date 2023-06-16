@@ -73,6 +73,7 @@ message SpinSymbol {
   int32 col = 2;
   int32 row = 3;
   float ratio = 4;
+  int32 index = 5;
 }
 
 //

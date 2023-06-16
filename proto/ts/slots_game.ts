@@ -990,6 +990,7 @@ export interface SpinSymbol {
   col: number;
   row: number;
   ratio: number;
+  index: number;
 }
 
 export interface CollectSymbol {
@@ -1469,7 +1470,7 @@ export const SlotMatrix = {
 };
 
 function createBaseSpinSymbol(): SpinSymbol {
-  return { symbol: 0, col: 0, row: 0, ratio: 0 };
+  return { symbol: 0, col: 0, row: 0, ratio: 0, index: 0 };
 }
 
 export const SpinSymbol = {
@@ -1485,6 +1486,9 @@ export const SpinSymbol = {
     }
     if (message.ratio !== 0) {
       writer.uint32(37).float(message.ratio);
+    }
+    if (message.index !== 0) {
+      writer.uint32(40).int32(message.index);
     }
     return writer;
   },
@@ -1524,6 +1528,13 @@ export const SpinSymbol = {
 
           message.ratio = reader.float();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.index = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1539,6 +1550,7 @@ export const SpinSymbol = {
       col: isSet(object.col) ? Number(object.col) : 0,
       row: isSet(object.row) ? Number(object.row) : 0,
       ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
+      index: isSet(object.index) ? Number(object.index) : 0,
     };
   },
 
@@ -1548,6 +1560,7 @@ export const SpinSymbol = {
     message.col !== undefined && (obj.col = Math.round(message.col));
     message.row !== undefined && (obj.row = Math.round(message.row));
     message.ratio !== undefined && (obj.ratio = message.ratio);
+    message.index !== undefined && (obj.index = Math.round(message.index));
     return obj;
   },
 
@@ -1561,6 +1574,7 @@ export const SpinSymbol = {
     message.col = object.col ?? 0;
     message.row = object.row ?? 0;
     message.ratio = object.ratio ?? 0;
+    message.index = object.index ?? 0;
     return message;
   },
 };
