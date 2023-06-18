@@ -281,7 +281,14 @@ message GameReward {
   int64 chips_bonus = 7;
   // save ratio win in some case
   float ratio_win=8;
-  int64 chip_bet_fee = 9;
-  int64 chip_fee=10;
+  int64 line_win=9;
+  float total_ratio_win=10;
+  int64 total_line_win=11;
+  int64 chip_bet_fee = 12;
+  int64 chip_fee=13;
+  // ratio bonus like tarzan payline cross freespin
+  float ratio_bonus = 14;
+  // tarzan PerlGreenForest
+  int32 perl_green_forest = 15;
 }
 

@@ -1028,8 +1028,15 @@ export interface GameReward {
   chipsBonus: number;
   /** save ratio win in some case */
   ratioWin: number;
+  lineWin: number;
+  totalRatioWin: number;
+  totalLineWin: number;
   chipBetFee: number;
   chipFee: number;
+  /** ratio bonus like tarzan payline cross freespin */
+  ratioBonus: number;
+  /** tarzan PerlGreenForest */
+  perlGreenForest: number;
 }
 
 function createBaseSlotDesk(): SlotDesk {
@@ -1812,8 +1819,13 @@ function createBaseGameReward(): GameReward {
     updateChipsBonus: false,
     chipsBonus: 0,
     ratioWin: 0,
+    lineWin: 0,
+    totalRatioWin: 0,
+    totalLineWin: 0,
     chipBetFee: 0,
     chipFee: 0,
+    ratioBonus: 0,
+    perlGreenForest: 0,
   };
 }
 
@@ -1843,11 +1855,26 @@ export const GameReward = {
     if (message.ratioWin !== 0) {
       writer.uint32(69).float(message.ratioWin);
     }
+    if (message.lineWin !== 0) {
+      writer.uint32(72).int64(message.lineWin);
+    }
+    if (message.totalRatioWin !== 0) {
+      writer.uint32(85).float(message.totalRatioWin);
+    }
+    if (message.totalLineWin !== 0) {
+      writer.uint32(88).int64(message.totalLineWin);
+    }
     if (message.chipBetFee !== 0) {
-      writer.uint32(72).int64(message.chipBetFee);
+      writer.uint32(96).int64(message.chipBetFee);
     }
     if (message.chipFee !== 0) {
-      writer.uint32(80).int64(message.chipFee);
+      writer.uint32(104).int64(message.chipFee);
+    }
+    if (message.ratioBonus !== 0) {
+      writer.uint32(117).float(message.ratioBonus);
+    }
+    if (message.perlGreenForest !== 0) {
+      writer.uint32(120).int32(message.perlGreenForest);
     }
     return writer;
   },
@@ -1920,14 +1947,49 @@ export const GameReward = {
             break;
           }
 
-          message.chipBetFee = longToNumber(reader.int64() as Long);
+          message.lineWin = longToNumber(reader.int64() as Long);
           continue;
         case 10:
-          if (tag !== 80) {
+          if (tag !== 85) {
+            break;
+          }
+
+          message.totalRatioWin = reader.float();
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.totalLineWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.chipBetFee = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 104) {
             break;
           }
 
           message.chipFee = longToNumber(reader.int64() as Long);
+          continue;
+        case 14:
+          if (tag !== 117) {
+            break;
+          }
+
+          message.ratioBonus = reader.float();
+          continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.perlGreenForest = reader.int32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1948,8 +2010,13 @@ export const GameReward = {
       updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
       chipsBonus: isSet(object.chipsBonus) ? Number(object.chipsBonus) : 0,
       ratioWin: isSet(object.ratioWin) ? Number(object.ratioWin) : 0,
+      lineWin: isSet(object.lineWin) ? Number(object.lineWin) : 0,
+      totalRatioWin: isSet(object.totalRatioWin) ? Number(object.totalRatioWin) : 0,
+      totalLineWin: isSet(object.totalLineWin) ? Number(object.totalLineWin) : 0,
       chipBetFee: isSet(object.chipBetFee) ? Number(object.chipBetFee) : 0,
       chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
+      ratioBonus: isSet(object.ratioBonus) ? Number(object.ratioBonus) : 0,
+      perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
     };
   },
 
@@ -1965,8 +2032,13 @@ export const GameReward = {
     message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
     message.chipsBonus !== undefined && (obj.chipsBonus = Math.round(message.chipsBonus));
     message.ratioWin !== undefined && (obj.ratioWin = message.ratioWin);
+    message.lineWin !== undefined && (obj.lineWin = Math.round(message.lineWin));
+    message.totalRatioWin !== undefined && (obj.totalRatioWin = message.totalRatioWin);
+    message.totalLineWin !== undefined && (obj.totalLineWin = Math.round(message.totalLineWin));
     message.chipBetFee !== undefined && (obj.chipBetFee = Math.round(message.chipBetFee));
     message.chipFee !== undefined && (obj.chipFee = Math.round(message.chipFee));
+    message.ratioBonus !== undefined && (obj.ratioBonus = message.ratioBonus);
+    message.perlGreenForest !== undefined && (obj.perlGreenForest = Math.round(message.perlGreenForest));
     return obj;
   },
 
@@ -1984,8 +2056,13 @@ export const GameReward = {
     message.updateChipsBonus = object.updateChipsBonus ?? false;
     message.chipsBonus = object.chipsBonus ?? 0;
     message.ratioWin = object.ratioWin ?? 0;
+    message.lineWin = object.lineWin ?? 0;
+    message.totalRatioWin = object.totalRatioWin ?? 0;
+    message.totalLineWin = object.totalLineWin ?? 0;
     message.chipBetFee = object.chipBetFee ?? 0;
     message.chipFee = object.chipFee ?? 0;
+    message.ratioBonus = object.ratioBonus ?? 0;
+    message.perlGreenForest = object.perlGreenForest ?? 0;
     return message;
   },
 };
