@@ -51,6 +51,7 @@ message MatchDetail {
   string detail = 6;
   string table_id = 7;
   int64 date_unix = 8;
+  int64 created_at_unix = 9;
 }
 
 message MatchDetailRequest {

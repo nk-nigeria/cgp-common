@@ -50,6 +50,7 @@ export interface MatchDetail {
   detail: string;
   tableId: string;
   dateUnix: number;
+  createdAtUnix: number;
 }
 
 export interface MatchDetailRequest {
@@ -734,7 +735,17 @@ export const OpPlayerResponse = {
 };
 
 function createBaseMatchDetail(): MatchDetail {
-  return { gameId: 0, gameName: "", mcb: 0, numMatchPlayed: 0, chipFee: 0, detail: "", tableId: "", dateUnix: 0 };
+  return {
+    gameId: 0,
+    gameName: "",
+    mcb: 0,
+    numMatchPlayed: 0,
+    chipFee: 0,
+    detail: "",
+    tableId: "",
+    dateUnix: 0,
+    createdAtUnix: 0,
+  };
 }
 
 export const MatchDetail = {
@@ -762,6 +773,9 @@ export const MatchDetail = {
     }
     if (message.dateUnix !== 0) {
       writer.uint32(64).int64(message.dateUnix);
+    }
+    if (message.createdAtUnix !== 0) {
+      writer.uint32(72).int64(message.createdAtUnix);
     }
     return writer;
   },
@@ -829,6 +843,13 @@ export const MatchDetail = {
 
           message.dateUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.createdAtUnix = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -848,6 +869,7 @@ export const MatchDetail = {
       detail: isSet(object.detail) ? String(object.detail) : "",
       tableId: isSet(object.tableId) ? String(object.tableId) : "",
       dateUnix: isSet(object.dateUnix) ? Number(object.dateUnix) : 0,
+      createdAtUnix: isSet(object.createdAtUnix) ? Number(object.createdAtUnix) : 0,
     };
   },
 
@@ -861,6 +883,7 @@ export const MatchDetail = {
     message.detail !== undefined && (obj.detail = message.detail);
     message.tableId !== undefined && (obj.tableId = message.tableId);
     message.dateUnix !== undefined && (obj.dateUnix = Math.round(message.dateUnix));
+    message.createdAtUnix !== undefined && (obj.createdAtUnix = Math.round(message.createdAtUnix));
     return obj;
   },
 
@@ -878,6 +901,7 @@ export const MatchDetail = {
     message.detail = object.detail ?? "";
     message.tableId = object.tableId ?? "";
     message.dateUnix = object.dateUnix ?? 0;
+    message.createdAtUnix = object.createdAtUnix ?? 0;
     return message;
   },
 };
