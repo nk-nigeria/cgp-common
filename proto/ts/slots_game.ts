@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import { InfoBet } from "./color_game";
 
 export const protobufPackage = "api";
 
@@ -968,6 +969,7 @@ export interface SlotDesk {
   /** số lượt spin còn lại, -1 = unlimited */
   numSpinLeft: number;
   betLevels: number[];
+  infoBet: InfoBet | undefined;
 }
 
 /** Ma trận symbol */
@@ -1059,6 +1061,7 @@ function createBaseSlotDesk(): SlotDesk {
     ratioFruitBasket: 0,
     numSpinLeft: 0,
     betLevels: [],
+    infoBet: undefined,
   };
 }
 
@@ -1120,6 +1123,9 @@ export const SlotDesk = {
       writer.int64(v);
     }
     writer.ldelim();
+    if (message.infoBet !== undefined) {
+      InfoBet.encode(message.infoBet, writer.uint32(202).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -1266,6 +1272,13 @@ export const SlotDesk = {
           }
 
           break;
+        case 25:
+          if (tag !== 202) {
+            break;
+          }
+
+          message.infoBet = InfoBet.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1297,6 +1310,7 @@ export const SlotDesk = {
       ratioFruitBasket: isSet(object.ratioFruitBasket) ? Number(object.ratioFruitBasket) : 0,
       numSpinLeft: isSet(object.numSpinLeft) ? Number(object.numSpinLeft) : 0,
       betLevels: Array.isArray(object?.betLevels) ? object.betLevels.map((e: any) => Number(e)) : [],
+      infoBet: isSet(object.infoBet) ? InfoBet.fromJSON(object.infoBet) : undefined,
     };
   },
 
@@ -1339,6 +1353,7 @@ export const SlotDesk = {
     } else {
       obj.betLevels = [];
     }
+    message.infoBet !== undefined && (obj.infoBet = message.infoBet ? InfoBet.toJSON(message.infoBet) : undefined);
     return obj;
   },
 
@@ -1372,6 +1387,9 @@ export const SlotDesk = {
     message.ratioFruitBasket = object.ratioFruitBasket ?? 0;
     message.numSpinLeft = object.numSpinLeft ?? 0;
     message.betLevels = object.betLevels?.map((e) => e) || [];
+    message.infoBet = (object.infoBet !== undefined && object.infoBet !== null)
+      ? InfoBet.fromPartial(object.infoBet)
+      : undefined;
     return message;
   },
 };

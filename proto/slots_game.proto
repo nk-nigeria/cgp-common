@@ -3,6 +3,7 @@ syntax = "proto3";
 package api;
 
 option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
+import "color_game.proto";
 
 message SlotDesk {
   // ma trận rowxcol ở dạng array 1 chiều,
@@ -53,6 +54,7 @@ message SlotDesk {
   // số lượt spin còn lại, -1 = unlimited
   int64 num_spin_left = 23;
   repeated int64 bet_levels = 24;
+  InfoBet info_bet = 25;
 }
 
 // Ma trận symbol
