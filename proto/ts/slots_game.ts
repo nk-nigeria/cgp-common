@@ -980,6 +980,7 @@ export interface SlotMatrix {
   rows: number;
   /** số cột tối đa */
   cols: number;
+  spinLists: SpinSymbol[];
 }
 
 /**
@@ -993,6 +994,8 @@ export interface SpinSymbol {
   row: number;
   ratio: number;
   index: number;
+  winJp: WinJackpot;
+  winAmount: number;
 }
 
 export interface CollectSymbol {
@@ -1395,7 +1398,7 @@ export const SlotDesk = {
 };
 
 function createBaseSlotMatrix(): SlotMatrix {
-  return { lists: [], rows: 0, cols: 0 };
+  return { lists: [], rows: 0, cols: 0, spinLists: [] };
 }
 
 export const SlotMatrix = {
@@ -1410,6 +1413,9 @@ export const SlotMatrix = {
     }
     if (message.cols !== 0) {
       writer.uint32(24).int32(message.cols);
+    }
+    for (const v of message.spinLists) {
+      SpinSymbol.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -1452,6 +1458,13 @@ export const SlotMatrix = {
 
           message.cols = reader.int32();
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.spinLists.push(SpinSymbol.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1466,6 +1479,7 @@ export const SlotMatrix = {
       lists: Array.isArray(object?.lists) ? object.lists.map((e: any) => siXiangSymbolFromJSON(e)) : [],
       rows: isSet(object.rows) ? Number(object.rows) : 0,
       cols: isSet(object.cols) ? Number(object.cols) : 0,
+      spinLists: Array.isArray(object?.spinLists) ? object.spinLists.map((e: any) => SpinSymbol.fromJSON(e)) : [],
     };
   },
 
@@ -1478,6 +1492,11 @@ export const SlotMatrix = {
     }
     message.rows !== undefined && (obj.rows = Math.round(message.rows));
     message.cols !== undefined && (obj.cols = Math.round(message.cols));
+    if (message.spinLists) {
+      obj.spinLists = message.spinLists.map((e) => e ? SpinSymbol.toJSON(e) : undefined);
+    } else {
+      obj.spinLists = [];
+    }
     return obj;
   },
 
@@ -1490,12 +1509,13 @@ export const SlotMatrix = {
     message.lists = object.lists?.map((e) => e) || [];
     message.rows = object.rows ?? 0;
     message.cols = object.cols ?? 0;
+    message.spinLists = object.spinLists?.map((e) => SpinSymbol.fromPartial(e)) || [];
     return message;
   },
 };
 
 function createBaseSpinSymbol(): SpinSymbol {
-  return { symbol: 0, col: 0, row: 0, ratio: 0, index: 0 };
+  return { symbol: 0, col: 0, row: 0, ratio: 0, index: 0, winJp: 0, winAmount: 0 };
 }
 
 export const SpinSymbol = {
@@ -1514,6 +1534,12 @@ export const SpinSymbol = {
     }
     if (message.index !== 0) {
       writer.uint32(40).int32(message.index);
+    }
+    if (message.winJp !== 0) {
+      writer.uint32(48).int32(message.winJp);
+    }
+    if (message.winAmount !== 0) {
+      writer.uint32(56).int64(message.winAmount);
     }
     return writer;
   },
@@ -1560,6 +1586,20 @@ export const SpinSymbol = {
 
           message.index = reader.int32();
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.winJp = reader.int32() as any;
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.winAmount = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1576,6 +1616,8 @@ export const SpinSymbol = {
       row: isSet(object.row) ? Number(object.row) : 0,
       ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
       index: isSet(object.index) ? Number(object.index) : 0,
+      winJp: isSet(object.winJp) ? winJackpotFromJSON(object.winJp) : 0,
+      winAmount: isSet(object.winAmount) ? Number(object.winAmount) : 0,
     };
   },
 
@@ -1586,6 +1628,8 @@ export const SpinSymbol = {
     message.row !== undefined && (obj.row = Math.round(message.row));
     message.ratio !== undefined && (obj.ratio = message.ratio);
     message.index !== undefined && (obj.index = Math.round(message.index));
+    message.winJp !== undefined && (obj.winJp = winJackpotToJSON(message.winJp));
+    message.winAmount !== undefined && (obj.winAmount = Math.round(message.winAmount));
     return obj;
   },
 
@@ -1600,6 +1644,8 @@ export const SpinSymbol = {
     message.row = object.row ?? 0;
     message.ratio = object.ratio ?? 0;
     message.index = object.index ?? 0;
+    message.winJp = object.winJp ?? 0;
+    message.winAmount = object.winAmount ?? 0;
     return message;
   },
 };

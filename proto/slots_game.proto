@@ -60,11 +60,12 @@ message SlotDesk {
 // Ma trận symbol
 message SlotMatrix {
   // Mảng 2 chiều ở dạng list, rowxcol
-  repeated SiXiangSymbol lists = 1;
+  repeated SiXiangSymbol lists = 1;  
   // số hàng tối đa
   int32 rows = 2;
   // số cột tối đa
   int32 cols = 3;
+  repeated SpinSymbol spin_lists = 4;
 }
 
 // Symbol quay được
@@ -76,6 +77,8 @@ message SpinSymbol {
   int32 row = 3;
   float ratio = 4;
   int32 index = 5;
+  WinJackpot win_jp = 6;
+  int64 win_amount=7;  
 }
 
 //
