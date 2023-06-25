@@ -256,6 +256,7 @@ export enum OpCodeRequest {
   /** OPCODE_REQUEST_HISTORY_RESULT -  */
   OPCODE_REQUEST_HISTORY_RESULT = 11,
   OPCODE_REQUEST_SPIN = 12,
+  OPCODE_REQUEST_BUY_SIXIANG_GEM = 13,
   UNRECOGNIZED = -1,
 }
 
@@ -297,6 +298,9 @@ export function opCodeRequestFromJSON(object: any): OpCodeRequest {
     case 12:
     case "OPCODE_REQUEST_SPIN":
       return OpCodeRequest.OPCODE_REQUEST_SPIN;
+    case 13:
+    case "OPCODE_REQUEST_BUY_SIXIANG_GEM":
+      return OpCodeRequest.OPCODE_REQUEST_BUY_SIXIANG_GEM;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -330,6 +334,8 @@ export function opCodeRequestToJSON(object: OpCodeRequest): string {
       return "OPCODE_REQUEST_HISTORY_RESULT";
     case OpCodeRequest.OPCODE_REQUEST_SPIN:
       return "OPCODE_REQUEST_SPIN";
+    case OpCodeRequest.OPCODE_REQUEST_BUY_SIXIANG_GEM:
+      return "OPCODE_REQUEST_BUY_SIXIANG_GEM";
     case OpCodeRequest.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -356,6 +362,7 @@ export enum OpCodeUpdate {
   OPCODE_UPDATE_USER_INFO = 9,
   OPCODE_USER_IN_TABLE_INFO = 10,
   OPCODE_ERROR = 11,
+  OPCODE_BUY_SIXIANG_GEM = 13,
   UNRECOGNIZED = -1,
 }
 
@@ -397,6 +404,9 @@ export function opCodeUpdateFromJSON(object: any): OpCodeUpdate {
     case 11:
     case "OPCODE_ERROR":
       return OpCodeUpdate.OPCODE_ERROR;
+    case 13:
+    case "OPCODE_BUY_SIXIANG_GEM":
+      return OpCodeUpdate.OPCODE_BUY_SIXIANG_GEM;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -430,6 +440,8 @@ export function opCodeUpdateToJSON(object: OpCodeUpdate): string {
       return "OPCODE_USER_IN_TABLE_INFO";
     case OpCodeUpdate.OPCODE_ERROR:
       return "OPCODE_ERROR";
+    case OpCodeUpdate.OPCODE_BUY_SIXIANG_GEM:
+      return "OPCODE_BUY_SIXIANG_GEM";
     case OpCodeUpdate.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

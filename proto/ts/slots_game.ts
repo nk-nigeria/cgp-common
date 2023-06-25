@@ -970,6 +970,7 @@ export interface SlotDesk {
   numSpinLeft: number;
   betLevels: number[];
   infoBet: InfoBet | undefined;
+  chipsBuyGem: number;
 }
 
 /** Ma trận symbol */
@@ -1070,6 +1071,7 @@ function createBaseSlotDesk(): SlotDesk {
     numSpinLeft: 0,
     betLevels: [],
     infoBet: undefined,
+    chipsBuyGem: 0,
   };
 }
 
@@ -1133,6 +1135,9 @@ export const SlotDesk = {
     writer.ldelim();
     if (message.infoBet !== undefined) {
       InfoBet.encode(message.infoBet, writer.uint32(202).fork()).ldelim();
+    }
+    if (message.chipsBuyGem !== 0) {
+      writer.uint32(208).int64(message.chipsBuyGem);
     }
     return writer;
   },
@@ -1287,6 +1292,13 @@ export const SlotDesk = {
 
           message.infoBet = InfoBet.decode(reader, reader.uint32());
           continue;
+        case 26:
+          if (tag !== 208) {
+            break;
+          }
+
+          message.chipsBuyGem = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1319,6 +1331,7 @@ export const SlotDesk = {
       numSpinLeft: isSet(object.numSpinLeft) ? Number(object.numSpinLeft) : 0,
       betLevels: Array.isArray(object?.betLevels) ? object.betLevels.map((e: any) => Number(e)) : [],
       infoBet: isSet(object.infoBet) ? InfoBet.fromJSON(object.infoBet) : undefined,
+      chipsBuyGem: isSet(object.chipsBuyGem) ? Number(object.chipsBuyGem) : 0,
     };
   },
 
@@ -1362,6 +1375,7 @@ export const SlotDesk = {
       obj.betLevels = [];
     }
     message.infoBet !== undefined && (obj.infoBet = message.infoBet ? InfoBet.toJSON(message.infoBet) : undefined);
+    message.chipsBuyGem !== undefined && (obj.chipsBuyGem = Math.round(message.chipsBuyGem));
     return obj;
   },
 
@@ -1398,6 +1412,7 @@ export const SlotDesk = {
     message.infoBet = (object.infoBet !== undefined && object.infoBet !== null)
       ? InfoBet.fromPartial(object.infoBet)
       : undefined;
+    message.chipsBuyGem = object.chipsBuyGem ?? 0;
     return message;
   },
 };

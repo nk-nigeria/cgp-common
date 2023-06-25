@@ -55,6 +55,7 @@ message SlotDesk {
   int64 num_spin_left = 23;
   repeated int64 bet_levels = 24;
   InfoBet info_bet = 25;
+  int64 chips_buy_gem = 26;
 }
 
 // Ma trận symbol
