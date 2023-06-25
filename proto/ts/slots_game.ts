@@ -1044,6 +1044,11 @@ export interface GameReward {
   perlGreenForest: number;
 }
 
+export interface SaveGame {
+  lastUpdateUnix: number;
+  data: string;
+}
+
 function createBaseSlotDesk(): SlotDesk {
   return {
     matrix: undefined,
@@ -2127,6 +2132,77 @@ export const GameReward = {
     message.chipFee = object.chipFee ?? 0;
     message.ratioBonus = object.ratioBonus ?? 0;
     message.perlGreenForest = object.perlGreenForest ?? 0;
+    return message;
+  },
+};
+
+function createBaseSaveGame(): SaveGame {
+  return { lastUpdateUnix: 0, data: "" };
+}
+
+export const SaveGame = {
+  encode(message: SaveGame, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.lastUpdateUnix !== 0) {
+      writer.uint32(8).int64(message.lastUpdateUnix);
+    }
+    if (message.data !== "") {
+      writer.uint32(18).string(message.data);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SaveGame {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSaveGame();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.lastUpdateUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.data = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SaveGame {
+    return {
+      lastUpdateUnix: isSet(object.lastUpdateUnix) ? Number(object.lastUpdateUnix) : 0,
+      data: isSet(object.data) ? String(object.data) : "",
+    };
+  },
+
+  toJSON(message: SaveGame): unknown {
+    const obj: any = {};
+    message.lastUpdateUnix !== undefined && (obj.lastUpdateUnix = Math.round(message.lastUpdateUnix));
+    message.data !== undefined && (obj.data = message.data);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SaveGame>, I>>(base?: I): SaveGame {
+    return SaveGame.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SaveGame>, I>>(object: I): SaveGame {
+    const message = createBaseSaveGame();
+    message.lastUpdateUnix = object.lastUpdateUnix ?? 0;
+    message.data = object.data ?? "";
     return message;
   },
 };

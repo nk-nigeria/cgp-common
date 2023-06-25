@@ -297,3 +297,7 @@ message GameReward {
   int32 perl_green_forest = 15;
 }
 
+message SaveGame{
+  int64 last_update_unix = 1;
+  string  data = 2;
+}
