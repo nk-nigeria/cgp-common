@@ -56,6 +56,13 @@ message SlotDesk {
   repeated int64 bet_levels = 24;
   InfoBet info_bet = 25;
   int64 chips_buy_gem = 26;
+  // số ngọc collect được để mở SI XIANG BONUS game
+  // symbol is 
+  // SI_XIANG_GAME_DRAGON_PEARL
+  // SI_XIANG_GAME_LUCKDRAW
+  // SI_XIANG_GAME_GOLDPICK
+  // SI_XIANG_GAME_RAPIDPAY
+  repeated SiXiangGame sixiang_gems =27;
 }
 
 // Ma trận symbol

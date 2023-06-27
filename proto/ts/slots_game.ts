@@ -971,6 +971,15 @@ export interface SlotDesk {
   betLevels: number[];
   infoBet: InfoBet | undefined;
   chipsBuyGem: number;
+  /**
+   * số ngọc collect được để mở SI XIANG BONUS game
+   * symbol is
+   * SI_XIANG_GAME_DRAGON_PEARL
+   * SI_XIANG_GAME_LUCKDRAW
+   * SI_XIANG_GAME_GOLDPICK
+   * SI_XIANG_GAME_RAPIDPAY
+   */
+  sixiangGems: SiXiangGame[];
 }
 
 /** Ma trận symbol */
@@ -1072,6 +1081,7 @@ function createBaseSlotDesk(): SlotDesk {
     betLevels: [],
     infoBet: undefined,
     chipsBuyGem: 0,
+    sixiangGems: [],
   };
 }
 
@@ -1139,6 +1149,11 @@ export const SlotDesk = {
     if (message.chipsBuyGem !== 0) {
       writer.uint32(208).int64(message.chipsBuyGem);
     }
+    writer.uint32(218).fork();
+    for (const v of message.sixiangGems) {
+      writer.int32(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -1299,6 +1314,23 @@ export const SlotDesk = {
 
           message.chipsBuyGem = longToNumber(reader.int64() as Long);
           continue;
+        case 27:
+          if (tag === 216) {
+            message.sixiangGems.push(reader.int32() as any);
+
+            continue;
+          }
+
+          if (tag === 218) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.sixiangGems.push(reader.int32() as any);
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1332,6 +1364,7 @@ export const SlotDesk = {
       betLevels: Array.isArray(object?.betLevels) ? object.betLevels.map((e: any) => Number(e)) : [],
       infoBet: isSet(object.infoBet) ? InfoBet.fromJSON(object.infoBet) : undefined,
       chipsBuyGem: isSet(object.chipsBuyGem) ? Number(object.chipsBuyGem) : 0,
+      sixiangGems: Array.isArray(object?.sixiangGems) ? object.sixiangGems.map((e: any) => siXiangGameFromJSON(e)) : [],
     };
   },
 
@@ -1376,6 +1409,11 @@ export const SlotDesk = {
     }
     message.infoBet !== undefined && (obj.infoBet = message.infoBet ? InfoBet.toJSON(message.infoBet) : undefined);
     message.chipsBuyGem !== undefined && (obj.chipsBuyGem = Math.round(message.chipsBuyGem));
+    if (message.sixiangGems) {
+      obj.sixiangGems = message.sixiangGems.map((e) => siXiangGameToJSON(e));
+    } else {
+      obj.sixiangGems = [];
+    }
     return obj;
   },
 
@@ -1413,6 +1451,7 @@ export const SlotDesk = {
       ? InfoBet.fromPartial(object.infoBet)
       : undefined;
     message.chipsBuyGem = object.chipsBuyGem ?? 0;
+    message.sixiangGems = object.sixiangGems?.map((e) => e) || [];
     return message;
   },
 };
