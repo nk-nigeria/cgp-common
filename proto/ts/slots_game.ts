@@ -1048,7 +1048,6 @@ export interface GameReward {
 export interface SaveGame {
   lastUpdateUnix: number;
   data: string;
-  lastMcb: number;
 }
 
 function createBaseSlotDesk(): SlotDesk {
@@ -2153,7 +2152,7 @@ export const GameReward = {
 };
 
 function createBaseSaveGame(): SaveGame {
-  return { lastUpdateUnix: 0, data: "", lastMcb: 0 };
+  return { lastUpdateUnix: 0, data: "" };
 }
 
 export const SaveGame = {
@@ -2163,9 +2162,6 @@ export const SaveGame = {
     }
     if (message.data !== "") {
       writer.uint32(18).string(message.data);
-    }
-    if (message.lastMcb !== 0) {
-      writer.uint32(24).int64(message.lastMcb);
     }
     return writer;
   },
@@ -2191,13 +2187,6 @@ export const SaveGame = {
 
           message.data = reader.string();
           continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.lastMcb = longToNumber(reader.int64() as Long);
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2211,7 +2200,6 @@ export const SaveGame = {
     return {
       lastUpdateUnix: isSet(object.lastUpdateUnix) ? Number(object.lastUpdateUnix) : 0,
       data: isSet(object.data) ? String(object.data) : "",
-      lastMcb: isSet(object.lastMcb) ? Number(object.lastMcb) : 0,
     };
   },
 
@@ -2219,7 +2207,6 @@ export const SaveGame = {
     const obj: any = {};
     message.lastUpdateUnix !== undefined && (obj.lastUpdateUnix = Math.round(message.lastUpdateUnix));
     message.data !== undefined && (obj.data = message.data);
-    message.lastMcb !== undefined && (obj.lastMcb = Math.round(message.lastMcb));
     return obj;
   },
 
@@ -2231,7 +2218,6 @@ export const SaveGame = {
     const message = createBaseSaveGame();
     message.lastUpdateUnix = object.lastUpdateUnix ?? 0;
     message.data = object.data ?? "";
-    message.lastMcb = object.lastMcb ?? 0;
     return message;
   },
 };

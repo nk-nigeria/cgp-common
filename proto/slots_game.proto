@@ -301,5 +301,4 @@ message GameReward {
 message SaveGame{
   int64 last_update_unix = 1;
   string  data = 2;
-  int64 last_mcb = 3;
 }
