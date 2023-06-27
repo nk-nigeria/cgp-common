@@ -63,6 +63,7 @@ message SlotDesk {
   // SI_XIANG_GAME_GOLDPICK
   // SI_XIANG_GAME_RAPIDPAY
   repeated SiXiangGame sixiang_gems =27;
+  repeated SiXiangSymbol letter_symbols = 28;
 }
 
 // Ma trận symbol

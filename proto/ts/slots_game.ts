@@ -980,6 +980,7 @@ export interface SlotDesk {
    * SI_XIANG_GAME_RAPIDPAY
    */
   sixiangGems: SiXiangGame[];
+  letterSymbols: SiXiangSymbol[];
 }
 
 /** Ma trận symbol */
@@ -1082,6 +1083,7 @@ function createBaseSlotDesk(): SlotDesk {
     infoBet: undefined,
     chipsBuyGem: 0,
     sixiangGems: [],
+    letterSymbols: [],
   };
 }
 
@@ -1151,6 +1153,11 @@ export const SlotDesk = {
     }
     writer.uint32(218).fork();
     for (const v of message.sixiangGems) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    writer.uint32(226).fork();
+    for (const v of message.letterSymbols) {
       writer.int32(v);
     }
     writer.ldelim();
@@ -1331,6 +1338,23 @@ export const SlotDesk = {
           }
 
           break;
+        case 28:
+          if (tag === 224) {
+            message.letterSymbols.push(reader.int32() as any);
+
+            continue;
+          }
+
+          if (tag === 226) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.letterSymbols.push(reader.int32() as any);
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1365,6 +1389,9 @@ export const SlotDesk = {
       infoBet: isSet(object.infoBet) ? InfoBet.fromJSON(object.infoBet) : undefined,
       chipsBuyGem: isSet(object.chipsBuyGem) ? Number(object.chipsBuyGem) : 0,
       sixiangGems: Array.isArray(object?.sixiangGems) ? object.sixiangGems.map((e: any) => siXiangGameFromJSON(e)) : [],
+      letterSymbols: Array.isArray(object?.letterSymbols)
+        ? object.letterSymbols.map((e: any) => siXiangSymbolFromJSON(e))
+        : [],
     };
   },
 
@@ -1414,6 +1441,11 @@ export const SlotDesk = {
     } else {
       obj.sixiangGems = [];
     }
+    if (message.letterSymbols) {
+      obj.letterSymbols = message.letterSymbols.map((e) => siXiangSymbolToJSON(e));
+    } else {
+      obj.letterSymbols = [];
+    }
     return obj;
   },
 
@@ -1452,6 +1484,7 @@ export const SlotDesk = {
       : undefined;
     message.chipsBuyGem = object.chipsBuyGem ?? 0;
     message.sixiangGems = object.sixiangGems?.map((e) => e) || [];
+    message.letterSymbols = object.letterSymbols?.map((e) => e) || [];
     return message;
   },
 };
