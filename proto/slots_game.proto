@@ -57,19 +57,20 @@ message SlotDesk {
   InfoBet info_bet = 25;
   int64 chips_buy_gem = 26;
   // số ngọc collect được để mở SI XIANG BONUS game
-  // symbol is 
+  // symbol is
   // SI_XIANG_GAME_DRAGON_PEARL
   // SI_XIANG_GAME_LUCKDRAW
   // SI_XIANG_GAME_GOLDPICK
   // SI_XIANG_GAME_RAPIDPAY
-  repeated SiXiangGame sixiang_gems =27;
+  repeated SiXiangGame sixiang_gems = 27;
   repeated SiXiangSymbol letter_symbols = 28;
+  JackpotHistory win_jp_history = 29;
 }
 
 // Ma trận symbol
 message SlotMatrix {
   // Mảng 2 chiều ở dạng list, rowxcol
-  repeated SiXiangSymbol lists = 1;  
+  repeated SiXiangSymbol lists = 1;
   // số hàng tối đa
   int32 rows = 2;
   // số cột tối đa
@@ -87,7 +88,7 @@ message SpinSymbol {
   float ratio = 4;
   int32 index = 5;
   WinJackpot win_jp = 6;
-  int64 win_amount=7;  
+  int64 win_amount = 7;
 }
 
 //
@@ -269,6 +270,19 @@ enum WinJackpot {
   WIN_JACKPOT_GRAND = 150;
 }
 
+message JackpotReward {
+  WinJackpot win_jackpot = 1;
+  int64 ratio = 2;
+  int64 count = 3;
+  int64 chips = 4;
+}
+message JackpotHistory {
+  JackpotReward minor = 1;
+  JackpotReward major = 2;
+  JackpotReward mega = 3;
+  JackpotReward grand = 4;
+}
+
 message Payline {
   int32 id = 1;
   SiXiangSymbol symbol = 2;
@@ -294,19 +308,19 @@ message GameReward {
   bool update_chips_bonus = 6;
   int64 chips_bonus = 7;
   // save ratio win in some case
-  float ratio_win=8;
-  int64 line_win=9;
-  float total_ratio_win=10;
-  int64 total_line_win=11;
+  float ratio_win = 8;
+  int64 line_win = 9;
+  float total_ratio_win = 10;
+  int64 total_line_win = 11;
   int64 chip_bet_fee = 12;
-  int64 chip_fee=13;
+  int64 chip_fee = 13;
   // ratio bonus like tarzan payline cross freespin
   float ratio_bonus = 14;
   // tarzan PerlGreenForest
   int32 perl_green_forest = 15;
 }
 
-message SaveGame{
+message SaveGame {
   int64 last_update_unix = 1;
-  string  data = 2;
+  string data = 2;
 }

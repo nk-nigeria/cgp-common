@@ -981,6 +981,7 @@ export interface SlotDesk {
    */
   sixiangGems: SiXiangGame[];
   letterSymbols: SiXiangSymbol[];
+  winJpHistory: JackpotHistory | undefined;
 }
 
 /** Ma trận symbol */
@@ -1014,6 +1015,20 @@ export interface CollectSymbol {
   /** so luong */
   qty: number;
   ratio: number;
+}
+
+export interface JackpotReward {
+  winJackpot: WinJackpot;
+  ratio: number;
+  count: number;
+  chips: number;
+}
+
+export interface JackpotHistory {
+  minor: JackpotReward | undefined;
+  major: JackpotReward | undefined;
+  mega: JackpotReward | undefined;
+  grand: JackpotReward | undefined;
 }
 
 export interface Payline {
@@ -1084,6 +1099,7 @@ function createBaseSlotDesk(): SlotDesk {
     chipsBuyGem: 0,
     sixiangGems: [],
     letterSymbols: [],
+    winJpHistory: undefined,
   };
 }
 
@@ -1161,6 +1177,9 @@ export const SlotDesk = {
       writer.int32(v);
     }
     writer.ldelim();
+    if (message.winJpHistory !== undefined) {
+      JackpotHistory.encode(message.winJpHistory, writer.uint32(234).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -1355,6 +1374,13 @@ export const SlotDesk = {
           }
 
           break;
+        case 29:
+          if (tag !== 234) {
+            break;
+          }
+
+          message.winJpHistory = JackpotHistory.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1392,6 +1418,7 @@ export const SlotDesk = {
       letterSymbols: Array.isArray(object?.letterSymbols)
         ? object.letterSymbols.map((e: any) => siXiangSymbolFromJSON(e))
         : [],
+      winJpHistory: isSet(object.winJpHistory) ? JackpotHistory.fromJSON(object.winJpHistory) : undefined,
     };
   },
 
@@ -1446,6 +1473,8 @@ export const SlotDesk = {
     } else {
       obj.letterSymbols = [];
     }
+    message.winJpHistory !== undefined &&
+      (obj.winJpHistory = message.winJpHistory ? JackpotHistory.toJSON(message.winJpHistory) : undefined);
     return obj;
   },
 
@@ -1485,6 +1514,9 @@ export const SlotDesk = {
     message.chipsBuyGem = object.chipsBuyGem ?? 0;
     message.sixiangGems = object.sixiangGems?.map((e) => e) || [];
     message.letterSymbols = object.letterSymbols?.map((e) => e) || [];
+    message.winJpHistory = (object.winJpHistory !== undefined && object.winJpHistory !== null)
+      ? JackpotHistory.fromPartial(object.winJpHistory)
+      : undefined;
     return message;
   },
 };
@@ -1822,6 +1854,208 @@ export const CollectSymbol = {
     message.symbol = object.symbol ?? 0;
     message.qty = object.qty ?? 0;
     message.ratio = object.ratio ?? 0;
+    return message;
+  },
+};
+
+function createBaseJackpotReward(): JackpotReward {
+  return { winJackpot: 0, ratio: 0, count: 0, chips: 0 };
+}
+
+export const JackpotReward = {
+  encode(message: JackpotReward, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.winJackpot !== 0) {
+      writer.uint32(8).int32(message.winJackpot);
+    }
+    if (message.ratio !== 0) {
+      writer.uint32(16).int64(message.ratio);
+    }
+    if (message.count !== 0) {
+      writer.uint32(24).int64(message.count);
+    }
+    if (message.chips !== 0) {
+      writer.uint32(32).int64(message.chips);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): JackpotReward {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseJackpotReward();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.winJackpot = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.ratio = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.count = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.chips = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): JackpotReward {
+    return {
+      winJackpot: isSet(object.winJackpot) ? winJackpotFromJSON(object.winJackpot) : 0,
+      ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
+      count: isSet(object.count) ? Number(object.count) : 0,
+      chips: isSet(object.chips) ? Number(object.chips) : 0,
+    };
+  },
+
+  toJSON(message: JackpotReward): unknown {
+    const obj: any = {};
+    message.winJackpot !== undefined && (obj.winJackpot = winJackpotToJSON(message.winJackpot));
+    message.ratio !== undefined && (obj.ratio = Math.round(message.ratio));
+    message.count !== undefined && (obj.count = Math.round(message.count));
+    message.chips !== undefined && (obj.chips = Math.round(message.chips));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<JackpotReward>, I>>(base?: I): JackpotReward {
+    return JackpotReward.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<JackpotReward>, I>>(object: I): JackpotReward {
+    const message = createBaseJackpotReward();
+    message.winJackpot = object.winJackpot ?? 0;
+    message.ratio = object.ratio ?? 0;
+    message.count = object.count ?? 0;
+    message.chips = object.chips ?? 0;
+    return message;
+  },
+};
+
+function createBaseJackpotHistory(): JackpotHistory {
+  return { minor: undefined, major: undefined, mega: undefined, grand: undefined };
+}
+
+export const JackpotHistory = {
+  encode(message: JackpotHistory, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.minor !== undefined) {
+      JackpotReward.encode(message.minor, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.major !== undefined) {
+      JackpotReward.encode(message.major, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.mega !== undefined) {
+      JackpotReward.encode(message.mega, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.grand !== undefined) {
+      JackpotReward.encode(message.grand, writer.uint32(34).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): JackpotHistory {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseJackpotHistory();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.minor = JackpotReward.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.major = JackpotReward.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.mega = JackpotReward.decode(reader, reader.uint32());
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.grand = JackpotReward.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): JackpotHistory {
+    return {
+      minor: isSet(object.minor) ? JackpotReward.fromJSON(object.minor) : undefined,
+      major: isSet(object.major) ? JackpotReward.fromJSON(object.major) : undefined,
+      mega: isSet(object.mega) ? JackpotReward.fromJSON(object.mega) : undefined,
+      grand: isSet(object.grand) ? JackpotReward.fromJSON(object.grand) : undefined,
+    };
+  },
+
+  toJSON(message: JackpotHistory): unknown {
+    const obj: any = {};
+    message.minor !== undefined && (obj.minor = message.minor ? JackpotReward.toJSON(message.minor) : undefined);
+    message.major !== undefined && (obj.major = message.major ? JackpotReward.toJSON(message.major) : undefined);
+    message.mega !== undefined && (obj.mega = message.mega ? JackpotReward.toJSON(message.mega) : undefined);
+    message.grand !== undefined && (obj.grand = message.grand ? JackpotReward.toJSON(message.grand) : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<JackpotHistory>, I>>(base?: I): JackpotHistory {
+    return JackpotHistory.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<JackpotHistory>, I>>(object: I): JackpotHistory {
+    const message = createBaseJackpotHistory();
+    message.minor = (object.minor !== undefined && object.minor !== null)
+      ? JackpotReward.fromPartial(object.minor)
+      : undefined;
+    message.major = (object.major !== undefined && object.major !== null)
+      ? JackpotReward.fromPartial(object.major)
+      : undefined;
+    message.mega = (object.mega !== undefined && object.mega !== null)
+      ? JackpotReward.fromPartial(object.mega)
+      : undefined;
+    message.grand = (object.grand !== undefined && object.grand !== null)
+      ? JackpotReward.fromPartial(object.grand)
+      : undefined;
     return message;
   },
 };
