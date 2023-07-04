@@ -318,6 +318,7 @@ message GameReward {
   float ratio_bonus = 14;
   // tarzan PerlGreenForest
   int32 perl_green_forest = 15;
+  int64 perl_green_forest_chips = 16;
 }
 
 message SaveGame {

@@ -1068,6 +1068,7 @@ export interface GameReward {
   ratioBonus: number;
   /** tarzan PerlGreenForest */
   perlGreenForest: number;
+  perlGreenForestChips: number;
 }
 
 export interface SaveGame {
@@ -2216,6 +2217,7 @@ function createBaseGameReward(): GameReward {
     chipFee: 0,
     ratioBonus: 0,
     perlGreenForest: 0,
+    perlGreenForestChips: 0,
   };
 }
 
@@ -2265,6 +2267,9 @@ export const GameReward = {
     }
     if (message.perlGreenForest !== 0) {
       writer.uint32(120).int32(message.perlGreenForest);
+    }
+    if (message.perlGreenForestChips !== 0) {
+      writer.uint32(128).int64(message.perlGreenForestChips);
     }
     return writer;
   },
@@ -2381,6 +2386,13 @@ export const GameReward = {
 
           message.perlGreenForest = reader.int32();
           continue;
+        case 16:
+          if (tag !== 128) {
+            break;
+          }
+
+          message.perlGreenForestChips = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2407,6 +2419,7 @@ export const GameReward = {
       chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
       ratioBonus: isSet(object.ratioBonus) ? Number(object.ratioBonus) : 0,
       perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
+      perlGreenForestChips: isSet(object.perlGreenForestChips) ? Number(object.perlGreenForestChips) : 0,
     };
   },
 
@@ -2429,6 +2442,7 @@ export const GameReward = {
     message.chipFee !== undefined && (obj.chipFee = Math.round(message.chipFee));
     message.ratioBonus !== undefined && (obj.ratioBonus = message.ratioBonus);
     message.perlGreenForest !== undefined && (obj.perlGreenForest = Math.round(message.perlGreenForest));
+    message.perlGreenForestChips !== undefined && (obj.perlGreenForestChips = Math.round(message.perlGreenForestChips));
     return obj;
   },
 
@@ -2453,6 +2467,7 @@ export const GameReward = {
     message.chipFee = object.chipFee ?? 0;
     message.ratioBonus = object.ratioBonus ?? 0;
     message.perlGreenForest = object.perlGreenForest ?? 0;
+    message.perlGreenForestChips = object.perlGreenForestChips ?? 0;
     return message;
   },
 };
