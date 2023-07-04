@@ -306,7 +306,7 @@ message GameReward {
   int64 total_chips_win_by_game = 5;
   // ngọc rừng xanh ở tarzan game
   bool update_chips_bonus = 6;
-  int64 chips_bonus = 7;
+  // int64 chips_bonus = 7;
   // save ratio win in some case
   float ratio_win = 8;
   int64 line_win = 9;

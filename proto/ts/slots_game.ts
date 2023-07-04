@@ -1056,8 +1056,10 @@ export interface GameReward {
   totalChipsWinByGame: number;
   /** ngọc rừng xanh ở tarzan game */
   updateChipsBonus: boolean;
-  chipsBonus: number;
-  /** save ratio win in some case */
+  /**
+   * int64 chips_bonus = 7;
+   * save ratio win in some case
+   */
   ratioWin: number;
   lineWin: number;
   totalRatioWin: number;
@@ -2208,7 +2210,6 @@ function createBaseGameReward(): GameReward {
     chipsWin: 0,
     totalChipsWinByGame: 0,
     updateChipsBonus: false,
-    chipsBonus: 0,
     ratioWin: 0,
     lineWin: 0,
     totalRatioWin: 0,
@@ -2240,9 +2241,6 @@ export const GameReward = {
     }
     if (message.updateChipsBonus === true) {
       writer.uint32(48).bool(message.updateChipsBonus);
-    }
-    if (message.chipsBonus !== 0) {
-      writer.uint32(56).int64(message.chipsBonus);
     }
     if (message.ratioWin !== 0) {
       writer.uint32(69).float(message.ratioWin);
@@ -2322,13 +2320,6 @@ export const GameReward = {
           }
 
           message.updateChipsBonus = reader.bool();
-          continue;
-        case 7:
-          if (tag !== 56) {
-            break;
-          }
-
-          message.chipsBonus = longToNumber(reader.int64() as Long);
           continue;
         case 8:
           if (tag !== 69) {
@@ -2410,7 +2401,6 @@ export const GameReward = {
       chipsWin: isSet(object.chipsWin) ? Number(object.chipsWin) : 0,
       totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
       updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
-      chipsBonus: isSet(object.chipsBonus) ? Number(object.chipsBonus) : 0,
       ratioWin: isSet(object.ratioWin) ? Number(object.ratioWin) : 0,
       lineWin: isSet(object.lineWin) ? Number(object.lineWin) : 0,
       totalRatioWin: isSet(object.totalRatioWin) ? Number(object.totalRatioWin) : 0,
@@ -2433,7 +2423,6 @@ export const GameReward = {
     message.chipsWin !== undefined && (obj.chipsWin = Math.round(message.chipsWin));
     message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
     message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
-    message.chipsBonus !== undefined && (obj.chipsBonus = Math.round(message.chipsBonus));
     message.ratioWin !== undefined && (obj.ratioWin = message.ratioWin);
     message.lineWin !== undefined && (obj.lineWin = Math.round(message.lineWin));
     message.totalRatioWin !== undefined && (obj.totalRatioWin = message.totalRatioWin);
@@ -2458,7 +2447,6 @@ export const GameReward = {
     message.chipsWin = object.chipsWin ?? 0;
     message.totalChipsWinByGame = object.totalChipsWinByGame ?? 0;
     message.updateChipsBonus = object.updateChipsBonus ?? false;
-    message.chipsBonus = object.chipsBonus ?? 0;
     message.ratioWin = object.ratioWin ?? 0;
     message.lineWin = object.lineWin ?? 0;
     message.totalRatioWin = object.totalRatioWin ?? 0;
