@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
 import { Card } from "./chinese_poker_game_api";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -372,8 +372,12 @@ export const BlackjackAction = {
 
   toJSON(message: BlackjackAction): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.code !== undefined && (obj.code = blackjackActionCodeToJSON(message.code));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.code !== 0) {
+      obj.code = blackjackActionCodeToJSON(message.code);
+    }
     return obj;
   },
 
@@ -454,9 +458,15 @@ export const BlackjackBet = {
 
   toJSON(message: BlackjackBet): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.code !== undefined && (obj.code = blackjackBetCodeToJSON(message.code));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.code !== 0) {
+      obj.code = blackjackBetCodeToJSON(message.code);
+    }
     return obj;
   },
 
@@ -549,10 +559,18 @@ export const BlackjackBetResult = {
 
   toJSON(message: BlackjackBetResult): unknown {
     const obj: any = {};
-    message.betAmount !== undefined && (obj.betAmount = Math.round(message.betAmount));
-    message.winAmount !== undefined && (obj.winAmount = Math.round(message.winAmount));
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.isWin !== undefined && (obj.isWin = Math.round(message.isWin));
+    if (message.betAmount !== 0) {
+      obj.betAmount = Math.round(message.betAmount);
+    }
+    if (message.winAmount !== 0) {
+      obj.winAmount = Math.round(message.winAmount);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.isWin !== 0) {
+      obj.isWin = Math.round(message.isWin);
+    }
     return obj;
   },
 
@@ -646,10 +664,18 @@ export const BlackjackPlayerBet = {
 
   toJSON(message: BlackjackPlayerBet): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.insurance !== undefined && (obj.insurance = Math.round(message.insurance));
-    message.first !== undefined && (obj.first = Math.round(message.first));
-    message.second !== undefined && (obj.second = Math.round(message.second));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.insurance !== 0) {
+      obj.insurance = Math.round(message.insurance);
+    }
+    if (message.first !== 0) {
+      obj.first = Math.round(message.first);
+    }
+    if (message.second !== 0) {
+      obj.second = Math.round(message.second);
+    }
     return obj;
   },
 
@@ -743,12 +769,18 @@ export const BlackjackPLayerBetResult = {
 
   toJSON(message: BlackjackPLayerBetResult): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.insurance !== undefined &&
-      (obj.insurance = message.insurance ? BlackjackBetResult.toJSON(message.insurance) : undefined);
-    message.first !== undefined && (obj.first = message.first ? BlackjackBetResult.toJSON(message.first) : undefined);
-    message.second !== undefined &&
-      (obj.second = message.second ? BlackjackBetResult.toJSON(message.second) : undefined);
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.insurance !== undefined) {
+      obj.insurance = BlackjackBetResult.toJSON(message.insurance);
+    }
+    if (message.first !== undefined) {
+      obj.first = BlackjackBetResult.toJSON(message.first);
+    }
+    if (message.second !== undefined) {
+      obj.second = BlackjackBetResult.toJSON(message.second);
+    }
     return obj;
   },
 
@@ -893,20 +925,26 @@ export const BlackjackUpdateDeal = {
 
   toJSON(message: BlackjackUpdateDeal): unknown {
     const obj: any = {};
-    message.isBanker !== undefined && (obj.isBanker = message.isBanker);
-    message.isRevealBankerHiddenCard !== undefined && (obj.isRevealBankerHiddenCard = message.isRevealBankerHiddenCard);
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.handN0 !== undefined && (obj.handN0 = blackjackHandN0ToJSON(message.handN0));
-    if (message.newCards) {
-      obj.newCards = message.newCards.map((e) => e ? Card.toJSON(e) : undefined);
-    } else {
-      obj.newCards = [];
+    if (message.isBanker === true) {
+      obj.isBanker = message.isBanker;
     }
-    message.hand !== undefined && (obj.hand = message.hand ? BlackjackPlayerHand.toJSON(message.hand) : undefined);
-    if (message.allPlayerHand) {
-      obj.allPlayerHand = message.allPlayerHand.map((e) => e ? BlackjackPlayerHand.toJSON(e) : undefined);
-    } else {
-      obj.allPlayerHand = [];
+    if (message.isRevealBankerHiddenCard === true) {
+      obj.isRevealBankerHiddenCard = message.isRevealBankerHiddenCard;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.handN0 !== 0) {
+      obj.handN0 = blackjackHandN0ToJSON(message.handN0);
+    }
+    if (message.newCards?.length) {
+      obj.newCards = message.newCards.map((e) => Card.toJSON(e));
+    }
+    if (message.hand !== undefined) {
+      obj.hand = BlackjackPlayerHand.toJSON(message.hand);
+    }
+    if (message.allPlayerHand?.length) {
+      obj.allPlayerHand = message.allPlayerHand.map((e) => BlackjackPlayerHand.toJSON(e));
     }
     return obj;
   },
@@ -996,11 +1034,11 @@ export const BlackjackLegalActions = {
 
   toJSON(message: BlackjackLegalActions): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.actions) {
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.actions?.length) {
       obj.actions = message.actions.map((e) => blackjackActionCodeToJSON(e));
-    } else {
-      obj.actions = [];
     }
     return obj;
   },
@@ -1082,13 +1120,15 @@ export const BlackjackHand = {
 
   toJSON(message: BlackjackHand): unknown {
     const obj: any = {};
-    if (message.cards) {
-      obj.cards = message.cards.map((e) => e ? Card.toJSON(e) : undefined);
-    } else {
-      obj.cards = [];
+    if (message.cards?.length) {
+      obj.cards = message.cards.map((e) => Card.toJSON(e));
     }
-    message.type !== undefined && (obj.type = blackjackHandTypeToJSON(message.type));
-    message.point !== undefined && (obj.point = Math.round(message.point));
+    if (message.type !== 0) {
+      obj.type = blackjackHandTypeToJSON(message.type);
+    }
+    if (message.point !== 0) {
+      obj.point = Math.round(message.point);
+    }
     return obj;
   },
 
@@ -1170,9 +1210,15 @@ export const BlackjackPlayerHand = {
 
   toJSON(message: BlackjackPlayerHand): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.first !== undefined && (obj.first = message.first ? BlackjackHand.toJSON(message.first) : undefined);
-    message.second !== undefined && (obj.second = message.second ? BlackjackHand.toJSON(message.second) : undefined);
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.first !== undefined) {
+      obj.first = BlackjackHand.toJSON(message.first);
+    }
+    if (message.second !== undefined) {
+      obj.second = BlackjackHand.toJSON(message.second);
+    }
     return obj;
   },
 
@@ -1258,9 +1304,15 @@ export const BlackjackPlayerTurn = {
 
   toJSON(message: BlackjackPlayerTurn): unknown {
     const obj: any = {};
-    message.isPlayer !== undefined && (obj.isPlayer = message.isPlayer);
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.handN0 !== undefined && (obj.handN0 = blackjackHandN0ToJSON(message.handN0));
+    if (message.isPlayer !== "") {
+      obj.isPlayer = message.isPlayer;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.handN0 !== 0) {
+      obj.handN0 = blackjackHandN0ToJSON(message.handN0);
+    }
     return obj;
   },
 
@@ -1456,22 +1508,41 @@ export const BlackjackUpdateDesk = {
 
   toJSON(message: BlackjackUpdateDesk): unknown {
     const obj: any = {};
-    message.isInsuranceTurnEnter !== undefined && (obj.isInsuranceTurnEnter = message.isInsuranceTurnEnter);
-    message.isNewTurn !== undefined && (obj.isNewTurn = message.isNewTurn);
-    message.inTurn !== undefined && (obj.inTurn = message.inTurn);
-    message.handN0 !== undefined && (obj.handN0 = blackjackHandN0ToJSON(message.handN0));
-    message.isUpdateBet !== undefined && (obj.isUpdateBet = message.isUpdateBet);
-    message.bet !== undefined && (obj.bet = message.bet ? BlackjackPlayerBet.toJSON(message.bet) : undefined);
-    message.isUpdateLegalAction !== undefined && (obj.isUpdateLegalAction = message.isUpdateLegalAction);
-    message.actions !== undefined &&
-      (obj.actions = message.actions ? BlackjackLegalActions.toJSON(message.actions) : undefined);
-    message.isSplitHand !== undefined && (obj.isSplitHand = message.isSplitHand);
-    message.hand !== undefined && (obj.hand = message.hand ? BlackjackPlayerHand.toJSON(message.hand) : undefined);
-    message.isBankerNotBlackjack !== undefined && (obj.isBankerNotBlackjack = message.isBankerNotBlackjack);
-    if (message.playersBet) {
-      obj.playersBet = message.playersBet.map((e) => e ? BlackjackPlayerBet.toJSON(e) : undefined);
-    } else {
-      obj.playersBet = [];
+    if (message.isInsuranceTurnEnter === true) {
+      obj.isInsuranceTurnEnter = message.isInsuranceTurnEnter;
+    }
+    if (message.isNewTurn === true) {
+      obj.isNewTurn = message.isNewTurn;
+    }
+    if (message.inTurn !== "") {
+      obj.inTurn = message.inTurn;
+    }
+    if (message.handN0 !== 0) {
+      obj.handN0 = blackjackHandN0ToJSON(message.handN0);
+    }
+    if (message.isUpdateBet === true) {
+      obj.isUpdateBet = message.isUpdateBet;
+    }
+    if (message.bet !== undefined) {
+      obj.bet = BlackjackPlayerBet.toJSON(message.bet);
+    }
+    if (message.isUpdateLegalAction === true) {
+      obj.isUpdateLegalAction = message.isUpdateLegalAction;
+    }
+    if (message.actions !== undefined) {
+      obj.actions = BlackjackLegalActions.toJSON(message.actions);
+    }
+    if (message.isSplitHand === true) {
+      obj.isSplitHand = message.isSplitHand;
+    }
+    if (message.hand !== undefined) {
+      obj.hand = BlackjackPlayerHand.toJSON(message.hand);
+    }
+    if (message.isBankerNotBlackjack === true) {
+      obj.isBankerNotBlackjack = message.isBankerNotBlackjack;
+    }
+    if (message.playersBet?.length) {
+      obj.playersBet = message.playersBet.map((e) => BlackjackPlayerBet.toJSON(e));
     }
     return obj;
   },
@@ -1549,10 +1620,8 @@ export const BlackjackUpdateFinish = {
 
   toJSON(message: BlackjackUpdateFinish): unknown {
     const obj: any = {};
-    if (message.betResults) {
-      obj.betResults = message.betResults.map((e) => e ? BlackjackPLayerBetResult.toJSON(e) : undefined);
-    } else {
-      obj.betResults = [];
+    if (message.betResults?.length) {
+      obj.betResults = message.betResults.map((e) => BlackjackPLayerBetResult.toJSON(e));
     }
     return obj;
   },
@@ -1568,10 +1637,10 @@ export const BlackjackUpdateFinish = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -1605,8 +1674,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

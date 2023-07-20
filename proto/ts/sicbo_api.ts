@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -469,8 +469,12 @@ export const SicboBet = {
 
   toJSON(message: SicboBet): unknown {
     const obj: any = {};
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.cell !== undefined && (obj.cell = sicboBetCellToJSON(message.cell));
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.cell !== 0) {
+      obj.cell = sicboBetCellToJSON(message.cell);
+    }
     return obj;
   },
 
@@ -540,8 +544,12 @@ export const SicboBetResult = {
 
   toJSON(message: SicboBetResult): unknown {
     const obj: any = {};
-    message.bet !== undefined && (obj.bet = message.bet ? SicboBet.toJSON(message.bet) : undefined);
-    message.isWin !== undefined && (obj.isWin = message.isWin);
+    if (message.bet !== undefined) {
+      obj.bet = SicboBet.toJSON(message.bet);
+    }
+    if (message.isWin === true) {
+      obj.isWin = message.isWin;
+    }
     return obj;
   },
 
@@ -622,12 +630,14 @@ export const SicboPlayerBet = {
 
   toJSON(message: SicboPlayerBet): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.action !== undefined && (obj.action = sicboBetActionToJSON(message.action));
-    if (message.bets) {
-      obj.bets = message.bets.map((e) => e ? SicboBet.toJSON(e) : undefined);
-    } else {
-      obj.bets = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.action !== 0) {
+      obj.action = sicboBetActionToJSON(message.action);
+    }
+    if (message.bets?.length) {
+      obj.bets = message.bets.map((e) => SicboBet.toJSON(e));
     }
     return obj;
   },
@@ -699,11 +709,11 @@ export const SicboPlayerBetResult = {
 
   toJSON(message: SicboPlayerBetResult): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.list) {
-      obj.list = message.list.map((e) => e ? SicboBetResult.toJSON(e) : undefined);
-    } else {
-      obj.list = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.list?.length) {
+      obj.list = message.list.map((e) => SicboBetResult.toJSON(e));
     }
     return obj;
   },
@@ -773,10 +783,8 @@ export const SicboHand = {
 
   toJSON(message: SicboHand): unknown {
     const obj: any = {};
-    if (message.dices) {
+    if (message.dices?.length) {
       obj.dices = message.dices.map((e) => diceToJSON(e));
-    } else {
-      obj.dices = [];
     }
     return obj;
   },
@@ -871,16 +879,14 @@ export const SicboGameFinish = {
 
   toJSON(message: SicboGameFinish): unknown {
     const obj: any = {};
-    message.hand !== undefined && (obj.hand = message.hand ? SicboHand.toJSON(message.hand) : undefined);
-    if (message.winCells) {
-      obj.winCells = message.winCells.map((e) => sicboBetCellToJSON(e));
-    } else {
-      obj.winCells = [];
+    if (message.hand !== undefined) {
+      obj.hand = SicboHand.toJSON(message.hand);
     }
-    if (message.listBetResult) {
-      obj.listBetResult = message.listBetResult.map((e) => e ? SicboPlayerBetResult.toJSON(e) : undefined);
-    } else {
-      obj.listBetResult = [];
+    if (message.winCells?.length) {
+      obj.winCells = message.winCells.map((e) => sicboBetCellToJSON(e));
+    }
+    if (message.listBetResult?.length) {
+      obj.listBetResult = message.listBetResult.map((e) => SicboPlayerBetResult.toJSON(e));
     }
     return obj;
   },
@@ -963,9 +969,15 @@ export const SicboBetCellInfo = {
 
   toJSON(message: SicboBetCellInfo): unknown {
     const obj: any = {};
-    message.cell !== undefined && (obj.cell = sicboBetCellToJSON(message.cell));
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.nUserBet !== undefined && (obj.nUserBet = Math.round(message.nUserBet));
+    if (message.cell !== 0) {
+      obj.cell = sicboBetCellToJSON(message.cell);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.nUserBet !== 0) {
+      obj.nUserBet = Math.round(message.nUserBet);
+    }
     return obj;
   },
 
@@ -1099,21 +1111,26 @@ export const SicboUpdateDesk = {
 
   toJSON(message: SicboUpdateDesk): unknown {
     const obj: any = {};
-    message.nPlayers !== undefined && (obj.nPlayers = Math.round(message.nPlayers));
-    message.isUpdateUserBet !== undefined && (obj.isUpdateUserBet = message.isUpdateUserBet);
-    message.isUpdateDeskCell !== undefined && (obj.isUpdateDeskCell = message.isUpdateDeskCell);
-    message.isUpdateGameHistory !== undefined && (obj.isUpdateGameHistory = message.isUpdateGameHistory);
-    message.userBet !== undefined &&
-      (obj.userBet = message.userBet ? SicboPlayerBet.toJSON(message.userBet) : undefined);
-    if (message.deskCell) {
-      obj.deskCell = message.deskCell.map((e) => e ? SicboBetCellInfo.toJSON(e) : undefined);
-    } else {
-      obj.deskCell = [];
+    if (message.nPlayers !== 0) {
+      obj.nPlayers = Math.round(message.nPlayers);
     }
-    if (message.history) {
-      obj.history = message.history.map((e) => e ? SicboHand.toJSON(e) : undefined);
-    } else {
-      obj.history = [];
+    if (message.isUpdateUserBet === true) {
+      obj.isUpdateUserBet = message.isUpdateUserBet;
+    }
+    if (message.isUpdateDeskCell === true) {
+      obj.isUpdateDeskCell = message.isUpdateDeskCell;
+    }
+    if (message.isUpdateGameHistory === true) {
+      obj.isUpdateGameHistory = message.isUpdateGameHistory;
+    }
+    if (message.userBet !== undefined) {
+      obj.userBet = SicboPlayerBet.toJSON(message.userBet);
+    }
+    if (message.deskCell?.length) {
+      obj.deskCell = message.deskCell.map((e) => SicboBetCellInfo.toJSON(e));
+    }
+    if (message.history?.length) {
+      obj.history = message.history.map((e) => SicboHand.toJSON(e));
     }
     return obj;
   },
@@ -1178,7 +1195,9 @@ export const SicboActionReject = {
 
   toJSON(message: SicboActionReject): unknown {
     const obj: any = {};
-    message.reason !== undefined && (obj.reason = sicboBetRejectReasonToJSON(message.reason));
+    if (message.reason !== 0) {
+      obj.reason = sicboBetRejectReasonToJSON(message.reason);
+    }
     return obj;
   },
 
@@ -1193,10 +1212,10 @@ export const SicboActionReject = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -1230,8 +1249,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

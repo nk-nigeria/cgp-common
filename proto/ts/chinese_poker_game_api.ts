@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -1023,9 +1023,15 @@ export const Card = {
 
   toJSON(message: Card): unknown {
     const obj: any = {};
-    message.rank !== undefined && (obj.rank = cardRankToJSON(message.rank));
-    message.suit !== undefined && (obj.suit = cardSuitToJSON(message.suit));
-    message.status !== undefined && (obj.status = cardStatusToJSON(message.status));
+    if (message.rank !== 0) {
+      obj.rank = cardRankToJSON(message.rank);
+    }
+    if (message.suit !== 0) {
+      obj.suit = cardSuitToJSON(message.suit);
+    }
+    if (message.status !== 0) {
+      obj.status = cardStatusToJSON(message.status);
+    }
     return obj;
   },
 
@@ -1083,10 +1089,8 @@ export const ListCard = {
 
   toJSON(message: ListCard): unknown {
     const obj: any = {};
-    if (message.cards) {
-      obj.cards = message.cards.map((e) => e ? Card.toJSON(e) : undefined);
-    } else {
-      obj.cards = [];
+    if (message.cards?.length) {
+      obj.cards = message.cards.map((e) => Card.toJSON(e));
     }
     return obj;
   },
@@ -1187,7 +1191,9 @@ export const Organize = {
 
   toJSON(message: Organize): unknown {
     const obj: any = {};
-    message.cards !== undefined && (obj.cards = message.cards ? ListCard.toJSON(message.cards) : undefined);
+    if (message.cards !== undefined) {
+      obj.cards = ListCard.toJSON(message.cards);
+    }
     return obj;
   },
 
@@ -1359,33 +1365,36 @@ export const UpdateTable = {
 
   toJSON(message: UpdateTable): unknown {
     const obj: any = {};
-    if (message.players) {
-      obj.players = message.players.map((e) => e ? Player.toJSON(e) : undefined);
-    } else {
-      obj.players = [];
+    if (message.players?.length) {
+      obj.players = message.players.map((e) => Player.toJSON(e));
     }
-    if (message.playingPlayers) {
-      obj.playingPlayers = message.playingPlayers.map((e) => e ? Player.toJSON(e) : undefined);
-    } else {
-      obj.playingPlayers = [];
+    if (message.playingPlayers?.length) {
+      obj.playingPlayers = message.playingPlayers.map((e) => Player.toJSON(e));
     }
-    if (message.joinPlayers) {
-      obj.joinPlayers = message.joinPlayers.map((e) => e ? Player.toJSON(e) : undefined);
-    } else {
-      obj.joinPlayers = [];
+    if (message.joinPlayers?.length) {
+      obj.joinPlayers = message.joinPlayers.map((e) => Player.toJSON(e));
     }
-    if (message.leavePlayers) {
-      obj.leavePlayers = message.leavePlayers.map((e) => e ? Player.toJSON(e) : undefined);
-    } else {
-      obj.leavePlayers = [];
+    if (message.leavePlayers?.length) {
+      obj.leavePlayers = message.leavePlayers.map((e) => Player.toJSON(e));
     }
-    message.bet !== undefined && (obj.bet = Math.round(message.bet));
-    message.vip !== undefined && (obj.vip = Math.round(message.vip));
-    message.timePlay !== undefined && (obj.timePlay = Math.round(message.timePlay));
-    message.remainTime !== undefined && (obj.remainTime = Math.round(message.remainTime));
-    message.gameState !== undefined && (obj.gameState = gameStateToJSON(message.gameState));
-    message.jpTreasure !== undefined &&
-      (obj.jpTreasure = message.jpTreasure ? Jackpot.toJSON(message.jpTreasure) : undefined);
+    if (message.bet !== 0) {
+      obj.bet = Math.round(message.bet);
+    }
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    if (message.timePlay !== 0) {
+      obj.timePlay = Math.round(message.timePlay);
+    }
+    if (message.remainTime !== 0) {
+      obj.remainTime = Math.round(message.remainTime);
+    }
+    if (message.gameState !== 0) {
+      obj.gameState = gameStateToJSON(message.gameState);
+    }
+    if (message.jpTreasure !== undefined) {
+      obj.jpTreasure = Jackpot.toJSON(message.jpTreasure);
+    }
     return obj;
   },
 
@@ -1465,11 +1474,11 @@ export const PresenceCards = {
 
   toJSON(message: PresenceCards): unknown {
     const obj: any = {};
-    message.presence !== undefined && (obj.presence = message.presence);
-    if (message.cards) {
-      obj.cards = message.cards.map((e) => e ? Card.toJSON(e) : undefined);
-    } else {
-      obj.cards = [];
+    if (message.presence !== "") {
+      obj.presence = message.presence;
+    }
+    if (message.cards?.length) {
+      obj.cards = message.cards.map((e) => Card.toJSON(e));
     }
     return obj;
   },
@@ -1527,8 +1536,9 @@ export const UpdateDeal = {
 
   toJSON(message: UpdateDeal): unknown {
     const obj: any = {};
-    message.presenceCard !== undefined &&
-      (obj.presenceCard = message.presenceCard ? PresenceCards.toJSON(message.presenceCard) : undefined);
+    if (message.presenceCard !== undefined) {
+      obj.presenceCard = PresenceCards.toJSON(message.presenceCard);
+    }
     return obj;
   },
 
@@ -1623,14 +1633,17 @@ export const UpdateGameState = {
 
   toJSON(message: UpdateGameState): unknown {
     const obj: any = {};
-    message.state !== undefined && (obj.state = gameStateToJSON(message.state));
-    message.countDown !== undefined && (obj.countDown = Math.round(message.countDown));
-    message.arrangeCard !== undefined &&
-      (obj.arrangeCard = message.arrangeCard ? ArrangeCard.toJSON(message.arrangeCard) : undefined);
-    if (message.presenceCards) {
-      obj.presenceCards = message.presenceCards.map((e) => e ? PresenceCards.toJSON(e) : undefined);
-    } else {
-      obj.presenceCards = [];
+    if (message.state !== 0) {
+      obj.state = gameStateToJSON(message.state);
+    }
+    if (message.countDown !== 0) {
+      obj.countDown = Math.round(message.countDown);
+    }
+    if (message.arrangeCard !== undefined) {
+      obj.arrangeCard = ArrangeCard.toJSON(message.arrangeCard);
+    }
+    if (message.presenceCards?.length) {
+      obj.presenceCards = message.presenceCards.map((e) => PresenceCards.toJSON(e));
     }
     return obj;
   },
@@ -1705,8 +1718,12 @@ export const ArrangeCard = {
 
   toJSON(message: ArrangeCard): unknown {
     const obj: any = {};
-    message.Presence !== undefined && (obj.Presence = message.Presence);
-    message.cardEvent !== undefined && (obj.cardEvent = cardEventToJSON(message.cardEvent));
+    if (message.Presence !== "") {
+      obj.Presence = message.Presence;
+    }
+    if (message.cardEvent !== 0) {
+      obj.cardEvent = cardEventToJSON(message.cardEvent);
+    }
     return obj;
   },
 
@@ -1798,10 +1815,18 @@ export const HandBonus = {
 
   toJSON(message: HandBonus): unknown {
     const obj: any = {};
-    message.win !== undefined && (obj.win = message.win);
-    message.lose !== undefined && (obj.lose = message.lose);
-    message.type !== undefined && (obj.type = handBonusTypeToJSON(message.type));
-    message.factor !== undefined && (obj.factor = Math.round(message.factor));
+    if (message.win !== "") {
+      obj.win = message.win;
+    }
+    if (message.lose !== "") {
+      obj.lose = message.lose;
+    }
+    if (message.type !== 0) {
+      obj.type = handBonusTypeToJSON(message.type);
+    }
+    if (message.factor !== 0) {
+      obj.factor = Math.round(message.factor);
+    }
     return obj;
   },
 
@@ -1884,9 +1909,15 @@ export const HandResult = {
 
   toJSON(message: HandResult): unknown {
     const obj: any = {};
-    message.ranking !== undefined && (obj.ranking = handRankingToJSON(message.ranking));
-    message.point !== undefined && (obj.point = Math.round(message.point));
-    message.lpoint !== undefined && (obj.lpoint = Math.round(message.lpoint));
+    if (message.ranking !== 0) {
+      obj.ranking = handRankingToJSON(message.ranking);
+    }
+    if (message.point !== 0) {
+      obj.point = Math.round(message.point);
+    }
+    if (message.lpoint !== 0) {
+      obj.lpoint = Math.round(message.lpoint);
+    }
     return obj;
   },
 
@@ -1990,11 +2021,21 @@ export const PointResult = {
 
   toJSON(message: PointResult): unknown {
     const obj: any = {};
-    message.front !== undefined && (obj.front = message.front ? HandResult.toJSON(message.front) : undefined);
-    message.middle !== undefined && (obj.middle = message.middle ? HandResult.toJSON(message.middle) : undefined);
-    message.back !== undefined && (obj.back = message.back ? HandResult.toJSON(message.back) : undefined);
-    message.natural !== undefined && (obj.natural = message.natural ? HandResult.toJSON(message.natural) : undefined);
-    message.type !== undefined && (obj.type = pointTypeToJSON(message.type));
+    if (message.front !== undefined) {
+      obj.front = HandResult.toJSON(message.front);
+    }
+    if (message.middle !== undefined) {
+      obj.middle = HandResult.toJSON(message.middle);
+    }
+    if (message.back !== undefined) {
+      obj.back = HandResult.toJSON(message.back);
+    }
+    if (message.natural !== undefined) {
+      obj.natural = HandResult.toJSON(message.natural);
+    }
+    if (message.type !== 0) {
+      obj.type = pointTypeToJSON(message.type);
+    }
     return obj;
   },
 
@@ -2186,17 +2227,39 @@ export const ScoreResult = {
 
   toJSON(message: ScoreResult): unknown {
     const obj: any = {};
-    message.frontFactor !== undefined && (obj.frontFactor = Math.round(message.frontFactor));
-    message.middleFactor !== undefined && (obj.middleFactor = Math.round(message.middleFactor));
-    message.backFactor !== undefined && (obj.backFactor = Math.round(message.backFactor));
-    message.frontBonusFactor !== undefined && (obj.frontBonusFactor = Math.round(message.frontBonusFactor));
-    message.middleBonusFactor !== undefined && (obj.middleBonusFactor = Math.round(message.middleBonusFactor));
-    message.backBonusFactor !== undefined && (obj.backBonusFactor = Math.round(message.backBonusFactor));
-    message.naturalFactor !== undefined && (obj.naturalFactor = Math.round(message.naturalFactor));
-    message.bonusFactor !== undefined && (obj.bonusFactor = Math.round(message.bonusFactor));
-    message.scoop !== undefined && (obj.scoop = Math.round(message.scoop));
-    message.numHandWin !== undefined && (obj.numHandWin = Math.round(message.numHandWin));
-    message.totalFactor !== undefined && (obj.totalFactor = Math.round(message.totalFactor));
+    if (message.frontFactor !== 0) {
+      obj.frontFactor = Math.round(message.frontFactor);
+    }
+    if (message.middleFactor !== 0) {
+      obj.middleFactor = Math.round(message.middleFactor);
+    }
+    if (message.backFactor !== 0) {
+      obj.backFactor = Math.round(message.backFactor);
+    }
+    if (message.frontBonusFactor !== 0) {
+      obj.frontBonusFactor = Math.round(message.frontBonusFactor);
+    }
+    if (message.middleBonusFactor !== 0) {
+      obj.middleBonusFactor = Math.round(message.middleBonusFactor);
+    }
+    if (message.backBonusFactor !== 0) {
+      obj.backBonusFactor = Math.round(message.backBonusFactor);
+    }
+    if (message.naturalFactor !== 0) {
+      obj.naturalFactor = Math.round(message.naturalFactor);
+    }
+    if (message.bonusFactor !== 0) {
+      obj.bonusFactor = Math.round(message.bonusFactor);
+    }
+    if (message.scoop !== 0) {
+      obj.scoop = Math.round(message.scoop);
+    }
+    if (message.numHandWin !== 0) {
+      obj.numHandWin = Math.round(message.numHandWin);
+    }
+    if (message.totalFactor !== 0) {
+      obj.totalFactor = Math.round(message.totalFactor);
+    }
     return obj;
   },
 
@@ -2286,11 +2349,15 @@ export const ComparisonResult = {
 
   toJSON(message: ComparisonResult): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.scoreResult !== undefined &&
-      (obj.scoreResult = message.scoreResult ? ScoreResult.toJSON(message.scoreResult) : undefined);
-    message.pointResult !== undefined &&
-      (obj.pointResult = message.pointResult ? PointResult.toJSON(message.pointResult) : undefined);
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.scoreResult !== undefined) {
+      obj.scoreResult = ScoreResult.toJSON(message.scoreResult);
+    }
+    if (message.pointResult !== undefined) {
+      obj.pointResult = PointResult.toJSON(message.pointResult);
+    }
     return obj;
   },
 
@@ -2387,19 +2454,18 @@ export const UpdateFinish = {
 
   toJSON(message: UpdateFinish): unknown {
     const obj: any = {};
-    if (message.results) {
-      obj.results = message.results.map((e) => e ? ComparisonResult.toJSON(e) : undefined);
-    } else {
-      obj.results = [];
+    if (message.results?.length) {
+      obj.results = message.results.map((e) => ComparisonResult.toJSON(e));
     }
-    if (message.bonuses) {
-      obj.bonuses = message.bonuses.map((e) => e ? HandBonus.toJSON(e) : undefined);
-    } else {
-      obj.bonuses = [];
+    if (message.bonuses?.length) {
+      obj.bonuses = message.bonuses.map((e) => HandBonus.toJSON(e));
     }
-    message.jackpot !== undefined && (obj.jackpot = message.jackpot ? Jackpot.toJSON(message.jackpot) : undefined);
-    message.jpTreasure !== undefined &&
-      (obj.jpTreasure = message.jpTreasure ? Jackpot.toJSON(message.jpTreasure) : undefined);
+    if (message.jackpot !== undefined) {
+      obj.jackpot = Jackpot.toJSON(message.jackpot);
+    }
+    if (message.jpTreasure !== undefined) {
+      obj.jpTreasure = Jackpot.toJSON(message.jpTreasure);
+    }
     return obj;
   },
 
@@ -2497,10 +2563,18 @@ export const BalanceUpdate = {
 
   toJSON(message: BalanceUpdate): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.amountChipBefore !== undefined && (obj.amountChipBefore = Math.round(message.amountChipBefore));
-    message.amountChipCurrent !== undefined && (obj.amountChipCurrent = Math.round(message.amountChipCurrent));
-    message.amountChipAdd !== undefined && (obj.amountChipAdd = Math.round(message.amountChipAdd));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.amountChipBefore !== 0) {
+      obj.amountChipBefore = Math.round(message.amountChipBefore);
+    }
+    if (message.amountChipCurrent !== 0) {
+      obj.amountChipCurrent = Math.round(message.amountChipCurrent);
+    }
+    if (message.amountChipAdd !== 0) {
+      obj.amountChipAdd = Math.round(message.amountChipAdd);
+    }
     return obj;
   },
 
@@ -2572,12 +2646,12 @@ export const BalanceResult = {
 
   toJSON(message: BalanceResult): unknown {
     const obj: any = {};
-    if (message.updates) {
-      obj.updates = message.updates.map((e) => e ? BalanceUpdate.toJSON(e) : undefined);
-    } else {
-      obj.updates = [];
+    if (message.updates?.length) {
+      obj.updates = message.updates.map((e) => BalanceUpdate.toJSON(e));
     }
-    message.jackpot !== undefined && (obj.jackpot = message.jackpot ? Jackpot.toJSON(message.jackpot) : undefined);
+    if (message.jackpot !== undefined) {
+      obj.jackpot = Jackpot.toJSON(message.jackpot);
+    }
     return obj;
   },
 
@@ -2724,14 +2798,30 @@ export const Player = {
 
   toJSON(message: Player): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.wallet !== undefined && (obj.wallet = message.wallet);
-    message.isPlaying !== undefined && (obj.isPlaying = message.isPlaying);
-    message.cardStatus !== undefined && (obj.cardStatus = cardStatusToJSON(message.cardStatus));
-    message.cards !== undefined && (obj.cards = message.cards ? ListCard.toJSON(message.cards) : undefined);
-    message.vipLevel !== undefined && (obj.vipLevel = Math.round(message.vipLevel));
-    message.avatarId !== undefined && (obj.avatarId = message.avatarId);
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.wallet !== "") {
+      obj.wallet = message.wallet;
+    }
+    if (message.isPlaying === true) {
+      obj.isPlaying = message.isPlaying;
+    }
+    if (message.cardStatus !== 0) {
+      obj.cardStatus = cardStatusToJSON(message.cardStatus);
+    }
+    if (message.cards !== undefined) {
+      obj.cards = ListCard.toJSON(message.cards);
+    }
+    if (message.vipLevel !== 0) {
+      obj.vipLevel = Math.round(message.vipLevel);
+    }
+    if (message.avatarId !== "") {
+      obj.avatarId = message.avatarId;
+    }
     return obj;
   },
 
@@ -2842,11 +2932,21 @@ export const Jackpot = {
 
   toJSON(message: Jackpot): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.gameCode !== undefined && (obj.gameCode = message.gameCode);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.createTimeUnix !== undefined && (obj.createTimeUnix = Math.round(message.createTimeUnix));
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.gameCode !== "") {
+      obj.gameCode = message.gameCode;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.createTimeUnix !== 0) {
+      obj.createTimeUnix = Math.round(message.createTimeUnix);
+    }
     return obj;
   },
 
@@ -2865,10 +2965,10 @@ export const Jackpot = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -2902,8 +3002,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

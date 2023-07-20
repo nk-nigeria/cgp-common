@@ -236,9 +236,15 @@ export const GapleDominoAction = {
 
   toJSON(message: GapleDominoAction): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.domino !== undefined && (obj.domino = message.domino ? Domino.toJSON(message.domino) : undefined);
-    message.position !== undefined && (obj.position = gapleDominoChainPositionToJSON(message.position));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.domino !== undefined) {
+      obj.domino = Domino.toJSON(message.domino);
+    }
+    if (message.position !== 0) {
+      obj.position = gapleDominoChainPositionToJSON(message.position);
+    }
     return obj;
   },
 
@@ -322,9 +328,15 @@ export const GapleDominoPenalty = {
 
   toJSON(message: GapleDominoPenalty): unknown {
     const obj: any = {};
-    message.gainPlayer !== undefined && (obj.gainPlayer = message.gainPlayer);
-    message.lostPlayer !== undefined && (obj.lostPlayer = message.lostPlayer);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
+    if (message.gainPlayer !== "") {
+      obj.gainPlayer = message.gainPlayer;
+    }
+    if (message.lostPlayer !== "") {
+      obj.lostPlayer = message.lostPlayer;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
     return obj;
   },
 
@@ -546,33 +558,45 @@ export const GapleDominoUpdateDesk = {
 
   toJSON(message: GapleDominoUpdateDesk): unknown {
     const obj: any = {};
-    message.nPlayers !== undefined && (obj.nPlayers = Math.round(message.nPlayers));
-    message.isNewTurn !== undefined && (obj.isNewTurn = message.isNewTurn);
-    message.isUpdateChain !== undefined && (obj.isUpdateChain = message.isUpdateChain);
-    message.isAppendDominoToChain !== undefined && (obj.isAppendDominoToChain = message.isAppendDominoToChain);
-    message.isPenaltyOccur !== undefined && (obj.isPenaltyOccur = message.isPenaltyOccur);
-    message.isUpdateLegalActions !== undefined && (obj.isUpdateLegalActions = message.isUpdateLegalActions);
-    message.isUpdateNumRemainedCard !== undefined && (obj.isUpdateNumRemainedCard = message.isUpdateNumRemainedCard);
-    if (message.chains) {
+    if (message.nPlayers !== 0) {
+      obj.nPlayers = Math.round(message.nPlayers);
+    }
+    if (message.isNewTurn === true) {
+      obj.isNewTurn = message.isNewTurn;
+    }
+    if (message.isUpdateChain === true) {
+      obj.isUpdateChain = message.isUpdateChain;
+    }
+    if (message.isAppendDominoToChain === true) {
+      obj.isAppendDominoToChain = message.isAppendDominoToChain;
+    }
+    if (message.isPenaltyOccur === true) {
+      obj.isPenaltyOccur = message.isPenaltyOccur;
+    }
+    if (message.isUpdateLegalActions === true) {
+      obj.isUpdateLegalActions = message.isUpdateLegalActions;
+    }
+    if (message.isUpdateNumRemainedCard === true) {
+      obj.isUpdateNumRemainedCard = message.isUpdateNumRemainedCard;
+    }
+    if (message.chains?.length) {
       obj.chains = message.chains.map((e) => Math.round(e));
-    } else {
-      obj.chains = [];
     }
-    message.action !== undefined &&
-      (obj.action = message.action ? GapleDominoAction.toJSON(message.action) : undefined);
-    if (message.legalActions) {
-      obj.legalActions = message.legalActions.map((e) => e ? GapleDominoAction.toJSON(e) : undefined);
-    } else {
-      obj.legalActions = [];
+    if (message.action !== undefined) {
+      obj.action = GapleDominoAction.toJSON(message.action);
     }
-    message.penalty !== undefined &&
-      (obj.penalty = message.penalty ? GapleDominoPenalty.toJSON(message.penalty) : undefined);
-    if (message.remaineds) {
-      obj.remaineds = message.remaineds.map((e) => e ? GapleDominoPresenceNumRemained.toJSON(e) : undefined);
-    } else {
-      obj.remaineds = [];
+    if (message.legalActions?.length) {
+      obj.legalActions = message.legalActions.map((e) => GapleDominoAction.toJSON(e));
     }
-    message.inTurn !== undefined && (obj.inTurn = message.inTurn);
+    if (message.penalty !== undefined) {
+      obj.penalty = GapleDominoPenalty.toJSON(message.penalty);
+    }
+    if (message.remaineds?.length) {
+      obj.remaineds = message.remaineds.map((e) => GapleDominoPresenceNumRemained.toJSON(e));
+    }
+    if (message.inTurn !== "") {
+      obj.inTurn = message.inTurn;
+    }
     return obj;
   },
 
@@ -657,8 +681,12 @@ export const GapleDominoPresenceNumRemained = {
 
   toJSON(message: GapleDominoPresenceNumRemained): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.numCard !== undefined && (obj.numCard = Math.round(message.numCard));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.numCard !== 0) {
+      obj.numCard = Math.round(message.numCard);
+    }
     return obj;
   },
 
@@ -730,11 +758,11 @@ export const GapleDominoPresenceHand = {
 
   toJSON(message: GapleDominoPresenceHand): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.dominos) {
-      obj.dominos = message.dominos.map((e) => e ? Domino.toJSON(e) : undefined);
-    } else {
-      obj.dominos = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.dominos?.length) {
+      obj.dominos = message.dominos.map((e) => Domino.toJSON(e));
     }
     return obj;
   },
@@ -792,7 +820,9 @@ export const GapleDominoUpdateDeal = {
 
   toJSON(message: GapleDominoUpdateDeal): unknown {
     const obj: any = {};
-    message.hand !== undefined && (obj.hand = message.hand ? GapleDominoPresenceHand.toJSON(message.hand) : undefined);
+    if (message.hand !== undefined) {
+      obj.hand = GapleDominoPresenceHand.toJSON(message.hand);
+    }
     return obj;
   },
 
@@ -863,8 +893,12 @@ export const GapleDoninoUpdateFinish = {
 
   toJSON(message: GapleDoninoUpdateFinish): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = gapleDominoFinishGameTypeToJSON(message.type));
-    message.winner !== undefined && (obj.winner = message.winner);
+    if (message.type !== 0) {
+      obj.type = gapleDominoFinishGameTypeToJSON(message.type);
+    }
+    if (message.winner !== "") {
+      obj.winner = message.winner;
+    }
     return obj;
   },
 

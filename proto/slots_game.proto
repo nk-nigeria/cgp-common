@@ -89,6 +89,7 @@ message SpinSymbol {
   int32 index = 5;
   WinJackpot win_jp = 6;
   int64 win_amount = 7;
+  float ratio_bonus = 8;
 }
 
 //

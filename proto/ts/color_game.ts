@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -184,13 +184,15 @@ export const BetResult = {
 
   toJSON(message: BetResult): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.bets) {
-      obj.bets = message.bets.map((e) => e ? InfoBet.toJSON(e) : undefined);
-    } else {
-      obj.bets = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
     }
-    message.isWin !== undefined && (obj.isWin = message.isWin);
+    if (message.bets?.length) {
+      obj.bets = message.bets.map((e) => InfoBet.toJSON(e));
+    }
+    if (message.isWin === true) {
+      obj.isWin = message.isWin;
+    }
     return obj;
   },
 
@@ -272,15 +274,15 @@ export const ColorGameFinish = {
 
   toJSON(message: ColorGameFinish): unknown {
     const obj: any = {};
-    message.rollColor !== undefined &&
-      (obj.rollColor = message.rollColor ? ListColor.toJSON(message.rollColor) : undefined);
-    if (message.betResults) {
-      obj.betResults = message.betResults.map((e) => e ? BetResult.toJSON(e) : undefined);
-    } else {
-      obj.betResults = [];
+    if (message.rollColor !== undefined) {
+      obj.rollColor = ListColor.toJSON(message.rollColor);
     }
-    message.historyRolls !== undefined &&
-      (obj.historyRolls = message.historyRolls ? HistoryRoll.toJSON(message.historyRolls) : undefined);
+    if (message.betResults?.length) {
+      obj.betResults = message.betResults.map((e) => BetResult.toJSON(e));
+    }
+    if (message.historyRolls !== undefined) {
+      obj.historyRolls = HistoryRoll.toJSON(message.historyRolls);
+    }
     return obj;
   },
 
@@ -354,10 +356,8 @@ export const ListColor = {
 
   toJSON(message: ListColor): unknown {
     const obj: any = {};
-    if (message.colors) {
+    if (message.colors?.length) {
       obj.colors = message.colors.map((e) => Math.round(e));
-    } else {
-      obj.colors = [];
     }
     return obj;
   },
@@ -427,8 +427,12 @@ export const RateColor = {
 
   toJSON(message: RateColor): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.percent !== undefined && (obj.percent = Math.round(message.percent));
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.percent !== 0) {
+      obj.percent = Math.round(message.percent);
+    }
     return obj;
   },
 
@@ -498,15 +502,11 @@ export const HistoryRoll = {
 
   toJSON(message: HistoryRoll): unknown {
     const obj: any = {};
-    if (message.listColors) {
-      obj.listColors = message.listColors.map((e) => e ? ListColor.toJSON(e) : undefined);
-    } else {
-      obj.listColors = [];
+    if (message.listColors?.length) {
+      obj.listColors = message.listColors.map((e) => ListColor.toJSON(e));
     }
-    if (message.rateColors) {
-      obj.rateColors = message.rateColors.map((e) => e ? RateColor.toJSON(e) : undefined);
-    } else {
-      obj.rateColors = [];
+    if (message.rateColors?.length) {
+      obj.rateColors = message.rateColors.map((e) => RateColor.toJSON(e));
     }
     return obj;
   },
@@ -632,13 +632,27 @@ export const InfoBet = {
 
   toJSON(message: InfoBet): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.nUserBet !== undefined && (obj.nUserBet = Math.round(message.nUserBet));
-    message.desp !== undefined && (obj.desp = message.desp);
-    message.reqSpecGame !== undefined && (obj.reqSpecGame = Math.round(message.reqSpecGame));
-    message.emitNewgameEvent !== undefined && (obj.emitNewgameEvent = message.emitNewgameEvent);
-    message.delayEmitResult !== undefined && (obj.delayEmitResult = message.delayEmitResult);
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.nUserBet !== 0) {
+      obj.nUserBet = Math.round(message.nUserBet);
+    }
+    if (message.desp !== "") {
+      obj.desp = message.desp;
+    }
+    if (message.reqSpecGame !== 0) {
+      obj.reqSpecGame = Math.round(message.reqSpecGame);
+    }
+    if (message.emitNewgameEvent === true) {
+      obj.emitNewgameEvent = message.emitNewgameEvent;
+    }
+    if (message.delayEmitResult !== "") {
+      obj.delayEmitResult = message.delayEmitResult;
+    }
     return obj;
   },
 
@@ -700,10 +714,8 @@ export const ListInfoBet = {
 
   toJSON(message: ListInfoBet): unknown {
     const obj: any = {};
-    if (message.listBets) {
-      obj.listBets = message.listBets.map((e) => e ? InfoBet.toJSON(e) : undefined);
-    } else {
-      obj.listBets = [];
+    if (message.listBets?.length) {
+      obj.listBets = message.listBets.map((e) => InfoBet.toJSON(e));
     }
     return obj;
   },
@@ -836,22 +848,27 @@ export const UpdateDesk = {
 
   toJSON(message: UpdateDesk): unknown {
     const obj: any = {};
-    message.nPlayer !== undefined && (obj.nPlayer = Math.round(message.nPlayer));
-    message.updateUserBets !== undefined && (obj.updateUserBets = message.updateUserBets);
-    message.updateCellBets !== undefined && (obj.updateCellBets = message.updateCellBets);
-    if (message.userBets) {
-      obj.userBets = message.userBets.map((e) => e ? InfoBet.toJSON(e) : undefined);
-    } else {
-      obj.userBets = [];
+    if (message.nPlayer !== 0) {
+      obj.nPlayer = Math.round(message.nPlayer);
     }
-    if (message.cellBets) {
-      obj.cellBets = message.cellBets.map((e) => e ? InfoBet.toJSON(e) : undefined);
-    } else {
-      obj.cellBets = [];
+    if (message.updateUserBets === true) {
+      obj.updateUserBets = message.updateUserBets;
     }
-    message.updateHistoryRoll !== undefined && (obj.updateHistoryRoll = message.updateHistoryRoll);
-    message.historyRolls !== undefined &&
-      (obj.historyRolls = message.historyRolls ? HistoryRoll.toJSON(message.historyRolls) : undefined);
+    if (message.updateCellBets === true) {
+      obj.updateCellBets = message.updateCellBets;
+    }
+    if (message.userBets?.length) {
+      obj.userBets = message.userBets.map((e) => InfoBet.toJSON(e));
+    }
+    if (message.cellBets?.length) {
+      obj.cellBets = message.cellBets.map((e) => InfoBet.toJSON(e));
+    }
+    if (message.updateHistoryRoll === true) {
+      obj.updateHistoryRoll = message.updateHistoryRoll;
+    }
+    if (message.historyRolls !== undefined) {
+      obj.historyRolls = HistoryRoll.toJSON(message.historyRolls);
+    }
     return obj;
   },
 
@@ -874,10 +891,10 @@ export const UpdateDesk = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -911,8 +928,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

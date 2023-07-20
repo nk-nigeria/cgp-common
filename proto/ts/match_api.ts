@@ -188,12 +188,24 @@ export const RpcFindMatchRequest = {
 
   toJSON(message: RpcFindMatchRequest): unknown {
     const obj: any = {};
-    message.markUnit !== undefined && (obj.markUnit = Math.round(message.markUnit));
-    message.gameCode !== undefined && (obj.gameCode = message.gameCode);
-    message.withNonOpen !== undefined && (obj.withNonOpen = message.withNonOpen);
-    message.create !== undefined && (obj.create = message.create);
-    message.mockCodeCard !== undefined && (obj.mockCodeCard = Math.round(message.mockCodeCard));
-    message.userData !== undefined && (obj.userData = message.userData);
+    if (message.markUnit !== 0) {
+      obj.markUnit = Math.round(message.markUnit);
+    }
+    if (message.gameCode !== "") {
+      obj.gameCode = message.gameCode;
+    }
+    if (message.withNonOpen === true) {
+      obj.withNonOpen = message.withNonOpen;
+    }
+    if (message.create === true) {
+      obj.create = message.create;
+    }
+    if (message.mockCodeCard !== 0) {
+      obj.mockCodeCard = Math.round(message.mockCodeCard);
+    }
+    if (message.userData !== "") {
+      obj.userData = message.userData;
+    }
     return obj;
   },
 
@@ -333,14 +345,30 @@ export const Match = {
 
   toJSON(message: Match): unknown {
     const obj: any = {};
-    message.matchId !== undefined && (obj.matchId = message.matchId);
-    message.size !== undefined && (obj.size = Math.round(message.size));
-    message.maxSize !== undefined && (obj.maxSize = Math.round(message.maxSize));
-    message.name !== undefined && (obj.name = message.name);
-    message.markUnit !== undefined && (obj.markUnit = Math.round(message.markUnit));
-    message.open !== undefined && (obj.open = message.open);
-    message.mockCodeCard !== undefined && (obj.mockCodeCard = Math.round(message.mockCodeCard));
-    message.userData !== undefined && (obj.userData = message.userData);
+    if (message.matchId !== "") {
+      obj.matchId = message.matchId;
+    }
+    if (message.size !== 0) {
+      obj.size = Math.round(message.size);
+    }
+    if (message.maxSize !== 0) {
+      obj.maxSize = Math.round(message.maxSize);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.markUnit !== 0) {
+      obj.markUnit = Math.round(message.markUnit);
+    }
+    if (message.open === true) {
+      obj.open = message.open;
+    }
+    if (message.mockCodeCard !== 0) {
+      obj.mockCodeCard = Math.round(message.mockCodeCard);
+    }
+    if (message.userData !== "") {
+      obj.userData = message.userData;
+    }
     return obj;
   },
 
@@ -403,10 +431,8 @@ export const RpcFindMatchResponse = {
 
   toJSON(message: RpcFindMatchResponse): unknown {
     const obj: any = {};
-    if (message.matches) {
-      obj.matches = message.matches.map((e) => e ? Match.toJSON(e) : undefined);
-    } else {
-      obj.matches = [];
+    if (message.matches?.length) {
+      obj.matches = message.matches.map((e) => Match.toJSON(e));
     }
     return obj;
   },
@@ -498,10 +524,18 @@ export const RpcCreateMatchRequest = {
 
   toJSON(message: RpcCreateMatchRequest): unknown {
     const obj: any = {};
-    message.markUnit !== undefined && (obj.markUnit = Math.round(message.markUnit));
-    message.gameCode !== undefined && (obj.gameCode = message.gameCode);
-    message.name !== undefined && (obj.name = message.name);
-    message.password !== undefined && (obj.password = message.password);
+    if (message.markUnit !== 0) {
+      obj.markUnit = Math.round(message.markUnit);
+    }
+    if (message.gameCode !== "") {
+      obj.gameCode = message.gameCode;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.password !== "") {
+      obj.password = message.password;
+    }
     return obj;
   },
 
@@ -560,7 +594,9 @@ export const RpcCreateMatchResponse = {
 
   toJSON(message: RpcCreateMatchResponse): unknown {
     const obj: any = {};
-    message.matchId !== undefined && (obj.matchId = message.matchId);
+    if (message.matchId !== "") {
+      obj.matchId = message.matchId;
+    }
     return obj;
   },
 
@@ -629,8 +665,12 @@ export const Bet = {
 
   toJSON(message: Bet): unknown {
     const obj: any = {};
-    message.enable !== undefined && (obj.enable = message.enable);
-    message.markUnit !== undefined && (obj.markUnit = Math.round(message.markUnit));
+    if (message.enable === true) {
+      obj.enable = message.enable;
+    }
+    if (message.markUnit !== 0) {
+      obj.markUnit = Math.round(message.markUnit);
+    }
     return obj;
   },
 
@@ -687,10 +727,8 @@ export const Bets = {
 
   toJSON(message: Bets): unknown {
     const obj: any = {};
-    if (message.bets) {
-      obj.bets = message.bets.map((e) => e ? Bet.toJSON(e) : undefined);
-    } else {
-      obj.bets = [];
+    if (message.bets?.length) {
+      obj.bets = message.bets.map((e) => Bet.toJSON(e));
     }
     return obj;
   },

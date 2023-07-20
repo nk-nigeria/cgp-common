@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
 import { Card, GameState, gameStateFromJSON, gameStateToJSON } from "./chinese_poker_game_api";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -263,8 +263,12 @@ export const DragonTigerBet = {
 
   toJSON(message: DragonTigerBet): unknown {
     const obj: any = {};
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.cell !== undefined && (obj.cell = dragonTigerBetCellToJSON(message.cell));
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.cell !== 0) {
+      obj.cell = dragonTigerBetCellToJSON(message.cell);
+    }
     return obj;
   },
 
@@ -334,8 +338,12 @@ export const DragonTigerBetResult = {
 
   toJSON(message: DragonTigerBetResult): unknown {
     const obj: any = {};
-    message.bet !== undefined && (obj.bet = message.bet ? DragonTigerBet.toJSON(message.bet) : undefined);
-    message.isWin !== undefined && (obj.isWin = message.isWin);
+    if (message.bet !== undefined) {
+      obj.bet = DragonTigerBet.toJSON(message.bet);
+    }
+    if (message.isWin === true) {
+      obj.isWin = message.isWin;
+    }
     return obj;
   },
 
@@ -418,12 +426,14 @@ export const DragonTigerPlayerBets = {
 
   toJSON(message: DragonTigerPlayerBets): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.actionType !== undefined && (obj.actionType = dragonTigerBetActionToJSON(message.actionType));
-    if (message.bets) {
-      obj.bets = message.bets.map((e) => e ? DragonTigerBet.toJSON(e) : undefined);
-    } else {
-      obj.bets = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.actionType !== 0) {
+      obj.actionType = dragonTigerBetActionToJSON(message.actionType);
+    }
+    if (message.bets?.length) {
+      obj.bets = message.bets.map((e) => DragonTigerBet.toJSON(e));
     }
     return obj;
   },
@@ -495,11 +505,11 @@ export const DragonTigerPlayerBetResult = {
 
   toJSON(message: DragonTigerPlayerBetResult): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.list) {
-      obj.list = message.list.map((e) => e ? DragonTigerBetResult.toJSON(e) : undefined);
-    } else {
-      obj.list = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.list?.length) {
+      obj.list = message.list.map((e) => DragonTigerBetResult.toJSON(e));
     }
     return obj;
   },
@@ -581,9 +591,15 @@ export const DragonTigerDeskCell = {
 
   toJSON(message: DragonTigerDeskCell): unknown {
     const obj: any = {};
-    message.cell !== undefined && (obj.cell = dragonTigerBetCellToJSON(message.cell));
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.nUserBet !== undefined && (obj.nUserBet = Math.round(message.nUserBet));
+    if (message.cell !== 0) {
+      obj.cell = dragonTigerBetCellToJSON(message.cell);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.nUserBet !== 0) {
+      obj.nUserBet = Math.round(message.nUserBet);
+    }
     return obj;
   },
 
@@ -641,10 +657,8 @@ export const DragonTigerListDeskCell = {
 
   toJSON(message: DragonTigerListDeskCell): unknown {
     const obj: any = {};
-    if (message.list) {
-      obj.list = message.list.map((e) => e ? DragonTigerDeskCell.toJSON(e) : undefined);
-    } else {
-      obj.list = [];
+    if (message.list?.length) {
+      obj.list = message.list.map((e) => DragonTigerDeskCell.toJSON(e));
     }
     return obj;
   },
@@ -714,8 +728,12 @@ export const DragonTigerHand = {
 
   toJSON(message: DragonTigerHand): unknown {
     const obj: any = {};
-    message.dragon !== undefined && (obj.dragon = message.dragon ? Card.toJSON(message.dragon) : undefined);
-    message.tiger !== undefined && (obj.tiger = message.tiger ? Card.toJSON(message.tiger) : undefined);
+    if (message.dragon !== undefined) {
+      obj.dragon = Card.toJSON(message.dragon);
+    }
+    if (message.tiger !== undefined) {
+      obj.tiger = Card.toJSON(message.tiger);
+    }
     return obj;
   },
 
@@ -812,16 +830,14 @@ export const DragonTigerGameFinish = {
 
   toJSON(message: DragonTigerGameFinish): unknown {
     const obj: any = {};
-    message.hand !== undefined && (obj.hand = message.hand ? DragonTigerHand.toJSON(message.hand) : undefined);
-    if (message.winCells) {
-      obj.winCells = message.winCells.map((e) => dragonTigerBetCellToJSON(e));
-    } else {
-      obj.winCells = [];
+    if (message.hand !== undefined) {
+      obj.hand = DragonTigerHand.toJSON(message.hand);
     }
-    if (message.listBetResult) {
-      obj.listBetResult = message.listBetResult.map((e) => e ? DragonTigerPlayerBetResult.toJSON(e) : undefined);
-    } else {
-      obj.listBetResult = [];
+    if (message.winCells?.length) {
+      obj.winCells = message.winCells.map((e) => dragonTigerBetCellToJSON(e));
+    }
+    if (message.listBetResult?.length) {
+      obj.listBetResult = message.listBetResult.map((e) => DragonTigerPlayerBetResult.toJSON(e));
     }
     return obj;
   },
@@ -884,10 +900,8 @@ export const DragonTigerHistory = {
 
   toJSON(message: DragonTigerHistory): unknown {
     const obj: any = {};
-    if (message.histories) {
-      obj.histories = message.histories.map((e) => e ? DragonTigerHand.toJSON(e) : undefined);
-    } else {
-      obj.histories = [];
+    if (message.histories?.length) {
+      obj.histories = message.histories.map((e) => DragonTigerHand.toJSON(e));
     }
     return obj;
   },
@@ -979,10 +993,18 @@ export const DragonTigerPlayer = {
 
   toJSON(message: DragonTigerPlayer): unknown {
     const obj: any = {};
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.vipLevel !== undefined && (obj.vipLevel = Math.round(message.vipLevel));
-    message.avatarId !== undefined && (obj.avatarId = message.avatarId);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.vipLevel !== 0) {
+      obj.vipLevel = Math.round(message.vipLevel);
+    }
+    if (message.avatarId !== "") {
+      obj.avatarId = message.avatarId;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
     return obj;
   },
 
@@ -1078,13 +1100,17 @@ export const DragonTigerUpdateTable = {
 
   toJSON(message: DragonTigerUpdateTable): unknown {
     const obj: any = {};
-    message.gameState !== undefined && (obj.gameState = gameStateToJSON(message.gameState));
-    message.countDown !== undefined && (obj.countDown = Math.round(message.countDown));
-    message.nPlayer !== undefined && (obj.nPlayer = Math.round(message.nPlayer));
-    if (message.notablePlayers) {
-      obj.notablePlayers = message.notablePlayers.map((e) => e ? DragonTigerPlayer.toJSON(e) : undefined);
-    } else {
-      obj.notablePlayers = [];
+    if (message.gameState !== 0) {
+      obj.gameState = gameStateToJSON(message.gameState);
+    }
+    if (message.countDown !== 0) {
+      obj.countDown = Math.round(message.countDown);
+    }
+    if (message.nPlayer !== 0) {
+      obj.nPlayer = Math.round(message.nPlayer);
+    }
+    if (message.notablePlayers?.length) {
+      obj.notablePlayers = message.notablePlayers.map((e) => DragonTigerPlayer.toJSON(e));
     }
     return obj;
   },
@@ -1220,16 +1246,27 @@ export const DragonTigerUpdateDesk = {
 
   toJSON(message: DragonTigerUpdateDesk): unknown {
     const obj: any = {};
-    message.nPlayers !== undefined && (obj.nPlayers = Math.round(message.nPlayers));
-    message.isUpdateUserBet !== undefined && (obj.isUpdateUserBet = message.isUpdateUserBet);
-    message.isUpdateDeskCell !== undefined && (obj.isUpdateDeskCell = message.isUpdateDeskCell);
-    message.isUpdateGameHistory !== undefined && (obj.isUpdateGameHistory = message.isUpdateGameHistory);
-    message.userBet !== undefined &&
-      (obj.userBet = message.userBet ? DragonTigerPlayerBets.toJSON(message.userBet) : undefined);
-    message.deskCell !== undefined &&
-      (obj.deskCell = message.deskCell ? DragonTigerListDeskCell.toJSON(message.deskCell) : undefined);
-    message.history !== undefined &&
-      (obj.history = message.history ? DragonTigerHistory.toJSON(message.history) : undefined);
+    if (message.nPlayers !== 0) {
+      obj.nPlayers = Math.round(message.nPlayers);
+    }
+    if (message.isUpdateUserBet === true) {
+      obj.isUpdateUserBet = message.isUpdateUserBet;
+    }
+    if (message.isUpdateDeskCell === true) {
+      obj.isUpdateDeskCell = message.isUpdateDeskCell;
+    }
+    if (message.isUpdateGameHistory === true) {
+      obj.isUpdateGameHistory = message.isUpdateGameHistory;
+    }
+    if (message.userBet !== undefined) {
+      obj.userBet = DragonTigerPlayerBets.toJSON(message.userBet);
+    }
+    if (message.deskCell !== undefined) {
+      obj.deskCell = DragonTigerListDeskCell.toJSON(message.deskCell);
+    }
+    if (message.history !== undefined) {
+      obj.history = DragonTigerHistory.toJSON(message.history);
+    }
     return obj;
   },
 
@@ -1297,7 +1334,9 @@ export const DragonTigerActionReject = {
 
   toJSON(message: DragonTigerActionReject): unknown {
     const obj: any = {};
-    message.reason !== undefined && (obj.reason = message.reason);
+    if (message.reason !== "") {
+      obj.reason = message.reason;
+    }
     return obj;
   },
 
@@ -1312,10 +1351,10 @@ export const DragonTigerActionReject = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -1349,8 +1388,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

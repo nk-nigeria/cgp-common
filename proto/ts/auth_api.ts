@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -137,8 +137,12 @@ export const ChangePasswordRequest = {
 
   toJSON(message: ChangePasswordRequest): unknown {
     const obj: any = {};
-    message.oldPassword !== undefined && (obj.oldPassword = message.oldPassword);
-    message.password !== undefined && (obj.password = message.password);
+    if (message.oldPassword !== "") {
+      obj.oldPassword = message.oldPassword;
+    }
+    if (message.password !== "") {
+      obj.password = message.password;
+    }
     return obj;
   },
 
@@ -208,8 +212,12 @@ export const RegisterRequest = {
 
   toJSON(message: RegisterRequest): unknown {
     const obj: any = {};
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.password !== undefined && (obj.password = message.password);
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.password !== "") {
+      obj.password = message.password;
+    }
     return obj;
   },
 
@@ -596,40 +604,90 @@ export const Profile = {
 
   toJSON(message: Profile): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.displayName !== undefined && (obj.displayName = message.displayName);
-    message.avatarUrl !== undefined && (obj.avatarUrl = message.avatarUrl);
-    message.status !== undefined && (obj.status = message.status);
-    message.accountChip !== undefined && (obj.accountChip = Math.round(message.accountChip));
-    message.bankChip !== undefined && (obj.bankChip = Math.round(message.bankChip));
-    message.refCode !== undefined && (obj.refCode = message.refCode);
-    message.langTag !== undefined && (obj.langTag = message.langTag);
-    message.linkGroup !== undefined && (obj.linkGroup = message.linkGroup);
-    message.linkFanpageFb !== undefined && (obj.linkFanpageFb = message.linkFanpageFb);
-    message.appConfig !== undefined && (obj.appConfig = message.appConfig);
-    message.avatarId !== undefined && (obj.avatarId = message.avatarId);
-    message.registrable !== undefined && (obj.registrable = message.registrable);
-    message.vipLevel !== undefined && (obj.vipLevel = Math.round(message.vipLevel));
-    message.lastOnlineTimeUnix !== undefined && (obj.lastOnlineTimeUnix = Math.round(message.lastOnlineTimeUnix));
-    message.createTimeUnix !== undefined && (obj.createTimeUnix = Math.round(message.createTimeUnix));
-    message.remainTimeInputRefCode !== undefined &&
-      (obj.remainTimeInputRefCode = Math.round(message.remainTimeInputRefCode));
-    if (message.langAvailables) {
-      obj.langAvailables = message.langAvailables.map((e) => e ? LangCode.toJSON(e) : undefined);
-    } else {
-      obj.langAvailables = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
     }
-    message.playingMatch !== undefined &&
-      (obj.playingMatch = message.playingMatch ? PlayingMatch.toJSON(message.playingMatch) : undefined);
-    message.deviceId !== undefined && (obj.deviceId = message.deviceId);
-    message.lastDeviceId !== undefined && (obj.lastDeviceId = message.lastDeviceId);
-    message.refGame !== undefined && (obj.refGame = message.refGame);
-    message.currentIp !== undefined && (obj.currentIp = message.currentIp);
-    message.vipPoint !== undefined && (obj.vipPoint = Math.round(message.vipPoint));
-    message.isOnline !== undefined && (obj.isOnline = message.isOnline);
-    message.isBanned !== undefined && (obj.isBanned = message.isBanned);
-    message.lastLoginUnix !== undefined && (obj.lastLoginUnix = Math.round(message.lastLoginUnix));
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.displayName !== "") {
+      obj.displayName = message.displayName;
+    }
+    if (message.avatarUrl !== "") {
+      obj.avatarUrl = message.avatarUrl;
+    }
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
+    if (message.accountChip !== 0) {
+      obj.accountChip = Math.round(message.accountChip);
+    }
+    if (message.bankChip !== 0) {
+      obj.bankChip = Math.round(message.bankChip);
+    }
+    if (message.refCode !== "") {
+      obj.refCode = message.refCode;
+    }
+    if (message.langTag !== "") {
+      obj.langTag = message.langTag;
+    }
+    if (message.linkGroup !== "") {
+      obj.linkGroup = message.linkGroup;
+    }
+    if (message.linkFanpageFb !== "") {
+      obj.linkFanpageFb = message.linkFanpageFb;
+    }
+    if (message.appConfig !== "") {
+      obj.appConfig = message.appConfig;
+    }
+    if (message.avatarId !== "") {
+      obj.avatarId = message.avatarId;
+    }
+    if (message.registrable === true) {
+      obj.registrable = message.registrable;
+    }
+    if (message.vipLevel !== 0) {
+      obj.vipLevel = Math.round(message.vipLevel);
+    }
+    if (message.lastOnlineTimeUnix !== 0) {
+      obj.lastOnlineTimeUnix = Math.round(message.lastOnlineTimeUnix);
+    }
+    if (message.createTimeUnix !== 0) {
+      obj.createTimeUnix = Math.round(message.createTimeUnix);
+    }
+    if (message.remainTimeInputRefCode !== 0) {
+      obj.remainTimeInputRefCode = Math.round(message.remainTimeInputRefCode);
+    }
+    if (message.langAvailables?.length) {
+      obj.langAvailables = message.langAvailables.map((e) => LangCode.toJSON(e));
+    }
+    if (message.playingMatch !== undefined) {
+      obj.playingMatch = PlayingMatch.toJSON(message.playingMatch);
+    }
+    if (message.deviceId !== "") {
+      obj.deviceId = message.deviceId;
+    }
+    if (message.lastDeviceId !== "") {
+      obj.lastDeviceId = message.lastDeviceId;
+    }
+    if (message.refGame !== "") {
+      obj.refGame = message.refGame;
+    }
+    if (message.currentIp !== "") {
+      obj.currentIp = message.currentIp;
+    }
+    if (message.vipPoint !== 0) {
+      obj.vipPoint = Math.round(message.vipPoint);
+    }
+    if (message.isOnline === true) {
+      obj.isOnline = message.isOnline;
+    }
+    if (message.isBanned === true) {
+      obj.isBanned = message.isBanned;
+    }
+    if (message.lastLoginUnix !== 0) {
+      obj.lastLoginUnix = Math.round(message.lastLoginUnix);
+    }
     return obj;
   },
 
@@ -727,8 +785,12 @@ export const PlayingMatch = {
 
   toJSON(message: PlayingMatch): unknown {
     const obj: any = {};
-    message.code !== undefined && (obj.code = message.code);
-    message.matchId !== undefined && (obj.matchId = message.matchId);
+    if (message.code !== "") {
+      obj.code = message.code;
+    }
+    if (message.matchId !== "") {
+      obj.matchId = message.matchId;
+    }
     return obj;
   },
 
@@ -785,10 +847,8 @@ export const ListProfile = {
 
   toJSON(message: ListProfile): unknown {
     const obj: any = {};
-    if (message.profiles) {
-      obj.profiles = message.profiles.map((e) => e ? Profile.toJSON(e) : undefined);
-    } else {
-      obj.profiles = [];
+    if (message.profiles?.length) {
+      obj.profiles = message.profiles.map((e) => Profile.toJSON(e));
     }
     return obj;
   },
@@ -933,15 +993,30 @@ export const SimpleProfile = {
 
   toJSON(message: SimpleProfile): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.displayName !== undefined && (obj.displayName = message.displayName);
-    message.status !== undefined && (obj.status = message.status);
-    message.accountChip !== undefined && (obj.accountChip = Math.round(message.accountChip));
-    message.avatarId !== undefined && (obj.avatarId = message.avatarId);
-    message.vipLevel !== undefined && (obj.vipLevel = Math.round(message.vipLevel));
-    message.playingMatch !== undefined &&
-      (obj.playingMatch = message.playingMatch ? PlayingMatch.toJSON(message.playingMatch) : undefined);
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.displayName !== "") {
+      obj.displayName = message.displayName;
+    }
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
+    if (message.accountChip !== 0) {
+      obj.accountChip = Math.round(message.accountChip);
+    }
+    if (message.avatarId !== "") {
+      obj.avatarId = message.avatarId;
+    }
+    if (message.vipLevel !== 0) {
+      obj.vipLevel = Math.round(message.vipLevel);
+    }
+    if (message.playingMatch !== undefined) {
+      obj.playingMatch = PlayingMatch.toJSON(message.playingMatch);
+    }
     return obj;
   },
 
@@ -1008,10 +1083,8 @@ export const ListSimpleProfile = {
 
   toJSON(message: ListSimpleProfile): unknown {
     const obj: any = {};
-    if (message.profiles) {
-      obj.profiles = message.profiles.map((e) => e ? SimpleProfile.toJSON(e) : undefined);
-    } else {
-      obj.profiles = [];
+    if (message.profiles?.length) {
+      obj.profiles = message.profiles.map((e) => SimpleProfile.toJSON(e));
     }
     return obj;
   },
@@ -1068,10 +1141,8 @@ export const QuickChatUpdateRequest = {
 
   toJSON(message: QuickChatUpdateRequest): unknown {
     const obj: any = {};
-    if (message.texts) {
-      obj.texts = message.texts.map((e) => e);
-    } else {
-      obj.texts = [];
+    if (message.texts?.length) {
+      obj.texts = message.texts;
     }
     return obj;
   },
@@ -1128,10 +1199,8 @@ export const QuickChatResponse = {
 
   toJSON(message: QuickChatResponse): unknown {
     const obj: any = {};
-    if (message.texts) {
-      obj.texts = message.texts.map((e) => e);
-    } else {
-      obj.texts = [];
+    if (message.texts?.length) {
+      obj.texts = message.texts;
     }
     return obj;
   },
@@ -1212,9 +1281,15 @@ export const LangCode = {
 
   toJSON(message: LangCode): unknown {
     const obj: any = {};
-    message.isoCode !== undefined && (obj.isoCode = message.isoCode);
-    message.displayName !== undefined && (obj.displayName = message.displayName);
-    message.sourceUrl !== undefined && (obj.sourceUrl = message.sourceUrl);
+    if (message.isoCode !== "") {
+      obj.isoCode = message.isoCode;
+    }
+    if (message.displayName !== "") {
+      obj.displayName = message.displayName;
+    }
+    if (message.sourceUrl !== "") {
+      obj.sourceUrl = message.sourceUrl;
+    }
     return obj;
   },
 
@@ -1231,10 +1306,10 @@ export const LangCode = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -1268,8 +1343,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

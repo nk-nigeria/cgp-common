@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -214,15 +214,33 @@ export const Bank = {
 
   toJSON(message: Bank): unknown {
     const obj: any = {};
-    message.senderId !== undefined && (obj.senderId = message.senderId);
-    message.recipientId !== undefined && (obj.recipientId = message.recipientId);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.chipsInBank !== undefined && (obj.chipsInBank = Math.round(message.chipsInBank));
-    message.action !== undefined && (obj.action = bank_ActionToJSON(message.action));
-    message.balancePrev !== undefined && (obj.balancePrev = Math.round(message.balancePrev));
-    message.balanceCurr !== undefined && (obj.balanceCurr = Math.round(message.balanceCurr));
-    message.percenFee !== undefined && (obj.percenFee = Math.round(message.percenFee));
-    message.amountFee !== undefined && (obj.amountFee = Math.round(message.amountFee));
+    if (message.senderId !== "") {
+      obj.senderId = message.senderId;
+    }
+    if (message.recipientId !== "") {
+      obj.recipientId = message.recipientId;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.chipsInBank !== 0) {
+      obj.chipsInBank = Math.round(message.chipsInBank);
+    }
+    if (message.action !== 0) {
+      obj.action = bank_ActionToJSON(message.action);
+    }
+    if (message.balancePrev !== 0) {
+      obj.balancePrev = Math.round(message.balancePrev);
+    }
+    if (message.balanceCurr !== 0) {
+      obj.balanceCurr = Math.round(message.balanceCurr);
+    }
+    if (message.percenFee !== 0) {
+      obj.percenFee = Math.round(message.percenFee);
+    }
+    if (message.amountFee !== 0) {
+      obj.amountFee = Math.round(message.amountFee);
+    }
     return obj;
   },
 
@@ -245,10 +263,10 @@ export const Bank = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -282,8 +300,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

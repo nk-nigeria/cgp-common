@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
 import { InfoBet } from "./color_game";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -1008,6 +1008,7 @@ export interface SpinSymbol {
   index: number;
   winJp: WinJackpot;
   winAmount: number;
+  ratioBonus: number;
 }
 
 export interface CollectSymbol {
@@ -1427,57 +1428,75 @@ export const SlotDesk = {
 
   toJSON(message: SlotDesk): unknown {
     const obj: any = {};
-    message.matrix !== undefined && (obj.matrix = message.matrix ? SlotMatrix.toJSON(message.matrix) : undefined);
-    message.spreadMatrix !== undefined &&
-      (obj.spreadMatrix = message.spreadMatrix ? SlotMatrix.toJSON(message.spreadMatrix) : undefined);
-    if (message.paylines) {
-      obj.paylines = message.paylines.map((e) => e ? Payline.toJSON(e) : undefined);
-    } else {
-      obj.paylines = [];
+    if (message.matrix !== undefined) {
+      obj.matrix = SlotMatrix.toJSON(message.matrix);
     }
-    message.chipsMcb !== undefined && (obj.chipsMcb = Math.round(message.chipsMcb));
-    message.nextSixiangGame !== undefined && (obj.nextSixiangGame = siXiangGameToJSON(message.nextSixiangGame));
-    message.currentSixiangGame !== undefined &&
-      (obj.currentSixiangGame = siXiangGameToJSON(message.currentSixiangGame));
-    message.isFinishGame !== undefined && (obj.isFinishGame = message.isFinishGame);
-    message.isInSixiangBonus !== undefined && (obj.isInSixiangBonus = message.isInSixiangBonus);
-    if (message.spinSymbols) {
-      obj.spinSymbols = message.spinSymbols.map((e) => e ? SpinSymbol.toJSON(e) : undefined);
-    } else {
-      obj.spinSymbols = [];
+    if (message.spreadMatrix !== undefined) {
+      obj.spreadMatrix = SlotMatrix.toJSON(message.spreadMatrix);
     }
-    message.winJp !== undefined && (obj.winJp = winJackpotToJSON(message.winJp));
-    message.bigWin !== undefined && (obj.bigWin = bigWinToJSON(message.bigWin));
-    message.gameReward !== undefined &&
-      (obj.gameReward = message.gameReward ? GameReward.toJSON(message.gameReward) : undefined);
-    if (message.collectionSymbols) {
-      obj.collectionSymbols = message.collectionSymbols.map((e) => e ? CollectSymbol.toJSON(e) : undefined);
-    } else {
-      obj.collectionSymbols = [];
+    if (message.paylines?.length) {
+      obj.paylines = message.paylines.map((e) => Payline.toJSON(e));
     }
-    message.perlGreenForest !== undefined && (obj.perlGreenForest = Math.round(message.perlGreenForest));
-    message.tsUnix !== undefined && (obj.tsUnix = Math.round(message.tsUnix));
-    message.ratioFruitBasket !== undefined && (obj.ratioFruitBasket = Math.round(message.ratioFruitBasket));
-    message.numSpinLeft !== undefined && (obj.numSpinLeft = Math.round(message.numSpinLeft));
-    if (message.betLevels) {
+    if (message.chipsMcb !== 0) {
+      obj.chipsMcb = Math.round(message.chipsMcb);
+    }
+    if (message.nextSixiangGame !== 0) {
+      obj.nextSixiangGame = siXiangGameToJSON(message.nextSixiangGame);
+    }
+    if (message.currentSixiangGame !== 0) {
+      obj.currentSixiangGame = siXiangGameToJSON(message.currentSixiangGame);
+    }
+    if (message.isFinishGame === true) {
+      obj.isFinishGame = message.isFinishGame;
+    }
+    if (message.isInSixiangBonus === true) {
+      obj.isInSixiangBonus = message.isInSixiangBonus;
+    }
+    if (message.spinSymbols?.length) {
+      obj.spinSymbols = message.spinSymbols.map((e) => SpinSymbol.toJSON(e));
+    }
+    if (message.winJp !== 0) {
+      obj.winJp = winJackpotToJSON(message.winJp);
+    }
+    if (message.bigWin !== 0) {
+      obj.bigWin = bigWinToJSON(message.bigWin);
+    }
+    if (message.gameReward !== undefined) {
+      obj.gameReward = GameReward.toJSON(message.gameReward);
+    }
+    if (message.collectionSymbols?.length) {
+      obj.collectionSymbols = message.collectionSymbols.map((e) => CollectSymbol.toJSON(e));
+    }
+    if (message.perlGreenForest !== 0) {
+      obj.perlGreenForest = Math.round(message.perlGreenForest);
+    }
+    if (message.tsUnix !== 0) {
+      obj.tsUnix = Math.round(message.tsUnix);
+    }
+    if (message.ratioFruitBasket !== 0) {
+      obj.ratioFruitBasket = Math.round(message.ratioFruitBasket);
+    }
+    if (message.numSpinLeft !== 0) {
+      obj.numSpinLeft = Math.round(message.numSpinLeft);
+    }
+    if (message.betLevels?.length) {
       obj.betLevels = message.betLevels.map((e) => Math.round(e));
-    } else {
-      obj.betLevels = [];
     }
-    message.infoBet !== undefined && (obj.infoBet = message.infoBet ? InfoBet.toJSON(message.infoBet) : undefined);
-    message.chipsBuyGem !== undefined && (obj.chipsBuyGem = Math.round(message.chipsBuyGem));
-    if (message.sixiangGems) {
+    if (message.infoBet !== undefined) {
+      obj.infoBet = InfoBet.toJSON(message.infoBet);
+    }
+    if (message.chipsBuyGem !== 0) {
+      obj.chipsBuyGem = Math.round(message.chipsBuyGem);
+    }
+    if (message.sixiangGems?.length) {
       obj.sixiangGems = message.sixiangGems.map((e) => siXiangGameToJSON(e));
-    } else {
-      obj.sixiangGems = [];
     }
-    if (message.letterSymbols) {
+    if (message.letterSymbols?.length) {
       obj.letterSymbols = message.letterSymbols.map((e) => siXiangSymbolToJSON(e));
-    } else {
-      obj.letterSymbols = [];
     }
-    message.winJpHistory !== undefined &&
-      (obj.winJpHistory = message.winJpHistory ? JackpotHistory.toJSON(message.winJpHistory) : undefined);
+    if (message.winJpHistory !== undefined) {
+      obj.winJpHistory = JackpotHistory.toJSON(message.winJpHistory);
+    }
     return obj;
   },
 
@@ -1612,17 +1631,17 @@ export const SlotMatrix = {
 
   toJSON(message: SlotMatrix): unknown {
     const obj: any = {};
-    if (message.lists) {
+    if (message.lists?.length) {
       obj.lists = message.lists.map((e) => siXiangSymbolToJSON(e));
-    } else {
-      obj.lists = [];
     }
-    message.rows !== undefined && (obj.rows = Math.round(message.rows));
-    message.cols !== undefined && (obj.cols = Math.round(message.cols));
-    if (message.spinLists) {
-      obj.spinLists = message.spinLists.map((e) => e ? SpinSymbol.toJSON(e) : undefined);
-    } else {
-      obj.spinLists = [];
+    if (message.rows !== 0) {
+      obj.rows = Math.round(message.rows);
+    }
+    if (message.cols !== 0) {
+      obj.cols = Math.round(message.cols);
+    }
+    if (message.spinLists?.length) {
+      obj.spinLists = message.spinLists.map((e) => SpinSymbol.toJSON(e));
     }
     return obj;
   },
@@ -1642,7 +1661,7 @@ export const SlotMatrix = {
 };
 
 function createBaseSpinSymbol(): SpinSymbol {
-  return { symbol: 0, col: 0, row: 0, ratio: 0, index: 0, winJp: 0, winAmount: 0 };
+  return { symbol: 0, col: 0, row: 0, ratio: 0, index: 0, winJp: 0, winAmount: 0, ratioBonus: 0 };
 }
 
 export const SpinSymbol = {
@@ -1667,6 +1686,9 @@ export const SpinSymbol = {
     }
     if (message.winAmount !== 0) {
       writer.uint32(56).int64(message.winAmount);
+    }
+    if (message.ratioBonus !== 0) {
+      writer.uint32(69).float(message.ratioBonus);
     }
     return writer;
   },
@@ -1727,6 +1749,13 @@ export const SpinSymbol = {
 
           message.winAmount = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 69) {
+            break;
+          }
+
+          message.ratioBonus = reader.float();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1745,18 +1774,36 @@ export const SpinSymbol = {
       index: isSet(object.index) ? Number(object.index) : 0,
       winJp: isSet(object.winJp) ? winJackpotFromJSON(object.winJp) : 0,
       winAmount: isSet(object.winAmount) ? Number(object.winAmount) : 0,
+      ratioBonus: isSet(object.ratioBonus) ? Number(object.ratioBonus) : 0,
     };
   },
 
   toJSON(message: SpinSymbol): unknown {
     const obj: any = {};
-    message.symbol !== undefined && (obj.symbol = siXiangSymbolToJSON(message.symbol));
-    message.col !== undefined && (obj.col = Math.round(message.col));
-    message.row !== undefined && (obj.row = Math.round(message.row));
-    message.ratio !== undefined && (obj.ratio = message.ratio);
-    message.index !== undefined && (obj.index = Math.round(message.index));
-    message.winJp !== undefined && (obj.winJp = winJackpotToJSON(message.winJp));
-    message.winAmount !== undefined && (obj.winAmount = Math.round(message.winAmount));
+    if (message.symbol !== 0) {
+      obj.symbol = siXiangSymbolToJSON(message.symbol);
+    }
+    if (message.col !== 0) {
+      obj.col = Math.round(message.col);
+    }
+    if (message.row !== 0) {
+      obj.row = Math.round(message.row);
+    }
+    if (message.ratio !== 0) {
+      obj.ratio = message.ratio;
+    }
+    if (message.index !== 0) {
+      obj.index = Math.round(message.index);
+    }
+    if (message.winJp !== 0) {
+      obj.winJp = winJackpotToJSON(message.winJp);
+    }
+    if (message.winAmount !== 0) {
+      obj.winAmount = Math.round(message.winAmount);
+    }
+    if (message.ratioBonus !== 0) {
+      obj.ratioBonus = message.ratioBonus;
+    }
     return obj;
   },
 
@@ -1773,6 +1820,7 @@ export const SpinSymbol = {
     message.index = object.index ?? 0;
     message.winJp = object.winJp ?? 0;
     message.winAmount = object.winAmount ?? 0;
+    message.ratioBonus = object.ratioBonus ?? 0;
     return message;
   },
 };
@@ -1842,9 +1890,15 @@ export const CollectSymbol = {
 
   toJSON(message: CollectSymbol): unknown {
     const obj: any = {};
-    message.symbol !== undefined && (obj.symbol = siXiangSymbolToJSON(message.symbol));
-    message.qty !== undefined && (obj.qty = Math.round(message.qty));
-    message.ratio !== undefined && (obj.ratio = message.ratio);
+    if (message.symbol !== 0) {
+      obj.symbol = siXiangSymbolToJSON(message.symbol);
+    }
+    if (message.qty !== 0) {
+      obj.qty = Math.round(message.qty);
+    }
+    if (message.ratio !== 0) {
+      obj.ratio = message.ratio;
+    }
     return obj;
   },
 
@@ -1937,10 +1991,18 @@ export const JackpotReward = {
 
   toJSON(message: JackpotReward): unknown {
     const obj: any = {};
-    message.winJackpot !== undefined && (obj.winJackpot = winJackpotToJSON(message.winJackpot));
-    message.ratio !== undefined && (obj.ratio = Math.round(message.ratio));
-    message.count !== undefined && (obj.count = Math.round(message.count));
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
+    if (message.winJackpot !== 0) {
+      obj.winJackpot = winJackpotToJSON(message.winJackpot);
+    }
+    if (message.ratio !== 0) {
+      obj.ratio = Math.round(message.ratio);
+    }
+    if (message.count !== 0) {
+      obj.count = Math.round(message.count);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
     return obj;
   },
 
@@ -2034,10 +2096,18 @@ export const JackpotHistory = {
 
   toJSON(message: JackpotHistory): unknown {
     const obj: any = {};
-    message.minor !== undefined && (obj.minor = message.minor ? JackpotReward.toJSON(message.minor) : undefined);
-    message.major !== undefined && (obj.major = message.major ? JackpotReward.toJSON(message.major) : undefined);
-    message.mega !== undefined && (obj.mega = message.mega ? JackpotReward.toJSON(message.mega) : undefined);
-    message.grand !== undefined && (obj.grand = message.grand ? JackpotReward.toJSON(message.grand) : undefined);
+    if (message.minor !== undefined) {
+      obj.minor = JackpotReward.toJSON(message.minor);
+    }
+    if (message.major !== undefined) {
+      obj.major = JackpotReward.toJSON(message.major);
+    }
+    if (message.mega !== undefined) {
+      obj.mega = JackpotReward.toJSON(message.mega);
+    }
+    if (message.grand !== undefined) {
+      obj.grand = JackpotReward.toJSON(message.grand);
+    }
     return obj;
   },
 
@@ -2173,15 +2243,23 @@ export const Payline = {
 
   toJSON(message: Payline): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.symbol !== undefined && (obj.symbol = siXiangSymbolToJSON(message.symbol));
-    message.numOccur !== undefined && (obj.numOccur = Math.round(message.numOccur));
-    message.rate !== undefined && (obj.rate = message.rate);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    if (message.indices) {
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.symbol !== 0) {
+      obj.symbol = siXiangSymbolToJSON(message.symbol);
+    }
+    if (message.numOccur !== 0) {
+      obj.numOccur = Math.round(message.numOccur);
+    }
+    if (message.rate !== 0) {
+      obj.rate = message.rate;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.indices?.length) {
       obj.indices = message.indices.map((e) => Math.round(e));
-    } else {
-      obj.indices = [];
     }
     return obj;
   },
@@ -2415,23 +2493,51 @@ export const GameReward = {
 
   toJSON(message: GameReward): unknown {
     const obj: any = {};
-    message.updateWallet !== undefined && (obj.updateWallet = message.updateWallet);
-    message.balanceChipsWalletBefore !== undefined &&
-      (obj.balanceChipsWalletBefore = Math.round(message.balanceChipsWalletBefore));
-    message.balanceChipsWalletAfter !== undefined &&
-      (obj.balanceChipsWalletAfter = Math.round(message.balanceChipsWalletAfter));
-    message.chipsWin !== undefined && (obj.chipsWin = Math.round(message.chipsWin));
-    message.totalChipsWinByGame !== undefined && (obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame));
-    message.updateChipsBonus !== undefined && (obj.updateChipsBonus = message.updateChipsBonus);
-    message.ratioWin !== undefined && (obj.ratioWin = message.ratioWin);
-    message.lineWin !== undefined && (obj.lineWin = Math.round(message.lineWin));
-    message.totalRatioWin !== undefined && (obj.totalRatioWin = message.totalRatioWin);
-    message.totalLineWin !== undefined && (obj.totalLineWin = Math.round(message.totalLineWin));
-    message.chipBetFee !== undefined && (obj.chipBetFee = Math.round(message.chipBetFee));
-    message.chipFee !== undefined && (obj.chipFee = Math.round(message.chipFee));
-    message.ratioBonus !== undefined && (obj.ratioBonus = message.ratioBonus);
-    message.perlGreenForest !== undefined && (obj.perlGreenForest = Math.round(message.perlGreenForest));
-    message.perlGreenForestChips !== undefined && (obj.perlGreenForestChips = Math.round(message.perlGreenForestChips));
+    if (message.updateWallet === true) {
+      obj.updateWallet = message.updateWallet;
+    }
+    if (message.balanceChipsWalletBefore !== 0) {
+      obj.balanceChipsWalletBefore = Math.round(message.balanceChipsWalletBefore);
+    }
+    if (message.balanceChipsWalletAfter !== 0) {
+      obj.balanceChipsWalletAfter = Math.round(message.balanceChipsWalletAfter);
+    }
+    if (message.chipsWin !== 0) {
+      obj.chipsWin = Math.round(message.chipsWin);
+    }
+    if (message.totalChipsWinByGame !== 0) {
+      obj.totalChipsWinByGame = Math.round(message.totalChipsWinByGame);
+    }
+    if (message.updateChipsBonus === true) {
+      obj.updateChipsBonus = message.updateChipsBonus;
+    }
+    if (message.ratioWin !== 0) {
+      obj.ratioWin = message.ratioWin;
+    }
+    if (message.lineWin !== 0) {
+      obj.lineWin = Math.round(message.lineWin);
+    }
+    if (message.totalRatioWin !== 0) {
+      obj.totalRatioWin = message.totalRatioWin;
+    }
+    if (message.totalLineWin !== 0) {
+      obj.totalLineWin = Math.round(message.totalLineWin);
+    }
+    if (message.chipBetFee !== 0) {
+      obj.chipBetFee = Math.round(message.chipBetFee);
+    }
+    if (message.chipFee !== 0) {
+      obj.chipFee = Math.round(message.chipFee);
+    }
+    if (message.ratioBonus !== 0) {
+      obj.ratioBonus = message.ratioBonus;
+    }
+    if (message.perlGreenForest !== 0) {
+      obj.perlGreenForest = Math.round(message.perlGreenForest);
+    }
+    if (message.perlGreenForestChips !== 0) {
+      obj.perlGreenForestChips = Math.round(message.perlGreenForestChips);
+    }
     return obj;
   },
 
@@ -2514,8 +2620,12 @@ export const SaveGame = {
 
   toJSON(message: SaveGame): unknown {
     const obj: any = {};
-    message.lastUpdateUnix !== undefined && (obj.lastUpdateUnix = Math.round(message.lastUpdateUnix));
-    message.data !== undefined && (obj.data = message.data);
+    if (message.lastUpdateUnix !== 0) {
+      obj.lastUpdateUnix = Math.round(message.lastUpdateUnix);
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
     return obj;
   },
 
@@ -2531,10 +2641,10 @@ export const SaveGame = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -2568,8 +2678,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

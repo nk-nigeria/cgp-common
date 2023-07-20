@@ -5,7 +5,6 @@ go 1.18
 require (
 	github.com/emirpasic/gods v1.12.0
 	github.com/heroiclabs/nakama-common v1.22.0
-	github.com/magiconair/properties v1.8.7
 	github.com/qmuntal/stateless v1.5.3
 	github.com/stretchr/testify v1.7.2
 	go.uber.org/zap v1.19.1

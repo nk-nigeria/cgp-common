@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -277,8 +277,12 @@ export const Domino = {
 
   toJSON(message: Domino): unknown {
     const obj: any = {};
-    message.top !== undefined && (obj.top = Math.round(message.top));
-    message.bottom !== undefined && (obj.bottom = Math.round(message.bottom));
+    if (message.top !== 0) {
+      obj.top = Math.round(message.top);
+    }
+    if (message.bottom !== 0) {
+      obj.bottom = Math.round(message.bottom);
+    }
     return obj;
   },
 
@@ -335,10 +339,8 @@ export const DominoList = {
 
   toJSON(message: DominoList): unknown {
     const obj: any = {};
-    if (message.dominos) {
-      obj.dominos = message.dominos.map((e) => e ? Domino.toJSON(e) : undefined);
-    } else {
-      obj.dominos = [];
+    if (message.dominos?.length) {
+      obj.dominos = message.dominos.map((e) => Domino.toJSON(e));
     }
     return obj;
   },
@@ -408,8 +410,12 @@ export const QQBet = {
 
   toJSON(message: QQBet): unknown {
     const obj: any = {};
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.cell !== undefined && (obj.cell = qQBetCellToJSON(message.cell));
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.cell !== 0) {
+      obj.cell = qQBetCellToJSON(message.cell);
+    }
     return obj;
   },
 
@@ -479,8 +485,12 @@ export const QQBetResult = {
 
   toJSON(message: QQBetResult): unknown {
     const obj: any = {};
-    message.bet !== undefined && (obj.bet = message.bet ? QQBet.toJSON(message.bet) : undefined);
-    message.isWin !== undefined && (obj.isWin = message.isWin);
+    if (message.bet !== undefined) {
+      obj.bet = QQBet.toJSON(message.bet);
+    }
+    if (message.isWin === true) {
+      obj.isWin = message.isWin;
+    }
     return obj;
   },
 
@@ -550,11 +560,11 @@ export const QQPlayerBets = {
 
   toJSON(message: QQPlayerBets): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.bets) {
-      obj.bets = message.bets.map((e) => e ? QQBet.toJSON(e) : undefined);
-    } else {
-      obj.bets = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.bets?.length) {
+      obj.bets = message.bets.map((e) => QQBet.toJSON(e));
     }
     return obj;
   },
@@ -625,11 +635,11 @@ export const QQPlayerBetResult = {
 
   toJSON(message: QQPlayerBetResult): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.betResults) {
-      obj.betResults = message.betResults.map((e) => e ? QQBetResult.toJSON(e) : undefined);
-    } else {
-      obj.betResults = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.betResults?.length) {
+      obj.betResults = message.betResults.map((e) => QQBetResult.toJSON(e));
     }
     return obj;
   },
@@ -689,10 +699,8 @@ export const QQListPlayerBetResult = {
 
   toJSON(message: QQListPlayerBetResult): unknown {
     const obj: any = {};
-    if (message.results) {
-      obj.results = message.results.map((e) => e ? QQPlayerBetResult.toJSON(e) : undefined);
-    } else {
-      obj.results = [];
+    if (message.results?.length) {
+      obj.results = message.results.map((e) => QQPlayerBetResult.toJSON(e));
     }
     return obj;
   },
@@ -773,13 +781,15 @@ export const QQHand = {
 
   toJSON(message: QQHand): unknown {
     const obj: any = {};
-    if (message.dominos) {
-      obj.dominos = message.dominos.map((e) => e ? Domino.toJSON(e) : undefined);
-    } else {
-      obj.dominos = [];
+    if (message.dominos?.length) {
+      obj.dominos = message.dominos.map((e) => Domino.toJSON(e));
     }
-    message.type !== undefined && (obj.type = qQHandTypeToJSON(message.type));
-    message.point !== undefined && (obj.point = Math.round(message.point));
+    if (message.type !== 0) {
+      obj.type = qQHandTypeToJSON(message.type);
+    }
+    if (message.point !== 0) {
+      obj.point = Math.round(message.point);
+    }
     return obj;
   },
 
@@ -873,14 +883,15 @@ export const QQGameFinish = {
 
   toJSON(message: QQGameFinish): unknown {
     const obj: any = {};
-    message.hands !== undefined && (obj.hands = message.hands ? QQGameFinishHand.toJSON(message.hands) : undefined);
-    if (message.winCells) {
-      obj.winCells = message.winCells.map((e) => qQBetCellToJSON(e));
-    } else {
-      obj.winCells = [];
+    if (message.hands !== undefined) {
+      obj.hands = QQGameFinishHand.toJSON(message.hands);
     }
-    message.result !== undefined &&
-      (obj.result = message.result ? QQListPlayerBetResult.toJSON(message.result) : undefined);
+    if (message.winCells?.length) {
+      obj.winCells = message.winCells.map((e) => qQBetCellToJSON(e));
+    }
+    if (message.result !== undefined) {
+      obj.result = QQListPlayerBetResult.toJSON(message.result);
+    }
     return obj;
   },
 
@@ -955,8 +966,12 @@ export const QQGameFinishHand = {
 
   toJSON(message: QQGameFinishHand): unknown {
     const obj: any = {};
-    message.redHand !== undefined && (obj.redHand = message.redHand ? QQHand.toJSON(message.redHand) : undefined);
-    message.blueHand !== undefined && (obj.blueHand = message.blueHand ? QQHand.toJSON(message.blueHand) : undefined);
+    if (message.redHand !== undefined) {
+      obj.redHand = QQHand.toJSON(message.redHand);
+    }
+    if (message.blueHand !== undefined) {
+      obj.blueHand = QQHand.toJSON(message.blueHand);
+    }
     return obj;
   },
 
@@ -1021,10 +1036,8 @@ export const QQHistory = {
 
   toJSON(message: QQHistory): unknown {
     const obj: any = {};
-    if (message.handHistories) {
-      obj.handHistories = message.handHistories.map((e) => e ? QQGameFinishHand.toJSON(e) : undefined);
-    } else {
-      obj.handHistories = [];
+    if (message.handHistories?.length) {
+      obj.handHistories = message.handHistories.map((e) => QQGameFinishHand.toJSON(e));
     }
     return obj;
   },
@@ -1105,9 +1118,15 @@ export const QQDeskCellBet = {
 
   toJSON(message: QQDeskCellBet): unknown {
     const obj: any = {};
-    message.cell !== undefined && (obj.cell = qQBetCellToJSON(message.cell));
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.nUserBet !== undefined && (obj.nUserBet = Math.round(message.nUserBet));
+    if (message.cell !== 0) {
+      obj.cell = qQBetCellToJSON(message.cell);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.nUserBet !== 0) {
+      obj.nUserBet = Math.round(message.nUserBet);
+    }
     return obj;
   },
 
@@ -1169,10 +1188,8 @@ export const QQDeskListCellBet = {
 
   toJSON(message: QQDeskListCellBet): unknown {
     const obj: any = {};
-    if (message.listCellBet) {
-      obj.listCellBet = message.listCellBet.map((e) => e ? QQDeskCellBet.toJSON(e) : undefined);
-    } else {
-      obj.listCellBet = [];
+    if (message.listCellBet?.length) {
+      obj.listCellBet = message.listCellBet.map((e) => QQDeskCellBet.toJSON(e));
     }
     return obj;
   },
@@ -1305,15 +1322,27 @@ export const QQUpdateDesk = {
 
   toJSON(message: QQUpdateDesk): unknown {
     const obj: any = {};
-    message.nPlayers !== undefined && (obj.nPlayers = Math.round(message.nPlayers));
-    message.updateUserBets !== undefined && (obj.updateUserBets = message.updateUserBets);
-    message.updateCellBets !== undefined && (obj.updateCellBets = message.updateCellBets);
-    message.updateGameHistory !== undefined && (obj.updateGameHistory = message.updateGameHistory);
-    message.userBets !== undefined &&
-      (obj.userBets = message.userBets ? QQPlayerBets.toJSON(message.userBets) : undefined);
-    message.listCellBet !== undefined &&
-      (obj.listCellBet = message.listCellBet ? QQDeskListCellBet.toJSON(message.listCellBet) : undefined);
-    message.history !== undefined && (obj.history = message.history ? QQHistory.toJSON(message.history) : undefined);
+    if (message.nPlayers !== 0) {
+      obj.nPlayers = Math.round(message.nPlayers);
+    }
+    if (message.updateUserBets === true) {
+      obj.updateUserBets = message.updateUserBets;
+    }
+    if (message.updateCellBets === true) {
+      obj.updateCellBets = message.updateCellBets;
+    }
+    if (message.updateGameHistory === true) {
+      obj.updateGameHistory = message.updateGameHistory;
+    }
+    if (message.userBets !== undefined) {
+      obj.userBets = QQPlayerBets.toJSON(message.userBets);
+    }
+    if (message.listCellBet !== undefined) {
+      obj.listCellBet = QQDeskListCellBet.toJSON(message.listCellBet);
+    }
+    if (message.history !== undefined) {
+      obj.history = QQHistory.toJSON(message.history);
+    }
     return obj;
   },
 
@@ -1340,10 +1369,10 @@ export const QQUpdateDesk = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -1377,8 +1406,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

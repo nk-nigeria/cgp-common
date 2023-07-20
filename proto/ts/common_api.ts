@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -801,10 +801,18 @@ export const Game = {
 
   toJSON(message: Game): unknown {
     const obj: any = {};
-    message.code !== undefined && (obj.code = message.code);
-    message.active !== undefined && (obj.active = message.active);
-    message.lobbyId !== undefined && (obj.lobbyId = message.lobbyId);
-    message.layout !== undefined && (obj.layout = message.layout ? Layout.toJSON(message.layout) : undefined);
+    if (message.code !== "") {
+      obj.code = message.code;
+    }
+    if (message.active === true) {
+      obj.active = message.active;
+    }
+    if (message.lobbyId !== "") {
+      obj.lobbyId = message.lobbyId;
+    }
+    if (message.layout !== undefined) {
+      obj.layout = Layout.toJSON(message.layout);
+    }
     return obj;
   },
 
@@ -900,10 +908,18 @@ export const Layout = {
 
   toJSON(message: Layout): unknown {
     const obj: any = {};
-    message.col !== undefined && (obj.col = Math.round(message.col));
-    message.row !== undefined && (obj.row = Math.round(message.row));
-    message.colSpan !== undefined && (obj.colSpan = Math.round(message.colSpan));
-    message.rowSpan !== undefined && (obj.rowSpan = Math.round(message.rowSpan));
+    if (message.col !== 0) {
+      obj.col = Math.round(message.col);
+    }
+    if (message.row !== 0) {
+      obj.row = Math.round(message.row);
+    }
+    if (message.colSpan !== 0) {
+      obj.colSpan = Math.round(message.colSpan);
+    }
+    if (message.rowSpan !== 0) {
+      obj.rowSpan = Math.round(message.rowSpan);
+    }
     return obj;
   },
 
@@ -962,10 +978,8 @@ export const GameListResponse = {
 
   toJSON(message: GameListResponse): unknown {
     const obj: any = {};
-    if (message.games) {
-      obj.games = message.games.map((e) => e ? Game.toJSON(e) : undefined);
-    } else {
-      obj.games = [];
+    if (message.games?.length) {
+      obj.games = message.games.map((e) => Game.toJSON(e));
     }
     return obj;
   },
@@ -1022,7 +1036,9 @@ export const BetListRequest = {
 
   toJSON(message: BetListRequest): unknown {
     const obj: any = {};
-    message.code !== undefined && (obj.code = message.code);
+    if (message.code !== "") {
+      obj.code = message.code;
+    }
     return obj;
   },
 
@@ -1090,10 +1106,8 @@ export const BetListResponse = {
 
   toJSON(message: BetListResponse): unknown {
     const obj: any = {};
-    if (message.bets) {
+    if (message.bets?.length) {
       obj.bets = message.bets.map((e) => Math.round(e));
-    } else {
-      obj.bets = [];
     }
     return obj;
   },
@@ -1174,9 +1188,15 @@ export const Chat = {
 
   toJSON(message: Chat): unknown {
     const obj: any = {};
-    message.typeChat !== undefined && (obj.typeChat = typeChatToJSON(message.typeChat));
-    message.id !== undefined && (obj.id = message.id);
-    message.content !== undefined && (obj.content = message.content);
+    if (message.typeChat !== 0) {
+      obj.typeChat = typeChatToJSON(message.typeChat);
+    }
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.content !== "") {
+      obj.content = message.content;
+    }
     return obj;
   },
 
@@ -1313,14 +1333,30 @@ export const FreeChip = {
 
   toJSON(message: FreeChip): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.senderId !== undefined && (obj.senderId = message.senderId);
-    message.recipientId !== undefined && (obj.recipientId = message.recipientId);
-    message.title !== undefined && (obj.title = message.title);
-    message.content !== undefined && (obj.content = message.content);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.claimable !== undefined && (obj.claimable = message.claimable);
-    message.action !== undefined && (obj.action = message.action);
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.senderId !== "") {
+      obj.senderId = message.senderId;
+    }
+    if (message.recipientId !== "") {
+      obj.recipientId = message.recipientId;
+    }
+    if (message.title !== "") {
+      obj.title = message.title;
+    }
+    if (message.content !== "") {
+      obj.content = message.content;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.claimable === true) {
+      obj.claimable = message.claimable;
+    }
+    if (message.action !== "") {
+      obj.action = message.action;
+    }
     return obj;
   },
 
@@ -1407,9 +1443,15 @@ export const FreeChipRequest = {
 
   toJSON(message: FreeChipRequest): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.cusor !== undefined && (obj.cusor = message.cusor);
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.cusor !== "") {
+      obj.cusor = message.cusor;
+    }
     return obj;
   },
 
@@ -1524,16 +1566,24 @@ export const ListFreeChip = {
 
   toJSON(message: ListFreeChip): unknown {
     const obj: any = {};
-    if (message.freechips) {
-      obj.freechips = message.freechips.map((e) => e ? FreeChip.toJSON(e) : undefined);
-    } else {
-      obj.freechips = [];
+    if (message.freechips?.length) {
+      obj.freechips = message.freechips.map((e) => FreeChip.toJSON(e));
     }
-    message.nextCusor !== undefined && (obj.nextCusor = message.nextCusor);
-    message.prevCusor !== undefined && (obj.prevCusor = message.prevCusor);
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    if (message.nextCusor !== "") {
+      obj.nextCusor = message.nextCusor;
+    }
+    if (message.prevCusor !== "") {
+      obj.prevCusor = message.prevCusor;
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
     return obj;
   },
 
@@ -1684,15 +1734,33 @@ export const Deal = {
 
   toJSON(message: Deal): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.amountChips !== undefined && (obj.amountChips = Math.round(message.amountChips));
-    message.bonus !== undefined && (obj.bonus = Math.round(message.bonus));
-    message.price !== undefined && (obj.price = message.price);
-    message.name !== undefined && (obj.name = message.name);
-    message.currency !== undefined && (obj.currency = message.currency);
-    message.percent !== undefined && (obj.percent = message.percent);
-    message.chipPerUnit !== undefined && (obj.chipPerUnit = Math.round(message.chipPerUnit));
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.amountChips !== 0) {
+      obj.amountChips = Math.round(message.amountChips);
+    }
+    if (message.bonus !== 0) {
+      obj.bonus = Math.round(message.bonus);
+    }
+    if (message.price !== "") {
+      obj.price = message.price;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.currency !== "") {
+      obj.currency = message.currency;
+    }
+    if (message.percent !== "") {
+      obj.percent = message.percent;
+    }
+    if (message.chipPerUnit !== 0) {
+      obj.chipPerUnit = Math.round(message.chipPerUnit);
+    }
     return obj;
   },
 
@@ -1791,21 +1859,17 @@ export const DealInShop = {
 
   toJSON(message: DealInShop): unknown {
     const obj: any = {};
-    message.best !== undefined && (obj.best = message.best ? Deal.toJSON(message.best) : undefined);
-    if (message.iaps) {
-      obj.iaps = message.iaps.map((e) => e ? Deal.toJSON(e) : undefined);
-    } else {
-      obj.iaps = [];
+    if (message.best !== undefined) {
+      obj.best = Deal.toJSON(message.best);
     }
-    if (message.gcashes) {
-      obj.gcashes = message.gcashes.map((e) => e ? Deal.toJSON(e) : undefined);
-    } else {
-      obj.gcashes = [];
+    if (message.iaps?.length) {
+      obj.iaps = message.iaps.map((e) => Deal.toJSON(e));
     }
-    if (message.sms) {
-      obj.sms = message.sms.map((e) => e ? Deal.toJSON(e) : undefined);
-    } else {
-      obj.sms = [];
+    if (message.gcashes?.length) {
+      obj.gcashes = message.gcashes.map((e) => Deal.toJSON(e));
+    }
+    if (message.sms?.length) {
+      obj.sms = message.sms.map((e) => Deal.toJSON(e));
     }
     return obj;
   },
@@ -1889,9 +1953,15 @@ export const LeaderBoardRecord = {
 
   toJSON(message: LeaderBoardRecord): unknown {
     const obj: any = {};
-    message.gameCode !== undefined && (obj.gameCode = message.gameCode);
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.score !== undefined && (obj.score = Math.round(message.score));
+    if (message.gameCode !== "") {
+      obj.gameCode = message.gameCode;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.score !== 0) {
+      obj.score = Math.round(message.score);
+    }
     return obj;
   },
 
@@ -2145,23 +2215,57 @@ export const ExchangeInfo = {
 
   toJSON(message: ExchangeInfo): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.idDeal !== undefined && (obj.idDeal = message.idDeal);
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.price !== undefined && (obj.price = message.price);
-    message.status !== undefined && (obj.status = Math.round(message.status));
-    message.unlock !== undefined && (obj.unlock = Math.round(message.unlock));
-    message.cashId !== undefined && (obj.cashId = message.cashId);
-    message.cashType !== undefined && (obj.cashType = message.cashType);
-    message.userIdRequest !== undefined && (obj.userIdRequest = message.userIdRequest);
-    message.userNameRequest !== undefined && (obj.userNameRequest = message.userNameRequest);
-    message.vipLv !== undefined && (obj.vipLv = Math.round(message.vipLv));
-    message.deviceId !== undefined && (obj.deviceId = message.deviceId);
-    message.userIdHandling !== undefined && (obj.userIdHandling = message.userIdHandling);
-    message.userNameHandling !== undefined && (obj.userNameHandling = message.userNameHandling);
-    message.reason !== undefined && (obj.reason = message.reason);
-    message.cursor !== undefined && (obj.cursor = message.cursor);
-    message.createTime !== undefined && (obj.createTime = Math.round(message.createTime));
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.idDeal !== "") {
+      obj.idDeal = message.idDeal;
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.price !== "") {
+      obj.price = message.price;
+    }
+    if (message.status !== 0) {
+      obj.status = Math.round(message.status);
+    }
+    if (message.unlock !== 0) {
+      obj.unlock = Math.round(message.unlock);
+    }
+    if (message.cashId !== "") {
+      obj.cashId = message.cashId;
+    }
+    if (message.cashType !== "") {
+      obj.cashType = message.cashType;
+    }
+    if (message.userIdRequest !== "") {
+      obj.userIdRequest = message.userIdRequest;
+    }
+    if (message.userNameRequest !== "") {
+      obj.userNameRequest = message.userNameRequest;
+    }
+    if (message.vipLv !== 0) {
+      obj.vipLv = Math.round(message.vipLv);
+    }
+    if (message.deviceId !== "") {
+      obj.deviceId = message.deviceId;
+    }
+    if (message.userIdHandling !== "") {
+      obj.userIdHandling = message.userIdHandling;
+    }
+    if (message.userNameHandling !== "") {
+      obj.userNameHandling = message.userNameHandling;
+    }
+    if (message.reason !== "") {
+      obj.reason = message.reason;
+    }
+    if (message.cursor !== "") {
+      obj.cursor = message.cursor;
+    }
+    if (message.createTime !== 0) {
+      obj.createTime = Math.round(message.createTime);
+    }
     return obj;
   },
 
@@ -2233,10 +2337,8 @@ export const ExchangeDealInShop = {
 
   toJSON(message: ExchangeDealInShop): unknown {
     const obj: any = {};
-    if (message.gcashes) {
-      obj.gcashes = message.gcashes.map((e) => e ? Deal.toJSON(e) : undefined);
-    } else {
-      obj.gcashes = [];
+    if (message.gcashes?.length) {
+      obj.gcashes = message.gcashes.map((e) => Deal.toJSON(e));
     }
     return obj;
   },
@@ -2374,18 +2476,30 @@ export const ListExchangeInfo = {
 
   toJSON(message: ListExchangeInfo): unknown {
     const obj: any = {};
-    if (message.exchangeInfos) {
-      obj.exchangeInfos = message.exchangeInfos.map((e) => e ? ExchangeInfo.toJSON(e) : undefined);
-    } else {
-      obj.exchangeInfos = [];
+    if (message.exchangeInfos?.length) {
+      obj.exchangeInfos = message.exchangeInfos.map((e) => ExchangeInfo.toJSON(e));
     }
-    message.nextCusor !== undefined && (obj.nextCusor = message.nextCusor);
-    message.prevCusor !== undefined && (obj.prevCusor = message.prevCusor);
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.from !== undefined && (obj.from = Math.round(message.from));
-    message.to !== undefined && (obj.to = Math.round(message.to));
+    if (message.nextCusor !== "") {
+      obj.nextCusor = message.nextCusor;
+    }
+    if (message.prevCusor !== "") {
+      obj.prevCusor = message.prevCusor;
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.from !== 0) {
+      obj.from = Math.round(message.from);
+    }
+    if (message.to !== 0) {
+      obj.to = Math.round(message.to);
+    }
     return obj;
   },
 
@@ -2516,13 +2630,27 @@ export const ExchangeRequest = {
 
   toJSON(message: ExchangeRequest): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.userIdRequest !== undefined && (obj.userIdRequest = message.userIdRequest);
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.from !== undefined && (obj.from = Math.round(message.from));
-    message.to !== undefined && (obj.to = Math.round(message.to));
-    message.cusor !== undefined && (obj.cusor = message.cusor);
-    message.cashType !== undefined && (obj.cashType = message.cashType);
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.userIdRequest !== "") {
+      obj.userIdRequest = message.userIdRequest;
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.from !== 0) {
+      obj.from = Math.round(message.from);
+    }
+    if (message.to !== 0) {
+      obj.to = Math.round(message.to);
+    }
+    if (message.cusor !== "") {
+      obj.cusor = message.cusor;
+    }
+    if (message.cashType !== "") {
+      obj.cashType = message.cashType;
+    }
     return obj;
   },
 
@@ -2756,21 +2884,51 @@ export const Reward = {
 
   toJSON(message: Reward): unknown {
     const obj: any = {};
-    message.basicChip !== undefined && (obj.basicChip = Math.round(message.basicChip));
-    message.percentBonus !== undefined && (obj.percentBonus = message.percentBonus);
-    message.bonusChip !== undefined && (obj.bonusChip = Math.round(message.bonusChip));
-    message.onlineChip !== undefined && (obj.onlineChip = Math.round(message.onlineChip));
-    message.totalChip !== undefined && (obj.totalChip = Math.round(message.totalChip));
-    message.streak !== undefined && (obj.streak = Math.round(message.streak));
-    message.onlineSec !== undefined && (obj.onlineSec = Math.round(message.onlineSec));
-    message.canClaim !== undefined && (obj.canClaim = message.canClaim);
-    message.numClaim !== undefined && (obj.numClaim = Math.round(message.numClaim));
-    message.lastClaimUnix !== undefined && (obj.lastClaimUnix = Math.round(message.lastClaimUnix));
-    message.nextClaimUnix !== undefined && (obj.nextClaimUnix = Math.round(message.nextClaimUnix));
-    message.nextClaimSec !== undefined && (obj.nextClaimSec = Math.round(message.nextClaimSec));
-    message.reachMaxStreak !== undefined && (obj.reachMaxStreak = message.reachMaxStreak);
-    message.lastSpinNumber !== undefined && (obj.lastSpinNumber = Math.round(message.lastSpinNumber));
-    message.lastOnlineUnix !== undefined && (obj.lastOnlineUnix = Math.round(message.lastOnlineUnix));
+    if (message.basicChip !== 0) {
+      obj.basicChip = Math.round(message.basicChip);
+    }
+    if (message.percentBonus !== 0) {
+      obj.percentBonus = message.percentBonus;
+    }
+    if (message.bonusChip !== 0) {
+      obj.bonusChip = Math.round(message.bonusChip);
+    }
+    if (message.onlineChip !== 0) {
+      obj.onlineChip = Math.round(message.onlineChip);
+    }
+    if (message.totalChip !== 0) {
+      obj.totalChip = Math.round(message.totalChip);
+    }
+    if (message.streak !== 0) {
+      obj.streak = Math.round(message.streak);
+    }
+    if (message.onlineSec !== 0) {
+      obj.onlineSec = Math.round(message.onlineSec);
+    }
+    if (message.canClaim === true) {
+      obj.canClaim = message.canClaim;
+    }
+    if (message.numClaim !== 0) {
+      obj.numClaim = Math.round(message.numClaim);
+    }
+    if (message.lastClaimUnix !== 0) {
+      obj.lastClaimUnix = Math.round(message.lastClaimUnix);
+    }
+    if (message.nextClaimUnix !== 0) {
+      obj.nextClaimUnix = Math.round(message.nextClaimUnix);
+    }
+    if (message.nextClaimSec !== 0) {
+      obj.nextClaimSec = Math.round(message.nextClaimSec);
+    }
+    if (message.reachMaxStreak === true) {
+      obj.reachMaxStreak = message.reachMaxStreak;
+    }
+    if (message.lastSpinNumber !== 0) {
+      obj.lastSpinNumber = Math.round(message.lastSpinNumber);
+    }
+    if (message.lastOnlineUnix !== 0) {
+      obj.lastOnlineUnix = Math.round(message.lastOnlineUnix);
+    }
     return obj;
   },
 
@@ -2898,15 +3056,21 @@ export const RewardTemplate = {
 
   toJSON(message: RewardTemplate): unknown {
     const obj: any = {};
-    if (message.basicChips) {
+    if (message.basicChips?.length) {
       obj.basicChips = message.basicChips.map((e) => Math.round(e));
-    } else {
-      obj.basicChips = [];
     }
-    message.percenBonus !== undefined && (obj.percenBonus = message.percenBonus);
-    message.onlineSec !== undefined && (obj.onlineSec = Math.round(message.onlineSec));
-    message.onlineChip !== undefined && (obj.onlineChip = Math.round(message.onlineChip));
-    message.streak !== undefined && (obj.streak = Math.round(message.streak));
+    if (message.percenBonus !== 0) {
+      obj.percenBonus = message.percenBonus;
+    }
+    if (message.onlineSec !== 0) {
+      obj.onlineSec = Math.round(message.onlineSec);
+    }
+    if (message.onlineChip !== 0) {
+      obj.onlineChip = Math.round(message.onlineChip);
+    }
+    if (message.streak !== 0) {
+      obj.streak = Math.round(message.streak);
+    }
     return obj;
   },
 
@@ -3023,12 +3187,24 @@ export const LastClaimReward = {
 
   toJSON(message: LastClaimReward): unknown {
     const obj: any = {};
-    message.lastClaimUnix !== undefined && (obj.lastClaimUnix = Math.round(message.lastClaimUnix));
-    message.nextClaimUnix !== undefined && (obj.nextClaimUnix = Math.round(message.nextClaimUnix));
-    message.streak !== undefined && (obj.streak = Math.round(message.streak));
-    message.lastSpinNumber !== undefined && (obj.lastSpinNumber = Math.round(message.lastSpinNumber));
-    message.reachMaxStreak !== undefined && (obj.reachMaxStreak = message.reachMaxStreak);
-    message.numClaim !== undefined && (obj.numClaim = Math.round(message.numClaim));
+    if (message.lastClaimUnix !== 0) {
+      obj.lastClaimUnix = Math.round(message.lastClaimUnix);
+    }
+    if (message.nextClaimUnix !== 0) {
+      obj.nextClaimUnix = Math.round(message.nextClaimUnix);
+    }
+    if (message.streak !== 0) {
+      obj.streak = Math.round(message.streak);
+    }
+    if (message.lastSpinNumber !== 0) {
+      obj.lastSpinNumber = Math.round(message.lastSpinNumber);
+    }
+    if (message.reachMaxStreak === true) {
+      obj.reachMaxStreak = message.reachMaxStreak;
+    }
+    if (message.numClaim !== 0) {
+      obj.numClaim = Math.round(message.numClaim);
+    }
     return obj;
   },
 
@@ -3093,10 +3269,8 @@ export const DailyRewardTemplate = {
 
   toJSON(message: DailyRewardTemplate): unknown {
     const obj: any = {};
-    if (message.rewardTemplates) {
-      obj.rewardTemplates = message.rewardTemplates.map((e) => e ? RewardTemplate.toJSON(e) : undefined);
-    } else {
-      obj.rewardTemplates = [];
+    if (message.rewardTemplates?.length) {
+      obj.rewardTemplates = message.rewardTemplates.map((e) => RewardTemplate.toJSON(e));
     }
     return obj;
   },
@@ -3166,8 +3340,12 @@ export const UserGroupCondition = {
 
   toJSON(message: UserGroupCondition): unknown {
     const obj: any = {};
-    message.operator !== undefined && (obj.operator = message.operator);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.operator !== "") {
+      obj.operator = message.operator;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
@@ -3270,12 +3448,21 @@ export const UserGroup = {
 
   toJSON(message: UserGroup): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.name !== undefined && (obj.name = message.name);
-    message.type !== undefined && (obj.type = message.type);
-    message.data !== undefined && (obj.data = message.data);
-    message.condition !== undefined &&
-      (obj.condition = message.condition ? UserGroupCondition.toJSON(message.condition) : undefined);
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
+    if (message.condition !== undefined) {
+      obj.condition = UserGroupCondition.toJSON(message.condition);
+    }
     return obj;
   },
 
@@ -3394,16 +3581,24 @@ export const ListUserGroup = {
 
   toJSON(message: ListUserGroup): unknown {
     const obj: any = {};
-    if (message.userGroups) {
-      obj.userGroups = message.userGroups.map((e) => e ? UserGroup.toJSON(e) : undefined);
-    } else {
-      obj.userGroups = [];
+    if (message.userGroups?.length) {
+      obj.userGroups = message.userGroups.map((e) => UserGroup.toJSON(e));
     }
-    message.nextCusor !== undefined && (obj.nextCusor = message.nextCusor);
-    message.prevCusor !== undefined && (obj.prevCusor = message.prevCusor);
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    if (message.nextCusor !== "") {
+      obj.nextCusor = message.nextCusor;
+    }
+    if (message.prevCusor !== "") {
+      obj.prevCusor = message.prevCusor;
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
     return obj;
   },
 
@@ -3477,8 +3672,12 @@ export const UserGroupRequest = {
 
   toJSON(message: UserGroupRequest): unknown {
     const obj: any = {};
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.cusor !== undefined && (obj.cusor = message.cusor);
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.cusor !== "") {
+      obj.cusor = message.cusor;
+    }
     return obj;
   },
 
@@ -3707,21 +3906,51 @@ export const GiftCode = {
 
   toJSON(message: GiftCode): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.code !== undefined && (obj.code = message.code);
-    message.nCurrent !== undefined && (obj.nCurrent = Math.round(message.nCurrent));
-    message.nMax !== undefined && (obj.nMax = Math.round(message.nMax));
-    message.value !== undefined && (obj.value = Math.round(message.value));
-    message.startTimeUnix !== undefined && (obj.startTimeUnix = Math.round(message.startTimeUnix));
-    message.endTimeUnix !== undefined && (obj.endTimeUnix = Math.round(message.endTimeUnix));
-    message.message !== undefined && (obj.message = message.message);
-    message.vip !== undefined && (obj.vip = Math.round(message.vip));
-    message.giftCodeType !== undefined && (obj.giftCodeType = giftCodeTypeToJSON(message.giftCodeType));
-    message.reachMaxClaim !== undefined && (obj.reachMaxClaim = message.reachMaxClaim);
-    message.alreadyClaim !== undefined && (obj.alreadyClaim = message.alreadyClaim);
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.openToClaim !== undefined && (obj.openToClaim = message.openToClaim);
-    message.errCode !== undefined && (obj.errCode = Math.round(message.errCode));
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.code !== "") {
+      obj.code = message.code;
+    }
+    if (message.nCurrent !== 0) {
+      obj.nCurrent = Math.round(message.nCurrent);
+    }
+    if (message.nMax !== 0) {
+      obj.nMax = Math.round(message.nMax);
+    }
+    if (message.value !== 0) {
+      obj.value = Math.round(message.value);
+    }
+    if (message.startTimeUnix !== 0) {
+      obj.startTimeUnix = Math.round(message.startTimeUnix);
+    }
+    if (message.endTimeUnix !== 0) {
+      obj.endTimeUnix = Math.round(message.endTimeUnix);
+    }
+    if (message.message !== "") {
+      obj.message = message.message;
+    }
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    if (message.giftCodeType !== 0) {
+      obj.giftCodeType = giftCodeTypeToJSON(message.giftCodeType);
+    }
+    if (message.reachMaxClaim === true) {
+      obj.reachMaxClaim = message.reachMaxClaim;
+    }
+    if (message.alreadyClaim === true) {
+      obj.alreadyClaim = message.alreadyClaim;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.openToClaim === true) {
+      obj.openToClaim = message.openToClaim;
+    }
+    if (message.errCode !== 0) {
+      obj.errCode = Math.round(message.errCode);
+    }
     return obj;
   },
 
@@ -3793,10 +4022,8 @@ export const ListGiftCode = {
 
   toJSON(message: ListGiftCode): unknown {
     const obj: any = {};
-    if (message.giftCodes) {
-      obj.giftCodes = message.giftCodes.map((e) => e ? GiftCode.toJSON(e) : undefined);
-    } else {
-      obj.giftCodes = [];
+    if (message.giftCodes?.length) {
+      obj.giftCodes = message.giftCodes.map((e) => GiftCode.toJSON(e));
     }
     return obj;
   },
@@ -3910,16 +4137,24 @@ export const AddNotificationRequest = {
 
   toJSON(message: AddNotificationRequest): unknown {
     const obj: any = {};
-    if (message.recipientIds) {
-      obj.recipientIds = message.recipientIds.map((e) => e);
-    } else {
-      obj.recipientIds = [];
+    if (message.recipientIds?.length) {
+      obj.recipientIds = message.recipientIds;
     }
-    message.userGroupId !== undefined && (obj.userGroupId = Math.round(message.userGroupId));
-    message.type !== undefined && (obj.type = typeNotificationToJSON(message.type));
-    message.title !== undefined && (obj.title = message.title);
-    message.content !== undefined && (obj.content = message.content);
-    message.senderId !== undefined && (obj.senderId = message.senderId);
+    if (message.userGroupId !== 0) {
+      obj.userGroupId = Math.round(message.userGroupId);
+    }
+    if (message.type !== 0) {
+      obj.type = typeNotificationToJSON(message.type);
+    }
+    if (message.title !== "") {
+      obj.title = message.title;
+    }
+    if (message.content !== "") {
+      obj.content = message.content;
+    }
+    if (message.senderId !== "") {
+      obj.senderId = message.senderId;
+    }
     return obj;
   },
 
@@ -4059,14 +4294,30 @@ export const Notification = {
 
   toJSON(message: Notification): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.recipientId !== undefined && (obj.recipientId = message.recipientId);
-    message.type !== undefined && (obj.type = typeNotificationToJSON(message.type));
-    message.title !== undefined && (obj.title = message.title);
-    message.content !== undefined && (obj.content = message.content);
-    message.senderId !== undefined && (obj.senderId = message.senderId);
-    message.read !== undefined && (obj.read = message.read);
-    message.createTimeUnix !== undefined && (obj.createTimeUnix = Math.round(message.createTimeUnix));
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.recipientId !== "") {
+      obj.recipientId = message.recipientId;
+    }
+    if (message.type !== 0) {
+      obj.type = typeNotificationToJSON(message.type);
+    }
+    if (message.title !== "") {
+      obj.title = message.title;
+    }
+    if (message.content !== "") {
+      obj.content = message.content;
+    }
+    if (message.senderId !== "") {
+      obj.senderId = message.senderId;
+    }
+    if (message.read === true) {
+      obj.read = message.read;
+    }
+    if (message.createTimeUnix !== 0) {
+      obj.createTimeUnix = Math.round(message.createTimeUnix);
+    }
     return obj;
   },
 
@@ -4153,9 +4404,15 @@ export const NotificationRequest = {
 
   toJSON(message: NotificationRequest): unknown {
     const obj: any = {};
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.cusor !== undefined && (obj.cusor = message.cusor);
-    message.type !== undefined && (obj.type = typeNotificationToJSON(message.type));
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.cusor !== "") {
+      obj.cusor = message.cusor;
+    }
+    if (message.type !== 0) {
+      obj.type = typeNotificationToJSON(message.type);
+    }
     return obj;
   },
 
@@ -4272,16 +4529,24 @@ export const ListNotification = {
 
   toJSON(message: ListNotification): unknown {
     const obj: any = {};
-    if (message.notifications) {
-      obj.notifications = message.notifications.map((e) => e ? Notification.toJSON(e) : undefined);
-    } else {
-      obj.notifications = [];
+    if (message.notifications?.length) {
+      obj.notifications = message.notifications.map((e) => Notification.toJSON(e));
     }
-    message.nextCusor !== undefined && (obj.nextCusor = message.nextCusor);
-    message.prevCusor !== undefined && (obj.prevCusor = message.prevCusor);
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    if (message.nextCusor !== "") {
+      obj.nextCusor = message.nextCusor;
+    }
+    if (message.prevCusor !== "") {
+      obj.prevCusor = message.prevCusor;
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
     return obj;
   },
 
@@ -4352,8 +4617,12 @@ export const RangeTime = {
 
   toJSON(message: RangeTime): unknown {
     const obj: any = {};
-    message.from !== undefined && (obj.from = Math.round(message.from));
-    message.to !== undefined && (obj.to = Math.round(message.to));
+    if (message.from !== 0) {
+      obj.from = Math.round(message.from);
+    }
+    if (message.to !== 0) {
+      obj.to = Math.round(message.to);
+    }
     return obj;
   },
 
@@ -4453,18 +4722,23 @@ export const InAppMessageData = {
 
   toJSON(message: InAppMessageData): unknown {
     const obj: any = {};
-    message.action !== undefined && (obj.action = inAppMessageActionToJSON(message.action));
-    message.target !== undefined && (obj.target = message.target);
-    obj.params = {};
-    if (message.params) {
-      Object.entries(message.params).forEach(([k, v]) => {
-        obj.params[k] = v;
-      });
+    if (message.action !== 0) {
+      obj.action = inAppMessageActionToJSON(message.action);
     }
-    if (message.showTimes) {
-      obj.showTimes = message.showTimes.map((e) => e ? RangeTime.toJSON(e) : undefined);
-    } else {
-      obj.showTimes = [];
+    if (message.target !== "") {
+      obj.target = message.target;
+    }
+    if (message.params) {
+      const entries = Object.entries(message.params);
+      if (entries.length > 0) {
+        obj.params = {};
+        entries.forEach(([k, v]) => {
+          obj.params[k] = v;
+        });
+      }
+    }
+    if (message.showTimes?.length) {
+      obj.showTimes = message.showTimes.map((e) => RangeTime.toJSON(e));
     }
     return obj;
   },
@@ -4539,8 +4813,12 @@ export const InAppMessageData_ParamsEntry = {
 
   toJSON(message: InAppMessageData_ParamsEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
@@ -4697,18 +4975,30 @@ export const InAppMessage = {
 
   toJSON(message: InAppMessage): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.highPriority !== undefined && (obj.highPriority = Math.round(message.highPriority));
-    if (message.groupIds) {
-      obj.groupIds = message.groupIds.map((e) => Math.round(e));
-    } else {
-      obj.groupIds = [];
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
     }
-    message.type !== undefined && (obj.type = typeInAppMessageToJSON(message.type));
-    message.data !== undefined && (obj.data = message.data ? InAppMessageData.toJSON(message.data) : undefined);
-    message.startDate !== undefined && (obj.startDate = Math.round(message.startDate));
-    message.endDate !== undefined && (obj.endDate = Math.round(message.endDate));
-    message.createTimeUnix !== undefined && (obj.createTimeUnix = Math.round(message.createTimeUnix));
+    if (message.highPriority !== 0) {
+      obj.highPriority = Math.round(message.highPriority);
+    }
+    if (message.groupIds?.length) {
+      obj.groupIds = message.groupIds.map((e) => Math.round(e));
+    }
+    if (message.type !== 0) {
+      obj.type = typeInAppMessageToJSON(message.type);
+    }
+    if (message.data !== undefined) {
+      obj.data = InAppMessageData.toJSON(message.data);
+    }
+    if (message.startDate !== 0) {
+      obj.startDate = Math.round(message.startDate);
+    }
+    if (message.endDate !== 0) {
+      obj.endDate = Math.round(message.endDate);
+    }
+    if (message.createTimeUnix !== 0) {
+      obj.createTimeUnix = Math.round(message.createTimeUnix);
+    }
     return obj;
   },
 
@@ -4797,9 +5087,15 @@ export const InAppMessageRequest = {
 
   toJSON(message: InAppMessageRequest): unknown {
     const obj: any = {};
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.cusor !== undefined && (obj.cusor = message.cusor);
-    message.type !== undefined && (obj.type = typeInAppMessageToJSON(message.type));
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.cusor !== "") {
+      obj.cusor = message.cusor;
+    }
+    if (message.type !== 0) {
+      obj.type = typeInAppMessageToJSON(message.type);
+    }
     return obj;
   },
 
@@ -4916,16 +5212,24 @@ export const ListInAppMessage = {
 
   toJSON(message: ListInAppMessage): unknown {
     const obj: any = {};
-    if (message.inAppMessages) {
-      obj.inAppMessages = message.inAppMessages.map((e) => e ? InAppMessage.toJSON(e) : undefined);
-    } else {
-      obj.inAppMessages = [];
+    if (message.inAppMessages?.length) {
+      obj.inAppMessages = message.inAppMessages.map((e) => InAppMessage.toJSON(e));
     }
-    message.nextCusor !== undefined && (obj.nextCusor = message.nextCusor);
-    message.prevCusor !== undefined && (obj.prevCusor = message.prevCusor);
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    if (message.nextCusor !== "") {
+      obj.nextCusor = message.nextCusor;
+    }
+    if (message.prevCusor !== "") {
+      obj.prevCusor = message.prevCusor;
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
     return obj;
   },
 
@@ -5010,9 +5314,15 @@ export const DefaultResponse = {
 
   toJSON(message: DefaultResponse): unknown {
     const obj: any = {};
-    message.message !== undefined && (obj.message = message.message);
-    message.code !== undefined && (obj.code = message.code);
-    message.status !== undefined && (obj.status = message.status);
+    if (message.message !== "") {
+      obj.message = message.message;
+    }
+    if (message.code !== "") {
+      obj.code = message.code;
+    }
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
     return obj;
   },
 
@@ -5083,8 +5393,12 @@ export const PreSignPutRequest = {
 
   toJSON(message: PreSignPutRequest): unknown {
     const obj: any = {};
-    message.fileName !== undefined && (obj.fileName = message.fileName);
-    message.bucketName !== undefined && (obj.bucketName = message.bucketName);
+    if (message.fileName !== "") {
+      obj.fileName = message.fileName;
+    }
+    if (message.bucketName !== "") {
+      obj.bucketName = message.bucketName;
+    }
     return obj;
   },
 
@@ -5141,7 +5455,9 @@ export const PreSignPutResponse = {
 
   toJSON(message: PreSignPutResponse): unknown {
     const obj: any = {};
-    message.url !== undefined && (obj.url = message.url);
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
     return obj;
   },
 
@@ -5232,10 +5548,18 @@ export const ReferUser = {
 
   toJSON(message: ReferUser): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.userInvitor !== undefined && (obj.userInvitor = message.userInvitor);
-    message.userInvitee !== undefined && (obj.userInvitee = message.userInvitee);
-    message.createTimeUnix !== undefined && (obj.createTimeUnix = Math.round(message.createTimeUnix));
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.userInvitor !== "") {
+      obj.userInvitor = message.userInvitor;
+    }
+    if (message.userInvitee !== "") {
+      obj.userInvitee = message.userInvitee;
+    }
+    if (message.createTimeUnix !== 0) {
+      obj.createTimeUnix = Math.round(message.createTimeUnix);
+    }
     return obj;
   },
 
@@ -5318,9 +5642,15 @@ export const RewardReferTemplate = {
 
   toJSON(message: RewardReferTemplate): unknown {
     const obj: any = {};
-    message.min !== undefined && (obj.min = Math.round(message.min));
-    message.max !== undefined && (obj.max = Math.round(message.max));
-    message.rate !== undefined && (obj.rate = message.rate);
+    if (message.min !== 0) {
+      obj.min = Math.round(message.min);
+    }
+    if (message.max !== 0) {
+      obj.max = Math.round(message.max);
+    }
+    if (message.rate !== 0) {
+      obj.rate = message.rate;
+    }
     return obj;
   },
 
@@ -5382,10 +5712,8 @@ export const ListRewardReferTemplate = {
 
   toJSON(message: ListRewardReferTemplate): unknown {
     const obj: any = {};
-    if (message.rewardRefers) {
-      obj.rewardRefers = message.rewardRefers.map((e) => e ? RewardReferTemplate.toJSON(e) : undefined);
-    } else {
-      obj.rewardRefers = [];
+    if (message.rewardRefers?.length) {
+      obj.rewardRefers = message.rewardRefers.map((e) => RewardReferTemplate.toJSON(e));
     }
     return obj;
   },
@@ -5616,29 +5944,51 @@ export const RewardRefer = {
 
   toJSON(message: RewardRefer): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.winAmt !== undefined && (obj.winAmt = Math.round(message.winAmt));
-    message.estRewardLv !== undefined && (obj.estRewardLv = Math.round(message.estRewardLv));
-    message.estReward !== undefined && (obj.estReward = Math.round(message.estReward));
-    message.estRateReward !== undefined && (obj.estRateReward = message.estRateReward);
-    if (message.userRefers) {
-      obj.userRefers = message.userRefers.map((e) => e ? RewardRefer.toJSON(e) : undefined);
-    } else {
-      obj.userRefers = [];
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
     }
-    if (message.listRewards) {
-      obj.listRewards = message.listRewards.map((e) => e ? RewardReferTemplate.toJSON(e) : undefined);
-    } else {
-      obj.listRewards = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
     }
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
-    message.totalUserRefer !== undefined && (obj.totalUserRefer = Math.round(message.totalUserRefer));
-    message.updateTimeUnix !== undefined && (obj.updateTimeUnix = Math.round(message.updateTimeUnix));
-    message.sendToWallet !== undefined && (obj.sendToWallet = message.sendToWallet);
-    message.createTimeUnix !== undefined && (obj.createTimeUnix = Math.round(message.createTimeUnix));
-    message.remainTimeResetSec !== undefined && (obj.remainTimeResetSec = Math.round(message.remainTimeResetSec));
+    if (message.winAmt !== 0) {
+      obj.winAmt = Math.round(message.winAmt);
+    }
+    if (message.estRewardLv !== 0) {
+      obj.estRewardLv = Math.round(message.estRewardLv);
+    }
+    if (message.estReward !== 0) {
+      obj.estReward = Math.round(message.estReward);
+    }
+    if (message.estRateReward !== 0) {
+      obj.estRateReward = message.estRateReward;
+    }
+    if (message.userRefers?.length) {
+      obj.userRefers = message.userRefers.map((e) => RewardRefer.toJSON(e));
+    }
+    if (message.listRewards?.length) {
+      obj.listRewards = message.listRewards.map((e) => RewardReferTemplate.toJSON(e));
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.totalUserRefer !== 0) {
+      obj.totalUserRefer = Math.round(message.totalUserRefer);
+    }
+    if (message.updateTimeUnix !== 0) {
+      obj.updateTimeUnix = Math.round(message.updateTimeUnix);
+    }
+    if (message.sendToWallet === true) {
+      obj.sendToWallet = message.sendToWallet;
+    }
+    if (message.createTimeUnix !== 0) {
+      obj.createTimeUnix = Math.round(message.createTimeUnix);
+    }
+    if (message.remainTimeResetSec !== 0) {
+      obj.remainTimeResetSec = Math.round(message.remainTimeResetSec);
+    }
     return obj;
   },
 
@@ -5710,10 +6060,8 @@ export const ListRewardRefer = {
 
   toJSON(message: ListRewardRefer): unknown {
     const obj: any = {};
-    if (message.userRefers) {
-      obj.userRefers = message.userRefers.map((e) => e ? RewardRefer.toJSON(e) : undefined);
-    } else {
-      obj.userRefers = [];
+    if (message.userRefers?.length) {
+      obj.userRefers = message.userRefers.map((e) => RewardRefer.toJSON(e));
     }
     return obj;
   },
@@ -5805,10 +6153,18 @@ export const HistoryRewardRequest = {
 
   toJSON(message: HistoryRewardRequest): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.time !== undefined && (obj.time = historyRewardTimeToJSON(message.time));
-    message.from !== undefined && (obj.from = Math.round(message.from));
-    message.to !== undefined && (obj.to = Math.round(message.to));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.time !== 0) {
+      obj.time = historyRewardTimeToJSON(message.time);
+    }
+    if (message.from !== 0) {
+      obj.from = Math.round(message.from);
+    }
+    if (message.to !== 0) {
+      obj.to = Math.round(message.to);
+    }
     return obj;
   },
 
@@ -5902,10 +6258,18 @@ export const WalletTransRequest = {
 
   toJSON(message: WalletTransRequest): unknown {
     const obj: any = {};
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.cusor !== undefined && (obj.cusor = message.cusor);
-    message.metaAction !== undefined && (obj.metaAction = message.metaAction);
-    message.metaBankAction !== undefined && (obj.metaBankAction = message.metaBankAction);
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.cusor !== "") {
+      obj.cusor = message.cusor;
+    }
+    if (message.metaAction !== "") {
+      obj.metaAction = message.metaAction;
+    }
+    if (message.metaBankAction !== "") {
+      obj.metaBankAction = message.metaBankAction;
+    }
     return obj;
   },
 
@@ -5977,8 +6341,12 @@ export const Error = {
 
   toJSON(message: Error): unknown {
     const obj: any = {};
-    message.code !== undefined && (obj.code = Math.round(message.code));
-    message.error !== undefined && (obj.error = message.error);
+    if (message.code !== 0) {
+      obj.code = Math.round(message.code);
+    }
+    if (message.error !== "") {
+      obj.error = message.error;
+    }
     return obj;
   },
 
@@ -5994,10 +6362,10 @@ export const Error = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -6031,8 +6399,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

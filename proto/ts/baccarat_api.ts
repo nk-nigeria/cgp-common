@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
 import { Card } from "./chinese_poker_game_api";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -281,8 +281,12 @@ export const BaccaratBet = {
 
   toJSON(message: BaccaratBet): unknown {
     const obj: any = {};
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.cell !== undefined && (obj.cell = baccaratBetCellToJSON(message.cell));
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.cell !== 0) {
+      obj.cell = baccaratBetCellToJSON(message.cell);
+    }
     return obj;
   },
 
@@ -352,8 +356,12 @@ export const BaccaratBetResult = {
 
   toJSON(message: BaccaratBetResult): unknown {
     const obj: any = {};
-    message.bet !== undefined && (obj.bet = message.bet ? BaccaratBet.toJSON(message.bet) : undefined);
-    message.isWin !== undefined && (obj.isWin = message.isWin);
+    if (message.bet !== undefined) {
+      obj.bet = BaccaratBet.toJSON(message.bet);
+    }
+    if (message.isWin === true) {
+      obj.isWin = message.isWin;
+    }
     return obj;
   },
 
@@ -434,12 +442,14 @@ export const BaccaratPlayerBet = {
 
   toJSON(message: BaccaratPlayerBet): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.actionType !== undefined && (obj.actionType = baccaratBetActionTypeToJSON(message.actionType));
-    if (message.bets) {
-      obj.bets = message.bets.map((e) => e ? BaccaratBet.toJSON(e) : undefined);
-    } else {
-      obj.bets = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.actionType !== 0) {
+      obj.actionType = baccaratBetActionTypeToJSON(message.actionType);
+    }
+    if (message.bets?.length) {
+      obj.bets = message.bets.map((e) => BaccaratBet.toJSON(e));
     }
     return obj;
   },
@@ -511,11 +521,11 @@ export const BaccaratPlayerBetResult = {
 
   toJSON(message: BaccaratPlayerBetResult): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    if (message.lists) {
-      obj.lists = message.lists.map((e) => e ? BaccaratBetResult.toJSON(e) : undefined);
-    } else {
-      obj.lists = [];
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.lists?.length) {
+      obj.lists = message.lists.map((e) => BaccaratBetResult.toJSON(e));
     }
     return obj;
   },
@@ -597,13 +607,15 @@ export const BaccaratHand = {
 
   toJSON(message: BaccaratHand): unknown {
     const obj: any = {};
-    if (message.cards) {
-      obj.cards = message.cards.map((e) => e ? Card.toJSON(e) : undefined);
-    } else {
-      obj.cards = [];
+    if (message.cards?.length) {
+      obj.cards = message.cards.map((e) => Card.toJSON(e));
     }
-    message.point !== undefined && (obj.point = Math.round(message.point));
-    message.isPair !== undefined && (obj.isPair = message.isPair);
+    if (message.point !== 0) {
+      obj.point = Math.round(message.point);
+    }
+    if (message.isPair === true) {
+      obj.isPair = message.isPair;
+    }
     return obj;
   },
 
@@ -674,8 +686,12 @@ export const BaccaratHands = {
 
   toJSON(message: BaccaratHands): unknown {
     const obj: any = {};
-    message.banker !== undefined && (obj.banker = message.banker ? BaccaratHand.toJSON(message.banker) : undefined);
-    message.player !== undefined && (obj.player = message.player ? BaccaratHand.toJSON(message.player) : undefined);
+    if (message.banker !== undefined) {
+      obj.banker = BaccaratHand.toJSON(message.banker);
+    }
+    if (message.player !== undefined) {
+      obj.player = BaccaratHand.toJSON(message.player);
+    }
     return obj;
   },
 
@@ -774,16 +790,14 @@ export const BaccaratGameFinish = {
 
   toJSON(message: BaccaratGameFinish): unknown {
     const obj: any = {};
-    message.hand !== undefined && (obj.hand = message.hand ? BaccaratHands.toJSON(message.hand) : undefined);
-    if (message.winCells) {
-      obj.winCells = message.winCells.map((e) => baccaratBetCellToJSON(e));
-    } else {
-      obj.winCells = [];
+    if (message.hand !== undefined) {
+      obj.hand = BaccaratHands.toJSON(message.hand);
     }
-    if (message.listBetResults) {
-      obj.listBetResults = message.listBetResults.map((e) => e ? BaccaratPlayerBetResult.toJSON(e) : undefined);
-    } else {
-      obj.listBetResults = [];
+    if (message.winCells?.length) {
+      obj.winCells = message.winCells.map((e) => baccaratBetCellToJSON(e));
+    }
+    if (message.listBetResults?.length) {
+      obj.listBetResults = message.listBetResults.map((e) => BaccaratPlayerBetResult.toJSON(e));
     }
     return obj;
   },
@@ -868,9 +882,15 @@ export const BaccaratBetCellInfo = {
 
   toJSON(message: BaccaratBetCellInfo): unknown {
     const obj: any = {};
-    message.cell !== undefined && (obj.cell = baccaratBetCellToJSON(message.cell));
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
-    message.nUserBet !== undefined && (obj.nUserBet = Math.round(message.nUserBet));
+    if (message.cell !== 0) {
+      obj.cell = baccaratBetCellToJSON(message.cell);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.nUserBet !== 0) {
+      obj.nUserBet = Math.round(message.nUserBet);
+    }
     return obj;
   },
 
@@ -952,9 +972,15 @@ export const BaccaratSimpleHistory = {
 
   toJSON(message: BaccaratSimpleHistory): unknown {
     const obj: any = {};
-    message.bankerWin !== undefined && (obj.bankerWin = Math.round(message.bankerWin));
-    message.playerWin !== undefined && (obj.playerWin = Math.round(message.playerWin));
-    message.tie !== undefined && (obj.tie = Math.round(message.tie));
+    if (message.bankerWin !== 0) {
+      obj.bankerWin = Math.round(message.bankerWin);
+    }
+    if (message.playerWin !== 0) {
+      obj.playerWin = Math.round(message.playerWin);
+    }
+    if (message.tie !== 0) {
+      obj.tie = Math.round(message.tie);
+    }
     return obj;
   },
 
@@ -1090,19 +1116,27 @@ export const BaccaratUpdateDesk = {
 
   toJSON(message: BaccaratUpdateDesk): unknown {
     const obj: any = {};
-    message.nPlayers !== undefined && (obj.nPlayers = Math.round(message.nPlayers));
-    message.isUpdateUserBet !== undefined && (obj.isUpdateUserBet = message.isUpdateUserBet);
-    message.isUpdateDeskCell !== undefined && (obj.isUpdateDeskCell = message.isUpdateDeskCell);
-    message.isUpdateGameHistory !== undefined && (obj.isUpdateGameHistory = message.isUpdateGameHistory);
-    message.userBet !== undefined &&
-      (obj.userBet = message.userBet ? BaccaratPlayerBet.toJSON(message.userBet) : undefined);
-    if (message.deskCells) {
-      obj.deskCells = message.deskCells.map((e) => e ? BaccaratBetCellInfo.toJSON(e) : undefined);
-    } else {
-      obj.deskCells = [];
+    if (message.nPlayers !== 0) {
+      obj.nPlayers = Math.round(message.nPlayers);
     }
-    message.history !== undefined &&
-      (obj.history = message.history ? BaccaratSimpleHistory.toJSON(message.history) : undefined);
+    if (message.isUpdateUserBet === true) {
+      obj.isUpdateUserBet = message.isUpdateUserBet;
+    }
+    if (message.isUpdateDeskCell === true) {
+      obj.isUpdateDeskCell = message.isUpdateDeskCell;
+    }
+    if (message.isUpdateGameHistory === true) {
+      obj.isUpdateGameHistory = message.isUpdateGameHistory;
+    }
+    if (message.userBet !== undefined) {
+      obj.userBet = BaccaratPlayerBet.toJSON(message.userBet);
+    }
+    if (message.deskCells?.length) {
+      obj.deskCells = message.deskCells.map((e) => BaccaratBetCellInfo.toJSON(e));
+    }
+    if (message.history !== undefined) {
+      obj.history = BaccaratSimpleHistory.toJSON(message.history);
+    }
     return obj;
   },
 
@@ -1168,7 +1202,9 @@ export const BaccaratBetActionReject = {
 
   toJSON(message: BaccaratBetActionReject): unknown {
     const obj: any = {};
-    message.reason !== undefined && (obj.reason = baccaratBetRejectedReasonToJSON(message.reason));
+    if (message.reason !== 0) {
+      obj.reason = baccaratBetRejectedReasonToJSON(message.reason);
+    }
     return obj;
   },
 
@@ -1248,13 +1284,15 @@ export const BaccaratUpdateDeal = {
 
   toJSON(message: BaccaratUpdateDeal): unknown {
     const obj: any = {};
-    message.isPlayer !== undefined && (obj.isPlayer = message.isPlayer);
-    if (message.cards) {
-      obj.cards = message.cards.map((e) => e ? Card.toJSON(e) : undefined);
-    } else {
-      obj.cards = [];
+    if (message.isPlayer === true) {
+      obj.isPlayer = message.isPlayer;
     }
-    message.hands !== undefined && (obj.hands = message.hands ? BaccaratHands.toJSON(message.hands) : undefined);
+    if (message.cards?.length) {
+      obj.cards = message.cards.map((e) => Card.toJSON(e));
+    }
+    if (message.hands !== undefined) {
+      obj.hands = BaccaratHands.toJSON(message.hands);
+    }
     return obj;
   },
 
@@ -1273,10 +1311,10 @@ export const BaccaratUpdateDeal = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -1310,8 +1348,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();

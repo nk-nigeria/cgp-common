@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
 import * as _m0 from "protobufjs/minimal";
 import { Profile } from "./auth_api";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -430,20 +430,48 @@ export const OpPlayer = {
 
   toJSON(message: OpPlayer): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.gameId !== undefined && (obj.gameId = Math.round(message.gameId));
-    message.gameName !== undefined && (obj.gameName = message.gameName);
-    message.noBet !== undefined && (obj.noBet = Math.round(message.noBet));
-    message.noWin !== undefined && (obj.noWin = Math.round(message.noWin));
-    message.noLost !== undefined && (obj.noLost = Math.round(message.noLost));
-    message.chipWin !== undefined && (obj.chipWin = Math.round(message.chipWin));
-    message.chipLost !== undefined && (obj.chipLost = Math.round(message.chipLost));
-    message.chipBalance !== undefined && (obj.chipBalance = Math.round(message.chipBalance));
-    message.action !== undefined && (obj.action = Math.round(message.action));
-    message.status !== undefined && (obj.status = message.status);
-    message.dateUnix !== undefined && (obj.dateUnix = Math.round(message.dateUnix));
-    message.mcb !== undefined && (obj.mcb = Math.round(message.mcb));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.gameName !== "") {
+      obj.gameName = message.gameName;
+    }
+    if (message.noBet !== 0) {
+      obj.noBet = Math.round(message.noBet);
+    }
+    if (message.noWin !== 0) {
+      obj.noWin = Math.round(message.noWin);
+    }
+    if (message.noLost !== 0) {
+      obj.noLost = Math.round(message.noLost);
+    }
+    if (message.chipWin !== 0) {
+      obj.chipWin = Math.round(message.chipWin);
+    }
+    if (message.chipLost !== 0) {
+      obj.chipLost = Math.round(message.chipLost);
+    }
+    if (message.chipBalance !== 0) {
+      obj.chipBalance = Math.round(message.chipBalance);
+    }
+    if (message.action !== 0) {
+      obj.action = Math.round(message.action);
+    }
+    if (message.status !== "") {
+      obj.status = message.status;
+    }
+    if (message.dateUnix !== 0) {
+      obj.dateUnix = Math.round(message.dateUnix);
+    }
+    if (message.mcb !== 0) {
+      obj.mcb = Math.round(message.mcb);
+    }
     return obj;
   },
 
@@ -580,13 +608,27 @@ export const OpPlayerRequest = {
 
   toJSON(message: OpPlayerRequest): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.gameId !== undefined && (obj.gameId = Math.round(message.gameId));
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
-    message.action !== undefined && (obj.action = Math.round(message.action));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.action !== 0) {
+      obj.action = Math.round(message.action);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
     return obj;
   },
 
@@ -705,16 +747,24 @@ export const OpPlayerResponse = {
 
   toJSON(message: OpPlayerResponse): unknown {
     const obj: any = {};
-    if (message.opPlayers) {
-      obj.opPlayers = message.opPlayers.map((e) => e ? OpPlayer.toJSON(e) : undefined);
-    } else {
-      obj.opPlayers = [];
+    if (message.opPlayers?.length) {
+      obj.opPlayers = message.opPlayers.map((e) => OpPlayer.toJSON(e));
     }
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.totalChipWin !== undefined && (obj.totalChipWin = Math.round(message.totalChipWin));
-    message.totalChipLost !== undefined && (obj.totalChipLost = Math.round(message.totalChipLost));
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.totalChipWin !== 0) {
+      obj.totalChipWin = Math.round(message.totalChipWin);
+    }
+    if (message.totalChipLost !== 0) {
+      obj.totalChipLost = Math.round(message.totalChipLost);
+    }
     return obj;
   },
 
@@ -875,15 +925,33 @@ export const MatchDetail = {
 
   toJSON(message: MatchDetail): unknown {
     const obj: any = {};
-    message.gameId !== undefined && (obj.gameId = Math.round(message.gameId));
-    message.gameName !== undefined && (obj.gameName = message.gameName);
-    message.mcb !== undefined && (obj.mcb = Math.round(message.mcb));
-    message.numMatchPlayed !== undefined && (obj.numMatchPlayed = Math.round(message.numMatchPlayed));
-    message.chipFee !== undefined && (obj.chipFee = Math.round(message.chipFee));
-    message.detail !== undefined && (obj.detail = message.detail);
-    message.tableId !== undefined && (obj.tableId = message.tableId);
-    message.dateUnix !== undefined && (obj.dateUnix = Math.round(message.dateUnix));
-    message.createdAtUnix !== undefined && (obj.createdAtUnix = Math.round(message.createdAtUnix));
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.gameName !== "") {
+      obj.gameName = message.gameName;
+    }
+    if (message.mcb !== 0) {
+      obj.mcb = Math.round(message.mcb);
+    }
+    if (message.numMatchPlayed !== 0) {
+      obj.numMatchPlayed = Math.round(message.numMatchPlayed);
+    }
+    if (message.chipFee !== 0) {
+      obj.chipFee = Math.round(message.chipFee);
+    }
+    if (message.detail !== "") {
+      obj.detail = message.detail;
+    }
+    if (message.tableId !== "") {
+      obj.tableId = message.tableId;
+    }
+    if (message.dateUnix !== 0) {
+      obj.dateUnix = Math.round(message.dateUnix);
+    }
+    if (message.createdAtUnix !== 0) {
+      obj.createdAtUnix = Math.round(message.createdAtUnix);
+    }
     return obj;
   },
 
@@ -1015,13 +1083,27 @@ export const MatchDetailRequest = {
 
   toJSON(message: MatchDetailRequest): unknown {
     const obj: any = {};
-    message.gameId !== undefined && (obj.gameId = Math.round(message.gameId));
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.userPairId !== undefined && (obj.userPairId = message.userPairId);
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userPairId !== "") {
+      obj.userPairId = message.userPairId;
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
     return obj;
   },
 
@@ -1120,14 +1202,18 @@ export const MatchDetailResponse = {
 
   toJSON(message: MatchDetailResponse): unknown {
     const obj: any = {};
-    if (message.matchDetails) {
-      obj.matchDetails = message.matchDetails.map((e) => e ? MatchDetail.toJSON(e) : undefined);
-    } else {
-      obj.matchDetails = [];
+    if (message.matchDetails?.length) {
+      obj.matchDetails = message.matchDetails.map((e) => MatchDetail.toJSON(e));
     }
-    message.total !== undefined && (obj.total = Math.round(message.total));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
     return obj;
   },
 
@@ -1210,9 +1296,15 @@ export const PlayerData = {
 
   toJSON(message: PlayerData): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.chip !== undefined && (obj.chip = Math.round(message.chip));
-    message.chipAdd !== undefined && (obj.chipAdd = Math.round(message.chipAdd));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.chip !== 0) {
+      obj.chip = Math.round(message.chip);
+    }
+    if (message.chipAdd !== 0) {
+      obj.chipAdd = Math.round(message.chipAdd);
+    }
     return obj;
   },
 
@@ -1316,11 +1408,21 @@ export const MatchData = {
 
   toJSON(message: MatchData): unknown {
     const obj: any = {};
-    message.gameId !== undefined && (obj.gameId = Math.round(message.gameId));
-    message.gameCode !== undefined && (obj.gameCode = message.gameCode);
-    message.mcb !== undefined && (obj.mcb = Math.round(message.mcb));
-    message.chipFee !== undefined && (obj.chipFee = Math.round(message.chipFee));
-    message.matchId !== undefined && (obj.matchId = message.matchId);
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.gameCode !== "") {
+      obj.gameCode = message.gameCode;
+    }
+    if (message.mcb !== 0) {
+      obj.mcb = Math.round(message.mcb);
+    }
+    if (message.chipFee !== 0) {
+      obj.chipFee = Math.round(message.chipFee);
+    }
+    if (message.matchId !== "") {
+      obj.matchId = message.matchId;
+    }
     return obj;
   },
 
@@ -1393,13 +1495,12 @@ export const OpReport = {
 
   toJSON(message: OpReport): unknown {
     const obj: any = {};
-    if (message.playerData) {
-      obj.playerData = message.playerData.map((e) => e ? PlayerData.toJSON(e) : undefined);
-    } else {
-      obj.playerData = [];
+    if (message.playerData?.length) {
+      obj.playerData = message.playerData.map((e) => PlayerData.toJSON(e));
     }
-    message.matchData !== undefined &&
-      (obj.matchData = message.matchData ? MatchData.toJSON(message.matchData) : undefined);
+    if (message.matchData !== undefined) {
+      obj.matchData = MatchData.toJSON(message.matchData);
+    }
     return obj;
   },
 
@@ -1526,17 +1627,27 @@ export const GoldStatistic = {
 
   toJSON(message: GoldStatistic): unknown {
     const obj: any = {};
-    message.timeUpdateUnix !== undefined && (obj.timeUpdateUnix = Math.round(message.timeUpdateUnix));
-    message.pay !== undefined && (obj.pay = Math.round(message.pay));
-    message.promotion !== undefined && (obj.promotion = Math.round(message.promotion));
-    if (message.matchData) {
-      obj.matchData = message.matchData.map((e) => e ? MatchData.toJSON(e) : undefined);
-    } else {
-      obj.matchData = [];
+    if (message.timeUpdateUnix !== 0) {
+      obj.timeUpdateUnix = Math.round(message.timeUpdateUnix);
     }
-    message.agCashout !== undefined && (obj.agCashout = Math.round(message.agCashout));
-    message.agBank !== undefined && (obj.agBank = Math.round(message.agBank));
-    message.chips !== undefined && (obj.chips = Math.round(message.chips));
+    if (message.pay !== 0) {
+      obj.pay = Math.round(message.pay);
+    }
+    if (message.promotion !== 0) {
+      obj.promotion = Math.round(message.promotion);
+    }
+    if (message.matchData?.length) {
+      obj.matchData = message.matchData.map((e) => MatchData.toJSON(e));
+    }
+    if (message.agCashout !== 0) {
+      obj.agCashout = Math.round(message.agCashout);
+    }
+    if (message.agBank !== 0) {
+      obj.agBank = Math.round(message.agBank);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
     return obj;
   },
 
@@ -1633,10 +1744,18 @@ export const GoldStatisticRequest = {
 
   toJSON(message: GoldStatisticRequest): unknown {
     const obj: any = {};
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
     return obj;
   },
 
@@ -1732,14 +1851,18 @@ export const GoldStatisticResponse = {
 
   toJSON(message: GoldStatisticResponse): unknown {
     const obj: any = {};
-    if (message.goldStatistics) {
-      obj.goldStatistics = message.goldStatistics.map((e) => e ? GoldStatistic.toJSON(e) : undefined);
-    } else {
-      obj.goldStatistics = [];
+    if (message.goldStatistics?.length) {
+      obj.goldStatistics = message.goldStatistics.map((e) => GoldStatistic.toJSON(e));
     }
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.total !== undefined && (obj.total = Math.round(message.total));
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
     return obj;
   },
 
@@ -1976,34 +2099,50 @@ export const UserStatistic = {
 
   toJSON(message: UserStatistic): unknown {
     const obj: any = {};
-    message.totalChipDeposit !== undefined && (obj.totalChipDeposit = Math.round(message.totalChipDeposit));
-    message.totalChipWithDraw !== undefined && (obj.totalChipWithDraw = Math.round(message.totalChipWithDraw));
-    message.totalChipWin !== undefined && (obj.totalChipWin = Math.round(message.totalChipWin));
-    message.totalChipLose !== undefined && (obj.totalChipLose = Math.round(message.totalChipLose));
-    message.totalChipPromotion !== undefined && (obj.totalChipPromotion = Math.round(message.totalChipPromotion));
-    message.totalChipSend !== undefined && (obj.totalChipSend = Math.round(message.totalChipSend));
-    message.totalChipRecv !== undefined && (obj.totalChipRecv = Math.round(message.totalChipRecv));
-    message.coRatio !== undefined && (obj.coRatio = Math.round(message.coRatio));
-    message.totalChipDeposit3d !== undefined && (obj.totalChipDeposit3d = Math.round(message.totalChipDeposit3d));
-    message.totalChipWithDraw3d !== undefined && (obj.totalChipWithDraw3d = Math.round(message.totalChipWithDraw3d));
-    message.luck !== undefined && (obj.luck = Math.round(message.luck));
-    message.userCreateTimeUnix !== undefined && (obj.userCreateTimeUnix = Math.round(message.userCreateTimeUnix));
-    if (message.userStatGameHistories) {
-      obj.userStatGameHistories = message.userStatGameHistories.map((e) =>
-        e ? UserStatGameHistory.toJSON(e) : undefined
-      );
-    } else {
-      obj.userStatGameHistories = [];
+    if (message.totalChipDeposit !== 0) {
+      obj.totalChipDeposit = Math.round(message.totalChipDeposit);
     }
-    if (message.recvChipStats) {
-      obj.recvChipStats = message.recvChipStats.map((e) => e ? UserTransferGoldStat.toJSON(e) : undefined);
-    } else {
-      obj.recvChipStats = [];
+    if (message.totalChipWithDraw !== 0) {
+      obj.totalChipWithDraw = Math.round(message.totalChipWithDraw);
     }
-    if (message.sendChipStats) {
-      obj.sendChipStats = message.sendChipStats.map((e) => e ? UserTransferGoldStat.toJSON(e) : undefined);
-    } else {
-      obj.sendChipStats = [];
+    if (message.totalChipWin !== 0) {
+      obj.totalChipWin = Math.round(message.totalChipWin);
+    }
+    if (message.totalChipLose !== 0) {
+      obj.totalChipLose = Math.round(message.totalChipLose);
+    }
+    if (message.totalChipPromotion !== 0) {
+      obj.totalChipPromotion = Math.round(message.totalChipPromotion);
+    }
+    if (message.totalChipSend !== 0) {
+      obj.totalChipSend = Math.round(message.totalChipSend);
+    }
+    if (message.totalChipRecv !== 0) {
+      obj.totalChipRecv = Math.round(message.totalChipRecv);
+    }
+    if (message.coRatio !== 0) {
+      obj.coRatio = Math.round(message.coRatio);
+    }
+    if (message.totalChipDeposit3d !== 0) {
+      obj.totalChipDeposit3d = Math.round(message.totalChipDeposit3d);
+    }
+    if (message.totalChipWithDraw3d !== 0) {
+      obj.totalChipWithDraw3d = Math.round(message.totalChipWithDraw3d);
+    }
+    if (message.luck !== 0) {
+      obj.luck = Math.round(message.luck);
+    }
+    if (message.userCreateTimeUnix !== 0) {
+      obj.userCreateTimeUnix = Math.round(message.userCreateTimeUnix);
+    }
+    if (message.userStatGameHistories?.length) {
+      obj.userStatGameHistories = message.userStatGameHistories.map((e) => UserStatGameHistory.toJSON(e));
+    }
+    if (message.recvChipStats?.length) {
+      obj.recvChipStats = message.recvChipStats.map((e) => UserTransferGoldStat.toJSON(e));
+    }
+    if (message.sendChipStats?.length) {
+      obj.sendChipStats = message.sendChipStats.map((e) => UserTransferGoldStat.toJSON(e));
     }
     return obj;
   },
@@ -2098,9 +2237,15 @@ export const UserStatisticRequest = {
 
   toJSON(message: UserStatisticRequest): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
     return obj;
   },
 
@@ -2193,10 +2338,18 @@ export const UserStatGameHistory = {
 
   toJSON(message: UserStatGameHistory): unknown {
     const obj: any = {};
-    message.gameId !== undefined && (obj.gameId = Math.round(message.gameId));
-    message.gameName !== undefined && (obj.gameName = message.gameName);
-    message.totalChipWin !== undefined && (obj.totalChipWin = Math.round(message.totalChipWin));
-    message.totalChipLost !== undefined && (obj.totalChipLost = Math.round(message.totalChipLost));
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.gameName !== "") {
+      obj.gameName = message.gameName;
+    }
+    if (message.totalChipWin !== 0) {
+      obj.totalChipWin = Math.round(message.totalChipWin);
+    }
+    if (message.totalChipLost !== 0) {
+      obj.totalChipLost = Math.round(message.totalChipLost);
+    }
     return obj;
   },
 
@@ -2301,11 +2454,21 @@ export const UserTransferGoldStat = {
 
   toJSON(message: UserTransferGoldStat): unknown {
     const obj: any = {};
-    message.userSendId !== undefined && (obj.userSendId = message.userSendId);
-    message.userSendName !== undefined && (obj.userSendName = message.userSendName);
-    message.userRecvId !== undefined && (obj.userRecvId = message.userRecvId);
-    message.userRecvName !== undefined && (obj.userRecvName = message.userRecvName);
-    message.chip !== undefined && (obj.chip = Math.round(message.chip));
+    if (message.userSendId !== "") {
+      obj.userSendId = message.userSendId;
+    }
+    if (message.userSendName !== "") {
+      obj.userSendName = message.userSendName;
+    }
+    if (message.userRecvId !== "") {
+      obj.userRecvId = message.userRecvId;
+    }
+    if (message.userRecvName !== "") {
+      obj.userRecvName = message.userRecvName;
+    }
+    if (message.chip !== 0) {
+      obj.chip = Math.round(message.chip);
+    }
     return obj;
   },
 
@@ -2389,9 +2552,15 @@ export const UserInfo = {
 
   toJSON(message: UserInfo): unknown {
     const obj: any = {};
-    message.profile !== undefined && (obj.profile = message.profile ? Profile.toJSON(message.profile) : undefined);
-    message.totalIn !== undefined && (obj.totalIn = Math.round(message.totalIn));
-    message.totalOut !== undefined && (obj.totalOut = Math.round(message.totalOut));
+    if (message.profile !== undefined) {
+      obj.profile = Profile.toJSON(message.profile);
+    }
+    if (message.totalIn !== 0) {
+      obj.totalIn = Math.round(message.totalIn);
+    }
+    if (message.totalOut !== 0) {
+      obj.totalOut = Math.round(message.totalOut);
+    }
     return obj;
   },
 
@@ -2519,13 +2688,27 @@ export const CashOut = {
 
   toJSON(message: CashOut): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.ci !== undefined && (obj.ci = Math.round(message.ci));
-    message.cio !== undefined && (obj.cio = Math.round(message.cio));
-    message.co !== undefined && (obj.co = Math.round(message.co));
-    message.coo !== undefined && (obj.coo = Math.round(message.coo));
-    message.luckyPercent !== undefined && (obj.luckyPercent = Math.round(message.luckyPercent));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.ci !== 0) {
+      obj.ci = Math.round(message.ci);
+    }
+    if (message.cio !== 0) {
+      obj.cio = Math.round(message.cio);
+    }
+    if (message.co !== 0) {
+      obj.co = Math.round(message.co);
+    }
+    if (message.coo !== 0) {
+      obj.coo = Math.round(message.coo);
+    }
+    if (message.luckyPercent !== 0) {
+      obj.luckyPercent = Math.round(message.luckyPercent);
+    }
     return obj;
   },
 
@@ -2644,16 +2827,24 @@ export const TopCashOut = {
 
   toJSON(message: TopCashOut): unknown {
     const obj: any = {};
-    if (message.cashouts) {
-      obj.cashouts = message.cashouts.map((e) => e ? CashOut.toJSON(e) : undefined);
-    } else {
-      obj.cashouts = [];
+    if (message.cashouts?.length) {
+      obj.cashouts = message.cashouts.map((e) => CashOut.toJSON(e));
     }
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.total !== undefined && (obj.total = Math.round(message.total));
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
     return obj;
   },
 
@@ -2898,22 +3089,54 @@ export const Vip = {
 
   toJSON(message: Vip): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.cio !== undefined && (obj.cio = Math.round(message.cio));
-    message.totalChip !== undefined && (obj.totalChip = Math.round(message.totalChip));
-    message.lastLoginTimeUnix !== undefined && (obj.lastLoginTimeUnix = Math.round(message.lastLoginTimeUnix));
-    message.createdTimeUnix !== undefined && (obj.createdTimeUnix = Math.round(message.createdTimeUnix));
-    message.refGame !== undefined && (obj.refGame = message.refGame);
-    message.ci !== undefined && (obj.ci = Math.round(message.ci));
-    message.co !== undefined && (obj.co = Math.round(message.co));
-    message.ci2d !== undefined && (obj.ci2d = Math.round(message.ci2d));
-    message.co2d !== undefined && (obj.co2d = Math.round(message.co2d));
-    message.luckyPercent !== undefined && (obj.luckyPercent = Math.round(message.luckyPercent));
-    message.isBanned !== undefined && (obj.isBanned = message.isBanned);
-    message.isOnline !== undefined && (obj.isOnline = message.isOnline);
-    message.totalIn !== undefined && (obj.totalIn = Math.round(message.totalIn));
-    message.totalOut !== undefined && (obj.totalOut = Math.round(message.totalOut));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.cio !== 0) {
+      obj.cio = Math.round(message.cio);
+    }
+    if (message.totalChip !== 0) {
+      obj.totalChip = Math.round(message.totalChip);
+    }
+    if (message.lastLoginTimeUnix !== 0) {
+      obj.lastLoginTimeUnix = Math.round(message.lastLoginTimeUnix);
+    }
+    if (message.createdTimeUnix !== 0) {
+      obj.createdTimeUnix = Math.round(message.createdTimeUnix);
+    }
+    if (message.refGame !== "") {
+      obj.refGame = message.refGame;
+    }
+    if (message.ci !== 0) {
+      obj.ci = Math.round(message.ci);
+    }
+    if (message.co !== 0) {
+      obj.co = Math.round(message.co);
+    }
+    if (message.ci2d !== 0) {
+      obj.ci2d = Math.round(message.ci2d);
+    }
+    if (message.co2d !== 0) {
+      obj.co2d = Math.round(message.co2d);
+    }
+    if (message.luckyPercent !== 0) {
+      obj.luckyPercent = Math.round(message.luckyPercent);
+    }
+    if (message.isBanned === true) {
+      obj.isBanned = message.isBanned;
+    }
+    if (message.isOnline === true) {
+      obj.isOnline = message.isOnline;
+    }
+    if (message.totalIn !== 0) {
+      obj.totalIn = Math.round(message.totalIn);
+    }
+    if (message.totalOut !== 0) {
+      obj.totalOut = Math.round(message.totalOut);
+    }
     return obj;
   },
 
@@ -3052,17 +3275,27 @@ export const TopVip = {
 
   toJSON(message: TopVip): unknown {
     const obj: any = {};
-    if (message.vips) {
-      obj.vips = message.vips.map((e) => e ? Vip.toJSON(e) : undefined);
-    } else {
-      obj.vips = [];
+    if (message.vips?.length) {
+      obj.vips = message.vips.map((e) => Vip.toJSON(e));
     }
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.refGame !== undefined && (obj.refGame = message.refGame);
-    message.total !== undefined && (obj.total = Math.round(message.total));
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.refGame !== "") {
+      obj.refGame = message.refGame;
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
     return obj;
   },
 
@@ -3225,16 +3458,36 @@ export const Win = {
 
   toJSON(message: Win): unknown {
     const obj: any = {};
-    message.userId !== undefined && (obj.userId = message.userId);
-    message.userName !== undefined && (obj.userName = message.userName);
-    message.vip !== undefined && (obj.vip = Math.round(message.vip));
-    message.gold !== undefined && (obj.gold = Math.round(message.gold));
-    message.ag !== undefined && (obj.ag = Math.round(message.ag));
-    message.agWin !== undefined && (obj.agWin = Math.round(message.agWin));
-    message.co !== undefined && (obj.co = Math.round(message.co));
-    message.ci !== undefined && (obj.ci = Math.round(message.ci));
-    message.coRate !== undefined && (obj.coRate = Math.round(message.coRate));
-    message.luckyPercent !== undefined && (obj.luckyPercent = Math.round(message.luckyPercent));
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    if (message.gold !== 0) {
+      obj.gold = Math.round(message.gold);
+    }
+    if (message.ag !== 0) {
+      obj.ag = Math.round(message.ag);
+    }
+    if (message.agWin !== 0) {
+      obj.agWin = Math.round(message.agWin);
+    }
+    if (message.co !== 0) {
+      obj.co = Math.round(message.co);
+    }
+    if (message.ci !== 0) {
+      obj.ci = Math.round(message.ci);
+    }
+    if (message.coRate !== 0) {
+      obj.coRate = Math.round(message.coRate);
+    }
+    if (message.luckyPercent !== 0) {
+      obj.luckyPercent = Math.round(message.luckyPercent);
+    }
     return obj;
   },
 
@@ -3367,17 +3620,27 @@ export const TopWin = {
 
   toJSON(message: TopWin): unknown {
     const obj: any = {};
-    if (message.wins) {
-      obj.wins = message.wins.map((e) => e ? Win.toJSON(e) : undefined);
-    } else {
-      obj.wins = [];
+    if (message.wins?.length) {
+      obj.wins = message.wins.map((e) => Win.toJSON(e));
     }
-    message.fromUnix !== undefined && (obj.fromUnix = Math.round(message.fromUnix));
-    message.toUnix !== undefined && (obj.toUnix = Math.round(message.toUnix));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.refGame !== undefined && (obj.refGame = message.refGame);
-    message.total !== undefined && (obj.total = Math.round(message.total));
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.refGame !== "") {
+      obj.refGame = message.refGame;
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
     return obj;
   },
 
@@ -3398,10 +3661,10 @@ export const TopWin = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -3435,8 +3698,6 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
