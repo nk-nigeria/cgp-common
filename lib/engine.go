@@ -7,4 +7,6 @@ type Engine interface {
 	Finish(matchState interface{}) (interface{}, error)
 	// for sync with loop game of nakame. return if nothing todo
 	Loop(matchState interface{}) (interface{}, error)
+	// return info match
+	Info(matchState interface{}) (interface{}, error)
 }
