@@ -48,7 +48,6 @@ message SlotDesk {
   // vd như eye ở sixiang, letter ở tarzan
   repeated CollectSymbol collection_symbols = 16;
   // ngọc rừng xanh ở tarzan game
-  int32 perl_green_forest = 18;
   int64 ts_unix = 21;
   int64 ratio_fruit_basket = 22;
   // số lượt spin còn lại, -1 = unlimited

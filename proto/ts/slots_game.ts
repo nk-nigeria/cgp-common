@@ -969,7 +969,6 @@ export interface SlotDesk {
    */
   collectionSymbols: CollectSymbol[];
   /** ngọc rừng xanh ở tarzan game */
-  perlGreenForest: number;
   tsUnix: number;
   ratioFruitBasket: number;
   /** số lượt spin còn lại, -1 = unlimited */
@@ -1100,7 +1099,6 @@ function createBaseSlotDesk(): SlotDesk {
     bigWin: 0,
     gameReward: undefined,
     collectionSymbols: [],
-    perlGreenForest: 0,
     tsUnix: 0,
     ratioFruitBasket: 0,
     numSpinLeft: 0,
@@ -1153,9 +1151,6 @@ export const SlotDesk = {
     }
     for (const v of message.collectionSymbols) {
       CollectSymbol.encode(v!, writer.uint32(130).fork()).ldelim();
-    }
-    if (message.perlGreenForest !== 0) {
-      writer.uint32(144).int32(message.perlGreenForest);
     }
     if (message.tsUnix !== 0) {
       writer.uint32(168).int64(message.tsUnix);
@@ -1291,13 +1286,6 @@ export const SlotDesk = {
 
           message.collectionSymbols.push(CollectSymbol.decode(reader, reader.uint32()));
           continue;
-        case 18:
-          if (tag !== 144) {
-            break;
-          }
-
-          message.perlGreenForest = reader.int32();
-          continue;
         case 21:
           if (tag !== 168) {
             break;
@@ -1417,7 +1405,6 @@ export const SlotDesk = {
       collectionSymbols: Array.isArray(object?.collectionSymbols)
         ? object.collectionSymbols.map((e: any) => CollectSymbol.fromJSON(e))
         : [],
-      perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
       tsUnix: isSet(object.tsUnix) ? Number(object.tsUnix) : 0,
       ratioFruitBasket: isSet(object.ratioFruitBasket) ? Number(object.ratioFruitBasket) : 0,
       numSpinLeft: isSet(object.numSpinLeft) ? Number(object.numSpinLeft) : 0,
@@ -1472,9 +1459,6 @@ export const SlotDesk = {
     }
     if (message.collectionSymbols?.length) {
       obj.collectionSymbols = message.collectionSymbols.map((e) => CollectSymbol.toJSON(e));
-    }
-    if (message.perlGreenForest !== 0) {
-      obj.perlGreenForest = Math.round(message.perlGreenForest);
     }
     if (message.tsUnix !== 0) {
       obj.tsUnix = Math.round(message.tsUnix);
@@ -1531,7 +1515,6 @@ export const SlotDesk = {
       ? GameReward.fromPartial(object.gameReward)
       : undefined;
     message.collectionSymbols = object.collectionSymbols?.map((e) => CollectSymbol.fromPartial(e)) || [];
-    message.perlGreenForest = object.perlGreenForest ?? 0;
     message.tsUnix = object.tsUnix ?? 0;
     message.ratioFruitBasket = object.ratioFruitBasket ?? 0;
     message.numSpinLeft = object.numSpinLeft ?? 0;
