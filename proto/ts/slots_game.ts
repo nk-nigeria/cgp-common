@@ -91,6 +91,7 @@ export enum SiXiangSymbol {
   SI_XIANG_SYMBOL_LETTER_G = 4115,
   SI_XIANG_SYMBOL_LETTER_L = 4116,
   SI_XIANG_SYMBOL_LETTER_E = 4117,
+  SI_XIANG_SYMBOL_DIAMOND = 4118,
   SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2 = 4128,
   SI_XIANG_SYMBOL_TARZAN_MORE_TURNX3 = 4129,
   SI_XIANG_SYMBOL_TARZAN_RANDOM_1 = 4130,
@@ -350,6 +351,9 @@ export function siXiangSymbolFromJSON(object: any): SiXiangSymbol {
     case 4117:
     case "SI_XIANG_SYMBOL_LETTER_E":
       return SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_E;
+    case 4118:
+    case "SI_XIANG_SYMBOL_DIAMOND":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_DIAMOND;
     case 4128:
     case "SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2":
       return SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2;
@@ -601,6 +605,8 @@ export function siXiangSymbolToJSON(object: SiXiangSymbol): string {
       return "SI_XIANG_SYMBOL_LETTER_L";
     case SiXiangSymbol.SI_XIANG_SYMBOL_LETTER_E:
       return "SI_XIANG_SYMBOL_LETTER_E";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_DIAMOND:
+      return "SI_XIANG_SYMBOL_DIAMOND";
     case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2:
       return "SI_XIANG_SYMBOL_TARZAN_MORE_TURNX2";
     case SiXiangSymbol.SI_XIANG_SYMBOL_TARZAN_MORE_TURNX3:
