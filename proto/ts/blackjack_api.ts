@@ -382,9 +382,8 @@ export const BlackjackAction = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackAction>, I>>(base?: I): BlackjackAction {
-    return BlackjackAction.fromPartial(base ?? {});
+    return BlackjackAction.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackAction>, I>>(object: I): BlackjackAction {
     const message = createBaseBlackjackAction();
     message.userId = object.userId ?? "";
@@ -471,9 +470,8 @@ export const BlackjackBet = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackBet>, I>>(base?: I): BlackjackBet {
-    return BlackjackBet.fromPartial(base ?? {});
+    return BlackjackBet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackBet>, I>>(object: I): BlackjackBet {
     const message = createBaseBlackjackBet();
     message.userId = object.userId ?? "";
@@ -575,9 +573,8 @@ export const BlackjackBetResult = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackBetResult>, I>>(base?: I): BlackjackBetResult {
-    return BlackjackBetResult.fromPartial(base ?? {});
+    return BlackjackBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackBetResult>, I>>(object: I): BlackjackBetResult {
     const message = createBaseBlackjackBetResult();
     message.betAmount = object.betAmount ?? 0;
@@ -680,9 +677,8 @@ export const BlackjackPlayerBet = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackPlayerBet>, I>>(base?: I): BlackjackPlayerBet {
-    return BlackjackPlayerBet.fromPartial(base ?? {});
+    return BlackjackPlayerBet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackPlayerBet>, I>>(object: I): BlackjackPlayerBet {
     const message = createBaseBlackjackPlayerBet();
     message.userId = object.userId ?? "";
@@ -785,9 +781,8 @@ export const BlackjackPLayerBetResult = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackPLayerBetResult>, I>>(base?: I): BlackjackPLayerBetResult {
-    return BlackjackPLayerBetResult.fromPartial(base ?? {});
+    return BlackjackPLayerBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackPLayerBetResult>, I>>(object: I): BlackjackPLayerBetResult {
     const message = createBaseBlackjackPLayerBetResult();
     message.userId = object.userId ?? "";
@@ -950,9 +945,8 @@ export const BlackjackUpdateDeal = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackUpdateDeal>, I>>(base?: I): BlackjackUpdateDeal {
-    return BlackjackUpdateDeal.fromPartial(base ?? {});
+    return BlackjackUpdateDeal.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackUpdateDeal>, I>>(object: I): BlackjackUpdateDeal {
     const message = createBaseBlackjackUpdateDeal();
     message.isBanker = object.isBanker ?? false;
@@ -1044,9 +1038,8 @@ export const BlackjackLegalActions = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackLegalActions>, I>>(base?: I): BlackjackLegalActions {
-    return BlackjackLegalActions.fromPartial(base ?? {});
+    return BlackjackLegalActions.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackLegalActions>, I>>(object: I): BlackjackLegalActions {
     const message = createBaseBlackjackLegalActions();
     message.userId = object.userId ?? "";
@@ -1133,9 +1126,8 @@ export const BlackjackHand = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackHand>, I>>(base?: I): BlackjackHand {
-    return BlackjackHand.fromPartial(base ?? {});
+    return BlackjackHand.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackHand>, I>>(object: I): BlackjackHand {
     const message = createBaseBlackjackHand();
     message.cards = object.cards?.map((e) => Card.fromPartial(e)) || [];
@@ -1223,9 +1215,8 @@ export const BlackjackPlayerHand = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackPlayerHand>, I>>(base?: I): BlackjackPlayerHand {
-    return BlackjackPlayerHand.fromPartial(base ?? {});
+    return BlackjackPlayerHand.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackPlayerHand>, I>>(object: I): BlackjackPlayerHand {
     const message = createBaseBlackjackPlayerHand();
     message.userId = object.userId ?? "";
@@ -1317,9 +1308,8 @@ export const BlackjackPlayerTurn = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackPlayerTurn>, I>>(base?: I): BlackjackPlayerTurn {
-    return BlackjackPlayerTurn.fromPartial(base ?? {});
+    return BlackjackPlayerTurn.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackPlayerTurn>, I>>(object: I): BlackjackPlayerTurn {
     const message = createBaseBlackjackPlayerTurn();
     message.isPlayer = object.isPlayer ?? "";
@@ -1548,9 +1538,8 @@ export const BlackjackUpdateDesk = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackUpdateDesk>, I>>(base?: I): BlackjackUpdateDesk {
-    return BlackjackUpdateDesk.fromPartial(base ?? {});
+    return BlackjackUpdateDesk.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackUpdateDesk>, I>>(object: I): BlackjackUpdateDesk {
     const message = createBaseBlackjackUpdateDesk();
     message.isInsuranceTurnEnter = object.isInsuranceTurnEnter ?? false;
@@ -1627,9 +1616,8 @@ export const BlackjackUpdateFinish = {
   },
 
   create<I extends Exact<DeepPartial<BlackjackUpdateFinish>, I>>(base?: I): BlackjackUpdateFinish {
-    return BlackjackUpdateFinish.fromPartial(base ?? {});
+    return BlackjackUpdateFinish.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BlackjackUpdateFinish>, I>>(object: I): BlackjackUpdateFinish {
     const message = createBaseBlackjackUpdateFinish();
     message.betResults = object.betResults?.map((e) => BlackjackPLayerBetResult.fromPartial(e)) || [];

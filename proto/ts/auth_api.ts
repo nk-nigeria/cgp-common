@@ -147,9 +147,8 @@ export const ChangePasswordRequest = {
   },
 
   create<I extends Exact<DeepPartial<ChangePasswordRequest>, I>>(base?: I): ChangePasswordRequest {
-    return ChangePasswordRequest.fromPartial(base ?? {});
+    return ChangePasswordRequest.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ChangePasswordRequest>, I>>(object: I): ChangePasswordRequest {
     const message = createBaseChangePasswordRequest();
     message.oldPassword = object.oldPassword ?? "";
@@ -222,9 +221,8 @@ export const RegisterRequest = {
   },
 
   create<I extends Exact<DeepPartial<RegisterRequest>, I>>(base?: I): RegisterRequest {
-    return RegisterRequest.fromPartial(base ?? {});
+    return RegisterRequest.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<RegisterRequest>, I>>(object: I): RegisterRequest {
     const message = createBaseRegisterRequest();
     message.userName = object.userName ?? "";
@@ -692,9 +690,8 @@ export const Profile = {
   },
 
   create<I extends Exact<DeepPartial<Profile>, I>>(base?: I): Profile {
-    return Profile.fromPartial(base ?? {});
+    return Profile.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Profile>, I>>(object: I): Profile {
     const message = createBaseProfile();
     message.userId = object.userId ?? "";
@@ -795,9 +792,8 @@ export const PlayingMatch = {
   },
 
   create<I extends Exact<DeepPartial<PlayingMatch>, I>>(base?: I): PlayingMatch {
-    return PlayingMatch.fromPartial(base ?? {});
+    return PlayingMatch.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<PlayingMatch>, I>>(object: I): PlayingMatch {
     const message = createBasePlayingMatch();
     message.code = object.code ?? "";
@@ -854,9 +850,8 @@ export const ListProfile = {
   },
 
   create<I extends Exact<DeepPartial<ListProfile>, I>>(base?: I): ListProfile {
-    return ListProfile.fromPartial(base ?? {});
+    return ListProfile.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ListProfile>, I>>(object: I): ListProfile {
     const message = createBaseListProfile();
     message.profiles = object.profiles?.map((e) => Profile.fromPartial(e)) || [];
@@ -1021,9 +1016,8 @@ export const SimpleProfile = {
   },
 
   create<I extends Exact<DeepPartial<SimpleProfile>, I>>(base?: I): SimpleProfile {
-    return SimpleProfile.fromPartial(base ?? {});
+    return SimpleProfile.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SimpleProfile>, I>>(object: I): SimpleProfile {
     const message = createBaseSimpleProfile();
     message.userId = object.userId ?? "";
@@ -1090,9 +1084,8 @@ export const ListSimpleProfile = {
   },
 
   create<I extends Exact<DeepPartial<ListSimpleProfile>, I>>(base?: I): ListSimpleProfile {
-    return ListSimpleProfile.fromPartial(base ?? {});
+    return ListSimpleProfile.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<ListSimpleProfile>, I>>(object: I): ListSimpleProfile {
     const message = createBaseListSimpleProfile();
     message.profiles = object.profiles?.map((e) => SimpleProfile.fromPartial(e)) || [];
@@ -1148,9 +1141,8 @@ export const QuickChatUpdateRequest = {
   },
 
   create<I extends Exact<DeepPartial<QuickChatUpdateRequest>, I>>(base?: I): QuickChatUpdateRequest {
-    return QuickChatUpdateRequest.fromPartial(base ?? {});
+    return QuickChatUpdateRequest.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<QuickChatUpdateRequest>, I>>(object: I): QuickChatUpdateRequest {
     const message = createBaseQuickChatUpdateRequest();
     message.texts = object.texts?.map((e) => e) || [];
@@ -1206,9 +1198,8 @@ export const QuickChatResponse = {
   },
 
   create<I extends Exact<DeepPartial<QuickChatResponse>, I>>(base?: I): QuickChatResponse {
-    return QuickChatResponse.fromPartial(base ?? {});
+    return QuickChatResponse.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<QuickChatResponse>, I>>(object: I): QuickChatResponse {
     const message = createBaseQuickChatResponse();
     message.texts = object.texts?.map((e) => e) || [];
@@ -1294,9 +1285,8 @@ export const LangCode = {
   },
 
   create<I extends Exact<DeepPartial<LangCode>, I>>(base?: I): LangCode {
-    return LangCode.fromPartial(base ?? {});
+    return LangCode.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<LangCode>, I>>(object: I): LangCode {
     const message = createBaseLangCode();
     message.isoCode = object.isoCode ?? "";
