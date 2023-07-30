@@ -245,9 +245,8 @@ export const Bank = {
   },
 
   create<I extends Exact<DeepPartial<Bank>, I>>(base?: I): Bank {
-    return Bank.fromPartial(base ?? {});
+    return Bank.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Bank>, I>>(object: I): Bank {
     const message = createBaseBank();
     message.senderId = object.senderId ?? "";

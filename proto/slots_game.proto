@@ -320,6 +320,7 @@ message GameReward {
   // tarzan PerlGreenForest
   int32 perl_green_forest = 15;
   int64 perl_green_forest_chips = 16;
+  int64 perl_green_forest_chips_collect = 17;
 }
 
 message SaveGame {

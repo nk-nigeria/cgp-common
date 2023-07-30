@@ -1077,6 +1077,7 @@ export interface GameReward {
   /** tarzan PerlGreenForest */
   perlGreenForest: number;
   perlGreenForestChips: number;
+  perlGreenForestChipsCollect: number;
 }
 
 export interface SaveGame {
@@ -1491,9 +1492,8 @@ export const SlotDesk = {
   },
 
   create<I extends Exact<DeepPartial<SlotDesk>, I>>(base?: I): SlotDesk {
-    return SlotDesk.fromPartial(base ?? {});
+    return SlotDesk.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SlotDesk>, I>>(object: I): SlotDesk {
     const message = createBaseSlotDesk();
     message.matrix = (object.matrix !== undefined && object.matrix !== null)
@@ -1636,9 +1636,8 @@ export const SlotMatrix = {
   },
 
   create<I extends Exact<DeepPartial<SlotMatrix>, I>>(base?: I): SlotMatrix {
-    return SlotMatrix.fromPartial(base ?? {});
+    return SlotMatrix.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SlotMatrix>, I>>(object: I): SlotMatrix {
     const message = createBaseSlotMatrix();
     message.lists = object.lists?.map((e) => e) || [];
@@ -1797,9 +1796,8 @@ export const SpinSymbol = {
   },
 
   create<I extends Exact<DeepPartial<SpinSymbol>, I>>(base?: I): SpinSymbol {
-    return SpinSymbol.fromPartial(base ?? {});
+    return SpinSymbol.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SpinSymbol>, I>>(object: I): SpinSymbol {
     const message = createBaseSpinSymbol();
     message.symbol = object.symbol ?? 0;
@@ -1892,9 +1890,8 @@ export const CollectSymbol = {
   },
 
   create<I extends Exact<DeepPartial<CollectSymbol>, I>>(base?: I): CollectSymbol {
-    return CollectSymbol.fromPartial(base ?? {});
+    return CollectSymbol.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CollectSymbol>, I>>(object: I): CollectSymbol {
     const message = createBaseCollectSymbol();
     message.symbol = object.symbol ?? 0;
@@ -1996,9 +1993,8 @@ export const JackpotReward = {
   },
 
   create<I extends Exact<DeepPartial<JackpotReward>, I>>(base?: I): JackpotReward {
-    return JackpotReward.fromPartial(base ?? {});
+    return JackpotReward.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<JackpotReward>, I>>(object: I): JackpotReward {
     const message = createBaseJackpotReward();
     message.winJackpot = object.winJackpot ?? 0;
@@ -2101,9 +2097,8 @@ export const JackpotHistory = {
   },
 
   create<I extends Exact<DeepPartial<JackpotHistory>, I>>(base?: I): JackpotHistory {
-    return JackpotHistory.fromPartial(base ?? {});
+    return JackpotHistory.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<JackpotHistory>, I>>(object: I): JackpotHistory {
     const message = createBaseJackpotHistory();
     message.minor = (object.minor !== undefined && object.minor !== null)
@@ -2254,9 +2249,8 @@ export const Payline = {
   },
 
   create<I extends Exact<DeepPartial<Payline>, I>>(base?: I): Payline {
-    return Payline.fromPartial(base ?? {});
+    return Payline.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Payline>, I>>(object: I): Payline {
     const message = createBasePayline();
     message.id = object.id ?? 0;
@@ -2286,6 +2280,7 @@ function createBaseGameReward(): GameReward {
     ratioBonus: 0,
     perlGreenForest: 0,
     perlGreenForestChips: 0,
+    perlGreenForestChipsCollect: 0,
   };
 }
 
@@ -2335,6 +2330,9 @@ export const GameReward = {
     }
     if (message.perlGreenForestChips !== 0) {
       writer.uint32(128).int64(message.perlGreenForestChips);
+    }
+    if (message.perlGreenForestChipsCollect !== 0) {
+      writer.uint32(136).int64(message.perlGreenForestChipsCollect);
     }
     return writer;
   },
@@ -2451,6 +2449,13 @@ export const GameReward = {
 
           message.perlGreenForestChips = longToNumber(reader.int64() as Long);
           continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.perlGreenForestChipsCollect = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2477,6 +2482,9 @@ export const GameReward = {
       ratioBonus: isSet(object.ratioBonus) ? Number(object.ratioBonus) : 0,
       perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
       perlGreenForestChips: isSet(object.perlGreenForestChips) ? Number(object.perlGreenForestChips) : 0,
+      perlGreenForestChipsCollect: isSet(object.perlGreenForestChipsCollect)
+        ? Number(object.perlGreenForestChipsCollect)
+        : 0,
     };
   },
 
@@ -2527,13 +2535,15 @@ export const GameReward = {
     if (message.perlGreenForestChips !== 0) {
       obj.perlGreenForestChips = Math.round(message.perlGreenForestChips);
     }
+    if (message.perlGreenForestChipsCollect !== 0) {
+      obj.perlGreenForestChipsCollect = Math.round(message.perlGreenForestChipsCollect);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<GameReward>, I>>(base?: I): GameReward {
-    return GameReward.fromPartial(base ?? {});
+    return GameReward.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GameReward>, I>>(object: I): GameReward {
     const message = createBaseGameReward();
     message.updateWallet = object.updateWallet ?? false;
@@ -2551,6 +2561,7 @@ export const GameReward = {
     message.ratioBonus = object.ratioBonus ?? 0;
     message.perlGreenForest = object.perlGreenForest ?? 0;
     message.perlGreenForestChips = object.perlGreenForestChips ?? 0;
+    message.perlGreenForestChipsCollect = object.perlGreenForestChipsCollect ?? 0;
     return message;
   },
 };
@@ -2619,9 +2630,8 @@ export const SaveGame = {
   },
 
   create<I extends Exact<DeepPartial<SaveGame>, I>>(base?: I): SaveGame {
-    return SaveGame.fromPartial(base ?? {});
+    return SaveGame.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SaveGame>, I>>(object: I): SaveGame {
     const message = createBaseSaveGame();
     message.lastUpdateUnix = object.lastUpdateUnix ?? 0;
