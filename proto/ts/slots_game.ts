@@ -865,6 +865,7 @@ export enum WinJackpot {
   WIN_JACKPOT_MAJOR = 20,
   WIN_JACKPOT_MEGA = 30,
   WIN_JACKPOT_GRAND = 150,
+  WIN_JACKPOT_MINI = 1,
   UNRECOGNIZED = -1,
 }
 
@@ -885,6 +886,9 @@ export function winJackpotFromJSON(object: any): WinJackpot {
     case 150:
     case "WIN_JACKPOT_GRAND":
       return WinJackpot.WIN_JACKPOT_GRAND;
+    case 1:
+    case "WIN_JACKPOT_MINI":
+      return WinJackpot.WIN_JACKPOT_MINI;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -904,6 +908,8 @@ export function winJackpotToJSON(object: WinJackpot): string {
       return "WIN_JACKPOT_MEGA";
     case WinJackpot.WIN_JACKPOT_GRAND:
       return "WIN_JACKPOT_GRAND";
+    case WinJackpot.WIN_JACKPOT_MINI:
+      return "WIN_JACKPOT_MINI";
     case WinJackpot.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -1028,6 +1034,8 @@ export interface JackpotReward {
   ratio: number;
   count: number;
   chips: number;
+  /** tích lũy lịch sử chơi */
+  chipsAccum: number;
 }
 
 export interface JackpotHistory {
@@ -1035,6 +1043,7 @@ export interface JackpotHistory {
   major: JackpotReward | undefined;
   mega: JackpotReward | undefined;
   grand: JackpotReward | undefined;
+  mini: JackpotReward | undefined;
 }
 
 export interface Payline {
@@ -1492,8 +1501,9 @@ export const SlotDesk = {
   },
 
   create<I extends Exact<DeepPartial<SlotDesk>, I>>(base?: I): SlotDesk {
-    return SlotDesk.fromPartial(base ?? ({} as any));
+    return SlotDesk.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<SlotDesk>, I>>(object: I): SlotDesk {
     const message = createBaseSlotDesk();
     message.matrix = (object.matrix !== undefined && object.matrix !== null)
@@ -1636,8 +1646,9 @@ export const SlotMatrix = {
   },
 
   create<I extends Exact<DeepPartial<SlotMatrix>, I>>(base?: I): SlotMatrix {
-    return SlotMatrix.fromPartial(base ?? ({} as any));
+    return SlotMatrix.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<SlotMatrix>, I>>(object: I): SlotMatrix {
     const message = createBaseSlotMatrix();
     message.lists = object.lists?.map((e) => e) || [];
@@ -1796,8 +1807,9 @@ export const SpinSymbol = {
   },
 
   create<I extends Exact<DeepPartial<SpinSymbol>, I>>(base?: I): SpinSymbol {
-    return SpinSymbol.fromPartial(base ?? ({} as any));
+    return SpinSymbol.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<SpinSymbol>, I>>(object: I): SpinSymbol {
     const message = createBaseSpinSymbol();
     message.symbol = object.symbol ?? 0;
@@ -1890,8 +1902,9 @@ export const CollectSymbol = {
   },
 
   create<I extends Exact<DeepPartial<CollectSymbol>, I>>(base?: I): CollectSymbol {
-    return CollectSymbol.fromPartial(base ?? ({} as any));
+    return CollectSymbol.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<CollectSymbol>, I>>(object: I): CollectSymbol {
     const message = createBaseCollectSymbol();
     message.symbol = object.symbol ?? 0;
@@ -1902,7 +1915,7 @@ export const CollectSymbol = {
 };
 
 function createBaseJackpotReward(): JackpotReward {
-  return { winJackpot: 0, ratio: 0, count: 0, chips: 0 };
+  return { winJackpot: 0, ratio: 0, count: 0, chips: 0, chipsAccum: 0 };
 }
 
 export const JackpotReward = {
@@ -1918,6 +1931,9 @@ export const JackpotReward = {
     }
     if (message.chips !== 0) {
       writer.uint32(32).int64(message.chips);
+    }
+    if (message.chipsAccum !== 0) {
+      writer.uint32(40).int64(message.chipsAccum);
     }
     return writer;
   },
@@ -1957,6 +1973,13 @@ export const JackpotReward = {
 
           message.chips = longToNumber(reader.int64() as Long);
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.chipsAccum = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1972,6 +1995,7 @@ export const JackpotReward = {
       ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
       count: isSet(object.count) ? Number(object.count) : 0,
       chips: isSet(object.chips) ? Number(object.chips) : 0,
+      chipsAccum: isSet(object.chipsAccum) ? Number(object.chipsAccum) : 0,
     };
   },
 
@@ -1989,24 +2013,29 @@ export const JackpotReward = {
     if (message.chips !== 0) {
       obj.chips = Math.round(message.chips);
     }
+    if (message.chipsAccum !== 0) {
+      obj.chipsAccum = Math.round(message.chipsAccum);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<JackpotReward>, I>>(base?: I): JackpotReward {
-    return JackpotReward.fromPartial(base ?? ({} as any));
+    return JackpotReward.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<JackpotReward>, I>>(object: I): JackpotReward {
     const message = createBaseJackpotReward();
     message.winJackpot = object.winJackpot ?? 0;
     message.ratio = object.ratio ?? 0;
     message.count = object.count ?? 0;
     message.chips = object.chips ?? 0;
+    message.chipsAccum = object.chipsAccum ?? 0;
     return message;
   },
 };
 
 function createBaseJackpotHistory(): JackpotHistory {
-  return { minor: undefined, major: undefined, mega: undefined, grand: undefined };
+  return { minor: undefined, major: undefined, mega: undefined, grand: undefined, mini: undefined };
 }
 
 export const JackpotHistory = {
@@ -2022,6 +2051,9 @@ export const JackpotHistory = {
     }
     if (message.grand !== undefined) {
       JackpotReward.encode(message.grand, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.mini !== undefined) {
+      JackpotReward.encode(message.mini, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -2061,6 +2093,13 @@ export const JackpotHistory = {
 
           message.grand = JackpotReward.decode(reader, reader.uint32());
           continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.mini = JackpotReward.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2076,6 +2115,7 @@ export const JackpotHistory = {
       major: isSet(object.major) ? JackpotReward.fromJSON(object.major) : undefined,
       mega: isSet(object.mega) ? JackpotReward.fromJSON(object.mega) : undefined,
       grand: isSet(object.grand) ? JackpotReward.fromJSON(object.grand) : undefined,
+      mini: isSet(object.mini) ? JackpotReward.fromJSON(object.mini) : undefined,
     };
   },
 
@@ -2093,12 +2133,16 @@ export const JackpotHistory = {
     if (message.grand !== undefined) {
       obj.grand = JackpotReward.toJSON(message.grand);
     }
+    if (message.mini !== undefined) {
+      obj.mini = JackpotReward.toJSON(message.mini);
+    }
     return obj;
   },
 
   create<I extends Exact<DeepPartial<JackpotHistory>, I>>(base?: I): JackpotHistory {
-    return JackpotHistory.fromPartial(base ?? ({} as any));
+    return JackpotHistory.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<JackpotHistory>, I>>(object: I): JackpotHistory {
     const message = createBaseJackpotHistory();
     message.minor = (object.minor !== undefined && object.minor !== null)
@@ -2112,6 +2156,9 @@ export const JackpotHistory = {
       : undefined;
     message.grand = (object.grand !== undefined && object.grand !== null)
       ? JackpotReward.fromPartial(object.grand)
+      : undefined;
+    message.mini = (object.mini !== undefined && object.mini !== null)
+      ? JackpotReward.fromPartial(object.mini)
       : undefined;
     return message;
   },
@@ -2249,8 +2296,9 @@ export const Payline = {
   },
 
   create<I extends Exact<DeepPartial<Payline>, I>>(base?: I): Payline {
-    return Payline.fromPartial(base ?? ({} as any));
+    return Payline.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Payline>, I>>(object: I): Payline {
     const message = createBasePayline();
     message.id = object.id ?? 0;
@@ -2542,8 +2590,9 @@ export const GameReward = {
   },
 
   create<I extends Exact<DeepPartial<GameReward>, I>>(base?: I): GameReward {
-    return GameReward.fromPartial(base ?? ({} as any));
+    return GameReward.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GameReward>, I>>(object: I): GameReward {
     const message = createBaseGameReward();
     message.updateWallet = object.updateWallet ?? false;
@@ -2630,8 +2679,9 @@ export const SaveGame = {
   },
 
   create<I extends Exact<DeepPartial<SaveGame>, I>>(base?: I): SaveGame {
-    return SaveGame.fromPartial(base ?? ({} as any));
+    return SaveGame.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<SaveGame>, I>>(object: I): SaveGame {
     const message = createBaseSaveGame();
     message.lastUpdateUnix = object.lastUpdateUnix ?? 0;

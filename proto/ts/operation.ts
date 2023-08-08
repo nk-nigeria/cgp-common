@@ -476,8 +476,9 @@ export const OpPlayer = {
   },
 
   create<I extends Exact<DeepPartial<OpPlayer>, I>>(base?: I): OpPlayer {
-    return OpPlayer.fromPartial(base ?? ({} as any));
+    return OpPlayer.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<OpPlayer>, I>>(object: I): OpPlayer {
     const message = createBaseOpPlayer();
     message.userId = object.userId ?? "";
@@ -632,8 +633,9 @@ export const OpPlayerRequest = {
   },
 
   create<I extends Exact<DeepPartial<OpPlayerRequest>, I>>(base?: I): OpPlayerRequest {
-    return OpPlayerRequest.fromPartial(base ?? ({} as any));
+    return OpPlayerRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<OpPlayerRequest>, I>>(object: I): OpPlayerRequest {
     const message = createBaseOpPlayerRequest();
     message.userId = object.userId ?? "";
@@ -767,8 +769,9 @@ export const OpPlayerResponse = {
   },
 
   create<I extends Exact<DeepPartial<OpPlayerResponse>, I>>(base?: I): OpPlayerResponse {
-    return OpPlayerResponse.fromPartial(base ?? ({} as any));
+    return OpPlayerResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<OpPlayerResponse>, I>>(object: I): OpPlayerResponse {
     const message = createBaseOpPlayerResponse();
     message.opPlayers = object.opPlayers?.map((e) => OpPlayer.fromPartial(e)) || [];
@@ -953,8 +956,9 @@ export const MatchDetail = {
   },
 
   create<I extends Exact<DeepPartial<MatchDetail>, I>>(base?: I): MatchDetail {
-    return MatchDetail.fromPartial(base ?? ({} as any));
+    return MatchDetail.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<MatchDetail>, I>>(object: I): MatchDetail {
     const message = createBaseMatchDetail();
     message.gameId = object.gameId ?? 0;
@@ -1104,8 +1108,9 @@ export const MatchDetailRequest = {
   },
 
   create<I extends Exact<DeepPartial<MatchDetailRequest>, I>>(base?: I): MatchDetailRequest {
-    return MatchDetailRequest.fromPartial(base ?? ({} as any));
+    return MatchDetailRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<MatchDetailRequest>, I>>(object: I): MatchDetailRequest {
     const message = createBaseMatchDetailRequest();
     message.gameId = object.gameId ?? 0;
@@ -1213,8 +1218,9 @@ export const MatchDetailResponse = {
   },
 
   create<I extends Exact<DeepPartial<MatchDetailResponse>, I>>(base?: I): MatchDetailResponse {
-    return MatchDetailResponse.fromPartial(base ?? ({} as any));
+    return MatchDetailResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<MatchDetailResponse>, I>>(object: I): MatchDetailResponse {
     const message = createBaseMatchDetailResponse();
     message.matchDetails = object.matchDetails?.map((e) => MatchDetail.fromPartial(e)) || [];
@@ -1303,8 +1309,9 @@ export const PlayerData = {
   },
 
   create<I extends Exact<DeepPartial<PlayerData>, I>>(base?: I): PlayerData {
-    return PlayerData.fromPartial(base ?? ({} as any));
+    return PlayerData.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<PlayerData>, I>>(object: I): PlayerData {
     const message = createBasePlayerData();
     message.userId = object.userId ?? "";
@@ -1420,8 +1427,9 @@ export const MatchData = {
   },
 
   create<I extends Exact<DeepPartial<MatchData>, I>>(base?: I): MatchData {
-    return MatchData.fromPartial(base ?? ({} as any));
+    return MatchData.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<MatchData>, I>>(object: I): MatchData {
     const message = createBaseMatchData();
     message.gameId = object.gameId ?? 0;
@@ -1497,8 +1505,9 @@ export const OpReport = {
   },
 
   create<I extends Exact<DeepPartial<OpReport>, I>>(base?: I): OpReport {
-    return OpReport.fromPartial(base ?? ({} as any));
+    return OpReport.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<OpReport>, I>>(object: I): OpReport {
     const message = createBaseOpReport();
     message.playerData = object.playerData?.map((e) => PlayerData.fromPartial(e)) || [];
@@ -1643,8 +1652,9 @@ export const GoldStatistic = {
   },
 
   create<I extends Exact<DeepPartial<GoldStatistic>, I>>(base?: I): GoldStatistic {
-    return GoldStatistic.fromPartial(base ?? ({} as any));
+    return GoldStatistic.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GoldStatistic>, I>>(object: I): GoldStatistic {
     const message = createBaseGoldStatistic();
     message.timeUpdateUnix = object.timeUpdateUnix ?? 0;
@@ -1750,8 +1760,9 @@ export const GoldStatisticRequest = {
   },
 
   create<I extends Exact<DeepPartial<GoldStatisticRequest>, I>>(base?: I): GoldStatisticRequest {
-    return GoldStatisticRequest.fromPartial(base ?? ({} as any));
+    return GoldStatisticRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GoldStatisticRequest>, I>>(object: I): GoldStatisticRequest {
     const message = createBaseGoldStatisticRequest();
     message.fromUnix = object.fromUnix ?? 0;
@@ -1856,8 +1867,9 @@ export const GoldStatisticResponse = {
   },
 
   create<I extends Exact<DeepPartial<GoldStatisticResponse>, I>>(base?: I): GoldStatisticResponse {
-    return GoldStatisticResponse.fromPartial(base ?? ({} as any));
+    return GoldStatisticResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GoldStatisticResponse>, I>>(object: I): GoldStatisticResponse {
     const message = createBaseGoldStatisticResponse();
     message.goldStatistics = object.goldStatistics?.map((e) => GoldStatistic.fromPartial(e)) || [];
@@ -2136,8 +2148,9 @@ export const UserStatistic = {
   },
 
   create<I extends Exact<DeepPartial<UserStatistic>, I>>(base?: I): UserStatistic {
-    return UserStatistic.fromPartial(base ?? ({} as any));
+    return UserStatistic.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserStatistic>, I>>(object: I): UserStatistic {
     const message = createBaseUserStatistic();
     message.totalChipDeposit = object.totalChipDeposit ?? 0;
@@ -2237,8 +2250,9 @@ export const UserStatisticRequest = {
   },
 
   create<I extends Exact<DeepPartial<UserStatisticRequest>, I>>(base?: I): UserStatisticRequest {
-    return UserStatisticRequest.fromPartial(base ?? ({} as any));
+    return UserStatisticRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserStatisticRequest>, I>>(object: I): UserStatisticRequest {
     const message = createBaseUserStatisticRequest();
     message.userId = object.userId ?? "";
@@ -2340,8 +2354,9 @@ export const UserStatGameHistory = {
   },
 
   create<I extends Exact<DeepPartial<UserStatGameHistory>, I>>(base?: I): UserStatGameHistory {
-    return UserStatGameHistory.fromPartial(base ?? ({} as any));
+    return UserStatGameHistory.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserStatGameHistory>, I>>(object: I): UserStatGameHistory {
     const message = createBaseUserStatGameHistory();
     message.gameId = object.gameId ?? 0;
@@ -2458,8 +2473,9 @@ export const UserTransferGoldStat = {
   },
 
   create<I extends Exact<DeepPartial<UserTransferGoldStat>, I>>(base?: I): UserTransferGoldStat {
-    return UserTransferGoldStat.fromPartial(base ?? ({} as any));
+    return UserTransferGoldStat.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserTransferGoldStat>, I>>(object: I): UserTransferGoldStat {
     const message = createBaseUserTransferGoldStat();
     message.userSendId = object.userSendId ?? "";
@@ -2549,8 +2565,9 @@ export const UserInfo = {
   },
 
   create<I extends Exact<DeepPartial<UserInfo>, I>>(base?: I): UserInfo {
-    return UserInfo.fromPartial(base ?? ({} as any));
+    return UserInfo.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserInfo>, I>>(object: I): UserInfo {
     const message = createBaseUserInfo();
     message.profile = (object.profile !== undefined && object.profile !== null)
@@ -2696,8 +2713,9 @@ export const CashOut = {
   },
 
   create<I extends Exact<DeepPartial<CashOut>, I>>(base?: I): CashOut {
-    return CashOut.fromPartial(base ?? ({} as any));
+    return CashOut.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<CashOut>, I>>(object: I): CashOut {
     const message = createBaseCashOut();
     message.userId = object.userId ?? "";
@@ -2831,8 +2849,9 @@ export const TopCashOut = {
   },
 
   create<I extends Exact<DeepPartial<TopCashOut>, I>>(base?: I): TopCashOut {
-    return TopCashOut.fromPartial(base ?? ({} as any));
+    return TopCashOut.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<TopCashOut>, I>>(object: I): TopCashOut {
     const message = createBaseTopCashOut();
     message.cashouts = object.cashouts?.map((e) => CashOut.fromPartial(e)) || [];
@@ -3122,8 +3141,9 @@ export const Vip = {
   },
 
   create<I extends Exact<DeepPartial<Vip>, I>>(base?: I): Vip {
-    return Vip.fromPartial(base ?? ({} as any));
+    return Vip.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Vip>, I>>(object: I): Vip {
     const message = createBaseVip();
     message.userId = object.userId ?? "";
@@ -3280,8 +3300,9 @@ export const TopVip = {
   },
 
   create<I extends Exact<DeepPartial<TopVip>, I>>(base?: I): TopVip {
-    return TopVip.fromPartial(base ?? ({} as any));
+    return TopVip.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<TopVip>, I>>(object: I): TopVip {
     const message = createBaseTopVip();
     message.vips = object.vips?.map((e) => Vip.fromPartial(e)) || [];
@@ -3471,8 +3492,9 @@ export const Win = {
   },
 
   create<I extends Exact<DeepPartial<Win>, I>>(base?: I): Win {
-    return Win.fromPartial(base ?? ({} as any));
+    return Win.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Win>, I>>(object: I): Win {
     const message = createBaseWin();
     message.userId = object.userId ?? "";
@@ -3623,8 +3645,9 @@ export const TopWin = {
   },
 
   create<I extends Exact<DeepPartial<TopWin>, I>>(base?: I): TopWin {
-    return TopWin.fromPartial(base ?? ({} as any));
+    return TopWin.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<TopWin>, I>>(object: I): TopWin {
     const message = createBaseTopWin();
     message.wins = object.wins?.map((e) => Win.fromPartial(e)) || [];

@@ -210,8 +210,9 @@ export const RpcFindMatchRequest = {
   },
 
   create<I extends Exact<DeepPartial<RpcFindMatchRequest>, I>>(base?: I): RpcFindMatchRequest {
-    return RpcFindMatchRequest.fromPartial(base ?? ({} as any));
+    return RpcFindMatchRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RpcFindMatchRequest>, I>>(object: I): RpcFindMatchRequest {
     const message = createBaseRpcFindMatchRequest();
     message.markUnit = object.markUnit ?? 0;
@@ -372,8 +373,9 @@ export const Match = {
   },
 
   create<I extends Exact<DeepPartial<Match>, I>>(base?: I): Match {
-    return Match.fromPartial(base ?? ({} as any));
+    return Match.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Match>, I>>(object: I): Match {
     const message = createBaseMatch();
     message.matchId = object.matchId ?? "";
@@ -436,8 +438,9 @@ export const RpcFindMatchResponse = {
   },
 
   create<I extends Exact<DeepPartial<RpcFindMatchResponse>, I>>(base?: I): RpcFindMatchResponse {
-    return RpcFindMatchResponse.fromPartial(base ?? ({} as any));
+    return RpcFindMatchResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RpcFindMatchResponse>, I>>(object: I): RpcFindMatchResponse {
     const message = createBaseRpcFindMatchResponse();
     message.matches = object.matches?.map((e) => Match.fromPartial(e)) || [];
@@ -537,8 +540,9 @@ export const RpcCreateMatchRequest = {
   },
 
   create<I extends Exact<DeepPartial<RpcCreateMatchRequest>, I>>(base?: I): RpcCreateMatchRequest {
-    return RpcCreateMatchRequest.fromPartial(base ?? ({} as any));
+    return RpcCreateMatchRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RpcCreateMatchRequest>, I>>(object: I): RpcCreateMatchRequest {
     const message = createBaseRpcCreateMatchRequest();
     message.markUnit = object.markUnit ?? 0;
@@ -597,8 +601,9 @@ export const RpcCreateMatchResponse = {
   },
 
   create<I extends Exact<DeepPartial<RpcCreateMatchResponse>, I>>(base?: I): RpcCreateMatchResponse {
-    return RpcCreateMatchResponse.fromPartial(base ?? ({} as any));
+    return RpcCreateMatchResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RpcCreateMatchResponse>, I>>(object: I): RpcCreateMatchResponse {
     const message = createBaseRpcCreateMatchResponse();
     message.matchId = object.matchId ?? "";
@@ -670,8 +675,9 @@ export const Bet = {
   },
 
   create<I extends Exact<DeepPartial<Bet>, I>>(base?: I): Bet {
-    return Bet.fromPartial(base ?? ({} as any));
+    return Bet.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Bet>, I>>(object: I): Bet {
     const message = createBaseBet();
     message.enable = object.enable ?? false;
@@ -728,8 +734,9 @@ export const Bets = {
   },
 
   create<I extends Exact<DeepPartial<Bets>, I>>(base?: I): Bets {
-    return Bets.fromPartial(base ?? ({} as any));
+    return Bets.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Bets>, I>>(object: I): Bets {
     const message = createBaseBets();
     message.bets = object.bets?.map((e) => Bet.fromPartial(e)) || [];

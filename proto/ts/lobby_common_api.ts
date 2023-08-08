@@ -88,8 +88,9 @@ export const CommonApiLeaderBoardRecord = {
   },
 
   create<I extends Exact<DeepPartial<CommonApiLeaderBoardRecord>, I>>(base?: I): CommonApiLeaderBoardRecord {
-    return CommonApiLeaderBoardRecord.fromPartial(base ?? ({} as any));
+    return CommonApiLeaderBoardRecord.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<CommonApiLeaderBoardRecord>, I>>(object: I): CommonApiLeaderBoardRecord {
     const message = createBaseCommonApiLeaderBoardRecord();
     message.gameCode = object.gameCode ?? "";

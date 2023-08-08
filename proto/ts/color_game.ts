@@ -197,8 +197,9 @@ export const BetResult = {
   },
 
   create<I extends Exact<DeepPartial<BetResult>, I>>(base?: I): BetResult {
-    return BetResult.fromPartial(base ?? ({} as any));
+    return BetResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<BetResult>, I>>(object: I): BetResult {
     const message = createBaseBetResult();
     message.userId = object.userId ?? "";
@@ -286,8 +287,9 @@ export const ColorGameFinish = {
   },
 
   create<I extends Exact<DeepPartial<ColorGameFinish>, I>>(base?: I): ColorGameFinish {
-    return ColorGameFinish.fromPartial(base ?? ({} as any));
+    return ColorGameFinish.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ColorGameFinish>, I>>(object: I): ColorGameFinish {
     const message = createBaseColorGameFinish();
     message.rollColor = (object.rollColor !== undefined && object.rollColor !== null)
@@ -361,8 +363,9 @@ export const ListColor = {
   },
 
   create<I extends Exact<DeepPartial<ListColor>, I>>(base?: I): ListColor {
-    return ListColor.fromPartial(base ?? ({} as any));
+    return ListColor.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListColor>, I>>(object: I): ListColor {
     const message = createBaseListColor();
     message.colors = object.colors?.map((e) => e) || [];
@@ -434,8 +437,9 @@ export const RateColor = {
   },
 
   create<I extends Exact<DeepPartial<RateColor>, I>>(base?: I): RateColor {
-    return RateColor.fromPartial(base ?? ({} as any));
+    return RateColor.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RateColor>, I>>(object: I): RateColor {
     const message = createBaseRateColor();
     message.id = object.id ?? 0;
@@ -508,8 +512,9 @@ export const HistoryRoll = {
   },
 
   create<I extends Exact<DeepPartial<HistoryRoll>, I>>(base?: I): HistoryRoll {
-    return HistoryRoll.fromPartial(base ?? ({} as any));
+    return HistoryRoll.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<HistoryRoll>, I>>(object: I): HistoryRoll {
     const message = createBaseHistoryRoll();
     message.listColors = object.listColors?.map((e) => ListColor.fromPartial(e)) || [];
@@ -652,8 +657,9 @@ export const InfoBet = {
   },
 
   create<I extends Exact<DeepPartial<InfoBet>, I>>(base?: I): InfoBet {
-    return InfoBet.fromPartial(base ?? ({} as any));
+    return InfoBet.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<InfoBet>, I>>(object: I): InfoBet {
     const message = createBaseInfoBet();
     message.id = object.id ?? 0;
@@ -715,8 +721,9 @@ export const ListInfoBet = {
   },
 
   create<I extends Exact<DeepPartial<ListInfoBet>, I>>(base?: I): ListInfoBet {
-    return ListInfoBet.fromPartial(base ?? ({} as any));
+    return ListInfoBet.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListInfoBet>, I>>(object: I): ListInfoBet {
     const message = createBaseListInfoBet();
     message.listBets = object.listBets?.map((e) => InfoBet.fromPartial(e)) || [];
@@ -866,8 +873,9 @@ export const UpdateDesk = {
   },
 
   create<I extends Exact<DeepPartial<UpdateDesk>, I>>(base?: I): UpdateDesk {
-    return UpdateDesk.fromPartial(base ?? ({} as any));
+    return UpdateDesk.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UpdateDesk>, I>>(object: I): UpdateDesk {
     const message = createBaseUpdateDesk();
     message.nPlayer = object.nPlayer ?? 0;

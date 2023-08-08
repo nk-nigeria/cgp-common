@@ -249,8 +249,9 @@ export const GapleDominoAction = {
   },
 
   create<I extends Exact<DeepPartial<GapleDominoAction>, I>>(base?: I): GapleDominoAction {
-    return GapleDominoAction.fromPartial(base ?? ({} as any));
+    return GapleDominoAction.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GapleDominoAction>, I>>(object: I): GapleDominoAction {
     const message = createBaseGapleDominoAction();
     message.userId = object.userId ?? "";
@@ -340,8 +341,9 @@ export const GapleDominoPenalty = {
   },
 
   create<I extends Exact<DeepPartial<GapleDominoPenalty>, I>>(base?: I): GapleDominoPenalty {
-    return GapleDominoPenalty.fromPartial(base ?? ({} as any));
+    return GapleDominoPenalty.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GapleDominoPenalty>, I>>(object: I): GapleDominoPenalty {
     const message = createBaseGapleDominoPenalty();
     message.gainPlayer = object.gainPlayer ?? "";
@@ -599,8 +601,9 @@ export const GapleDominoUpdateDesk = {
   },
 
   create<I extends Exact<DeepPartial<GapleDominoUpdateDesk>, I>>(base?: I): GapleDominoUpdateDesk {
-    return GapleDominoUpdateDesk.fromPartial(base ?? ({} as any));
+    return GapleDominoUpdateDesk.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GapleDominoUpdateDesk>, I>>(object: I): GapleDominoUpdateDesk {
     const message = createBaseGapleDominoUpdateDesk();
     message.nPlayers = object.nPlayers ?? 0;
@@ -688,8 +691,9 @@ export const GapleDominoPresenceNumRemained = {
   },
 
   create<I extends Exact<DeepPartial<GapleDominoPresenceNumRemained>, I>>(base?: I): GapleDominoPresenceNumRemained {
-    return GapleDominoPresenceNumRemained.fromPartial(base ?? ({} as any));
+    return GapleDominoPresenceNumRemained.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GapleDominoPresenceNumRemained>, I>>(
     object: I,
   ): GapleDominoPresenceNumRemained {
@@ -764,8 +768,9 @@ export const GapleDominoPresenceHand = {
   },
 
   create<I extends Exact<DeepPartial<GapleDominoPresenceHand>, I>>(base?: I): GapleDominoPresenceHand {
-    return GapleDominoPresenceHand.fromPartial(base ?? ({} as any));
+    return GapleDominoPresenceHand.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GapleDominoPresenceHand>, I>>(object: I): GapleDominoPresenceHand {
     const message = createBaseGapleDominoPresenceHand();
     message.userId = object.userId ?? "";
@@ -822,8 +827,9 @@ export const GapleDominoUpdateDeal = {
   },
 
   create<I extends Exact<DeepPartial<GapleDominoUpdateDeal>, I>>(base?: I): GapleDominoUpdateDeal {
-    return GapleDominoUpdateDeal.fromPartial(base ?? ({} as any));
+    return GapleDominoUpdateDeal.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GapleDominoUpdateDeal>, I>>(object: I): GapleDominoUpdateDeal {
     const message = createBaseGapleDominoUpdateDeal();
     message.hand = (object.hand !== undefined && object.hand !== null)
@@ -897,8 +903,9 @@ export const GapleDoninoUpdateFinish = {
   },
 
   create<I extends Exact<DeepPartial<GapleDoninoUpdateFinish>, I>>(base?: I): GapleDoninoUpdateFinish {
-    return GapleDoninoUpdateFinish.fromPartial(base ?? ({} as any));
+    return GapleDoninoUpdateFinish.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GapleDoninoUpdateFinish>, I>>(object: I): GapleDoninoUpdateFinish {
     const message = createBaseGapleDoninoUpdateFinish();
     message.type = object.type ?? 0;

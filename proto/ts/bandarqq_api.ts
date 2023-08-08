@@ -287,8 +287,9 @@ export const Domino = {
   },
 
   create<I extends Exact<DeepPartial<Domino>, I>>(base?: I): Domino {
-    return Domino.fromPartial(base ?? ({} as any));
+    return Domino.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Domino>, I>>(object: I): Domino {
     const message = createBaseDomino();
     message.top = object.top ?? 0;
@@ -345,8 +346,9 @@ export const DominoList = {
   },
 
   create<I extends Exact<DeepPartial<DominoList>, I>>(base?: I): DominoList {
-    return DominoList.fromPartial(base ?? ({} as any));
+    return DominoList.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<DominoList>, I>>(object: I): DominoList {
     const message = createBaseDominoList();
     message.dominos = object.dominos?.map((e) => Domino.fromPartial(e)) || [];
@@ -418,8 +420,9 @@ export const QQBet = {
   },
 
   create<I extends Exact<DeepPartial<QQBet>, I>>(base?: I): QQBet {
-    return QQBet.fromPartial(base ?? ({} as any));
+    return QQBet.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQBet>, I>>(object: I): QQBet {
     const message = createBaseQQBet();
     message.chips = object.chips ?? 0;
@@ -492,8 +495,9 @@ export const QQBetResult = {
   },
 
   create<I extends Exact<DeepPartial<QQBetResult>, I>>(base?: I): QQBetResult {
-    return QQBetResult.fromPartial(base ?? ({} as any));
+    return QQBetResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQBetResult>, I>>(object: I): QQBetResult {
     const message = createBaseQQBetResult();
     message.bet = (object.bet !== undefined && object.bet !== null) ? QQBet.fromPartial(object.bet) : undefined;
@@ -566,8 +570,9 @@ export const QQPlayerBets = {
   },
 
   create<I extends Exact<DeepPartial<QQPlayerBets>, I>>(base?: I): QQPlayerBets {
-    return QQPlayerBets.fromPartial(base ?? ({} as any));
+    return QQPlayerBets.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQPlayerBets>, I>>(object: I): QQPlayerBets {
     const message = createBaseQQPlayerBets();
     message.userId = object.userId ?? "";
@@ -640,8 +645,9 @@ export const QQPlayerBetResult = {
   },
 
   create<I extends Exact<DeepPartial<QQPlayerBetResult>, I>>(base?: I): QQPlayerBetResult {
-    return QQPlayerBetResult.fromPartial(base ?? ({} as any));
+    return QQPlayerBetResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQPlayerBetResult>, I>>(object: I): QQPlayerBetResult {
     const message = createBaseQQPlayerBetResult();
     message.userId = object.userId ?? "";
@@ -700,8 +706,9 @@ export const QQListPlayerBetResult = {
   },
 
   create<I extends Exact<DeepPartial<QQListPlayerBetResult>, I>>(base?: I): QQListPlayerBetResult {
-    return QQListPlayerBetResult.fromPartial(base ?? ({} as any));
+    return QQListPlayerBetResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQListPlayerBetResult>, I>>(object: I): QQListPlayerBetResult {
     const message = createBaseQQListPlayerBetResult();
     message.results = object.results?.map((e) => QQPlayerBetResult.fromPartial(e)) || [];
@@ -787,8 +794,9 @@ export const QQHand = {
   },
 
   create<I extends Exact<DeepPartial<QQHand>, I>>(base?: I): QQHand {
-    return QQHand.fromPartial(base ?? ({} as any));
+    return QQHand.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQHand>, I>>(object: I): QQHand {
     const message = createBaseQQHand();
     message.dominos = object.dominos?.map((e) => Domino.fromPartial(e)) || [];
@@ -888,8 +896,9 @@ export const QQGameFinish = {
   },
 
   create<I extends Exact<DeepPartial<QQGameFinish>, I>>(base?: I): QQGameFinish {
-    return QQGameFinish.fromPartial(base ?? ({} as any));
+    return QQGameFinish.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQGameFinish>, I>>(object: I): QQGameFinish {
     const message = createBaseQQGameFinish();
     message.hands = (object.hands !== undefined && object.hands !== null)
@@ -967,8 +976,9 @@ export const QQGameFinishHand = {
   },
 
   create<I extends Exact<DeepPartial<QQGameFinishHand>, I>>(base?: I): QQGameFinishHand {
-    return QQGameFinishHand.fromPartial(base ?? ({} as any));
+    return QQGameFinishHand.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQGameFinishHand>, I>>(object: I): QQGameFinishHand {
     const message = createBaseQQGameFinishHand();
     message.redHand = (object.redHand !== undefined && object.redHand !== null)
@@ -1033,8 +1043,9 @@ export const QQHistory = {
   },
 
   create<I extends Exact<DeepPartial<QQHistory>, I>>(base?: I): QQHistory {
-    return QQHistory.fromPartial(base ?? ({} as any));
+    return QQHistory.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQHistory>, I>>(object: I): QQHistory {
     const message = createBaseQQHistory();
     message.handHistories = object.handHistories?.map((e) => QQGameFinishHand.fromPartial(e)) || [];
@@ -1120,8 +1131,9 @@ export const QQDeskCellBet = {
   },
 
   create<I extends Exact<DeepPartial<QQDeskCellBet>, I>>(base?: I): QQDeskCellBet {
-    return QQDeskCellBet.fromPartial(base ?? ({} as any));
+    return QQDeskCellBet.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQDeskCellBet>, I>>(object: I): QQDeskCellBet {
     const message = createBaseQQDeskCellBet();
     message.cell = object.cell ?? 0;
@@ -1183,8 +1195,9 @@ export const QQDeskListCellBet = {
   },
 
   create<I extends Exact<DeepPartial<QQDeskListCellBet>, I>>(base?: I): QQDeskListCellBet {
-    return QQDeskListCellBet.fromPartial(base ?? ({} as any));
+    return QQDeskListCellBet.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQDeskListCellBet>, I>>(object: I): QQDeskListCellBet {
     const message = createBaseQQDeskListCellBet();
     message.listCellBet = object.listCellBet?.map((e) => QQDeskCellBet.fromPartial(e)) || [];
@@ -1334,8 +1347,9 @@ export const QQUpdateDesk = {
   },
 
   create<I extends Exact<DeepPartial<QQUpdateDesk>, I>>(base?: I): QQUpdateDesk {
-    return QQUpdateDesk.fromPartial(base ?? ({} as any));
+    return QQUpdateDesk.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<QQUpdateDesk>, I>>(object: I): QQUpdateDesk {
     const message = createBaseQQUpdateDesk();
     message.nPlayers = object.nPlayers ?? 0;

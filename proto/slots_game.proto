@@ -269,6 +269,7 @@ enum WinJackpot {
   WIN_JACKPOT_MAJOR = 20;
   WIN_JACKPOT_MEGA = 30;
   WIN_JACKPOT_GRAND = 150;
+  WIN_JACKPOT_MINI = 1;
 }
 
 message JackpotReward {
@@ -276,12 +277,15 @@ message JackpotReward {
   int64 ratio = 2;
   int64 count = 3;
   int64 chips = 4;
+  // tích lũy lịch sử chơi 
+  int64 chips_accum = 5;
 }
 message JackpotHistory {
   JackpotReward minor = 1;
   JackpotReward major = 2;
   JackpotReward mega = 3;
   JackpotReward grand = 4;
+  JackpotReward mini = 5;
 }
 
 message Payline {

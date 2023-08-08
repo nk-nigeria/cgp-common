@@ -1036,8 +1036,9 @@ export const Card = {
   },
 
   create<I extends Exact<DeepPartial<Card>, I>>(base?: I): Card {
-    return Card.fromPartial(base ?? ({} as any));
+    return Card.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Card>, I>>(object: I): Card {
     const message = createBaseCard();
     message.rank = object.rank ?? 0;
@@ -1095,8 +1096,9 @@ export const ListCard = {
   },
 
   create<I extends Exact<DeepPartial<ListCard>, I>>(base?: I): ListCard {
-    return ListCard.fromPartial(base ?? ({} as any));
+    return ListCard.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListCard>, I>>(object: I): ListCard {
     const message = createBaseListCard();
     message.cards = object.cards?.map((e) => Card.fromPartial(e)) || [];
@@ -1139,8 +1141,9 @@ export const NewGame = {
   },
 
   create<I extends Exact<DeepPartial<NewGame>, I>>(base?: I): NewGame {
-    return NewGame.fromPartial(base ?? ({} as any));
+    return NewGame.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<NewGame>, I>>(_: I): NewGame {
     const message = createBaseNewGame();
     return message;
@@ -1195,8 +1198,9 @@ export const Organize = {
   },
 
   create<I extends Exact<DeepPartial<Organize>, I>>(base?: I): Organize {
-    return Organize.fromPartial(base ?? ({} as any));
+    return Organize.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Organize>, I>>(object: I): Organize {
     const message = createBaseOrganize();
     message.cards = (object.cards !== undefined && object.cards !== null)
@@ -1395,8 +1399,9 @@ export const UpdateTable = {
   },
 
   create<I extends Exact<DeepPartial<UpdateTable>, I>>(base?: I): UpdateTable {
-    return UpdateTable.fromPartial(base ?? ({} as any));
+    return UpdateTable.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UpdateTable>, I>>(object: I): UpdateTable {
     const message = createBaseUpdateTable();
     message.players = object.players?.map((e) => Player.fromPartial(e)) || [];
@@ -1479,8 +1484,9 @@ export const PresenceCards = {
   },
 
   create<I extends Exact<DeepPartial<PresenceCards>, I>>(base?: I): PresenceCards {
-    return PresenceCards.fromPartial(base ?? ({} as any));
+    return PresenceCards.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<PresenceCards>, I>>(object: I): PresenceCards {
     const message = createBasePresenceCards();
     message.presence = object.presence ?? "";
@@ -1537,8 +1543,9 @@ export const UpdateDeal = {
   },
 
   create<I extends Exact<DeepPartial<UpdateDeal>, I>>(base?: I): UpdateDeal {
-    return UpdateDeal.fromPartial(base ?? ({} as any));
+    return UpdateDeal.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UpdateDeal>, I>>(object: I): UpdateDeal {
     const message = createBaseUpdateDeal();
     message.presenceCard = (object.presenceCard !== undefined && object.presenceCard !== null)
@@ -1642,8 +1649,9 @@ export const UpdateGameState = {
   },
 
   create<I extends Exact<DeepPartial<UpdateGameState>, I>>(base?: I): UpdateGameState {
-    return UpdateGameState.fromPartial(base ?? ({} as any));
+    return UpdateGameState.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UpdateGameState>, I>>(object: I): UpdateGameState {
     const message = createBaseUpdateGameState();
     message.state = object.state ?? 0;
@@ -1720,8 +1728,9 @@ export const ArrangeCard = {
   },
 
   create<I extends Exact<DeepPartial<ArrangeCard>, I>>(base?: I): ArrangeCard {
-    return ArrangeCard.fromPartial(base ?? ({} as any));
+    return ArrangeCard.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ArrangeCard>, I>>(object: I): ArrangeCard {
     const message = createBaseArrangeCard();
     message.Presence = object.Presence ?? "";
@@ -1822,8 +1831,9 @@ export const HandBonus = {
   },
 
   create<I extends Exact<DeepPartial<HandBonus>, I>>(base?: I): HandBonus {
-    return HandBonus.fromPartial(base ?? ({} as any));
+    return HandBonus.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<HandBonus>, I>>(object: I): HandBonus {
     const message = createBaseHandBonus();
     message.win = object.win ?? "";
@@ -1912,8 +1922,9 @@ export const HandResult = {
   },
 
   create<I extends Exact<DeepPartial<HandResult>, I>>(base?: I): HandResult {
-    return HandResult.fromPartial(base ?? ({} as any));
+    return HandResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<HandResult>, I>>(object: I): HandResult {
     const message = createBaseHandResult();
     message.ranking = object.ranking ?? 0;
@@ -2029,8 +2040,9 @@ export const PointResult = {
   },
 
   create<I extends Exact<DeepPartial<PointResult>, I>>(base?: I): PointResult {
-    return PointResult.fromPartial(base ?? ({} as any));
+    return PointResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<PointResult>, I>>(object: I): PointResult {
     const message = createBasePointResult();
     message.front = (object.front !== undefined && object.front !== null)
@@ -2252,8 +2264,9 @@ export const ScoreResult = {
   },
 
   create<I extends Exact<DeepPartial<ScoreResult>, I>>(base?: I): ScoreResult {
-    return ScoreResult.fromPartial(base ?? ({} as any));
+    return ScoreResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ScoreResult>, I>>(object: I): ScoreResult {
     const message = createBaseScoreResult();
     message.frontFactor = object.frontFactor ?? 0;
@@ -2349,8 +2362,9 @@ export const ComparisonResult = {
   },
 
   create<I extends Exact<DeepPartial<ComparisonResult>, I>>(base?: I): ComparisonResult {
-    return ComparisonResult.fromPartial(base ?? ({} as any));
+    return ComparisonResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ComparisonResult>, I>>(object: I): ComparisonResult {
     const message = createBaseComparisonResult();
     message.userId = object.userId ?? "";
@@ -2456,8 +2470,9 @@ export const UpdateFinish = {
   },
 
   create<I extends Exact<DeepPartial<UpdateFinish>, I>>(base?: I): UpdateFinish {
-    return UpdateFinish.fromPartial(base ?? ({} as any));
+    return UpdateFinish.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UpdateFinish>, I>>(object: I): UpdateFinish {
     const message = createBaseUpdateFinish();
     message.results = object.results?.map((e) => ComparisonResult.fromPartial(e)) || [];
@@ -2564,8 +2579,9 @@ export const BalanceUpdate = {
   },
 
   create<I extends Exact<DeepPartial<BalanceUpdate>, I>>(base?: I): BalanceUpdate {
-    return BalanceUpdate.fromPartial(base ?? ({} as any));
+    return BalanceUpdate.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<BalanceUpdate>, I>>(object: I): BalanceUpdate {
     const message = createBaseBalanceUpdate();
     message.userId = object.userId ?? "";
@@ -2640,8 +2656,9 @@ export const BalanceResult = {
   },
 
   create<I extends Exact<DeepPartial<BalanceResult>, I>>(base?: I): BalanceResult {
-    return BalanceResult.fromPartial(base ?? ({} as any));
+    return BalanceResult.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<BalanceResult>, I>>(object: I): BalanceResult {
     const message = createBaseBalanceResult();
     message.updates = object.updates?.map((e) => BalanceUpdate.fromPartial(e)) || [];
@@ -2809,8 +2826,9 @@ export const Player = {
   },
 
   create<I extends Exact<DeepPartial<Player>, I>>(base?: I): Player {
-    return Player.fromPartial(base ?? ({} as any));
+    return Player.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Player>, I>>(object: I): Player {
     const message = createBasePlayer();
     message.id = object.id ?? "";
@@ -2933,8 +2951,9 @@ export const Jackpot = {
   },
 
   create<I extends Exact<DeepPartial<Jackpot>, I>>(base?: I): Jackpot {
-    return Jackpot.fromPartial(base ?? ({} as any));
+    return Jackpot.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Jackpot>, I>>(object: I): Jackpot {
     const message = createBaseJackpot();
     message.id = object.id ?? 0;

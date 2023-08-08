@@ -817,8 +817,9 @@ export const Game = {
   },
 
   create<I extends Exact<DeepPartial<Game>, I>>(base?: I): Game {
-    return Game.fromPartial(base ?? ({} as any));
+    return Game.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Game>, I>>(object: I): Game {
     const message = createBaseGame();
     message.code = object.code ?? "";
@@ -923,8 +924,9 @@ export const Layout = {
   },
 
   create<I extends Exact<DeepPartial<Layout>, I>>(base?: I): Layout {
-    return Layout.fromPartial(base ?? ({} as any));
+    return Layout.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Layout>, I>>(object: I): Layout {
     const message = createBaseLayout();
     message.col = object.col ?? 0;
@@ -983,8 +985,9 @@ export const GameListResponse = {
   },
 
   create<I extends Exact<DeepPartial<GameListResponse>, I>>(base?: I): GameListResponse {
-    return GameListResponse.fromPartial(base ?? ({} as any));
+    return GameListResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GameListResponse>, I>>(object: I): GameListResponse {
     const message = createBaseGameListResponse();
     message.games = object.games?.map((e) => Game.fromPartial(e)) || [];
@@ -1040,8 +1043,9 @@ export const BetListRequest = {
   },
 
   create<I extends Exact<DeepPartial<BetListRequest>, I>>(base?: I): BetListRequest {
-    return BetListRequest.fromPartial(base ?? ({} as any));
+    return BetListRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<BetListRequest>, I>>(object: I): BetListRequest {
     const message = createBaseBetListRequest();
     message.code = object.code ?? "";
@@ -1109,8 +1113,9 @@ export const BetListResponse = {
   },
 
   create<I extends Exact<DeepPartial<BetListResponse>, I>>(base?: I): BetListResponse {
-    return BetListResponse.fromPartial(base ?? ({} as any));
+    return BetListResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<BetListResponse>, I>>(object: I): BetListResponse {
     const message = createBaseBetListResponse();
     message.bets = object.bets?.map((e) => e) || [];
@@ -1196,8 +1201,9 @@ export const Chat = {
   },
 
   create<I extends Exact<DeepPartial<Chat>, I>>(base?: I): Chat {
-    return Chat.fromPartial(base ?? ({} as any));
+    return Chat.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Chat>, I>>(object: I): Chat {
     const message = createBaseChat();
     message.typeChat = object.typeChat ?? 0;
@@ -1355,8 +1361,9 @@ export const FreeChip = {
   },
 
   create<I extends Exact<DeepPartial<FreeChip>, I>>(base?: I): FreeChip {
-    return FreeChip.fromPartial(base ?? ({} as any));
+    return FreeChip.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<FreeChip>, I>>(object: I): FreeChip {
     const message = createBaseFreeChip();
     message.id = object.id ?? 0;
@@ -1449,8 +1456,9 @@ export const FreeChipRequest = {
   },
 
   create<I extends Exact<DeepPartial<FreeChipRequest>, I>>(base?: I): FreeChipRequest {
-    return FreeChipRequest.fromPartial(base ?? ({} as any));
+    return FreeChipRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<FreeChipRequest>, I>>(object: I): FreeChipRequest {
     const message = createBaseFreeChipRequest();
     message.userId = object.userId ?? "";
@@ -1580,8 +1588,9 @@ export const ListFreeChip = {
   },
 
   create<I extends Exact<DeepPartial<ListFreeChip>, I>>(base?: I): ListFreeChip {
-    return ListFreeChip.fromPartial(base ?? ({} as any));
+    return ListFreeChip.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListFreeChip>, I>>(object: I): ListFreeChip {
     const message = createBaseListFreeChip();
     message.freechips = object.freechips?.map((e) => FreeChip.fromPartial(e)) || [];
@@ -1756,8 +1765,9 @@ export const Deal = {
   },
 
   create<I extends Exact<DeepPartial<Deal>, I>>(base?: I): Deal {
-    return Deal.fromPartial(base ?? ({} as any));
+    return Deal.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Deal>, I>>(object: I): Deal {
     const message = createBaseDeal();
     message.id = object.id ?? "";
@@ -1865,8 +1875,9 @@ export const DealInShop = {
   },
 
   create<I extends Exact<DeepPartial<DealInShop>, I>>(base?: I): DealInShop {
-    return DealInShop.fromPartial(base ?? ({} as any));
+    return DealInShop.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<DealInShop>, I>>(object: I): DealInShop {
     const message = createBaseDealInShop();
     message.best = (object.best !== undefined && object.best !== null) ? Deal.fromPartial(object.best) : undefined;
@@ -1955,8 +1966,9 @@ export const LeaderBoardRecord = {
   },
 
   create<I extends Exact<DeepPartial<LeaderBoardRecord>, I>>(base?: I): LeaderBoardRecord {
-    return LeaderBoardRecord.fromPartial(base ?? ({} as any));
+    return LeaderBoardRecord.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<LeaderBoardRecord>, I>>(object: I): LeaderBoardRecord {
     const message = createBaseLeaderBoardRecord();
     message.gameCode = object.gameCode ?? "";
@@ -2258,8 +2270,9 @@ export const ExchangeInfo = {
   },
 
   create<I extends Exact<DeepPartial<ExchangeInfo>, I>>(base?: I): ExchangeInfo {
-    return ExchangeInfo.fromPartial(base ?? ({} as any));
+    return ExchangeInfo.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ExchangeInfo>, I>>(object: I): ExchangeInfo {
     const message = createBaseExchangeInfo();
     message.id = object.id ?? "";
@@ -2331,8 +2344,9 @@ export const ExchangeDealInShop = {
   },
 
   create<I extends Exact<DeepPartial<ExchangeDealInShop>, I>>(base?: I): ExchangeDealInShop {
-    return ExchangeDealInShop.fromPartial(base ?? ({} as any));
+    return ExchangeDealInShop.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ExchangeDealInShop>, I>>(object: I): ExchangeDealInShop {
     const message = createBaseExchangeDealInShop();
     message.gcashes = object.gcashes?.map((e) => Deal.fromPartial(e)) || [];
@@ -2490,8 +2504,9 @@ export const ListExchangeInfo = {
   },
 
   create<I extends Exact<DeepPartial<ListExchangeInfo>, I>>(base?: I): ListExchangeInfo {
-    return ListExchangeInfo.fromPartial(base ?? ({} as any));
+    return ListExchangeInfo.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListExchangeInfo>, I>>(object: I): ListExchangeInfo {
     const message = createBaseListExchangeInfo();
     message.exchangeInfos = object.exchangeInfos?.map((e) => ExchangeInfo.fromPartial(e)) || [];
@@ -2640,8 +2655,9 @@ export const ExchangeRequest = {
   },
 
   create<I extends Exact<DeepPartial<ExchangeRequest>, I>>(base?: I): ExchangeRequest {
-    return ExchangeRequest.fromPartial(base ?? ({} as any));
+    return ExchangeRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ExchangeRequest>, I>>(object: I): ExchangeRequest {
     const message = createBaseExchangeRequest();
     message.id = object.id ?? "";
@@ -2917,8 +2933,9 @@ export const Reward = {
   },
 
   create<I extends Exact<DeepPartial<Reward>, I>>(base?: I): Reward {
-    return Reward.fromPartial(base ?? ({} as any));
+    return Reward.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Reward>, I>>(object: I): Reward {
     const message = createBaseReward();
     message.basicChip = object.basicChip ?? 0;
@@ -3058,8 +3075,9 @@ export const RewardTemplate = {
   },
 
   create<I extends Exact<DeepPartial<RewardTemplate>, I>>(base?: I): RewardTemplate {
-    return RewardTemplate.fromPartial(base ?? ({} as any));
+    return RewardTemplate.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RewardTemplate>, I>>(object: I): RewardTemplate {
     const message = createBaseRewardTemplate();
     message.basicChips = object.basicChips?.map((e) => e) || [];
@@ -3191,8 +3209,9 @@ export const LastClaimReward = {
   },
 
   create<I extends Exact<DeepPartial<LastClaimReward>, I>>(base?: I): LastClaimReward {
-    return LastClaimReward.fromPartial(base ?? ({} as any));
+    return LastClaimReward.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<LastClaimReward>, I>>(object: I): LastClaimReward {
     const message = createBaseLastClaimReward();
     message.lastClaimUnix = object.lastClaimUnix ?? 0;
@@ -3257,8 +3276,9 @@ export const DailyRewardTemplate = {
   },
 
   create<I extends Exact<DeepPartial<DailyRewardTemplate>, I>>(base?: I): DailyRewardTemplate {
-    return DailyRewardTemplate.fromPartial(base ?? ({} as any));
+    return DailyRewardTemplate.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<DailyRewardTemplate>, I>>(object: I): DailyRewardTemplate {
     const message = createBaseDailyRewardTemplate();
     message.rewardTemplates = object.rewardTemplates?.map((e) => RewardTemplate.fromPartial(e)) || [];
@@ -3330,8 +3350,9 @@ export const UserGroupCondition = {
   },
 
   create<I extends Exact<DeepPartial<UserGroupCondition>, I>>(base?: I): UserGroupCondition {
-    return UserGroupCondition.fromPartial(base ?? ({} as any));
+    return UserGroupCondition.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserGroupCondition>, I>>(object: I): UserGroupCondition {
     const message = createBaseUserGroupCondition();
     message.operator = object.operator ?? "";
@@ -3446,8 +3467,9 @@ export const UserGroup = {
   },
 
   create<I extends Exact<DeepPartial<UserGroup>, I>>(base?: I): UserGroup {
-    return UserGroup.fromPartial(base ?? ({} as any));
+    return UserGroup.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserGroup>, I>>(object: I): UserGroup {
     const message = createBaseUserGroup();
     message.id = object.id ?? 0;
@@ -3581,8 +3603,9 @@ export const ListUserGroup = {
   },
 
   create<I extends Exact<DeepPartial<ListUserGroup>, I>>(base?: I): ListUserGroup {
-    return ListUserGroup.fromPartial(base ?? ({} as any));
+    return ListUserGroup.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListUserGroup>, I>>(object: I): ListUserGroup {
     const message = createBaseListUserGroup();
     message.userGroups = object.userGroups?.map((e) => UserGroup.fromPartial(e)) || [];
@@ -3659,8 +3682,9 @@ export const UserGroupRequest = {
   },
 
   create<I extends Exact<DeepPartial<UserGroupRequest>, I>>(base?: I): UserGroupRequest {
-    return UserGroupRequest.fromPartial(base ?? ({} as any));
+    return UserGroupRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<UserGroupRequest>, I>>(object: I): UserGroupRequest {
     const message = createBaseUserGroupRequest();
     message.limit = object.limit ?? 0;
@@ -3931,8 +3955,9 @@ export const GiftCode = {
   },
 
   create<I extends Exact<DeepPartial<GiftCode>, I>>(base?: I): GiftCode {
-    return GiftCode.fromPartial(base ?? ({} as any));
+    return GiftCode.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<GiftCode>, I>>(object: I): GiftCode {
     const message = createBaseGiftCode();
     message.id = object.id ?? 0;
@@ -4004,8 +4029,9 @@ export const ListGiftCode = {
   },
 
   create<I extends Exact<DeepPartial<ListGiftCode>, I>>(base?: I): ListGiftCode {
-    return ListGiftCode.fromPartial(base ?? ({} as any));
+    return ListGiftCode.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListGiftCode>, I>>(object: I): ListGiftCode {
     const message = createBaseListGiftCode();
     message.giftCodes = object.giftCodes?.map((e) => GiftCode.fromPartial(e)) || [];
@@ -4133,8 +4159,9 @@ export const AddNotificationRequest = {
   },
 
   create<I extends Exact<DeepPartial<AddNotificationRequest>, I>>(base?: I): AddNotificationRequest {
-    return AddNotificationRequest.fromPartial(base ?? ({} as any));
+    return AddNotificationRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<AddNotificationRequest>, I>>(object: I): AddNotificationRequest {
     const message = createBaseAddNotificationRequest();
     message.recipientIds = object.recipientIds?.map((e) => e) || [];
@@ -4295,8 +4322,9 @@ export const Notification = {
   },
 
   create<I extends Exact<DeepPartial<Notification>, I>>(base?: I): Notification {
-    return Notification.fromPartial(base ?? ({} as any));
+    return Notification.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Notification>, I>>(object: I): Notification {
     const message = createBaseNotification();
     message.id = object.id ?? 0;
@@ -4389,8 +4417,9 @@ export const NotificationRequest = {
   },
 
   create<I extends Exact<DeepPartial<NotificationRequest>, I>>(base?: I): NotificationRequest {
-    return NotificationRequest.fromPartial(base ?? ({} as any));
+    return NotificationRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<NotificationRequest>, I>>(object: I): NotificationRequest {
     const message = createBaseNotificationRequest();
     message.limit = object.limit ?? 0;
@@ -4522,8 +4551,9 @@ export const ListNotification = {
   },
 
   create<I extends Exact<DeepPartial<ListNotification>, I>>(base?: I): ListNotification {
-    return ListNotification.fromPartial(base ?? ({} as any));
+    return ListNotification.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListNotification>, I>>(object: I): ListNotification {
     const message = createBaseListNotification();
     message.notifications = object.notifications?.map((e) => Notification.fromPartial(e)) || [];
@@ -4597,8 +4627,9 @@ export const RangeTime = {
   },
 
   create<I extends Exact<DeepPartial<RangeTime>, I>>(base?: I): RangeTime {
-    return RangeTime.fromPartial(base ?? ({} as any));
+    return RangeTime.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RangeTime>, I>>(object: I): RangeTime {
     const message = createBaseRangeTime();
     message.from = object.from ?? 0;
@@ -4713,8 +4744,9 @@ export const InAppMessageData = {
   },
 
   create<I extends Exact<DeepPartial<InAppMessageData>, I>>(base?: I): InAppMessageData {
-    return InAppMessageData.fromPartial(base ?? ({} as any));
+    return InAppMessageData.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<InAppMessageData>, I>>(object: I): InAppMessageData {
     const message = createBaseInAppMessageData();
     message.action = object.action ?? 0;
@@ -4791,8 +4823,9 @@ export const InAppMessageData_ParamsEntry = {
   },
 
   create<I extends Exact<DeepPartial<InAppMessageData_ParamsEntry>, I>>(base?: I): InAppMessageData_ParamsEntry {
-    return InAppMessageData_ParamsEntry.fromPartial(base ?? ({} as any));
+    return InAppMessageData_ParamsEntry.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<InAppMessageData_ParamsEntry>, I>>(object: I): InAppMessageData_ParamsEntry {
     const message = createBaseInAppMessageData_ParamsEntry();
     message.key = object.key ?? "";
@@ -4970,8 +5003,9 @@ export const InAppMessage = {
   },
 
   create<I extends Exact<DeepPartial<InAppMessage>, I>>(base?: I): InAppMessage {
-    return InAppMessage.fromPartial(base ?? ({} as any));
+    return InAppMessage.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<InAppMessage>, I>>(object: I): InAppMessage {
     const message = createBaseInAppMessage();
     message.id = object.id ?? 0;
@@ -5066,8 +5100,9 @@ export const InAppMessageRequest = {
   },
 
   create<I extends Exact<DeepPartial<InAppMessageRequest>, I>>(base?: I): InAppMessageRequest {
-    return InAppMessageRequest.fromPartial(base ?? ({} as any));
+    return InAppMessageRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<InAppMessageRequest>, I>>(object: I): InAppMessageRequest {
     const message = createBaseInAppMessageRequest();
     message.limit = object.limit ?? 0;
@@ -5199,8 +5234,9 @@ export const ListInAppMessage = {
   },
 
   create<I extends Exact<DeepPartial<ListInAppMessage>, I>>(base?: I): ListInAppMessage {
-    return ListInAppMessage.fromPartial(base ?? ({} as any));
+    return ListInAppMessage.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListInAppMessage>, I>>(object: I): ListInAppMessage {
     const message = createBaseListInAppMessage();
     message.inAppMessages = object.inAppMessages?.map((e) => InAppMessage.fromPartial(e)) || [];
@@ -5291,8 +5327,9 @@ export const DefaultResponse = {
   },
 
   create<I extends Exact<DeepPartial<DefaultResponse>, I>>(base?: I): DefaultResponse {
-    return DefaultResponse.fromPartial(base ?? ({} as any));
+    return DefaultResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<DefaultResponse>, I>>(object: I): DefaultResponse {
     const message = createBaseDefaultResponse();
     message.message = object.message ?? "";
@@ -5366,8 +5403,9 @@ export const PreSignPutRequest = {
   },
 
   create<I extends Exact<DeepPartial<PreSignPutRequest>, I>>(base?: I): PreSignPutRequest {
-    return PreSignPutRequest.fromPartial(base ?? ({} as any));
+    return PreSignPutRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<PreSignPutRequest>, I>>(object: I): PreSignPutRequest {
     const message = createBasePreSignPutRequest();
     message.fileName = object.fileName ?? "";
@@ -5424,8 +5462,9 @@ export const PreSignPutResponse = {
   },
 
   create<I extends Exact<DeepPartial<PreSignPutResponse>, I>>(base?: I): PreSignPutResponse {
-    return PreSignPutResponse.fromPartial(base ?? ({} as any));
+    return PreSignPutResponse.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<PreSignPutResponse>, I>>(object: I): PreSignPutResponse {
     const message = createBasePreSignPutResponse();
     message.url = object.url ?? "";
@@ -5525,8 +5564,9 @@ export const ReferUser = {
   },
 
   create<I extends Exact<DeepPartial<ReferUser>, I>>(base?: I): ReferUser {
-    return ReferUser.fromPartial(base ?? ({} as any));
+    return ReferUser.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ReferUser>, I>>(object: I): ReferUser {
     const message = createBaseReferUser();
     message.id = object.id ?? 0;
@@ -5615,8 +5655,9 @@ export const RewardReferTemplate = {
   },
 
   create<I extends Exact<DeepPartial<RewardReferTemplate>, I>>(base?: I): RewardReferTemplate {
-    return RewardReferTemplate.fromPartial(base ?? ({} as any));
+    return RewardReferTemplate.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RewardReferTemplate>, I>>(object: I): RewardReferTemplate {
     const message = createBaseRewardReferTemplate();
     message.min = object.min ?? 0;
@@ -5678,8 +5719,9 @@ export const ListRewardReferTemplate = {
   },
 
   create<I extends Exact<DeepPartial<ListRewardReferTemplate>, I>>(base?: I): ListRewardReferTemplate {
-    return ListRewardReferTemplate.fromPartial(base ?? ({} as any));
+    return ListRewardReferTemplate.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListRewardReferTemplate>, I>>(object: I): ListRewardReferTemplate {
     const message = createBaseListRewardReferTemplate();
     message.rewardRefers = object.rewardRefers?.map((e) => RewardReferTemplate.fromPartial(e)) || [];
@@ -5951,8 +5993,9 @@ export const RewardRefer = {
   },
 
   create<I extends Exact<DeepPartial<RewardRefer>, I>>(base?: I): RewardRefer {
-    return RewardRefer.fromPartial(base ?? ({} as any));
+    return RewardRefer.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<RewardRefer>, I>>(object: I): RewardRefer {
     const message = createBaseRewardRefer();
     message.id = object.id ?? 0;
@@ -6024,8 +6067,9 @@ export const ListRewardRefer = {
   },
 
   create<I extends Exact<DeepPartial<ListRewardRefer>, I>>(base?: I): ListRewardRefer {
-    return ListRewardRefer.fromPartial(base ?? ({} as any));
+    return ListRewardRefer.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<ListRewardRefer>, I>>(object: I): ListRewardRefer {
     const message = createBaseListRewardRefer();
     message.userRefers = object.userRefers?.map((e) => RewardRefer.fromPartial(e)) || [];
@@ -6125,8 +6169,9 @@ export const HistoryRewardRequest = {
   },
 
   create<I extends Exact<DeepPartial<HistoryRewardRequest>, I>>(base?: I): HistoryRewardRequest {
-    return HistoryRewardRequest.fromPartial(base ?? ({} as any));
+    return HistoryRewardRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<HistoryRewardRequest>, I>>(object: I): HistoryRewardRequest {
     const message = createBaseHistoryRewardRequest();
     message.userId = object.userId ?? "";
@@ -6229,8 +6274,9 @@ export const WalletTransRequest = {
   },
 
   create<I extends Exact<DeepPartial<WalletTransRequest>, I>>(base?: I): WalletTransRequest {
-    return WalletTransRequest.fromPartial(base ?? ({} as any));
+    return WalletTransRequest.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<WalletTransRequest>, I>>(object: I): WalletTransRequest {
     const message = createBaseWalletTransRequest();
     message.limit = object.limit ?? 0;
@@ -6305,8 +6351,9 @@ export const Error = {
   },
 
   create<I extends Exact<DeepPartial<Error>, I>>(base?: I): Error {
-    return Error.fromPartial(base ?? ({} as any));
+    return Error.fromPartial(base ?? {});
   },
+
   fromPartial<I extends Exact<DeepPartial<Error>, I>>(object: I): Error {
     const message = createBaseError();
     message.code = object.code ?? 0;
