@@ -72,7 +72,7 @@ message GameConfig {
   int64 num_free_spin = 2;
   int64 num_wild = 3;
   int64 ratio_wild=4;
-  int64 bonus_basket=5;
+  int64 ratio_basket=5;
 
 }
 

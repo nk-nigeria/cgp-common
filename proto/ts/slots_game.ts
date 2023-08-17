@@ -1001,7 +1001,7 @@ export interface GameConfig {
   numFreeSpin: number;
   numWild: number;
   ratioWild: number;
-  bonusBasket: number;
+  ratioBasket: number;
 }
 
 /** Ma trận symbol */
@@ -1570,7 +1570,7 @@ export const SlotDesk = {
 };
 
 function createBaseGameConfig(): GameConfig {
-  return { numScatterSeq: 0, numFreeSpin: 0, numWild: 0, ratioWild: 0, bonusBasket: 0 };
+  return { numScatterSeq: 0, numFreeSpin: 0, numWild: 0, ratioWild: 0, ratioBasket: 0 };
 }
 
 export const GameConfig = {
@@ -1587,8 +1587,8 @@ export const GameConfig = {
     if (message.ratioWild !== 0) {
       writer.uint32(32).int64(message.ratioWild);
     }
-    if (message.bonusBasket !== 0) {
-      writer.uint32(40).int64(message.bonusBasket);
+    if (message.ratioBasket !== 0) {
+      writer.uint32(40).int64(message.ratioBasket);
     }
     return writer;
   },
@@ -1633,7 +1633,7 @@ export const GameConfig = {
             break;
           }
 
-          message.bonusBasket = longToNumber(reader.int64() as Long);
+          message.ratioBasket = longToNumber(reader.int64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1650,7 +1650,7 @@ export const GameConfig = {
       numFreeSpin: isSet(object.numFreeSpin) ? Number(object.numFreeSpin) : 0,
       numWild: isSet(object.numWild) ? Number(object.numWild) : 0,
       ratioWild: isSet(object.ratioWild) ? Number(object.ratioWild) : 0,
-      bonusBasket: isSet(object.bonusBasket) ? Number(object.bonusBasket) : 0,
+      ratioBasket: isSet(object.ratioBasket) ? Number(object.ratioBasket) : 0,
     };
   },
 
@@ -1668,8 +1668,8 @@ export const GameConfig = {
     if (message.ratioWild !== 0) {
       obj.ratioWild = Math.round(message.ratioWild);
     }
-    if (message.bonusBasket !== 0) {
-      obj.bonusBasket = Math.round(message.bonusBasket);
+    if (message.ratioBasket !== 0) {
+      obj.ratioBasket = Math.round(message.ratioBasket);
     }
     return obj;
   },
@@ -1684,7 +1684,7 @@ export const GameConfig = {
     message.numFreeSpin = object.numFreeSpin ?? 0;
     message.numWild = object.numWild ?? 0;
     message.ratioWild = object.ratioWild ?? 0;
-    message.bonusBasket = object.bonusBasket ?? 0;
+    message.ratioBasket = object.ratioBasket ?? 0;
     return message;
   },
 };
