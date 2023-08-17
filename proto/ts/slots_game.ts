@@ -1585,10 +1585,10 @@ export const GameConfig = {
       writer.uint32(24).int64(message.numWild);
     }
     if (message.ratioWild !== 0) {
-      writer.uint32(32).int64(message.ratioWild);
+      writer.uint32(37).float(message.ratioWild);
     }
     if (message.ratioBasket !== 0) {
-      writer.uint32(40).int64(message.ratioBasket);
+      writer.uint32(45).float(message.ratioBasket);
     }
     return writer;
   },
@@ -1622,18 +1622,18 @@ export const GameConfig = {
           message.numWild = longToNumber(reader.int64() as Long);
           continue;
         case 4:
-          if (tag !== 32) {
+          if (tag !== 37) {
             break;
           }
 
-          message.ratioWild = longToNumber(reader.int64() as Long);
+          message.ratioWild = reader.float();
           continue;
         case 5:
-          if (tag !== 40) {
+          if (tag !== 45) {
             break;
           }
 
-          message.ratioBasket = longToNumber(reader.int64() as Long);
+          message.ratioBasket = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1666,10 +1666,10 @@ export const GameConfig = {
       obj.numWild = Math.round(message.numWild);
     }
     if (message.ratioWild !== 0) {
-      obj.ratioWild = Math.round(message.ratioWild);
+      obj.ratioWild = message.ratioWild;
     }
     if (message.ratioBasket !== 0) {
-      obj.ratioBasket = Math.round(message.ratioBasket);
+      obj.ratioBasket = message.ratioBasket;
     }
     return obj;
   },
