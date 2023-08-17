@@ -993,6 +993,15 @@ export interface SlotDesk {
   sixiangGems: SiXiangGame[];
   letterSymbols: SiXiangSymbol[];
   winJpHistory: JackpotHistory | undefined;
+  gameConfig: GameConfig | undefined;
+}
+
+export interface GameConfig {
+  numScatter: number;
+  numFreeSpin: number;
+  numWild: number;
+  ratioWild: number;
+  bonusBasket: number;
 }
 
 /** Ma trận symbol */
@@ -1118,6 +1127,7 @@ function createBaseSlotDesk(): SlotDesk {
     sixiangGems: [],
     letterSymbols: [],
     winJpHistory: undefined,
+    gameConfig: undefined,
   };
 }
 
@@ -1194,6 +1204,9 @@ export const SlotDesk = {
     writer.ldelim();
     if (message.winJpHistory !== undefined) {
       JackpotHistory.encode(message.winJpHistory, writer.uint32(234).fork()).ldelim();
+    }
+    if (message.gameConfig !== undefined) {
+      GameConfig.encode(message.gameConfig, writer.uint32(242).fork()).ldelim();
     }
     return writer;
   },
@@ -1389,6 +1402,13 @@ export const SlotDesk = {
 
           message.winJpHistory = JackpotHistory.decode(reader, reader.uint32());
           continue;
+        case 30:
+          if (tag !== 242) {
+            break;
+          }
+
+          message.gameConfig = GameConfig.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1426,6 +1446,7 @@ export const SlotDesk = {
         ? object.letterSymbols.map((e: any) => siXiangSymbolFromJSON(e))
         : [],
       winJpHistory: isSet(object.winJpHistory) ? JackpotHistory.fromJSON(object.winJpHistory) : undefined,
+      gameConfig: isSet(object.gameConfig) ? GameConfig.fromJSON(object.gameConfig) : undefined,
     };
   },
 
@@ -1497,6 +1518,9 @@ export const SlotDesk = {
     if (message.winJpHistory !== undefined) {
       obj.winJpHistory = JackpotHistory.toJSON(message.winJpHistory);
     }
+    if (message.gameConfig !== undefined) {
+      obj.gameConfig = GameConfig.toJSON(message.gameConfig);
+    }
     return obj;
   },
 
@@ -1538,6 +1562,129 @@ export const SlotDesk = {
     message.winJpHistory = (object.winJpHistory !== undefined && object.winJpHistory !== null)
       ? JackpotHistory.fromPartial(object.winJpHistory)
       : undefined;
+    message.gameConfig = (object.gameConfig !== undefined && object.gameConfig !== null)
+      ? GameConfig.fromPartial(object.gameConfig)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseGameConfig(): GameConfig {
+  return { numScatter: 0, numFreeSpin: 0, numWild: 0, ratioWild: 0, bonusBasket: 0 };
+}
+
+export const GameConfig = {
+  encode(message: GameConfig, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.numScatter !== 0) {
+      writer.uint32(8).int64(message.numScatter);
+    }
+    if (message.numFreeSpin !== 0) {
+      writer.uint32(16).int64(message.numFreeSpin);
+    }
+    if (message.numWild !== 0) {
+      writer.uint32(24).int64(message.numWild);
+    }
+    if (message.ratioWild !== 0) {
+      writer.uint32(32).int64(message.ratioWild);
+    }
+    if (message.bonusBasket !== 0) {
+      writer.uint32(40).int64(message.bonusBasket);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GameConfig {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGameConfig();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.numScatter = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.numFreeSpin = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.numWild = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.ratioWild = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.bonusBasket = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameConfig {
+    return {
+      numScatter: isSet(object.numScatter) ? Number(object.numScatter) : 0,
+      numFreeSpin: isSet(object.numFreeSpin) ? Number(object.numFreeSpin) : 0,
+      numWild: isSet(object.numWild) ? Number(object.numWild) : 0,
+      ratioWild: isSet(object.ratioWild) ? Number(object.ratioWild) : 0,
+      bonusBasket: isSet(object.bonusBasket) ? Number(object.bonusBasket) : 0,
+    };
+  },
+
+  toJSON(message: GameConfig): unknown {
+    const obj: any = {};
+    if (message.numScatter !== 0) {
+      obj.numScatter = Math.round(message.numScatter);
+    }
+    if (message.numFreeSpin !== 0) {
+      obj.numFreeSpin = Math.round(message.numFreeSpin);
+    }
+    if (message.numWild !== 0) {
+      obj.numWild = Math.round(message.numWild);
+    }
+    if (message.ratioWild !== 0) {
+      obj.ratioWild = Math.round(message.ratioWild);
+    }
+    if (message.bonusBasket !== 0) {
+      obj.bonusBasket = Math.round(message.bonusBasket);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GameConfig>, I>>(base?: I): GameConfig {
+    return GameConfig.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GameConfig>, I>>(object: I): GameConfig {
+    const message = createBaseGameConfig();
+    message.numScatter = object.numScatter ?? 0;
+    message.numFreeSpin = object.numFreeSpin ?? 0;
+    message.numWild = object.numWild ?? 0;
+    message.ratioWild = object.ratioWild ?? 0;
+    message.bonusBasket = object.bonusBasket ?? 0;
     return message;
   },
 };

@@ -64,6 +64,16 @@ message SlotDesk {
   repeated SiXiangGame sixiang_gems = 27;
   repeated SiXiangSymbol letter_symbols = 28;
   JackpotHistory win_jp_history = 29;
+  GameConfig game_config = 30;
+}
+
+message GameConfig {
+  int64 num_scatter = 1;
+  int64 num_free_spin = 2;
+  int64 num_wild = 3;
+  int64 ratio_wild=4;
+  int64 bonus_basket=5;
+
 }
 
 // Ma trận symbol
