@@ -68,7 +68,7 @@ message SlotDesk {
 }
 
 message GameConfig {
-  int64 num_scatter = 1;
+  int64 num_scatter_seq = 1;
   int64 num_free_spin = 2;
   int64 num_wild = 3;
   int64 ratio_wild=4;

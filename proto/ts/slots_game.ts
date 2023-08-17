@@ -997,7 +997,7 @@ export interface SlotDesk {
 }
 
 export interface GameConfig {
-  numScatter: number;
+  numScatterSeq: number;
   numFreeSpin: number;
   numWild: number;
   ratioWild: number;
@@ -1570,13 +1570,13 @@ export const SlotDesk = {
 };
 
 function createBaseGameConfig(): GameConfig {
-  return { numScatter: 0, numFreeSpin: 0, numWild: 0, ratioWild: 0, bonusBasket: 0 };
+  return { numScatterSeq: 0, numFreeSpin: 0, numWild: 0, ratioWild: 0, bonusBasket: 0 };
 }
 
 export const GameConfig = {
   encode(message: GameConfig, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.numScatter !== 0) {
-      writer.uint32(8).int64(message.numScatter);
+    if (message.numScatterSeq !== 0) {
+      writer.uint32(8).int64(message.numScatterSeq);
     }
     if (message.numFreeSpin !== 0) {
       writer.uint32(16).int64(message.numFreeSpin);
@@ -1605,7 +1605,7 @@ export const GameConfig = {
             break;
           }
 
-          message.numScatter = longToNumber(reader.int64() as Long);
+          message.numScatterSeq = longToNumber(reader.int64() as Long);
           continue;
         case 2:
           if (tag !== 16) {
@@ -1646,7 +1646,7 @@ export const GameConfig = {
 
   fromJSON(object: any): GameConfig {
     return {
-      numScatter: isSet(object.numScatter) ? Number(object.numScatter) : 0,
+      numScatterSeq: isSet(object.numScatterSeq) ? Number(object.numScatterSeq) : 0,
       numFreeSpin: isSet(object.numFreeSpin) ? Number(object.numFreeSpin) : 0,
       numWild: isSet(object.numWild) ? Number(object.numWild) : 0,
       ratioWild: isSet(object.ratioWild) ? Number(object.ratioWild) : 0,
@@ -1656,8 +1656,8 @@ export const GameConfig = {
 
   toJSON(message: GameConfig): unknown {
     const obj: any = {};
-    if (message.numScatter !== 0) {
-      obj.numScatter = Math.round(message.numScatter);
+    if (message.numScatterSeq !== 0) {
+      obj.numScatterSeq = Math.round(message.numScatterSeq);
     }
     if (message.numFreeSpin !== 0) {
       obj.numFreeSpin = Math.round(message.numFreeSpin);
@@ -1680,7 +1680,7 @@ export const GameConfig = {
 
   fromPartial<I extends Exact<DeepPartial<GameConfig>, I>>(object: I): GameConfig {
     const message = createBaseGameConfig();
-    message.numScatter = object.numScatter ?? 0;
+    message.numScatterSeq = object.numScatterSeq ?? 0;
     message.numFreeSpin = object.numFreeSpin ?? 0;
     message.numWild = object.numWild ?? 0;
     message.ratioWild = object.ratioWild ?? 0;
