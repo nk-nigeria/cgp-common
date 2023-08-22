@@ -4,6 +4,8 @@ const (
 	SixiangGameName = "sixiang"
 	TarzanGameName  = "tarzan"
 	JuicyGardenName = "juicygarden"
+	IncaGameName    = "inca"
+
 	BlackjackName   = "blackjack"
 	BandarqqName    = "bandarqq"
 	SicboName       = "sicbo"
