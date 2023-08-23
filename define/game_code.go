@@ -18,8 +18,8 @@ const (
 	DragontigerName GameName = "dragontiger"
 )
 
-func (g *GameName) String() string {
-	return string(*g)
+func (g GameName) String() string {
+	return string(g)
 }
 func IsAllowJoinInGameOnProgress(gameCode string) bool {
 	switch GameName(gameCode) {
