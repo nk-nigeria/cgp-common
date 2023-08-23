@@ -7,7 +7,7 @@ const (
 	TarzanGameName  GameName = "tarzan"
 	JuicyGardenName GameName = "juicygarden"
 	// clone game JuicyGardenName
-	CrytoRush    GameName = "cryotorush"
+	CryptoRush   GameName = "cryptorush"
 	IncaGameName GameName = "inca"
 
 	BlackjackName   GameName = "blackjack"
