@@ -126,6 +126,14 @@ export enum SiXiangSymbol {
   SI_XIANG_SYMBOL_JUICE_FRUITBASKET_RANDOM_7 = 4390,
   SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FREE_GAME = 4391,
   SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN = 4392,
+  /** SI_XIANG_SYMBOL_SUIT_HEARTS - inca */
+  SI_XIANG_SYMBOL_SUIT_HEARTS = 4608,
+  SI_XIANG_SYMBOL_SUIT_DIAMONDS = 4609,
+  SI_XIANG_SYMBOL_SUIT_CLUBS = 4610,
+  SI_XIANG_SYMBOL_SUIT_SPADES = 4611,
+  SI_XIANG_SYMBOL_SUN = 4612,
+  SI_XIANG_SYMBOL_EAGLE_GARUDA = 4613,
+  SI_XIANG_SYMBOL_ANTIQUE = 4614,
   SI_XIANG_SYMBOL_WILD = 65535,
   UNRECOGNIZED = -1,
 }
@@ -447,6 +455,27 @@ export function siXiangSymbolFromJSON(object: any): SiXiangSymbol {
     case 4392:
     case "SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN":
       return SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN;
+    case 4608:
+    case "SI_XIANG_SYMBOL_SUIT_HEARTS":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_HEARTS;
+    case 4609:
+    case "SI_XIANG_SYMBOL_SUIT_DIAMONDS":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_DIAMONDS;
+    case 4610:
+    case "SI_XIANG_SYMBOL_SUIT_CLUBS":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_CLUBS;
+    case 4611:
+    case "SI_XIANG_SYMBOL_SUIT_SPADES":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_SPADES;
+    case 4612:
+    case "SI_XIANG_SYMBOL_SUN":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_SUN;
+    case 4613:
+    case "SI_XIANG_SYMBOL_EAGLE_GARUDA":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_EAGLE_GARUDA;
+    case 4614:
+    case "SI_XIANG_SYMBOL_ANTIQUE":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_ANTIQUE;
     case 65535:
     case "SI_XIANG_SYMBOL_WILD":
       return SiXiangSymbol.SI_XIANG_SYMBOL_WILD;
@@ -669,6 +698,20 @@ export function siXiangSymbolToJSON(object: SiXiangSymbol): string {
       return "SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FREE_GAME";
     case SiXiangSymbol.SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN:
       return "SI_XIANG_SYMBOL_JUICE_FUIT_SELECT_FRUIT_RAIN";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_HEARTS:
+      return "SI_XIANG_SYMBOL_SUIT_HEARTS";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_DIAMONDS:
+      return "SI_XIANG_SYMBOL_SUIT_DIAMONDS";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_CLUBS:
+      return "SI_XIANG_SYMBOL_SUIT_CLUBS";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_SUIT_SPADES:
+      return "SI_XIANG_SYMBOL_SUIT_SPADES";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_SUN:
+      return "SI_XIANG_SYMBOL_SUN";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_EAGLE_GARUDA:
+      return "SI_XIANG_SYMBOL_EAGLE_GARUDA";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_ANTIQUE:
+      return "SI_XIANG_SYMBOL_ANTIQUE";
     case SiXiangSymbol.SI_XIANG_SYMBOL_WILD:
       return "SI_XIANG_SYMBOL_WILD";
     case SiXiangSymbol.UNRECOGNIZED:

@@ -1,19 +1,28 @@
 package define
 
+type GameName string
+
 const (
-	SixiangGameName = "sixiang"
-	TarzanGameName  = "tarzan"
-	JuicyGardenName = "juicygarden"
-	BlackjackName   = "blackjack"
-	BandarqqName    = "bandarqq"
-	SicboName       = "sicbo"
-	BaccaratName    = "baccarat"
-	ColorGameName   = "color-game"
-	DragontigerName = "dragontiger"
+	SixiangGameName GameName = "sixiang"
+	TarzanGameName  GameName = "tarzan"
+	JuicyGardenName GameName = "juicygarden"
+	// clone game JuicyGardenName
+	CryptoRush   GameName = "cryptorush"
+	IncaGameName GameName = "inca"
+
+	BlackjackName   GameName = "blackjack"
+	BandarqqName    GameName = "bandarqq"
+	SicboName       GameName = "sicbo"
+	BaccaratName    GameName = "baccarat"
+	ColorGameName   GameName = "color-game"
+	DragontigerName GameName = "dragontiger"
 )
 
+func (g GameName) String() string {
+	return string(g)
+}
 func IsAllowJoinInGameOnProgress(gameCode string) bool {
-	switch gameCode {
+	switch GameName(gameCode) {
 	case SixiangGameName, TarzanGameName, JuicyGardenName:
 		return false
 	default:
