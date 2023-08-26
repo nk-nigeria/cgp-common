@@ -741,6 +741,7 @@ export enum SiXiangGame {
   SI_XIANG_GAME_JUICE_FRUIT_BASKET = 201,
   SI_XIANG_GAME_JUICE_FRUIT_RAIN = 202,
   SI_XIANG_GAME_JUICE_FREE_GAME = 203,
+  SI_XIANG_GAME_INCA_FREE_GAME = 301,
   UNRECOGNIZED = -1,
 }
 
@@ -800,6 +801,9 @@ export function siXiangGameFromJSON(object: any): SiXiangGame {
     case 203:
     case "SI_XIANG_GAME_JUICE_FREE_GAME":
       return SiXiangGame.SI_XIANG_GAME_JUICE_FREE_GAME;
+    case 301:
+    case "SI_XIANG_GAME_INCA_FREE_GAME":
+      return SiXiangGame.SI_XIANG_GAME_INCA_FREE_GAME;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -845,6 +849,8 @@ export function siXiangGameToJSON(object: SiXiangGame): string {
       return "SI_XIANG_GAME_JUICE_FRUIT_RAIN";
     case SiXiangGame.SI_XIANG_GAME_JUICE_FREE_GAME:
       return "SI_XIANG_GAME_JUICE_FREE_GAME";
+    case SiXiangGame.SI_XIANG_GAME_INCA_FREE_GAME:
+      return "SI_XIANG_GAME_INCA_FREE_GAME";
     case SiXiangGame.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
