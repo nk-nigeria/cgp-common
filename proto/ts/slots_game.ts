@@ -134,6 +134,10 @@ export enum SiXiangSymbol {
   SI_XIANG_SYMBOL_SUN = 4612,
   SI_XIANG_SYMBOL_EAGLE_GARUDA = 4613,
   SI_XIANG_SYMBOL_ANTIQUE = 4614,
+  /** SI_XIANG_SYMBOL_CHRISMAS_GIFT - noel */
+  SI_XIANG_SYMBOL_CHRISMAS_GIFT = 4624,
+  SI_XIANG_SYMBOL_CHRISMAS_CANDY = 4625,
+  SI_XIANG_SYMBOL_CHRISMAS_RING = 4626,
   SI_XIANG_SYMBOL_WILD = 65535,
   UNRECOGNIZED = -1,
 }
@@ -476,6 +480,15 @@ export function siXiangSymbolFromJSON(object: any): SiXiangSymbol {
     case 4614:
     case "SI_XIANG_SYMBOL_ANTIQUE":
       return SiXiangSymbol.SI_XIANG_SYMBOL_ANTIQUE;
+    case 4624:
+    case "SI_XIANG_SYMBOL_CHRISMAS_GIFT":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_CHRISMAS_GIFT;
+    case 4625:
+    case "SI_XIANG_SYMBOL_CHRISMAS_CANDY":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_CHRISMAS_CANDY;
+    case 4626:
+    case "SI_XIANG_SYMBOL_CHRISMAS_RING":
+      return SiXiangSymbol.SI_XIANG_SYMBOL_CHRISMAS_RING;
     case 65535:
     case "SI_XIANG_SYMBOL_WILD":
       return SiXiangSymbol.SI_XIANG_SYMBOL_WILD;
@@ -712,6 +725,12 @@ export function siXiangSymbolToJSON(object: SiXiangSymbol): string {
       return "SI_XIANG_SYMBOL_EAGLE_GARUDA";
     case SiXiangSymbol.SI_XIANG_SYMBOL_ANTIQUE:
       return "SI_XIANG_SYMBOL_ANTIQUE";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_CHRISMAS_GIFT:
+      return "SI_XIANG_SYMBOL_CHRISMAS_GIFT";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_CHRISMAS_CANDY:
+      return "SI_XIANG_SYMBOL_CHRISMAS_CANDY";
+    case SiXiangSymbol.SI_XIANG_SYMBOL_CHRISMAS_RING:
+      return "SI_XIANG_SYMBOL_CHRISMAS_RING";
     case SiXiangSymbol.SI_XIANG_SYMBOL_WILD:
       return "SI_XIANG_SYMBOL_WILD";
     case SiXiangSymbol.UNRECOGNIZED:
@@ -741,6 +760,7 @@ export enum SiXiangGame {
   SI_XIANG_GAME_JUICE_FRUIT_BASKET = 201,
   SI_XIANG_GAME_JUICE_FRUIT_RAIN = 202,
   SI_XIANG_GAME_JUICE_FREE_GAME = 203,
+  /** SI_XIANG_GAME_INCA_FREE_GAME - SiXiangGame_SI_XIANG_GAME_NOEL_FREE_GAME = 301; */
   SI_XIANG_GAME_INCA_FREE_GAME = 301,
   UNRECOGNIZED = -1,
 }
@@ -1574,9 +1594,8 @@ export const SlotDesk = {
   },
 
   create<I extends Exact<DeepPartial<SlotDesk>, I>>(base?: I): SlotDesk {
-    return SlotDesk.fromPartial(base ?? {});
+    return SlotDesk.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SlotDesk>, I>>(object: I): SlotDesk {
     const message = createBaseSlotDesk();
     message.matrix = (object.matrix !== undefined && object.matrix !== null)
@@ -1724,9 +1743,8 @@ export const GameConfig = {
   },
 
   create<I extends Exact<DeepPartial<GameConfig>, I>>(base?: I): GameConfig {
-    return GameConfig.fromPartial(base ?? {});
+    return GameConfig.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GameConfig>, I>>(object: I): GameConfig {
     const message = createBaseGameConfig();
     message.numScatterSeq = object.numScatterSeq ?? 0;
@@ -1842,9 +1860,8 @@ export const SlotMatrix = {
   },
 
   create<I extends Exact<DeepPartial<SlotMatrix>, I>>(base?: I): SlotMatrix {
-    return SlotMatrix.fromPartial(base ?? {});
+    return SlotMatrix.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SlotMatrix>, I>>(object: I): SlotMatrix {
     const message = createBaseSlotMatrix();
     message.lists = object.lists?.map((e) => e) || [];
@@ -2003,9 +2020,8 @@ export const SpinSymbol = {
   },
 
   create<I extends Exact<DeepPartial<SpinSymbol>, I>>(base?: I): SpinSymbol {
-    return SpinSymbol.fromPartial(base ?? {});
+    return SpinSymbol.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SpinSymbol>, I>>(object: I): SpinSymbol {
     const message = createBaseSpinSymbol();
     message.symbol = object.symbol ?? 0;
@@ -2098,9 +2114,8 @@ export const CollectSymbol = {
   },
 
   create<I extends Exact<DeepPartial<CollectSymbol>, I>>(base?: I): CollectSymbol {
-    return CollectSymbol.fromPartial(base ?? {});
+    return CollectSymbol.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<CollectSymbol>, I>>(object: I): CollectSymbol {
     const message = createBaseCollectSymbol();
     message.symbol = object.symbol ?? 0;
@@ -2216,9 +2231,8 @@ export const JackpotReward = {
   },
 
   create<I extends Exact<DeepPartial<JackpotReward>, I>>(base?: I): JackpotReward {
-    return JackpotReward.fromPartial(base ?? {});
+    return JackpotReward.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<JackpotReward>, I>>(object: I): JackpotReward {
     const message = createBaseJackpotReward();
     message.winJackpot = object.winJackpot ?? 0;
@@ -2336,9 +2350,8 @@ export const JackpotHistory = {
   },
 
   create<I extends Exact<DeepPartial<JackpotHistory>, I>>(base?: I): JackpotHistory {
-    return JackpotHistory.fromPartial(base ?? {});
+    return JackpotHistory.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<JackpotHistory>, I>>(object: I): JackpotHistory {
     const message = createBaseJackpotHistory();
     message.minor = (object.minor !== undefined && object.minor !== null)
@@ -2492,9 +2505,8 @@ export const Payline = {
   },
 
   create<I extends Exact<DeepPartial<Payline>, I>>(base?: I): Payline {
-    return Payline.fromPartial(base ?? {});
+    return Payline.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<Payline>, I>>(object: I): Payline {
     const message = createBasePayline();
     message.id = object.id ?? 0;
@@ -2786,9 +2798,8 @@ export const GameReward = {
   },
 
   create<I extends Exact<DeepPartial<GameReward>, I>>(base?: I): GameReward {
-    return GameReward.fromPartial(base ?? {});
+    return GameReward.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<GameReward>, I>>(object: I): GameReward {
     const message = createBaseGameReward();
     message.updateWallet = object.updateWallet ?? false;
@@ -2875,9 +2886,8 @@ export const SaveGame = {
   },
 
   create<I extends Exact<DeepPartial<SaveGame>, I>>(base?: I): SaveGame {
-    return SaveGame.fromPartial(base ?? {});
+    return SaveGame.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SaveGame>, I>>(object: I): SaveGame {
     const message = createBaseSaveGame();
     message.lastUpdateUnix = object.lastUpdateUnix ?? 0;
