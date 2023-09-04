@@ -273,9 +273,8 @@ export const DragonTigerBet = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerBet>, I>>(base?: I): DragonTigerBet {
-    return DragonTigerBet.fromPartial(base ?? {});
+    return DragonTigerBet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerBet>, I>>(object: I): DragonTigerBet {
     const message = createBaseDragonTigerBet();
     message.chips = object.chips ?? 0;
@@ -348,9 +347,8 @@ export const DragonTigerBetResult = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerBetResult>, I>>(base?: I): DragonTigerBetResult {
-    return DragonTigerBetResult.fromPartial(base ?? {});
+    return DragonTigerBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerBetResult>, I>>(object: I): DragonTigerBetResult {
     const message = createBaseDragonTigerBetResult();
     message.bet = (object.bet !== undefined && object.bet !== null)
@@ -439,9 +437,8 @@ export const DragonTigerPlayerBets = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerPlayerBets>, I>>(base?: I): DragonTigerPlayerBets {
-    return DragonTigerPlayerBets.fromPartial(base ?? {});
+    return DragonTigerPlayerBets.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerPlayerBets>, I>>(object: I): DragonTigerPlayerBets {
     const message = createBaseDragonTigerPlayerBets();
     message.userId = object.userId ?? "";
@@ -515,9 +512,8 @@ export const DragonTigerPlayerBetResult = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerPlayerBetResult>, I>>(base?: I): DragonTigerPlayerBetResult {
-    return DragonTigerPlayerBetResult.fromPartial(base ?? {});
+    return DragonTigerPlayerBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerPlayerBetResult>, I>>(object: I): DragonTigerPlayerBetResult {
     const message = createBaseDragonTigerPlayerBetResult();
     message.userId = object.userId ?? "";
@@ -604,9 +600,8 @@ export const DragonTigerDeskCell = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerDeskCell>, I>>(base?: I): DragonTigerDeskCell {
-    return DragonTigerDeskCell.fromPartial(base ?? {});
+    return DragonTigerDeskCell.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerDeskCell>, I>>(object: I): DragonTigerDeskCell {
     const message = createBaseDragonTigerDeskCell();
     message.cell = object.cell ?? 0;
@@ -664,9 +659,8 @@ export const DragonTigerListDeskCell = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerListDeskCell>, I>>(base?: I): DragonTigerListDeskCell {
-    return DragonTigerListDeskCell.fromPartial(base ?? {});
+    return DragonTigerListDeskCell.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerListDeskCell>, I>>(object: I): DragonTigerListDeskCell {
     const message = createBaseDragonTigerListDeskCell();
     message.list = object.list?.map((e) => DragonTigerDeskCell.fromPartial(e)) || [];
@@ -738,9 +732,8 @@ export const DragonTigerHand = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerHand>, I>>(base?: I): DragonTigerHand {
-    return DragonTigerHand.fromPartial(base ?? {});
+    return DragonTigerHand.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerHand>, I>>(object: I): DragonTigerHand {
     const message = createBaseDragonTigerHand();
     message.dragon = (object.dragon !== undefined && object.dragon !== null)
@@ -843,9 +836,8 @@ export const DragonTigerGameFinish = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerGameFinish>, I>>(base?: I): DragonTigerGameFinish {
-    return DragonTigerGameFinish.fromPartial(base ?? {});
+    return DragonTigerGameFinish.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerGameFinish>, I>>(object: I): DragonTigerGameFinish {
     const message = createBaseDragonTigerGameFinish();
     message.hand = (object.hand !== undefined && object.hand !== null)
@@ -907,9 +899,8 @@ export const DragonTigerHistory = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerHistory>, I>>(base?: I): DragonTigerHistory {
-    return DragonTigerHistory.fromPartial(base ?? {});
+    return DragonTigerHistory.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerHistory>, I>>(object: I): DragonTigerHistory {
     const message = createBaseDragonTigerHistory();
     message.histories = object.histories?.map((e) => DragonTigerHand.fromPartial(e)) || [];
@@ -1009,9 +1000,8 @@ export const DragonTigerPlayer = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerPlayer>, I>>(base?: I): DragonTigerPlayer {
-    return DragonTigerPlayer.fromPartial(base ?? {});
+    return DragonTigerPlayer.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerPlayer>, I>>(object: I): DragonTigerPlayer {
     const message = createBaseDragonTigerPlayer();
     message.userName = object.userName ?? "";
@@ -1116,9 +1106,8 @@ export const DragonTigerUpdateTable = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerUpdateTable>, I>>(base?: I): DragonTigerUpdateTable {
-    return DragonTigerUpdateTable.fromPartial(base ?? {});
+    return DragonTigerUpdateTable.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerUpdateTable>, I>>(object: I): DragonTigerUpdateTable {
     const message = createBaseDragonTigerUpdateTable();
     message.gameState = object.gameState ?? 0;
@@ -1271,9 +1260,8 @@ export const DragonTigerUpdateDesk = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerUpdateDesk>, I>>(base?: I): DragonTigerUpdateDesk {
-    return DragonTigerUpdateDesk.fromPartial(base ?? {});
+    return DragonTigerUpdateDesk.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerUpdateDesk>, I>>(object: I): DragonTigerUpdateDesk {
     const message = createBaseDragonTigerUpdateDesk();
     message.nPlayers = object.nPlayers ?? 0;
@@ -1341,9 +1329,8 @@ export const DragonTigerActionReject = {
   },
 
   create<I extends Exact<DeepPartial<DragonTigerActionReject>, I>>(base?: I): DragonTigerActionReject {
-    return DragonTigerActionReject.fromPartial(base ?? {});
+    return DragonTigerActionReject.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<DragonTigerActionReject>, I>>(object: I): DragonTigerActionReject {
     const message = createBaseDragonTigerActionReject();
     message.reason = object.reason ?? "";

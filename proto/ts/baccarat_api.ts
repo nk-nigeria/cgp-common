@@ -291,9 +291,8 @@ export const BaccaratBet = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratBet>, I>>(base?: I): BaccaratBet {
-    return BaccaratBet.fromPartial(base ?? {});
+    return BaccaratBet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratBet>, I>>(object: I): BaccaratBet {
     const message = createBaseBaccaratBet();
     message.chips = object.chips ?? 0;
@@ -366,9 +365,8 @@ export const BaccaratBetResult = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratBetResult>, I>>(base?: I): BaccaratBetResult {
-    return BaccaratBetResult.fromPartial(base ?? {});
+    return BaccaratBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratBetResult>, I>>(object: I): BaccaratBetResult {
     const message = createBaseBaccaratBetResult();
     message.bet = (object.bet !== undefined && object.bet !== null) ? BaccaratBet.fromPartial(object.bet) : undefined;
@@ -455,9 +453,8 @@ export const BaccaratPlayerBet = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratPlayerBet>, I>>(base?: I): BaccaratPlayerBet {
-    return BaccaratPlayerBet.fromPartial(base ?? {});
+    return BaccaratPlayerBet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratPlayerBet>, I>>(object: I): BaccaratPlayerBet {
     const message = createBaseBaccaratPlayerBet();
     message.userId = object.userId ?? "";
@@ -531,9 +528,8 @@ export const BaccaratPlayerBetResult = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratPlayerBetResult>, I>>(base?: I): BaccaratPlayerBetResult {
-    return BaccaratPlayerBetResult.fromPartial(base ?? {});
+    return BaccaratPlayerBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratPlayerBetResult>, I>>(object: I): BaccaratPlayerBetResult {
     const message = createBaseBaccaratPlayerBetResult();
     message.userId = object.userId ?? "";
@@ -620,9 +616,8 @@ export const BaccaratHand = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratHand>, I>>(base?: I): BaccaratHand {
-    return BaccaratHand.fromPartial(base ?? {});
+    return BaccaratHand.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratHand>, I>>(object: I): BaccaratHand {
     const message = createBaseBaccaratHand();
     message.cards = object.cards?.map((e) => Card.fromPartial(e)) || [];
@@ -696,9 +691,8 @@ export const BaccaratHands = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratHands>, I>>(base?: I): BaccaratHands {
-    return BaccaratHands.fromPartial(base ?? {});
+    return BaccaratHands.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratHands>, I>>(object: I): BaccaratHands {
     const message = createBaseBaccaratHands();
     message.banker = (object.banker !== undefined && object.banker !== null)
@@ -803,9 +797,8 @@ export const BaccaratGameFinish = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratGameFinish>, I>>(base?: I): BaccaratGameFinish {
-    return BaccaratGameFinish.fromPartial(base ?? {});
+    return BaccaratGameFinish.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratGameFinish>, I>>(object: I): BaccaratGameFinish {
     const message = createBaseBaccaratGameFinish();
     message.hand = (object.hand !== undefined && object.hand !== null)
@@ -895,9 +888,8 @@ export const BaccaratBetCellInfo = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratBetCellInfo>, I>>(base?: I): BaccaratBetCellInfo {
-    return BaccaratBetCellInfo.fromPartial(base ?? {});
+    return BaccaratBetCellInfo.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratBetCellInfo>, I>>(object: I): BaccaratBetCellInfo {
     const message = createBaseBaccaratBetCellInfo();
     message.cell = object.cell ?? 0;
@@ -985,9 +977,8 @@ export const BaccaratSimpleHistory = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratSimpleHistory>, I>>(base?: I): BaccaratSimpleHistory {
-    return BaccaratSimpleHistory.fromPartial(base ?? {});
+    return BaccaratSimpleHistory.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratSimpleHistory>, I>>(object: I): BaccaratSimpleHistory {
     const message = createBaseBaccaratSimpleHistory();
     message.bankerWin = object.bankerWin ?? 0;
@@ -1141,9 +1132,8 @@ export const BaccaratUpdateDesk = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratUpdateDesk>, I>>(base?: I): BaccaratUpdateDesk {
-    return BaccaratUpdateDesk.fromPartial(base ?? {});
+    return BaccaratUpdateDesk.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratUpdateDesk>, I>>(object: I): BaccaratUpdateDesk {
     const message = createBaseBaccaratUpdateDesk();
     message.nPlayers = object.nPlayers ?? 0;
@@ -1209,9 +1199,8 @@ export const BaccaratBetActionReject = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratBetActionReject>, I>>(base?: I): BaccaratBetActionReject {
-    return BaccaratBetActionReject.fromPartial(base ?? {});
+    return BaccaratBetActionReject.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratBetActionReject>, I>>(object: I): BaccaratBetActionReject {
     const message = createBaseBaccaratBetActionReject();
     message.reason = object.reason ?? 0;
@@ -1297,9 +1286,8 @@ export const BaccaratUpdateDeal = {
   },
 
   create<I extends Exact<DeepPartial<BaccaratUpdateDeal>, I>>(base?: I): BaccaratUpdateDeal {
-    return BaccaratUpdateDeal.fromPartial(base ?? {});
+    return BaccaratUpdateDeal.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<BaccaratUpdateDeal>, I>>(object: I): BaccaratUpdateDeal {
     const message = createBaseBaccaratUpdateDeal();
     message.isPlayer = object.isPlayer ?? false;

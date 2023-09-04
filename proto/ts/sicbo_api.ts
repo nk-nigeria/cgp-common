@@ -479,9 +479,8 @@ export const SicboBet = {
   },
 
   create<I extends Exact<DeepPartial<SicboBet>, I>>(base?: I): SicboBet {
-    return SicboBet.fromPartial(base ?? {});
+    return SicboBet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboBet>, I>>(object: I): SicboBet {
     const message = createBaseSicboBet();
     message.chips = object.chips ?? 0;
@@ -554,9 +553,8 @@ export const SicboBetResult = {
   },
 
   create<I extends Exact<DeepPartial<SicboBetResult>, I>>(base?: I): SicboBetResult {
-    return SicboBetResult.fromPartial(base ?? {});
+    return SicboBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboBetResult>, I>>(object: I): SicboBetResult {
     const message = createBaseSicboBetResult();
     message.bet = (object.bet !== undefined && object.bet !== null) ? SicboBet.fromPartial(object.bet) : undefined;
@@ -643,9 +641,8 @@ export const SicboPlayerBet = {
   },
 
   create<I extends Exact<DeepPartial<SicboPlayerBet>, I>>(base?: I): SicboPlayerBet {
-    return SicboPlayerBet.fromPartial(base ?? {});
+    return SicboPlayerBet.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboPlayerBet>, I>>(object: I): SicboPlayerBet {
     const message = createBaseSicboPlayerBet();
     message.userId = object.userId ?? "";
@@ -719,9 +716,8 @@ export const SicboPlayerBetResult = {
   },
 
   create<I extends Exact<DeepPartial<SicboPlayerBetResult>, I>>(base?: I): SicboPlayerBetResult {
-    return SicboPlayerBetResult.fromPartial(base ?? {});
+    return SicboPlayerBetResult.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboPlayerBetResult>, I>>(object: I): SicboPlayerBetResult {
     const message = createBaseSicboPlayerBetResult();
     message.userId = object.userId ?? "";
@@ -790,9 +786,8 @@ export const SicboHand = {
   },
 
   create<I extends Exact<DeepPartial<SicboHand>, I>>(base?: I): SicboHand {
-    return SicboHand.fromPartial(base ?? {});
+    return SicboHand.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboHand>, I>>(object: I): SicboHand {
     const message = createBaseSicboHand();
     message.dices = object.dices?.map((e) => e) || [];
@@ -892,9 +887,8 @@ export const SicboGameFinish = {
   },
 
   create<I extends Exact<DeepPartial<SicboGameFinish>, I>>(base?: I): SicboGameFinish {
-    return SicboGameFinish.fromPartial(base ?? {});
+    return SicboGameFinish.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboGameFinish>, I>>(object: I): SicboGameFinish {
     const message = createBaseSicboGameFinish();
     message.hand = (object.hand !== undefined && object.hand !== null) ? SicboHand.fromPartial(object.hand) : undefined;
@@ -982,9 +976,8 @@ export const SicboBetCellInfo = {
   },
 
   create<I extends Exact<DeepPartial<SicboBetCellInfo>, I>>(base?: I): SicboBetCellInfo {
-    return SicboBetCellInfo.fromPartial(base ?? {});
+    return SicboBetCellInfo.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboBetCellInfo>, I>>(object: I): SicboBetCellInfo {
     const message = createBaseSicboBetCellInfo();
     message.cell = object.cell ?? 0;
@@ -1136,9 +1129,8 @@ export const SicboUpdateDesk = {
   },
 
   create<I extends Exact<DeepPartial<SicboUpdateDesk>, I>>(base?: I): SicboUpdateDesk {
-    return SicboUpdateDesk.fromPartial(base ?? {});
+    return SicboUpdateDesk.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboUpdateDesk>, I>>(object: I): SicboUpdateDesk {
     const message = createBaseSicboUpdateDesk();
     message.nPlayers = object.nPlayers ?? 0;
@@ -1202,9 +1194,8 @@ export const SicboActionReject = {
   },
 
   create<I extends Exact<DeepPartial<SicboActionReject>, I>>(base?: I): SicboActionReject {
-    return SicboActionReject.fromPartial(base ?? {});
+    return SicboActionReject.fromPartial(base ?? ({} as any));
   },
-
   fromPartial<I extends Exact<DeepPartial<SicboActionReject>, I>>(object: I): SicboActionReject {
     const message = createBaseSicboActionReject();
     message.reason = object.reason ?? 0;
