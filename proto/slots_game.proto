@@ -278,6 +278,7 @@ enum SiXiangGame {
 
   SI_XIANG_GAME_INCA_FREE_GAME = 301;
   // SiXiangGame_SI_XIANG_GAME_NOEL_FREE_GAME = 301; 
+  // SiXiangGame_SI_XIANG_GAME_FRUIT_FREE_GAME = 301; 
 }
 
 enum BigWin {
