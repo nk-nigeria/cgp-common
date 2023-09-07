@@ -14,9 +14,9 @@ const (
 	FruitGameName GameName = "fruit"
 
 	// Duō Fú Duō Cái
-	FortuneFoundFortune = "fortunefoundfortune" // clone TarzanGameName
+	FortuneFoundFortune GameName = "fortunefoundfortune" // clone TarzanGameName
 	// Clone Si Xiang Slots
-	JourneyToTheWest = "journeytothewest"
+	JourneyToTheWest GameName = "journeytothewest"
 
 	BlackjackName   GameName = "blackjack"
 	BandarqqName    GameName = "bandarqq"
