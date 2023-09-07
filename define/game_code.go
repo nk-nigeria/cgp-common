@@ -13,6 +13,11 @@ const (
 	NoelGameName  GameName = "noel"
 	FruitGameName GameName = "fruit"
 
+	// Duō Fú Duō Cái
+	FortuneFoundFortune = "fortunefoundfortune" // clone TarzanGameName
+	// Clone Si Xiang Slots
+	JourneyToTheWest = "journeytothewest"
+
 	BlackjackName   GameName = "blackjack"
 	BandarqqName    GameName = "bandarqq"
 	SicboName       GameName = "sicbo"
