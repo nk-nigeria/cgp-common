@@ -48,6 +48,7 @@ message GapleDominoUpdateDesk {
   GapleDominoPenalty penalty = 11;
   repeated GapleDominoPresenceNumRemained remaineds = 12;
   string in_turn = 13; // uid of player in current turn
+  repeated int32 remained_domino_faces_count = 14;
 }
 
 message GapleDominoPresenceNumRemained {
