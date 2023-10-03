@@ -25,6 +25,12 @@ message GapleDominoPenalty {
   string gain_player = 1;
   string lost_player = 2;
   int32 chips = 3;
+  repeated int32 lost_player_not_have_facelets = 4;
+}
+
+message GapleDominoChainNode {
+  Domino domino = 1;
+  int32 turn_number = 2;
 }
 
 // note: when user that was disconnected reenter the table and that game not yet
@@ -40,15 +46,14 @@ message GapleDominoUpdateDesk {
   bool is_penalty_occur = 5;
   bool is_update_legal_actions = 6;
   bool is_update_num_remained_card = 7;
-  repeated int32 chains = 8;     // update entire chain on tables
+  repeated GapleDominoChainNode chain = 8;     // update entire chain on tables
   GapleDominoAction action = 9; //  last piece of domino, adding it to the table
   //  chain in correspond chain's end
-  repeated GapleDominoAction legal_actions =
-      10; // for displaying playable cards
+  repeated GapleDominoAction legal_actions = 10; // for displaying playable cards
   GapleDominoPenalty penalty = 11;
   repeated GapleDominoPresenceNumRemained remaineds = 12;
   string in_turn = 13; // uid of player in current turn
-  repeated int32 remained_domino_faces_count = 14;
+  repeated int32 remained_facelets_count = 14; // count facelets remained on all players hand
 }
 
 message GapleDominoPresenceNumRemained {
