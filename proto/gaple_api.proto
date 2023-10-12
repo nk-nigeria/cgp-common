@@ -84,4 +84,5 @@ enum GapleDominoFinishGameType {
 message GapleDoninoUpdateFinish {
   GapleDominoFinishGameType type = 1;
   string winner = 2;
+  repeated GapleDominoPresenceHand hands = 3;
 }
