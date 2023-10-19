@@ -411,20 +411,20 @@ export const OpPlayer = {
 
   fromJSON(object: any): OpPlayer {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
-      gameName: isSet(object.gameName) ? String(object.gameName) : "",
-      noBet: isSet(object.noBet) ? Number(object.noBet) : 0,
-      noWin: isSet(object.noWin) ? Number(object.noWin) : 0,
-      noLost: isSet(object.noLost) ? Number(object.noLost) : 0,
-      chipWin: isSet(object.chipWin) ? Number(object.chipWin) : 0,
-      chipLost: isSet(object.chipLost) ? Number(object.chipLost) : 0,
-      chipBalance: isSet(object.chipBalance) ? Number(object.chipBalance) : 0,
-      action: isSet(object.action) ? Number(object.action) : 0,
-      status: isSet(object.status) ? String(object.status) : "",
-      dateUnix: isSet(object.dateUnix) ? Number(object.dateUnix) : 0,
-      mcb: isSet(object.mcb) ? Number(object.mcb) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
+      noBet: isSet(object.noBet) ? globalThis.Number(object.noBet) : 0,
+      noWin: isSet(object.noWin) ? globalThis.Number(object.noWin) : 0,
+      noLost: isSet(object.noLost) ? globalThis.Number(object.noLost) : 0,
+      chipWin: isSet(object.chipWin) ? globalThis.Number(object.chipWin) : 0,
+      chipLost: isSet(object.chipLost) ? globalThis.Number(object.chipLost) : 0,
+      chipBalance: isSet(object.chipBalance) ? globalThis.Number(object.chipBalance) : 0,
+      action: isSet(object.action) ? globalThis.Number(object.action) : 0,
+      status: isSet(object.status) ? globalThis.String(object.status) : "",
+      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
+      mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
     };
   },
 
@@ -595,13 +595,13 @@ export const OpPlayerRequest = {
 
   fromJSON(object: any): OpPlayerRequest {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
-      action: isSet(object.action) ? Number(object.action) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      action: isSet(object.action) ? globalThis.Number(object.action) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
   },
 
@@ -734,12 +734,14 @@ export const OpPlayerResponse = {
 
   fromJSON(object: any): OpPlayerResponse {
     return {
-      opPlayers: Array.isArray(object?.opPlayers) ? object.opPlayers.map((e: any) => OpPlayer.fromJSON(e)) : [],
-      total: isSet(object.total) ? Number(object.total) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      totalChipWin: isSet(object.totalChipWin) ? Number(object.totalChipWin) : 0,
-      totalChipLost: isSet(object.totalChipLost) ? Number(object.totalChipLost) : 0,
+      opPlayers: globalThis.Array.isArray(object?.opPlayers)
+        ? object.opPlayers.map((e: any) => OpPlayer.fromJSON(e))
+        : [],
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
+      totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
     };
   },
 
@@ -908,15 +910,15 @@ export const MatchDetail = {
 
   fromJSON(object: any): MatchDetail {
     return {
-      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
-      gameName: isSet(object.gameName) ? String(object.gameName) : "",
-      mcb: isSet(object.mcb) ? Number(object.mcb) : 0,
-      numMatchPlayed: isSet(object.numMatchPlayed) ? Number(object.numMatchPlayed) : 0,
-      chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
-      detail: isSet(object.detail) ? String(object.detail) : "",
-      tableId: isSet(object.tableId) ? String(object.tableId) : "",
-      dateUnix: isSet(object.dateUnix) ? Number(object.dateUnix) : 0,
-      createdAtUnix: isSet(object.createdAtUnix) ? Number(object.createdAtUnix) : 0,
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
+      mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
+      numMatchPlayed: isSet(object.numMatchPlayed) ? globalThis.Number(object.numMatchPlayed) : 0,
+      chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
+      detail: isSet(object.detail) ? globalThis.String(object.detail) : "",
+      tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
+      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
+      createdAtUnix: isSet(object.createdAtUnix) ? globalThis.Number(object.createdAtUnix) : 0,
     };
   },
 
@@ -1067,13 +1069,13 @@ export const MatchDetailRequest = {
 
   fromJSON(object: any): MatchDetailRequest {
     return {
-      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      userPairId: isSet(object.userPairId) ? String(object.userPairId) : "",
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userPairId: isSet(object.userPairId) ? globalThis.String(object.userPairId) : "",
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
     };
   },
 
@@ -1186,12 +1188,12 @@ export const MatchDetailResponse = {
 
   fromJSON(object: any): MatchDetailResponse {
     return {
-      matchDetails: Array.isArray(object?.matchDetails)
+      matchDetails: globalThis.Array.isArray(object?.matchDetails)
         ? object.matchDetails.map((e: any) => MatchDetail.fromJSON(e))
         : [],
-      total: isSet(object.total) ? Number(object.total) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
     };
   },
 
@@ -1282,9 +1284,9 @@ export const PlayerData = {
 
   fromJSON(object: any): PlayerData {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      chip: isSet(object.chip) ? Number(object.chip) : 0,
-      chipAdd: isSet(object.chipAdd) ? Number(object.chipAdd) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      chip: isSet(object.chip) ? globalThis.Number(object.chip) : 0,
+      chipAdd: isSet(object.chipAdd) ? globalThis.Number(object.chipAdd) : 0,
     };
   },
 
@@ -1391,11 +1393,11 @@ export const MatchData = {
 
   fromJSON(object: any): MatchData {
     return {
-      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
-      gameCode: isSet(object.gameCode) ? String(object.gameCode) : "",
-      mcb: isSet(object.mcb) ? Number(object.mcb) : 0,
-      chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
-      matchId: isSet(object.matchId) ? String(object.matchId) : "",
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
+      mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
+      chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
+      matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
     };
   },
 
@@ -1480,7 +1482,9 @@ export const OpReport = {
 
   fromJSON(object: any): OpReport {
     return {
-      playerData: Array.isArray(object?.playerData) ? object.playerData.map((e: any) => PlayerData.fromJSON(e)) : [],
+      playerData: globalThis.Array.isArray(object?.playerData)
+        ? object.playerData.map((e: any) => PlayerData.fromJSON(e))
+        : [],
       matchData: isSet(object.matchData) ? MatchData.fromJSON(object.matchData) : undefined,
     };
   },
@@ -1606,13 +1610,15 @@ export const GoldStatistic = {
 
   fromJSON(object: any): GoldStatistic {
     return {
-      timeUpdateUnix: isSet(object.timeUpdateUnix) ? Number(object.timeUpdateUnix) : 0,
-      pay: isSet(object.pay) ? Number(object.pay) : 0,
-      promotion: isSet(object.promotion) ? Number(object.promotion) : 0,
-      matchData: Array.isArray(object?.matchData) ? object.matchData.map((e: any) => MatchData.fromJSON(e)) : [],
-      agCashout: isSet(object.agCashout) ? Number(object.agCashout) : 0,
-      agBank: isSet(object.agBank) ? Number(object.agBank) : 0,
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      timeUpdateUnix: isSet(object.timeUpdateUnix) ? globalThis.Number(object.timeUpdateUnix) : 0,
+      pay: isSet(object.pay) ? globalThis.Number(object.pay) : 0,
+      promotion: isSet(object.promotion) ? globalThis.Number(object.promotion) : 0,
+      matchData: globalThis.Array.isArray(object?.matchData)
+        ? object.matchData.map((e: any) => MatchData.fromJSON(e))
+        : [],
+      agCashout: isSet(object.agCashout) ? globalThis.Number(object.agCashout) : 0,
+      agBank: isSet(object.agBank) ? globalThis.Number(object.agBank) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
     };
   },
 
@@ -1725,10 +1731,10 @@ export const GoldStatisticRequest = {
 
   fromJSON(object: any): GoldStatisticRequest {
     return {
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
     };
   },
 
@@ -1829,12 +1835,12 @@ export const GoldStatisticResponse = {
 
   fromJSON(object: any): GoldStatisticResponse {
     return {
-      goldStatistics: Array.isArray(object?.goldStatistics)
+      goldStatistics: globalThis.Array.isArray(object?.goldStatistics)
         ? object.goldStatistics.map((e: any) => GoldStatistic.fromJSON(e))
         : [],
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      total: isSet(object.total) ? Number(object.total) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
     };
   },
 
@@ -2061,25 +2067,25 @@ export const UserStatistic = {
 
   fromJSON(object: any): UserStatistic {
     return {
-      totalChipDeposit: isSet(object.totalChipDeposit) ? Number(object.totalChipDeposit) : 0,
-      totalChipWithDraw: isSet(object.totalChipWithDraw) ? Number(object.totalChipWithDraw) : 0,
-      totalChipWin: isSet(object.totalChipWin) ? Number(object.totalChipWin) : 0,
-      totalChipLose: isSet(object.totalChipLose) ? Number(object.totalChipLose) : 0,
-      totalChipPromotion: isSet(object.totalChipPromotion) ? Number(object.totalChipPromotion) : 0,
-      totalChipSend: isSet(object.totalChipSend) ? Number(object.totalChipSend) : 0,
-      totalChipRecv: isSet(object.totalChipRecv) ? Number(object.totalChipRecv) : 0,
-      coRatio: isSet(object.coRatio) ? Number(object.coRatio) : 0,
-      totalChipDeposit3d: isSet(object.totalChipDeposit3d) ? Number(object.totalChipDeposit3d) : 0,
-      totalChipWithDraw3d: isSet(object.totalChipWithDraw3d) ? Number(object.totalChipWithDraw3d) : 0,
-      luck: isSet(object.luck) ? Number(object.luck) : 0,
-      userCreateTimeUnix: isSet(object.userCreateTimeUnix) ? Number(object.userCreateTimeUnix) : 0,
-      userStatGameHistories: Array.isArray(object?.userStatGameHistories)
+      totalChipDeposit: isSet(object.totalChipDeposit) ? globalThis.Number(object.totalChipDeposit) : 0,
+      totalChipWithDraw: isSet(object.totalChipWithDraw) ? globalThis.Number(object.totalChipWithDraw) : 0,
+      totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
+      totalChipLose: isSet(object.totalChipLose) ? globalThis.Number(object.totalChipLose) : 0,
+      totalChipPromotion: isSet(object.totalChipPromotion) ? globalThis.Number(object.totalChipPromotion) : 0,
+      totalChipSend: isSet(object.totalChipSend) ? globalThis.Number(object.totalChipSend) : 0,
+      totalChipRecv: isSet(object.totalChipRecv) ? globalThis.Number(object.totalChipRecv) : 0,
+      coRatio: isSet(object.coRatio) ? globalThis.Number(object.coRatio) : 0,
+      totalChipDeposit3d: isSet(object.totalChipDeposit3d) ? globalThis.Number(object.totalChipDeposit3d) : 0,
+      totalChipWithDraw3d: isSet(object.totalChipWithDraw3d) ? globalThis.Number(object.totalChipWithDraw3d) : 0,
+      luck: isSet(object.luck) ? globalThis.Number(object.luck) : 0,
+      userCreateTimeUnix: isSet(object.userCreateTimeUnix) ? globalThis.Number(object.userCreateTimeUnix) : 0,
+      userStatGameHistories: globalThis.Array.isArray(object?.userStatGameHistories)
         ? object.userStatGameHistories.map((e: any) => UserStatGameHistory.fromJSON(e))
         : [],
-      recvChipStats: Array.isArray(object?.recvChipStats)
+      recvChipStats: globalThis.Array.isArray(object?.recvChipStats)
         ? object.recvChipStats.map((e: any) => UserTransferGoldStat.fromJSON(e))
         : [],
-      sendChipStats: Array.isArray(object?.sendChipStats)
+      sendChipStats: globalThis.Array.isArray(object?.sendChipStats)
         ? object.sendChipStats.map((e: any) => UserTransferGoldStat.fromJSON(e))
         : [],
     };
@@ -2216,9 +2222,9 @@ export const UserStatisticRequest = {
 
   fromJSON(object: any): UserStatisticRequest {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
     };
   },
 
@@ -2315,10 +2321,10 @@ export const UserStatGameHistory = {
 
   fromJSON(object: any): UserStatGameHistory {
     return {
-      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
-      gameName: isSet(object.gameName) ? String(object.gameName) : "",
-      totalChipWin: isSet(object.totalChipWin) ? Number(object.totalChipWin) : 0,
-      totalChipLost: isSet(object.totalChipLost) ? Number(object.totalChipLost) : 0,
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
+      totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
+      totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
     };
   },
 
@@ -2429,11 +2435,11 @@ export const UserTransferGoldStat = {
 
   fromJSON(object: any): UserTransferGoldStat {
     return {
-      userSendId: isSet(object.userSendId) ? String(object.userSendId) : "",
-      userSendName: isSet(object.userSendName) ? String(object.userSendName) : "",
-      userRecvId: isSet(object.userRecvId) ? String(object.userRecvId) : "",
-      userRecvName: isSet(object.userRecvName) ? String(object.userRecvName) : "",
-      chip: isSet(object.chip) ? Number(object.chip) : 0,
+      userSendId: isSet(object.userSendId) ? globalThis.String(object.userSendId) : "",
+      userSendName: isSet(object.userSendName) ? globalThis.String(object.userSendName) : "",
+      userRecvId: isSet(object.userRecvId) ? globalThis.String(object.userRecvId) : "",
+      userRecvName: isSet(object.userRecvName) ? globalThis.String(object.userRecvName) : "",
+      chip: isSet(object.chip) ? globalThis.Number(object.chip) : 0,
     };
   },
 
@@ -2529,8 +2535,8 @@ export const UserInfo = {
   fromJSON(object: any): UserInfo {
     return {
       profile: isSet(object.profile) ? Profile.fromJSON(object.profile) : undefined,
-      totalIn: isSet(object.totalIn) ? Number(object.totalIn) : 0,
-      totalOut: isSet(object.totalOut) ? Number(object.totalOut) : 0,
+      totalIn: isSet(object.totalIn) ? globalThis.Number(object.totalIn) : 0,
+      totalOut: isSet(object.totalOut) ? globalThis.Number(object.totalOut) : 0,
     };
   },
 
@@ -2659,13 +2665,13 @@ export const CashOut = {
 
   fromJSON(object: any): CashOut {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      ci: isSet(object.ci) ? Number(object.ci) : 0,
-      cio: isSet(object.cio) ? Number(object.cio) : 0,
-      co: isSet(object.co) ? Number(object.co) : 0,
-      coo: isSet(object.coo) ? Number(object.coo) : 0,
-      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
+      cio: isSet(object.cio) ? globalThis.Number(object.cio) : 0,
+      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
+      coo: isSet(object.coo) ? globalThis.Number(object.coo) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
     };
   },
 
@@ -2798,12 +2804,12 @@ export const TopCashOut = {
 
   fromJSON(object: any): TopCashOut {
     return {
-      cashouts: Array.isArray(object?.cashouts) ? object.cashouts.map((e: any) => CashOut.fromJSON(e)) : [],
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      total: isSet(object.total) ? Number(object.total) : 0,
+      cashouts: globalThis.Array.isArray(object?.cashouts) ? object.cashouts.map((e: any) => CashOut.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
     };
   },
 
@@ -3049,22 +3055,22 @@ export const Vip = {
 
   fromJSON(object: any): Vip {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      cio: isSet(object.cio) ? Number(object.cio) : 0,
-      totalChip: isSet(object.totalChip) ? Number(object.totalChip) : 0,
-      lastLoginTimeUnix: isSet(object.lastLoginTimeUnix) ? Number(object.lastLoginTimeUnix) : 0,
-      createdTimeUnix: isSet(object.createdTimeUnix) ? Number(object.createdTimeUnix) : 0,
-      refGame: isSet(object.refGame) ? String(object.refGame) : "",
-      ci: isSet(object.ci) ? Number(object.ci) : 0,
-      co: isSet(object.co) ? Number(object.co) : 0,
-      ci2d: isSet(object.ci2d) ? Number(object.ci2d) : 0,
-      co2d: isSet(object.co2d) ? Number(object.co2d) : 0,
-      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
-      isBanned: isSet(object.isBanned) ? Boolean(object.isBanned) : false,
-      isOnline: isSet(object.isOnline) ? Boolean(object.isOnline) : false,
-      totalIn: isSet(object.totalIn) ? Number(object.totalIn) : 0,
-      totalOut: isSet(object.totalOut) ? Number(object.totalOut) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      cio: isSet(object.cio) ? globalThis.Number(object.cio) : 0,
+      totalChip: isSet(object.totalChip) ? globalThis.Number(object.totalChip) : 0,
+      lastLoginTimeUnix: isSet(object.lastLoginTimeUnix) ? globalThis.Number(object.lastLoginTimeUnix) : 0,
+      createdTimeUnix: isSet(object.createdTimeUnix) ? globalThis.Number(object.createdTimeUnix) : 0,
+      refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
+      ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
+      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
+      ci2d: isSet(object.ci2d) ? globalThis.Number(object.ci2d) : 0,
+      co2d: isSet(object.co2d) ? globalThis.Number(object.co2d) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
+      isBanned: isSet(object.isBanned) ? globalThis.Boolean(object.isBanned) : false,
+      isOnline: isSet(object.isOnline) ? globalThis.Boolean(object.isOnline) : false,
+      totalIn: isSet(object.totalIn) ? globalThis.Number(object.totalIn) : 0,
+      totalOut: isSet(object.totalOut) ? globalThis.Number(object.totalOut) : 0,
     };
   },
 
@@ -3243,13 +3249,13 @@ export const TopVip = {
 
   fromJSON(object: any): TopVip {
     return {
-      vips: Array.isArray(object?.vips) ? object.vips.map((e: any) => Vip.fromJSON(e)) : [],
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      refGame: isSet(object.refGame) ? String(object.refGame) : "",
-      total: isSet(object.total) ? Number(object.total) : 0,
+      vips: globalThis.Array.isArray(object?.vips) ? object.vips.map((e: any) => Vip.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
     };
   },
 
@@ -3422,16 +3428,16 @@ export const Win = {
 
   fromJSON(object: any): Win {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      vip: isSet(object.vip) ? Number(object.vip) : 0,
-      gold: isSet(object.gold) ? Number(object.gold) : 0,
-      ag: isSet(object.ag) ? Number(object.ag) : 0,
-      agWin: isSet(object.agWin) ? Number(object.agWin) : 0,
-      co: isSet(object.co) ? Number(object.co) : 0,
-      ci: isSet(object.ci) ? Number(object.ci) : 0,
-      coRate: isSet(object.coRate) ? Number(object.coRate) : 0,
-      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
+      gold: isSet(object.gold) ? globalThis.Number(object.gold) : 0,
+      ag: isSet(object.ag) ? globalThis.Number(object.ag) : 0,
+      agWin: isSet(object.agWin) ? globalThis.Number(object.agWin) : 0,
+      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
+      ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
+      coRate: isSet(object.coRate) ? globalThis.Number(object.coRate) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
     };
   },
 
@@ -3586,13 +3592,13 @@ export const TopWin = {
 
   fromJSON(object: any): TopWin {
     return {
-      wins: Array.isArray(object?.wins) ? object.wins.map((e: any) => Win.fromJSON(e)) : [],
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      refGame: isSet(object.refGame) ? String(object.refGame) : "",
-      total: isSet(object.total) ? Number(object.total) : 0,
+      wins: globalThis.Array.isArray(object?.wins) ? object.wins.map((e: any) => Win.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
     };
   },
 
@@ -3638,29 +3644,11 @@ export const TopWin = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -3669,8 +3657,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

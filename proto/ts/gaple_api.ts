@@ -117,6 +117,12 @@ export interface GapleDominoPenalty {
   gainPlayer: string;
   lostPlayer: string;
   chips: number;
+  lostPlayerNotHaveFacelets: number[];
+}
+
+export interface GapleDominoChainNode {
+  domino: Domino | undefined;
+  turnNumber: number;
 }
 
 /**
@@ -135,7 +141,7 @@ export interface GapleDominoUpdateDesk {
   isUpdateLegalActions: boolean;
   isUpdateNumRemainedCard: boolean;
   /** update entire chain on tables */
-  chains: number[];
+  chain: GapleDominoChainNode[];
   /** last piece of domino, adding it to the table */
   action:
     | GapleDominoAction
@@ -146,6 +152,8 @@ export interface GapleDominoUpdateDesk {
   remaineds: GapleDominoPresenceNumRemained[];
   /** uid of player in current turn */
   inTurn: string;
+  /** count facelets remained on all players hand */
+  remainedFaceletsCount: number[];
 }
 
 export interface GapleDominoPresenceNumRemained {
@@ -169,6 +177,7 @@ export interface GapleDominoUpdateDeal {
 export interface GapleDoninoUpdateFinish {
   type: GapleDominoFinishGameType;
   winner: string;
+  hands: GapleDominoPresenceHand[];
 }
 
 function createBaseGapleDominoAction(): GapleDominoAction {
@@ -228,7 +237,7 @@ export const GapleDominoAction = {
 
   fromJSON(object: any): GapleDominoAction {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       domino: isSet(object.domino) ? Domino.fromJSON(object.domino) : undefined,
       position: isSet(object.position) ? gapleDominoChainPositionFromJSON(object.position) : 0,
     };
@@ -263,7 +272,7 @@ export const GapleDominoAction = {
 };
 
 function createBaseGapleDominoPenalty(): GapleDominoPenalty {
-  return { gainPlayer: "", lostPlayer: "", chips: 0 };
+  return { gainPlayer: "", lostPlayer: "", chips: 0, lostPlayerNotHaveFacelets: [] };
 }
 
 export const GapleDominoPenalty = {
@@ -277,6 +286,11 @@ export const GapleDominoPenalty = {
     if (message.chips !== 0) {
       writer.uint32(24).int32(message.chips);
     }
+    writer.uint32(34).fork();
+    for (const v of message.lostPlayerNotHaveFacelets) {
+      writer.int32(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -308,6 +322,23 @@ export const GapleDominoPenalty = {
 
           message.chips = reader.int32();
           continue;
+        case 4:
+          if (tag === 32) {
+            message.lostPlayerNotHaveFacelets.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 34) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.lostPlayerNotHaveFacelets.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -319,9 +350,12 @@ export const GapleDominoPenalty = {
 
   fromJSON(object: any): GapleDominoPenalty {
     return {
-      gainPlayer: isSet(object.gainPlayer) ? String(object.gainPlayer) : "",
-      lostPlayer: isSet(object.lostPlayer) ? String(object.lostPlayer) : "",
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      gainPlayer: isSet(object.gainPlayer) ? globalThis.String(object.gainPlayer) : "",
+      lostPlayer: isSet(object.lostPlayer) ? globalThis.String(object.lostPlayer) : "",
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      lostPlayerNotHaveFacelets: globalThis.Array.isArray(object?.lostPlayerNotHaveFacelets)
+        ? object.lostPlayerNotHaveFacelets.map((e: any) => globalThis.Number(e))
+        : [],
     };
   },
 
@@ -336,6 +370,9 @@ export const GapleDominoPenalty = {
     if (message.chips !== 0) {
       obj.chips = Math.round(message.chips);
     }
+    if (message.lostPlayerNotHaveFacelets?.length) {
+      obj.lostPlayerNotHaveFacelets = message.lostPlayerNotHaveFacelets.map((e) => Math.round(e));
+    }
     return obj;
   },
 
@@ -347,6 +384,83 @@ export const GapleDominoPenalty = {
     message.gainPlayer = object.gainPlayer ?? "";
     message.lostPlayer = object.lostPlayer ?? "";
     message.chips = object.chips ?? 0;
+    message.lostPlayerNotHaveFacelets = object.lostPlayerNotHaveFacelets?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseGapleDominoChainNode(): GapleDominoChainNode {
+  return { domino: undefined, turnNumber: 0 };
+}
+
+export const GapleDominoChainNode = {
+  encode(message: GapleDominoChainNode, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.domino !== undefined) {
+      Domino.encode(message.domino, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.turnNumber !== 0) {
+      writer.uint32(16).int32(message.turnNumber);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GapleDominoChainNode {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGapleDominoChainNode();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.domino = Domino.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.turnNumber = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GapleDominoChainNode {
+    return {
+      domino: isSet(object.domino) ? Domino.fromJSON(object.domino) : undefined,
+      turnNumber: isSet(object.turnNumber) ? globalThis.Number(object.turnNumber) : 0,
+    };
+  },
+
+  toJSON(message: GapleDominoChainNode): unknown {
+    const obj: any = {};
+    if (message.domino !== undefined) {
+      obj.domino = Domino.toJSON(message.domino);
+    }
+    if (message.turnNumber !== 0) {
+      obj.turnNumber = Math.round(message.turnNumber);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GapleDominoChainNode>, I>>(base?: I): GapleDominoChainNode {
+    return GapleDominoChainNode.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GapleDominoChainNode>, I>>(object: I): GapleDominoChainNode {
+    const message = createBaseGapleDominoChainNode();
+    message.domino = (object.domino !== undefined && object.domino !== null)
+      ? Domino.fromPartial(object.domino)
+      : undefined;
+    message.turnNumber = object.turnNumber ?? 0;
     return message;
   },
 };
@@ -360,12 +474,13 @@ function createBaseGapleDominoUpdateDesk(): GapleDominoUpdateDesk {
     isPenaltyOccur: false,
     isUpdateLegalActions: false,
     isUpdateNumRemainedCard: false,
-    chains: [],
+    chain: [],
     action: undefined,
     legalActions: [],
     penalty: undefined,
     remaineds: [],
     inTurn: "",
+    remainedFaceletsCount: [],
   };
 }
 
@@ -392,11 +507,9 @@ export const GapleDominoUpdateDesk = {
     if (message.isUpdateNumRemainedCard === true) {
       writer.uint32(56).bool(message.isUpdateNumRemainedCard);
     }
-    writer.uint32(66).fork();
-    for (const v of message.chains) {
-      writer.int32(v);
+    for (const v of message.chain) {
+      GapleDominoChainNode.encode(v!, writer.uint32(66).fork()).ldelim();
     }
-    writer.ldelim();
     if (message.action !== undefined) {
       GapleDominoAction.encode(message.action, writer.uint32(74).fork()).ldelim();
     }
@@ -412,6 +525,11 @@ export const GapleDominoUpdateDesk = {
     if (message.inTurn !== "") {
       writer.uint32(106).string(message.inTurn);
     }
+    writer.uint32(114).fork();
+    for (const v of message.remainedFaceletsCount) {
+      writer.int32(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -472,22 +590,12 @@ export const GapleDominoUpdateDesk = {
           message.isUpdateNumRemainedCard = reader.bool();
           continue;
         case 8:
-          if (tag === 64) {
-            message.chains.push(reader.int32());
-
-            continue;
+          if (tag !== 66) {
+            break;
           }
 
-          if (tag === 66) {
-            const end2 = reader.uint32() + reader.pos;
-            while (reader.pos < end2) {
-              message.chains.push(reader.int32());
-            }
-
-            continue;
-          }
-
-          break;
+          message.chain.push(GapleDominoChainNode.decode(reader, reader.uint32()));
+          continue;
         case 9:
           if (tag !== 74) {
             break;
@@ -523,6 +631,23 @@ export const GapleDominoUpdateDesk = {
 
           message.inTurn = reader.string();
           continue;
+        case 14:
+          if (tag === 112) {
+            message.remainedFaceletsCount.push(reader.int32());
+
+            continue;
+          }
+
+          if (tag === 114) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.remainedFaceletsCount.push(reader.int32());
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -534,23 +659,34 @@ export const GapleDominoUpdateDesk = {
 
   fromJSON(object: any): GapleDominoUpdateDesk {
     return {
-      nPlayers: isSet(object.nPlayers) ? Number(object.nPlayers) : 0,
-      isNewTurn: isSet(object.isNewTurn) ? Boolean(object.isNewTurn) : false,
-      isUpdateChain: isSet(object.isUpdateChain) ? Boolean(object.isUpdateChain) : false,
-      isAppendDominoToChain: isSet(object.isAppendDominoToChain) ? Boolean(object.isAppendDominoToChain) : false,
-      isPenaltyOccur: isSet(object.isPenaltyOccur) ? Boolean(object.isPenaltyOccur) : false,
-      isUpdateLegalActions: isSet(object.isUpdateLegalActions) ? Boolean(object.isUpdateLegalActions) : false,
-      isUpdateNumRemainedCard: isSet(object.isUpdateNumRemainedCard) ? Boolean(object.isUpdateNumRemainedCard) : false,
-      chains: Array.isArray(object?.chains) ? object.chains.map((e: any) => Number(e)) : [],
+      nPlayers: isSet(object.nPlayers) ? globalThis.Number(object.nPlayers) : 0,
+      isNewTurn: isSet(object.isNewTurn) ? globalThis.Boolean(object.isNewTurn) : false,
+      isUpdateChain: isSet(object.isUpdateChain) ? globalThis.Boolean(object.isUpdateChain) : false,
+      isAppendDominoToChain: isSet(object.isAppendDominoToChain)
+        ? globalThis.Boolean(object.isAppendDominoToChain)
+        : false,
+      isPenaltyOccur: isSet(object.isPenaltyOccur) ? globalThis.Boolean(object.isPenaltyOccur) : false,
+      isUpdateLegalActions: isSet(object.isUpdateLegalActions)
+        ? globalThis.Boolean(object.isUpdateLegalActions)
+        : false,
+      isUpdateNumRemainedCard: isSet(object.isUpdateNumRemainedCard)
+        ? globalThis.Boolean(object.isUpdateNumRemainedCard)
+        : false,
+      chain: globalThis.Array.isArray(object?.chain)
+        ? object.chain.map((e: any) => GapleDominoChainNode.fromJSON(e))
+        : [],
       action: isSet(object.action) ? GapleDominoAction.fromJSON(object.action) : undefined,
-      legalActions: Array.isArray(object?.legalActions)
+      legalActions: globalThis.Array.isArray(object?.legalActions)
         ? object.legalActions.map((e: any) => GapleDominoAction.fromJSON(e))
         : [],
       penalty: isSet(object.penalty) ? GapleDominoPenalty.fromJSON(object.penalty) : undefined,
-      remaineds: Array.isArray(object?.remaineds)
+      remaineds: globalThis.Array.isArray(object?.remaineds)
         ? object.remaineds.map((e: any) => GapleDominoPresenceNumRemained.fromJSON(e))
         : [],
-      inTurn: isSet(object.inTurn) ? String(object.inTurn) : "",
+      inTurn: isSet(object.inTurn) ? globalThis.String(object.inTurn) : "",
+      remainedFaceletsCount: globalThis.Array.isArray(object?.remainedFaceletsCount)
+        ? object.remainedFaceletsCount.map((e: any) => globalThis.Number(e))
+        : [],
     };
   },
 
@@ -577,8 +713,8 @@ export const GapleDominoUpdateDesk = {
     if (message.isUpdateNumRemainedCard === true) {
       obj.isUpdateNumRemainedCard = message.isUpdateNumRemainedCard;
     }
-    if (message.chains?.length) {
-      obj.chains = message.chains.map((e) => Math.round(e));
+    if (message.chain?.length) {
+      obj.chain = message.chain.map((e) => GapleDominoChainNode.toJSON(e));
     }
     if (message.action !== undefined) {
       obj.action = GapleDominoAction.toJSON(message.action);
@@ -595,6 +731,9 @@ export const GapleDominoUpdateDesk = {
     if (message.inTurn !== "") {
       obj.inTurn = message.inTurn;
     }
+    if (message.remainedFaceletsCount?.length) {
+      obj.remainedFaceletsCount = message.remainedFaceletsCount.map((e) => Math.round(e));
+    }
     return obj;
   },
 
@@ -610,7 +749,7 @@ export const GapleDominoUpdateDesk = {
     message.isPenaltyOccur = object.isPenaltyOccur ?? false;
     message.isUpdateLegalActions = object.isUpdateLegalActions ?? false;
     message.isUpdateNumRemainedCard = object.isUpdateNumRemainedCard ?? false;
-    message.chains = object.chains?.map((e) => e) || [];
+    message.chain = object.chain?.map((e) => GapleDominoChainNode.fromPartial(e)) || [];
     message.action = (object.action !== undefined && object.action !== null)
       ? GapleDominoAction.fromPartial(object.action)
       : undefined;
@@ -620,6 +759,7 @@ export const GapleDominoUpdateDesk = {
       : undefined;
     message.remaineds = object.remaineds?.map((e) => GapleDominoPresenceNumRemained.fromPartial(e)) || [];
     message.inTurn = object.inTurn ?? "";
+    message.remainedFaceletsCount = object.remainedFaceletsCount?.map((e) => e) || [];
     return message;
   },
 };
@@ -671,8 +811,8 @@ export const GapleDominoPresenceNumRemained = {
 
   fromJSON(object: any): GapleDominoPresenceNumRemained {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      numCard: isSet(object.numCard) ? Number(object.numCard) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      numCard: isSet(object.numCard) ? globalThis.Number(object.numCard) : 0,
     };
   },
 
@@ -747,8 +887,8 @@ export const GapleDominoPresenceHand = {
 
   fromJSON(object: any): GapleDominoPresenceHand {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      dominos: Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [],
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      dominos: globalThis.Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [],
     };
   },
 
@@ -834,7 +974,7 @@ export const GapleDominoUpdateDeal = {
 };
 
 function createBaseGapleDoninoUpdateFinish(): GapleDoninoUpdateFinish {
-  return { type: 0, winner: "" };
+  return { type: 0, winner: "", hands: [] };
 }
 
 export const GapleDoninoUpdateFinish = {
@@ -844,6 +984,9 @@ export const GapleDoninoUpdateFinish = {
     }
     if (message.winner !== "") {
       writer.uint32(18).string(message.winner);
+    }
+    for (const v of message.hands) {
+      GapleDominoPresenceHand.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -869,6 +1012,13 @@ export const GapleDoninoUpdateFinish = {
 
           message.winner = reader.string();
           continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.hands.push(GapleDominoPresenceHand.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -881,7 +1031,10 @@ export const GapleDoninoUpdateFinish = {
   fromJSON(object: any): GapleDoninoUpdateFinish {
     return {
       type: isSet(object.type) ? gapleDominoFinishGameTypeFromJSON(object.type) : 0,
-      winner: isSet(object.winner) ? String(object.winner) : "",
+      winner: isSet(object.winner) ? globalThis.String(object.winner) : "",
+      hands: globalThis.Array.isArray(object?.hands)
+        ? object.hands.map((e: any) => GapleDominoPresenceHand.fromJSON(e))
+        : [],
     };
   },
 
@@ -893,6 +1046,9 @@ export const GapleDoninoUpdateFinish = {
     if (message.winner !== "") {
       obj.winner = message.winner;
     }
+    if (message.hands?.length) {
+      obj.hands = message.hands.map((e) => GapleDominoPresenceHand.toJSON(e));
+    }
     return obj;
   },
 
@@ -903,6 +1059,7 @@ export const GapleDoninoUpdateFinish = {
     const message = createBaseGapleDoninoUpdateFinish();
     message.type = object.type ?? 0;
     message.winner = object.winner ?? "";
+    message.hands = object.hands?.map((e) => GapleDominoPresenceHand.fromPartial(e)) || [];
     return message;
   },
 };
@@ -910,7 +1067,8 @@ export const GapleDoninoUpdateFinish = {
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 

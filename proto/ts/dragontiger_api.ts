@@ -256,7 +256,7 @@ export const DragonTigerBet = {
 
   fromJSON(object: any): DragonTigerBet {
     return {
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       cell: isSet(object.cell) ? dragonTigerBetCellFromJSON(object.cell) : 0,
     };
   },
@@ -331,7 +331,7 @@ export const DragonTigerBetResult = {
   fromJSON(object: any): DragonTigerBetResult {
     return {
       bet: isSet(object.bet) ? DragonTigerBet.fromJSON(object.bet) : undefined,
-      isWin: isSet(object.isWin) ? Boolean(object.isWin) : false,
+      isWin: isSet(object.isWin) ? globalThis.Boolean(object.isWin) : false,
     };
   },
 
@@ -416,9 +416,9 @@ export const DragonTigerPlayerBets = {
 
   fromJSON(object: any): DragonTigerPlayerBets {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       actionType: isSet(object.actionType) ? dragonTigerBetActionFromJSON(object.actionType) : 0,
-      bets: Array.isArray(object?.bets) ? object.bets.map((e: any) => DragonTigerBet.fromJSON(e)) : [],
+      bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => DragonTigerBet.fromJSON(e)) : [],
     };
   },
 
@@ -495,8 +495,8 @@ export const DragonTigerPlayerBetResult = {
 
   fromJSON(object: any): DragonTigerPlayerBetResult {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      list: Array.isArray(object?.list) ? object.list.map((e: any) => DragonTigerBetResult.fromJSON(e)) : [],
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      list: globalThis.Array.isArray(object?.list) ? object.list.map((e: any) => DragonTigerBetResult.fromJSON(e)) : [],
     };
   },
 
@@ -580,8 +580,8 @@ export const DragonTigerDeskCell = {
   fromJSON(object: any): DragonTigerDeskCell {
     return {
       cell: isSet(object.cell) ? dragonTigerBetCellFromJSON(object.cell) : 0,
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      nUserBet: isSet(object.nUserBet) ? Number(object.nUserBet) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      nUserBet: isSet(object.nUserBet) ? globalThis.Number(object.nUserBet) : 0,
     };
   },
 
@@ -647,7 +647,9 @@ export const DragonTigerListDeskCell = {
   },
 
   fromJSON(object: any): DragonTigerListDeskCell {
-    return { list: Array.isArray(object?.list) ? object.list.map((e: any) => DragonTigerDeskCell.fromJSON(e)) : [] };
+    return {
+      list: globalThis.Array.isArray(object?.list) ? object.list.map((e: any) => DragonTigerDeskCell.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: DragonTigerListDeskCell): unknown {
@@ -814,8 +816,10 @@ export const DragonTigerGameFinish = {
   fromJSON(object: any): DragonTigerGameFinish {
     return {
       hand: isSet(object.hand) ? DragonTigerHand.fromJSON(object.hand) : undefined,
-      winCells: Array.isArray(object?.winCells) ? object.winCells.map((e: any) => dragonTigerBetCellFromJSON(e)) : [],
-      listBetResult: Array.isArray(object?.listBetResult)
+      winCells: globalThis.Array.isArray(object?.winCells)
+        ? object.winCells.map((e: any) => dragonTigerBetCellFromJSON(e))
+        : [],
+      listBetResult: globalThis.Array.isArray(object?.listBetResult)
         ? object.listBetResult.map((e: any) => DragonTigerPlayerBetResult.fromJSON(e))
         : [],
     };
@@ -886,7 +890,9 @@ export const DragonTigerHistory = {
 
   fromJSON(object: any): DragonTigerHistory {
     return {
-      histories: Array.isArray(object?.histories) ? object.histories.map((e: any) => DragonTigerHand.fromJSON(e)) : [],
+      histories: globalThis.Array.isArray(object?.histories)
+        ? object.histories.map((e: any) => DragonTigerHand.fromJSON(e))
+        : [],
     };
   },
 
@@ -975,10 +981,10 @@ export const DragonTigerPlayer = {
 
   fromJSON(object: any): DragonTigerPlayer {
     return {
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      vipLevel: isSet(object.vipLevel) ? Number(object.vipLevel) : 0,
-      avatarId: isSet(object.avatarId) ? String(object.avatarId) : "",
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
+      avatarId: isSet(object.avatarId) ? globalThis.String(object.avatarId) : "",
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
     };
   },
 
@@ -1080,9 +1086,9 @@ export const DragonTigerUpdateTable = {
   fromJSON(object: any): DragonTigerUpdateTable {
     return {
       gameState: isSet(object.gameState) ? gameStateFromJSON(object.gameState) : 0,
-      countDown: isSet(object.countDown) ? Number(object.countDown) : 0,
-      nPlayer: isSet(object.nPlayer) ? Number(object.nPlayer) : 0,
-      notablePlayers: Array.isArray(object?.notablePlayers)
+      countDown: isSet(object.countDown) ? globalThis.Number(object.countDown) : 0,
+      nPlayer: isSet(object.nPlayer) ? globalThis.Number(object.nPlayer) : 0,
+      notablePlayers: globalThis.Array.isArray(object?.notablePlayers)
         ? object.notablePlayers.map((e: any) => DragonTigerPlayer.fromJSON(e))
         : [],
     };
@@ -1223,10 +1229,10 @@ export const DragonTigerUpdateDesk = {
 
   fromJSON(object: any): DragonTigerUpdateDesk {
     return {
-      nPlayers: isSet(object.nPlayers) ? Number(object.nPlayers) : 0,
-      isUpdateUserBet: isSet(object.isUpdateUserBet) ? Boolean(object.isUpdateUserBet) : false,
-      isUpdateDeskCell: isSet(object.isUpdateDeskCell) ? Boolean(object.isUpdateDeskCell) : false,
-      isUpdateGameHistory: isSet(object.isUpdateGameHistory) ? Boolean(object.isUpdateGameHistory) : false,
+      nPlayers: isSet(object.nPlayers) ? globalThis.Number(object.nPlayers) : 0,
+      isUpdateUserBet: isSet(object.isUpdateUserBet) ? globalThis.Boolean(object.isUpdateUserBet) : false,
+      isUpdateDeskCell: isSet(object.isUpdateDeskCell) ? globalThis.Boolean(object.isUpdateDeskCell) : false,
+      isUpdateGameHistory: isSet(object.isUpdateGameHistory) ? globalThis.Boolean(object.isUpdateGameHistory) : false,
       userBet: isSet(object.userBet) ? DragonTigerPlayerBets.fromJSON(object.userBet) : undefined,
       deskCell: isSet(object.deskCell) ? DragonTigerListDeskCell.fromJSON(object.deskCell) : undefined,
       history: isSet(object.history) ? DragonTigerHistory.fromJSON(object.history) : undefined,
@@ -1317,7 +1323,7 @@ export const DragonTigerActionReject = {
   },
 
   fromJSON(object: any): DragonTigerActionReject {
-    return { reason: isSet(object.reason) ? String(object.reason) : "" };
+    return { reason: isSet(object.reason) ? globalThis.String(object.reason) : "" };
   },
 
   toJSON(message: DragonTigerActionReject): unknown {
@@ -1338,29 +1344,11 @@ export const DragonTigerActionReject = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -1369,8 +1357,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
