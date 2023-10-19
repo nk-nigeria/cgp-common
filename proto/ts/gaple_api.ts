@@ -1,5 +1,5 @@
 /* eslint-disable */
-import _m0 from "protobufjs/minimal";
+import * as _m0 from "protobufjs/minimal";
 import { Domino } from "./bandarqq_api";
 
 export const protobufPackage = "api";
