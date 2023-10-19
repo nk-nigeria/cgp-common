@@ -60,6 +60,7 @@ func NewReportGame(ctx context.Context) *reportGame {
 			continue
 		}
 	}
+	fmt.Printf("init report game with endpoint %v , http key %v", o.reportEndpoint, o.reportHttpKey[:len(o.reportHttpKey)/2])
 	return o
 }
 
