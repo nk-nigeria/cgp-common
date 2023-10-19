@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { Card, GameState, gameStateFromJSON, gameStateToJSON } from "./chinese_poker_game_api";
-import Long = require("long");
 
 export const protobufPackage = "api";
 
