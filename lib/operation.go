@@ -64,6 +64,10 @@ func NewReportGame(ctx context.Context) *reportGame {
 	return o
 }
 
+func (o reportGame) ReportEndpoint() string {
+	return o.reportEndpoint
+}
+
 // call persistent data
 func (o *reportGame) Commit() ([]byte, int, error) {
 	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", o.reportEndpoint)
