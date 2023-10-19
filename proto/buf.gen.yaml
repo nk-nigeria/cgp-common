@@ -4,7 +4,7 @@ plugins:
     out: ./ts
     strategy: all
     path: ../node_modules/.bin/protoc-gen-ts_proto
-
+    opt: esModuleInterop=true
   - plugin: go
     path: ["go", "run", "google.golang.org/protobuf/cmd/protoc-gen-go"]
     out: ./
