@@ -2,13 +2,16 @@ package lib
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
+	"github.com/heroiclabs/nakama-common/runtime"
 )
 
 var httpClient *http.Client
@@ -16,7 +19,7 @@ var DefaultHttpKey string = "defaulthttpkey"
 
 // dev http://103.226.250.195:8350
 // stg  http://103.226.250.195:7350
-var HostReport = "http://103.226.250.195:8350"
+var DefaultHostReport = "http://103.226.250.195:8350"
 
 func init() {
 	t := http.DefaultTransport.(*http.Transport).Clone()
@@ -31,22 +34,43 @@ func init() {
 }
 
 type reportGame struct {
-	Users []*pb.PlayerData `json:"users"`
-	Game  *pb.Game         `json:"game"`
-	Match *pb.MatchData    `json:"match"`
-	Fee   int64            `json:"fee"`
+	reportEndpoint string
+	reportHttpKey  string
+	Users          []*pb.PlayerData `json:"users"`
+	Game           *pb.Game         `json:"game"`
+	Match          *pb.MatchData    `json:"match"`
+	Fee            int64            `json:"fee"`
 }
 
-func NewReportGame() *reportGame {
+func NewReportGame(ctx context.Context) *reportGame {
 	o := &reportGame{
-		Users: make([]*pb.PlayerData, 0),
+		Users:          make([]*pb.PlayerData, 0),
+		reportEndpoint: DefaultHostReport,
+		reportHttpKey:  DefaultHttpKey,
 	}
+	runtimeVal := ctx.Value(runtime.RUNTIME_CTX_ENV).(map[string]string)
+	for k, v := range runtimeVal {
+		if strings.ToLower(k) == "report_endpoint" {
+			reportEndpoint := strings.ToLower(v)
+			o.reportEndpoint = reportEndpoint
+			continue
+		}
+		if strings.ToLower(k) == "http_key" {
+			o.reportHttpKey = v
+			continue
+		}
+	}
+	fmt.Printf("init report game with endpoint %v , http key %v", o.reportEndpoint, o.reportHttpKey[:len(o.reportHttpKey)/2])
 	return o
+}
+
+func (o reportGame) ReportEndpoint() string {
+	return o.reportEndpoint
 }
 
 // call persistent data
 func (o *reportGame) Commit() ([]byte, int, error) {
-	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", HostReport)
+	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", o.reportEndpoint)
 	data, _ := json.Marshal(o)
 	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(data))
 	if err != nil {
@@ -54,7 +78,7 @@ func (o *reportGame) Commit() ([]byte, int, error) {
 	}
 
 	query := req.URL.Query()
-	query.Add("http_key", DefaultHttpKey)
+	query.Add("http_key", o.reportHttpKey)
 	query.Add("unwrap", "true")
 	req.URL.RawQuery = query.Encode()
 	// res, err := httpClient.Post(targetUrl, http.DetectContentType(data), bytes.NewReader(data))

@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
-import Long = require("long");
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "api";
 
@@ -792,9 +792,9 @@ export const Game = {
 
   fromJSON(object: any): Game {
     return {
-      code: isSet(object.code) ? String(object.code) : "",
-      active: isSet(object.active) ? Boolean(object.active) : false,
-      lobbyId: isSet(object.lobbyId) ? String(object.lobbyId) : "",
+      code: isSet(object.code) ? globalThis.String(object.code) : "",
+      active: isSet(object.active) ? globalThis.Boolean(object.active) : false,
+      lobbyId: isSet(object.lobbyId) ? globalThis.String(object.lobbyId) : "",
       layout: isSet(object.layout) ? Layout.fromJSON(object.layout) : undefined,
     };
   },
@@ -898,10 +898,10 @@ export const Layout = {
 
   fromJSON(object: any): Layout {
     return {
-      col: isSet(object.col) ? Number(object.col) : 0,
-      row: isSet(object.row) ? Number(object.row) : 0,
-      colSpan: isSet(object.colSpan) ? Number(object.colSpan) : 0,
-      rowSpan: isSet(object.rowSpan) ? Number(object.rowSpan) : 0,
+      col: isSet(object.col) ? globalThis.Number(object.col) : 0,
+      row: isSet(object.row) ? globalThis.Number(object.row) : 0,
+      colSpan: isSet(object.colSpan) ? globalThis.Number(object.colSpan) : 0,
+      rowSpan: isSet(object.rowSpan) ? globalThis.Number(object.rowSpan) : 0,
     };
   },
 
@@ -971,7 +971,7 @@ export const GameListResponse = {
   },
 
   fromJSON(object: any): GameListResponse {
-    return { games: Array.isArray(object?.games) ? object.games.map((e: any) => Game.fromJSON(e)) : [] };
+    return { games: globalThis.Array.isArray(object?.games) ? object.games.map((e: any) => Game.fromJSON(e)) : [] };
   },
 
   toJSON(message: GameListResponse): unknown {
@@ -1028,7 +1028,7 @@ export const BetListRequest = {
   },
 
   fromJSON(object: any): BetListRequest {
-    return { code: isSet(object.code) ? String(object.code) : "" };
+    return { code: isSet(object.code) ? globalThis.String(object.code) : "" };
   },
 
   toJSON(message: BetListRequest): unknown {
@@ -1097,7 +1097,7 @@ export const BetListResponse = {
   },
 
   fromJSON(object: any): BetListResponse {
-    return { bets: Array.isArray(object?.bets) ? object.bets.map((e: any) => Number(e)) : [] };
+    return { bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => globalThis.Number(e)) : [] };
   },
 
   toJSON(message: BetListResponse): unknown {
@@ -1176,8 +1176,8 @@ export const Chat = {
   fromJSON(object: any): Chat {
     return {
       typeChat: isSet(object.typeChat) ? typeChatFromJSON(object.typeChat) : 0,
-      id: isSet(object.id) ? String(object.id) : "",
-      content: isSet(object.content) ? String(object.content) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
     };
   },
 
@@ -1314,14 +1314,14 @@ export const FreeChip = {
 
   fromJSON(object: any): FreeChip {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      senderId: isSet(object.senderId) ? String(object.senderId) : "",
-      recipientId: isSet(object.recipientId) ? String(object.recipientId) : "",
-      title: isSet(object.title) ? String(object.title) : "",
-      content: isSet(object.content) ? String(object.content) : "",
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      claimable: isSet(object.claimable) ? Boolean(object.claimable) : false,
-      action: isSet(object.action) ? String(object.action) : "",
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      senderId: isSet(object.senderId) ? globalThis.String(object.senderId) : "",
+      recipientId: isSet(object.recipientId) ? globalThis.String(object.recipientId) : "",
+      title: isSet(object.title) ? globalThis.String(object.title) : "",
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      claimable: isSet(object.claimable) ? globalThis.Boolean(object.claimable) : false,
+      action: isSet(object.action) ? globalThis.String(object.action) : "",
     };
   },
 
@@ -1428,9 +1428,9 @@ export const FreeChipRequest = {
 
   fromJSON(object: any): FreeChipRequest {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      cusor: isSet(object.cusor) ? String(object.cusor) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
     };
   },
 
@@ -1547,12 +1547,14 @@ export const ListFreeChip = {
 
   fromJSON(object: any): ListFreeChip {
     return {
-      freechips: Array.isArray(object?.freechips) ? object.freechips.map((e: any) => FreeChip.fromJSON(e)) : [],
-      nextCusor: isSet(object.nextCusor) ? String(object.nextCusor) : "",
-      prevCusor: isSet(object.prevCusor) ? String(object.prevCusor) : "",
-      total: isSet(object.total) ? Number(object.total) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      freechips: globalThis.Array.isArray(object?.freechips)
+        ? object.freechips.map((e: any) => FreeChip.fromJSON(e))
+        : [],
+      nextCusor: isSet(object.nextCusor) ? globalThis.String(object.nextCusor) : "",
+      prevCusor: isSet(object.prevCusor) ? globalThis.String(object.prevCusor) : "",
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
   },
 
@@ -1711,15 +1713,15 @@ export const Deal = {
 
   fromJSON(object: any): Deal {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      amountChips: isSet(object.amountChips) ? Number(object.amountChips) : 0,
-      bonus: isSet(object.bonus) ? Number(object.bonus) : 0,
-      price: isSet(object.price) ? String(object.price) : "",
-      name: isSet(object.name) ? String(object.name) : "",
-      currency: isSet(object.currency) ? String(object.currency) : "",
-      percent: isSet(object.percent) ? String(object.percent) : "",
-      chipPerUnit: isSet(object.chipPerUnit) ? Number(object.chipPerUnit) : 0,
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      amountChips: isSet(object.amountChips) ? globalThis.Number(object.amountChips) : 0,
+      bonus: isSet(object.bonus) ? globalThis.Number(object.bonus) : 0,
+      price: isSet(object.price) ? globalThis.String(object.price) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      currency: isSet(object.currency) ? globalThis.String(object.currency) : "",
+      percent: isSet(object.percent) ? globalThis.String(object.percent) : "",
+      chipPerUnit: isSet(object.chipPerUnit) ? globalThis.Number(object.chipPerUnit) : 0,
     };
   },
 
@@ -1841,9 +1843,9 @@ export const DealInShop = {
   fromJSON(object: any): DealInShop {
     return {
       best: isSet(object.best) ? Deal.fromJSON(object.best) : undefined,
-      iaps: Array.isArray(object?.iaps) ? object.iaps.map((e: any) => Deal.fromJSON(e)) : [],
-      gcashes: Array.isArray(object?.gcashes) ? object.gcashes.map((e: any) => Deal.fromJSON(e)) : [],
-      sms: Array.isArray(object?.sms) ? object.sms.map((e: any) => Deal.fromJSON(e)) : [],
+      iaps: globalThis.Array.isArray(object?.iaps) ? object.iaps.map((e: any) => Deal.fromJSON(e)) : [],
+      gcashes: globalThis.Array.isArray(object?.gcashes) ? object.gcashes.map((e: any) => Deal.fromJSON(e)) : [],
+      sms: globalThis.Array.isArray(object?.sms) ? object.sms.map((e: any) => Deal.fromJSON(e)) : [],
     };
   },
 
@@ -1934,9 +1936,9 @@ export const LeaderBoardRecord = {
 
   fromJSON(object: any): LeaderBoardRecord {
     return {
-      gameCode: isSet(object.gameCode) ? String(object.gameCode) : "",
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      score: isSet(object.score) ? Number(object.score) : 0,
+      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      score: isSet(object.score) ? globalThis.Number(object.score) : 0,
     };
   },
 
@@ -2181,23 +2183,23 @@ export const ExchangeInfo = {
 
   fromJSON(object: any): ExchangeInfo {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      idDeal: isSet(object.idDeal) ? String(object.idDeal) : "",
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      price: isSet(object.price) ? String(object.price) : "",
-      status: isSet(object.status) ? Number(object.status) : 0,
-      unlock: isSet(object.unlock) ? Number(object.unlock) : 0,
-      cashId: isSet(object.cashId) ? String(object.cashId) : "",
-      cashType: isSet(object.cashType) ? String(object.cashType) : "",
-      userIdRequest: isSet(object.userIdRequest) ? String(object.userIdRequest) : "",
-      userNameRequest: isSet(object.userNameRequest) ? String(object.userNameRequest) : "",
-      vipLv: isSet(object.vipLv) ? Number(object.vipLv) : 0,
-      deviceId: isSet(object.deviceId) ? String(object.deviceId) : "",
-      userIdHandling: isSet(object.userIdHandling) ? String(object.userIdHandling) : "",
-      userNameHandling: isSet(object.userNameHandling) ? String(object.userNameHandling) : "",
-      reason: isSet(object.reason) ? String(object.reason) : "",
-      cursor: isSet(object.cursor) ? String(object.cursor) : "",
-      createTime: isSet(object.createTime) ? Number(object.createTime) : 0,
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      idDeal: isSet(object.idDeal) ? globalThis.String(object.idDeal) : "",
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      price: isSet(object.price) ? globalThis.String(object.price) : "",
+      status: isSet(object.status) ? globalThis.Number(object.status) : 0,
+      unlock: isSet(object.unlock) ? globalThis.Number(object.unlock) : 0,
+      cashId: isSet(object.cashId) ? globalThis.String(object.cashId) : "",
+      cashType: isSet(object.cashType) ? globalThis.String(object.cashType) : "",
+      userIdRequest: isSet(object.userIdRequest) ? globalThis.String(object.userIdRequest) : "",
+      userNameRequest: isSet(object.userNameRequest) ? globalThis.String(object.userNameRequest) : "",
+      vipLv: isSet(object.vipLv) ? globalThis.Number(object.vipLv) : 0,
+      deviceId: isSet(object.deviceId) ? globalThis.String(object.deviceId) : "",
+      userIdHandling: isSet(object.userIdHandling) ? globalThis.String(object.userIdHandling) : "",
+      userNameHandling: isSet(object.userNameHandling) ? globalThis.String(object.userNameHandling) : "",
+      reason: isSet(object.reason) ? globalThis.String(object.reason) : "",
+      cursor: isSet(object.cursor) ? globalThis.String(object.cursor) : "",
+      createTime: isSet(object.createTime) ? globalThis.Number(object.createTime) : 0,
     };
   },
 
@@ -2319,7 +2321,9 @@ export const ExchangeDealInShop = {
   },
 
   fromJSON(object: any): ExchangeDealInShop {
-    return { gcashes: Array.isArray(object?.gcashes) ? object.gcashes.map((e: any) => Deal.fromJSON(e)) : [] };
+    return {
+      gcashes: globalThis.Array.isArray(object?.gcashes) ? object.gcashes.map((e: any) => Deal.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: ExchangeDealInShop): unknown {
@@ -2447,16 +2451,16 @@ export const ListExchangeInfo = {
 
   fromJSON(object: any): ListExchangeInfo {
     return {
-      exchangeInfos: Array.isArray(object?.exchangeInfos)
+      exchangeInfos: globalThis.Array.isArray(object?.exchangeInfos)
         ? object.exchangeInfos.map((e: any) => ExchangeInfo.fromJSON(e))
         : [],
-      nextCusor: isSet(object.nextCusor) ? String(object.nextCusor) : "",
-      prevCusor: isSet(object.prevCusor) ? String(object.prevCusor) : "",
-      total: isSet(object.total) ? Number(object.total) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      from: isSet(object.from) ? Number(object.from) : 0,
-      to: isSet(object.to) ? Number(object.to) : 0,
+      nextCusor: isSet(object.nextCusor) ? globalThis.String(object.nextCusor) : "",
+      prevCusor: isSet(object.prevCusor) ? globalThis.String(object.prevCusor) : "",
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      from: isSet(object.from) ? globalThis.Number(object.from) : 0,
+      to: isSet(object.to) ? globalThis.Number(object.to) : 0,
     };
   },
 
@@ -2603,13 +2607,13 @@ export const ExchangeRequest = {
 
   fromJSON(object: any): ExchangeRequest {
     return {
-      id: isSet(object.id) ? String(object.id) : "",
-      userIdRequest: isSet(object.userIdRequest) ? String(object.userIdRequest) : "",
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      from: isSet(object.from) ? Number(object.from) : 0,
-      to: isSet(object.to) ? Number(object.to) : 0,
-      cusor: isSet(object.cusor) ? String(object.cusor) : "",
-      cashType: isSet(object.cashType) ? String(object.cashType) : "",
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      userIdRequest: isSet(object.userIdRequest) ? globalThis.String(object.userIdRequest) : "",
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      from: isSet(object.from) ? globalThis.Number(object.from) : 0,
+      to: isSet(object.to) ? globalThis.Number(object.to) : 0,
+      cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
+      cashType: isSet(object.cashType) ? globalThis.String(object.cashType) : "",
     };
   },
 
@@ -2848,21 +2852,21 @@ export const Reward = {
 
   fromJSON(object: any): Reward {
     return {
-      basicChip: isSet(object.basicChip) ? Number(object.basicChip) : 0,
-      percentBonus: isSet(object.percentBonus) ? Number(object.percentBonus) : 0,
-      bonusChip: isSet(object.bonusChip) ? Number(object.bonusChip) : 0,
-      onlineChip: isSet(object.onlineChip) ? Number(object.onlineChip) : 0,
-      totalChip: isSet(object.totalChip) ? Number(object.totalChip) : 0,
-      streak: isSet(object.streak) ? Number(object.streak) : 0,
-      onlineSec: isSet(object.onlineSec) ? Number(object.onlineSec) : 0,
-      canClaim: isSet(object.canClaim) ? Boolean(object.canClaim) : false,
-      numClaim: isSet(object.numClaim) ? Number(object.numClaim) : 0,
-      lastClaimUnix: isSet(object.lastClaimUnix) ? Number(object.lastClaimUnix) : 0,
-      nextClaimUnix: isSet(object.nextClaimUnix) ? Number(object.nextClaimUnix) : 0,
-      nextClaimSec: isSet(object.nextClaimSec) ? Number(object.nextClaimSec) : 0,
-      reachMaxStreak: isSet(object.reachMaxStreak) ? Boolean(object.reachMaxStreak) : false,
-      lastSpinNumber: isSet(object.lastSpinNumber) ? Number(object.lastSpinNumber) : 0,
-      lastOnlineUnix: isSet(object.lastOnlineUnix) ? Number(object.lastOnlineUnix) : 0,
+      basicChip: isSet(object.basicChip) ? globalThis.Number(object.basicChip) : 0,
+      percentBonus: isSet(object.percentBonus) ? globalThis.Number(object.percentBonus) : 0,
+      bonusChip: isSet(object.bonusChip) ? globalThis.Number(object.bonusChip) : 0,
+      onlineChip: isSet(object.onlineChip) ? globalThis.Number(object.onlineChip) : 0,
+      totalChip: isSet(object.totalChip) ? globalThis.Number(object.totalChip) : 0,
+      streak: isSet(object.streak) ? globalThis.Number(object.streak) : 0,
+      onlineSec: isSet(object.onlineSec) ? globalThis.Number(object.onlineSec) : 0,
+      canClaim: isSet(object.canClaim) ? globalThis.Boolean(object.canClaim) : false,
+      numClaim: isSet(object.numClaim) ? globalThis.Number(object.numClaim) : 0,
+      lastClaimUnix: isSet(object.lastClaimUnix) ? globalThis.Number(object.lastClaimUnix) : 0,
+      nextClaimUnix: isSet(object.nextClaimUnix) ? globalThis.Number(object.nextClaimUnix) : 0,
+      nextClaimSec: isSet(object.nextClaimSec) ? globalThis.Number(object.nextClaimSec) : 0,
+      reachMaxStreak: isSet(object.reachMaxStreak) ? globalThis.Boolean(object.reachMaxStreak) : false,
+      lastSpinNumber: isSet(object.lastSpinNumber) ? globalThis.Number(object.lastSpinNumber) : 0,
+      lastOnlineUnix: isSet(object.lastOnlineUnix) ? globalThis.Number(object.lastOnlineUnix) : 0,
     };
   },
 
@@ -3029,11 +3033,13 @@ export const RewardTemplate = {
 
   fromJSON(object: any): RewardTemplate {
     return {
-      basicChips: Array.isArray(object?.basicChips) ? object.basicChips.map((e: any) => Number(e)) : [],
-      percenBonus: isSet(object.percenBonus) ? Number(object.percenBonus) : 0,
-      onlineSec: isSet(object.onlineSec) ? Number(object.onlineSec) : 0,
-      onlineChip: isSet(object.onlineChip) ? Number(object.onlineChip) : 0,
-      streak: isSet(object.streak) ? Number(object.streak) : 0,
+      basicChips: globalThis.Array.isArray(object?.basicChips)
+        ? object.basicChips.map((e: any) => globalThis.Number(e))
+        : [],
+      percenBonus: isSet(object.percenBonus) ? globalThis.Number(object.percenBonus) : 0,
+      onlineSec: isSet(object.onlineSec) ? globalThis.Number(object.onlineSec) : 0,
+      onlineChip: isSet(object.onlineChip) ? globalThis.Number(object.onlineChip) : 0,
+      streak: isSet(object.streak) ? globalThis.Number(object.streak) : 0,
     };
   },
 
@@ -3158,12 +3164,12 @@ export const LastClaimReward = {
 
   fromJSON(object: any): LastClaimReward {
     return {
-      lastClaimUnix: isSet(object.lastClaimUnix) ? Number(object.lastClaimUnix) : 0,
-      nextClaimUnix: isSet(object.nextClaimUnix) ? Number(object.nextClaimUnix) : 0,
-      streak: isSet(object.streak) ? Number(object.streak) : 0,
-      lastSpinNumber: isSet(object.lastSpinNumber) ? Number(object.lastSpinNumber) : 0,
-      reachMaxStreak: isSet(object.reachMaxStreak) ? Boolean(object.reachMaxStreak) : false,
-      numClaim: isSet(object.numClaim) ? Number(object.numClaim) : 0,
+      lastClaimUnix: isSet(object.lastClaimUnix) ? globalThis.Number(object.lastClaimUnix) : 0,
+      nextClaimUnix: isSet(object.nextClaimUnix) ? globalThis.Number(object.nextClaimUnix) : 0,
+      streak: isSet(object.streak) ? globalThis.Number(object.streak) : 0,
+      lastSpinNumber: isSet(object.lastSpinNumber) ? globalThis.Number(object.lastSpinNumber) : 0,
+      reachMaxStreak: isSet(object.reachMaxStreak) ? globalThis.Boolean(object.reachMaxStreak) : false,
+      numClaim: isSet(object.numClaim) ? globalThis.Number(object.numClaim) : 0,
     };
   },
 
@@ -3242,7 +3248,7 @@ export const DailyRewardTemplate = {
 
   fromJSON(object: any): DailyRewardTemplate {
     return {
-      rewardTemplates: Array.isArray(object?.rewardTemplates)
+      rewardTemplates: globalThis.Array.isArray(object?.rewardTemplates)
         ? object.rewardTemplates.map((e: any) => RewardTemplate.fromJSON(e))
         : [],
     };
@@ -3313,8 +3319,8 @@ export const UserGroupCondition = {
 
   fromJSON(object: any): UserGroupCondition {
     return {
-      operator: isSet(object.operator) ? String(object.operator) : "",
-      value: isSet(object.value) ? String(object.value) : "",
+      operator: isSet(object.operator) ? globalThis.String(object.operator) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
     };
   },
 
@@ -3417,10 +3423,10 @@ export const UserGroup = {
 
   fromJSON(object: any): UserGroup {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      type: isSet(object.type) ? String(object.type) : "",
-      data: isSet(object.data) ? String(object.data) : "",
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
+      data: isSet(object.data) ? globalThis.String(object.data) : "",
       condition: isSet(object.condition) ? UserGroupCondition.fromJSON(object.condition) : undefined,
     };
   },
@@ -3548,12 +3554,14 @@ export const ListUserGroup = {
 
   fromJSON(object: any): ListUserGroup {
     return {
-      userGroups: Array.isArray(object?.userGroups) ? object.userGroups.map((e: any) => UserGroup.fromJSON(e)) : [],
-      nextCusor: isSet(object.nextCusor) ? String(object.nextCusor) : "",
-      prevCusor: isSet(object.prevCusor) ? String(object.prevCusor) : "",
-      total: isSet(object.total) ? Number(object.total) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      userGroups: globalThis.Array.isArray(object?.userGroups)
+        ? object.userGroups.map((e: any) => UserGroup.fromJSON(e))
+        : [],
+      nextCusor: isSet(object.nextCusor) ? globalThis.String(object.nextCusor) : "",
+      prevCusor: isSet(object.prevCusor) ? globalThis.String(object.prevCusor) : "",
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
   },
 
@@ -3642,8 +3650,8 @@ export const UserGroupRequest = {
 
   fromJSON(object: any): UserGroupRequest {
     return {
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      cusor: isSet(object.cusor) ? String(object.cusor) : "",
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
     };
   },
 
@@ -3862,21 +3870,21 @@ export const GiftCode = {
 
   fromJSON(object: any): GiftCode {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      code: isSet(object.code) ? String(object.code) : "",
-      nCurrent: isSet(object.nCurrent) ? Number(object.nCurrent) : 0,
-      nMax: isSet(object.nMax) ? Number(object.nMax) : 0,
-      value: isSet(object.value) ? Number(object.value) : 0,
-      startTimeUnix: isSet(object.startTimeUnix) ? Number(object.startTimeUnix) : 0,
-      endTimeUnix: isSet(object.endTimeUnix) ? Number(object.endTimeUnix) : 0,
-      message: isSet(object.message) ? String(object.message) : "",
-      vip: isSet(object.vip) ? Number(object.vip) : 0,
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      code: isSet(object.code) ? globalThis.String(object.code) : "",
+      nCurrent: isSet(object.nCurrent) ? globalThis.Number(object.nCurrent) : 0,
+      nMax: isSet(object.nMax) ? globalThis.Number(object.nMax) : 0,
+      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
+      startTimeUnix: isSet(object.startTimeUnix) ? globalThis.Number(object.startTimeUnix) : 0,
+      endTimeUnix: isSet(object.endTimeUnix) ? globalThis.Number(object.endTimeUnix) : 0,
+      message: isSet(object.message) ? globalThis.String(object.message) : "",
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
       giftCodeType: isSet(object.giftCodeType) ? giftCodeTypeFromJSON(object.giftCodeType) : 0,
-      reachMaxClaim: isSet(object.reachMaxClaim) ? Boolean(object.reachMaxClaim) : false,
-      alreadyClaim: isSet(object.alreadyClaim) ? Boolean(object.alreadyClaim) : false,
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      openToClaim: isSet(object.openToClaim) ? Boolean(object.openToClaim) : false,
-      errCode: isSet(object.errCode) ? Number(object.errCode) : 0,
+      reachMaxClaim: isSet(object.reachMaxClaim) ? globalThis.Boolean(object.reachMaxClaim) : false,
+      alreadyClaim: isSet(object.alreadyClaim) ? globalThis.Boolean(object.alreadyClaim) : false,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      openToClaim: isSet(object.openToClaim) ? globalThis.Boolean(object.openToClaim) : false,
+      errCode: isSet(object.errCode) ? globalThis.Number(object.errCode) : 0,
     };
   },
 
@@ -3991,7 +3999,9 @@ export const ListGiftCode = {
 
   fromJSON(object: any): ListGiftCode {
     return {
-      giftCodes: Array.isArray(object?.giftCodes) ? object.giftCodes.map((e: any) => GiftCode.fromJSON(e)) : [],
+      giftCodes: globalThis.Array.isArray(object?.giftCodes)
+        ? object.giftCodes.map((e: any) => GiftCode.fromJSON(e))
+        : [],
     };
   },
 
@@ -4100,12 +4110,14 @@ export const AddNotificationRequest = {
 
   fromJSON(object: any): AddNotificationRequest {
     return {
-      recipientIds: Array.isArray(object?.recipientIds) ? object.recipientIds.map((e: any) => String(e)) : [],
-      userGroupId: isSet(object.userGroupId) ? Number(object.userGroupId) : 0,
+      recipientIds: globalThis.Array.isArray(object?.recipientIds)
+        ? object.recipientIds.map((e: any) => globalThis.String(e))
+        : [],
+      userGroupId: isSet(object.userGroupId) ? globalThis.Number(object.userGroupId) : 0,
       type: isSet(object.type) ? typeNotificationFromJSON(object.type) : 0,
-      title: isSet(object.title) ? String(object.title) : "",
-      content: isSet(object.content) ? String(object.content) : "",
-      senderId: isSet(object.senderId) ? String(object.senderId) : "",
+      title: isSet(object.title) ? globalThis.String(object.title) : "",
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
+      senderId: isSet(object.senderId) ? globalThis.String(object.senderId) : "",
     };
   },
 
@@ -4254,14 +4266,14 @@ export const Notification = {
 
   fromJSON(object: any): Notification {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      recipientId: isSet(object.recipientId) ? String(object.recipientId) : "",
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      recipientId: isSet(object.recipientId) ? globalThis.String(object.recipientId) : "",
       type: isSet(object.type) ? typeNotificationFromJSON(object.type) : 0,
-      title: isSet(object.title) ? String(object.title) : "",
-      content: isSet(object.content) ? String(object.content) : "",
-      senderId: isSet(object.senderId) ? String(object.senderId) : "",
-      read: isSet(object.read) ? Boolean(object.read) : false,
-      createTimeUnix: isSet(object.createTimeUnix) ? Number(object.createTimeUnix) : 0,
+      title: isSet(object.title) ? globalThis.String(object.title) : "",
+      content: isSet(object.content) ? globalThis.String(object.content) : "",
+      senderId: isSet(object.senderId) ? globalThis.String(object.senderId) : "",
+      read: isSet(object.read) ? globalThis.Boolean(object.read) : false,
+      createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
     };
   },
 
@@ -4368,8 +4380,8 @@ export const NotificationRequest = {
 
   fromJSON(object: any): NotificationRequest {
     return {
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      cusor: isSet(object.cusor) ? String(object.cusor) : "",
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
       type: isSet(object.type) ? typeNotificationFromJSON(object.type) : 0,
     };
   },
@@ -4487,14 +4499,14 @@ export const ListNotification = {
 
   fromJSON(object: any): ListNotification {
     return {
-      notifications: Array.isArray(object?.notifications)
+      notifications: globalThis.Array.isArray(object?.notifications)
         ? object.notifications.map((e: any) => Notification.fromJSON(e))
         : [],
-      nextCusor: isSet(object.nextCusor) ? String(object.nextCusor) : "",
-      prevCusor: isSet(object.prevCusor) ? String(object.prevCusor) : "",
-      total: isSet(object.total) ? Number(object.total) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      nextCusor: isSet(object.nextCusor) ? globalThis.String(object.nextCusor) : "",
+      prevCusor: isSet(object.prevCusor) ? globalThis.String(object.prevCusor) : "",
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
   },
 
@@ -4582,7 +4594,10 @@ export const RangeTime = {
   },
 
   fromJSON(object: any): RangeTime {
-    return { from: isSet(object.from) ? Number(object.from) : 0, to: isSet(object.to) ? Number(object.to) : 0 };
+    return {
+      from: isSet(object.from) ? globalThis.Number(object.from) : 0,
+      to: isSet(object.to) ? globalThis.Number(object.to) : 0,
+    };
   },
 
   toJSON(message: RangeTime): unknown {
@@ -4678,14 +4693,16 @@ export const InAppMessageData = {
   fromJSON(object: any): InAppMessageData {
     return {
       action: isSet(object.action) ? inAppMessageActionFromJSON(object.action) : 0,
-      target: isSet(object.target) ? String(object.target) : "",
+      target: isSet(object.target) ? globalThis.String(object.target) : "",
       params: isObject(object.params)
         ? Object.entries(object.params).reduce<{ [key: string]: string }>((acc, [key, value]) => {
           acc[key] = String(value);
           return acc;
         }, {})
         : {},
-      showTimes: Array.isArray(object?.showTimes) ? object.showTimes.map((e: any) => RangeTime.fromJSON(e)) : [],
+      showTimes: globalThis.Array.isArray(object?.showTimes)
+        ? object.showTimes.map((e: any) => RangeTime.fromJSON(e))
+        : [],
     };
   },
 
@@ -4721,7 +4738,7 @@ export const InAppMessageData = {
     message.target = object.target ?? "";
     message.params = Object.entries(object.params ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -4776,7 +4793,10 @@ export const InAppMessageData_ParamsEntry = {
   },
 
   fromJSON(object: any): InAppMessageData_ParamsEntry {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
+    };
   },
 
   toJSON(message: InAppMessageData_ParamsEntry): unknown {
@@ -4929,14 +4949,14 @@ export const InAppMessage = {
 
   fromJSON(object: any): InAppMessage {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      highPriority: isSet(object.highPriority) ? Number(object.highPriority) : 0,
-      groupIds: Array.isArray(object?.groupIds) ? object.groupIds.map((e: any) => Number(e)) : [],
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      highPriority: isSet(object.highPriority) ? globalThis.Number(object.highPriority) : 0,
+      groupIds: globalThis.Array.isArray(object?.groupIds) ? object.groupIds.map((e: any) => globalThis.Number(e)) : [],
       type: isSet(object.type) ? typeInAppMessageFromJSON(object.type) : 0,
       data: isSet(object.data) ? InAppMessageData.fromJSON(object.data) : undefined,
-      startDate: isSet(object.startDate) ? Number(object.startDate) : 0,
-      endDate: isSet(object.endDate) ? Number(object.endDate) : 0,
-      createTimeUnix: isSet(object.createTimeUnix) ? Number(object.createTimeUnix) : 0,
+      startDate: isSet(object.startDate) ? globalThis.Number(object.startDate) : 0,
+      endDate: isSet(object.endDate) ? globalThis.Number(object.endDate) : 0,
+      createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
     };
   },
 
@@ -5045,8 +5065,8 @@ export const InAppMessageRequest = {
 
   fromJSON(object: any): InAppMessageRequest {
     return {
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      cusor: isSet(object.cusor) ? String(object.cusor) : "",
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
       type: isSet(object.type) ? typeInAppMessageFromJSON(object.type) : 0,
     };
   },
@@ -5164,14 +5184,14 @@ export const ListInAppMessage = {
 
   fromJSON(object: any): ListInAppMessage {
     return {
-      inAppMessages: Array.isArray(object?.inAppMessages)
+      inAppMessages: globalThis.Array.isArray(object?.inAppMessages)
         ? object.inAppMessages.map((e: any) => InAppMessage.fromJSON(e))
         : [],
-      nextCusor: isSet(object.nextCusor) ? String(object.nextCusor) : "",
-      prevCusor: isSet(object.prevCusor) ? String(object.prevCusor) : "",
-      total: isSet(object.total) ? Number(object.total) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      nextCusor: isSet(object.nextCusor) ? globalThis.String(object.nextCusor) : "",
+      prevCusor: isSet(object.prevCusor) ? globalThis.String(object.prevCusor) : "",
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
   },
 
@@ -5270,9 +5290,9 @@ export const DefaultResponse = {
 
   fromJSON(object: any): DefaultResponse {
     return {
-      message: isSet(object.message) ? String(object.message) : "",
-      code: isSet(object.code) ? String(object.code) : "",
-      status: isSet(object.status) ? String(object.status) : "",
+      message: isSet(object.message) ? globalThis.String(object.message) : "",
+      code: isSet(object.code) ? globalThis.String(object.code) : "",
+      status: isSet(object.status) ? globalThis.String(object.status) : "",
     };
   },
 
@@ -5349,8 +5369,8 @@ export const PreSignPutRequest = {
 
   fromJSON(object: any): PreSignPutRequest {
     return {
-      fileName: isSet(object.fileName) ? String(object.fileName) : "",
-      bucketName: isSet(object.bucketName) ? String(object.bucketName) : "",
+      fileName: isSet(object.fileName) ? globalThis.String(object.fileName) : "",
+      bucketName: isSet(object.bucketName) ? globalThis.String(object.bucketName) : "",
     };
   },
 
@@ -5412,7 +5432,7 @@ export const PreSignPutResponse = {
   },
 
   fromJSON(object: any): PreSignPutResponse {
-    return { url: isSet(object.url) ? String(object.url) : "" };
+    return { url: isSet(object.url) ? globalThis.String(object.url) : "" };
   },
 
   toJSON(message: PreSignPutResponse): unknown {
@@ -5500,10 +5520,10 @@ export const ReferUser = {
 
   fromJSON(object: any): ReferUser {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      userInvitor: isSet(object.userInvitor) ? String(object.userInvitor) : "",
-      userInvitee: isSet(object.userInvitee) ? String(object.userInvitee) : "",
-      createTimeUnix: isSet(object.createTimeUnix) ? Number(object.createTimeUnix) : 0,
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      userInvitor: isSet(object.userInvitor) ? globalThis.String(object.userInvitor) : "",
+      userInvitee: isSet(object.userInvitee) ? globalThis.String(object.userInvitee) : "",
+      createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
     };
   },
 
@@ -5594,9 +5614,9 @@ export const RewardReferTemplate = {
 
   fromJSON(object: any): RewardReferTemplate {
     return {
-      min: isSet(object.min) ? Number(object.min) : 0,
-      max: isSet(object.max) ? Number(object.max) : 0,
-      rate: isSet(object.rate) ? Number(object.rate) : 0,
+      min: isSet(object.min) ? globalThis.Number(object.min) : 0,
+      max: isSet(object.max) ? globalThis.Number(object.max) : 0,
+      rate: isSet(object.rate) ? globalThis.Number(object.rate) : 0,
     };
   },
 
@@ -5663,7 +5683,7 @@ export const ListRewardReferTemplate = {
 
   fromJSON(object: any): ListRewardReferTemplate {
     return {
-      rewardRefers: Array.isArray(object?.rewardRefers)
+      rewardRefers: globalThis.Array.isArray(object?.rewardRefers)
         ? object.rewardRefers.map((e: any) => RewardReferTemplate.fromJSON(e))
         : [],
     };
@@ -5880,23 +5900,25 @@ export const RewardRefer = {
 
   fromJSON(object: any): RewardRefer {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      winAmt: isSet(object.winAmt) ? Number(object.winAmt) : 0,
-      estRewardLv: isSet(object.estRewardLv) ? Number(object.estRewardLv) : 0,
-      estReward: isSet(object.estReward) ? Number(object.estReward) : 0,
-      estRateReward: isSet(object.estRateReward) ? Number(object.estRateReward) : 0,
-      userRefers: Array.isArray(object?.userRefers) ? object.userRefers.map((e: any) => RewardRefer.fromJSON(e)) : [],
-      listRewards: Array.isArray(object?.listRewards)
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      winAmt: isSet(object.winAmt) ? globalThis.Number(object.winAmt) : 0,
+      estRewardLv: isSet(object.estRewardLv) ? globalThis.Number(object.estRewardLv) : 0,
+      estReward: isSet(object.estReward) ? globalThis.Number(object.estReward) : 0,
+      estRateReward: isSet(object.estRateReward) ? globalThis.Number(object.estRateReward) : 0,
+      userRefers: globalThis.Array.isArray(object?.userRefers)
+        ? object.userRefers.map((e: any) => RewardRefer.fromJSON(e))
+        : [],
+      listRewards: globalThis.Array.isArray(object?.listRewards)
         ? object.listRewards.map((e: any) => RewardReferTemplate.fromJSON(e))
         : [],
-      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
-      totalUserRefer: isSet(object.totalUserRefer) ? Number(object.totalUserRefer) : 0,
-      updateTimeUnix: isSet(object.updateTimeUnix) ? Number(object.updateTimeUnix) : 0,
-      sendToWallet: isSet(object.sendToWallet) ? Boolean(object.sendToWallet) : false,
-      createTimeUnix: isSet(object.createTimeUnix) ? Number(object.createTimeUnix) : 0,
-      remainTimeResetSec: isSet(object.remainTimeResetSec) ? Number(object.remainTimeResetSec) : 0,
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      totalUserRefer: isSet(object.totalUserRefer) ? globalThis.Number(object.totalUserRefer) : 0,
+      updateTimeUnix: isSet(object.updateTimeUnix) ? globalThis.Number(object.updateTimeUnix) : 0,
+      sendToWallet: isSet(object.sendToWallet) ? globalThis.Boolean(object.sendToWallet) : false,
+      createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
+      remainTimeResetSec: isSet(object.remainTimeResetSec) ? globalThis.Number(object.remainTimeResetSec) : 0,
     };
   },
 
@@ -6011,7 +6033,9 @@ export const ListRewardRefer = {
 
   fromJSON(object: any): ListRewardRefer {
     return {
-      userRefers: Array.isArray(object?.userRefers) ? object.userRefers.map((e: any) => RewardRefer.fromJSON(e)) : [],
+      userRefers: globalThis.Array.isArray(object?.userRefers)
+        ? object.userRefers.map((e: any) => RewardRefer.fromJSON(e))
+        : [],
     };
   },
 
@@ -6100,10 +6124,10 @@ export const HistoryRewardRequest = {
 
   fromJSON(object: any): HistoryRewardRequest {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       time: isSet(object.time) ? historyRewardTimeFromJSON(object.time) : 0,
-      from: isSet(object.from) ? Number(object.from) : 0,
-      to: isSet(object.to) ? Number(object.to) : 0,
+      from: isSet(object.from) ? globalThis.Number(object.from) : 0,
+      to: isSet(object.to) ? globalThis.Number(object.to) : 0,
     };
   },
 
@@ -6204,10 +6228,10 @@ export const WalletTransRequest = {
 
   fromJSON(object: any): WalletTransRequest {
     return {
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      cusor: isSet(object.cusor) ? String(object.cusor) : "",
-      metaAction: isSet(object.metaAction) ? String(object.metaAction) : "",
-      metaBankAction: isSet(object.metaBankAction) ? String(object.metaBankAction) : "",
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
+      metaAction: isSet(object.metaAction) ? globalThis.String(object.metaAction) : "",
+      metaBankAction: isSet(object.metaBankAction) ? globalThis.String(object.metaBankAction) : "",
     };
   },
 
@@ -6288,8 +6312,8 @@ export const Error = {
 
   fromJSON(object: any): Error {
     return {
-      code: isSet(object.code) ? Number(object.code) : 0,
-      error: isSet(object.error) ? String(object.error) : "",
+      code: isSet(object.code) ? globalThis.Number(object.code) : 0,
+      error: isSet(object.error) ? globalThis.String(object.error) : "",
     };
   },
 
@@ -6315,29 +6339,11 @@ export const Error = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -6346,8 +6352,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

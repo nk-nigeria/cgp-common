@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { InfoBet } from "./color_game";
-import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -760,7 +760,10 @@ export enum SiXiangGame {
   SI_XIANG_GAME_JUICE_FRUIT_BASKET = 201,
   SI_XIANG_GAME_JUICE_FRUIT_RAIN = 202,
   SI_XIANG_GAME_JUICE_FREE_GAME = 203,
-  /** SI_XIANG_GAME_INCA_FREE_GAME - SiXiangGame_SI_XIANG_GAME_NOEL_FREE_GAME = 301; */
+  /**
+   * SI_XIANG_GAME_INCA_FREE_GAME - SiXiangGame_SI_XIANG_GAME_NOEL_FREE_GAME = 301;
+   * SiXiangGame_SI_XIANG_GAME_FRUIT_FREE_GAME = 301;
+   */
   SI_XIANG_GAME_INCA_FREE_GAME = 301,
   UNRECOGNIZED = -1,
 }
@@ -1491,27 +1494,33 @@ export const SlotDesk = {
     return {
       matrix: isSet(object.matrix) ? SlotMatrix.fromJSON(object.matrix) : undefined,
       spreadMatrix: isSet(object.spreadMatrix) ? SlotMatrix.fromJSON(object.spreadMatrix) : undefined,
-      paylines: Array.isArray(object?.paylines) ? object.paylines.map((e: any) => Payline.fromJSON(e)) : [],
-      chipsMcb: isSet(object.chipsMcb) ? Number(object.chipsMcb) : 0,
+      paylines: globalThis.Array.isArray(object?.paylines) ? object.paylines.map((e: any) => Payline.fromJSON(e)) : [],
+      chipsMcb: isSet(object.chipsMcb) ? globalThis.Number(object.chipsMcb) : 0,
       nextSixiangGame: isSet(object.nextSixiangGame) ? siXiangGameFromJSON(object.nextSixiangGame) : 0,
       currentSixiangGame: isSet(object.currentSixiangGame) ? siXiangGameFromJSON(object.currentSixiangGame) : 0,
-      isFinishGame: isSet(object.isFinishGame) ? Boolean(object.isFinishGame) : false,
-      isInSixiangBonus: isSet(object.isInSixiangBonus) ? Boolean(object.isInSixiangBonus) : false,
-      spinSymbols: Array.isArray(object?.spinSymbols) ? object.spinSymbols.map((e: any) => SpinSymbol.fromJSON(e)) : [],
+      isFinishGame: isSet(object.isFinishGame) ? globalThis.Boolean(object.isFinishGame) : false,
+      isInSixiangBonus: isSet(object.isInSixiangBonus) ? globalThis.Boolean(object.isInSixiangBonus) : false,
+      spinSymbols: globalThis.Array.isArray(object?.spinSymbols)
+        ? object.spinSymbols.map((e: any) => SpinSymbol.fromJSON(e))
+        : [],
       winJp: isSet(object.winJp) ? winJackpotFromJSON(object.winJp) : 0,
       bigWin: isSet(object.bigWin) ? bigWinFromJSON(object.bigWin) : 0,
       gameReward: isSet(object.gameReward) ? GameReward.fromJSON(object.gameReward) : undefined,
-      collectionSymbols: Array.isArray(object?.collectionSymbols)
+      collectionSymbols: globalThis.Array.isArray(object?.collectionSymbols)
         ? object.collectionSymbols.map((e: any) => CollectSymbol.fromJSON(e))
         : [],
-      tsUnix: isSet(object.tsUnix) ? Number(object.tsUnix) : 0,
-      ratioFruitBasket: isSet(object.ratioFruitBasket) ? Number(object.ratioFruitBasket) : 0,
-      numSpinLeft: isSet(object.numSpinLeft) ? Number(object.numSpinLeft) : 0,
-      betLevels: Array.isArray(object?.betLevels) ? object.betLevels.map((e: any) => Number(e)) : [],
+      tsUnix: isSet(object.tsUnix) ? globalThis.Number(object.tsUnix) : 0,
+      ratioFruitBasket: isSet(object.ratioFruitBasket) ? globalThis.Number(object.ratioFruitBasket) : 0,
+      numSpinLeft: isSet(object.numSpinLeft) ? globalThis.Number(object.numSpinLeft) : 0,
+      betLevels: globalThis.Array.isArray(object?.betLevels)
+        ? object.betLevels.map((e: any) => globalThis.Number(e))
+        : [],
       infoBet: isSet(object.infoBet) ? InfoBet.fromJSON(object.infoBet) : undefined,
-      chipsBuyGem: isSet(object.chipsBuyGem) ? Number(object.chipsBuyGem) : 0,
-      sixiangGems: Array.isArray(object?.sixiangGems) ? object.sixiangGems.map((e: any) => siXiangGameFromJSON(e)) : [],
-      letterSymbols: Array.isArray(object?.letterSymbols)
+      chipsBuyGem: isSet(object.chipsBuyGem) ? globalThis.Number(object.chipsBuyGem) : 0,
+      sixiangGems: globalThis.Array.isArray(object?.sixiangGems)
+        ? object.sixiangGems.map((e: any) => siXiangGameFromJSON(e))
+        : [],
+      letterSymbols: globalThis.Array.isArray(object?.letterSymbols)
         ? object.letterSymbols.map((e: any) => siXiangSymbolFromJSON(e))
         : [],
       winJpHistory: isSet(object.winJpHistory) ? JackpotHistory.fromJSON(object.winJpHistory) : undefined,
@@ -1714,11 +1723,11 @@ export const GameConfig = {
 
   fromJSON(object: any): GameConfig {
     return {
-      numScatterSeq: isSet(object.numScatterSeq) ? Number(object.numScatterSeq) : 0,
-      numFreeSpin: isSet(object.numFreeSpin) ? Number(object.numFreeSpin) : 0,
-      numWild: isSet(object.numWild) ? Number(object.numWild) : 0,
-      ratioWild: isSet(object.ratioWild) ? Number(object.ratioWild) : 0,
-      ratioBasket: isSet(object.ratioBasket) ? Number(object.ratioBasket) : 0,
+      numScatterSeq: isSet(object.numScatterSeq) ? globalThis.Number(object.numScatterSeq) : 0,
+      numFreeSpin: isSet(object.numFreeSpin) ? globalThis.Number(object.numFreeSpin) : 0,
+      numWild: isSet(object.numWild) ? globalThis.Number(object.numWild) : 0,
+      ratioWild: isSet(object.ratioWild) ? globalThis.Number(object.ratioWild) : 0,
+      ratioBasket: isSet(object.ratioBasket) ? globalThis.Number(object.ratioBasket) : 0,
     };
   },
 
@@ -1835,10 +1844,12 @@ export const SlotMatrix = {
 
   fromJSON(object: any): SlotMatrix {
     return {
-      lists: Array.isArray(object?.lists) ? object.lists.map((e: any) => siXiangSymbolFromJSON(e)) : [],
-      rows: isSet(object.rows) ? Number(object.rows) : 0,
-      cols: isSet(object.cols) ? Number(object.cols) : 0,
-      spinLists: Array.isArray(object?.spinLists) ? object.spinLists.map((e: any) => SpinSymbol.fromJSON(e)) : [],
+      lists: globalThis.Array.isArray(object?.lists) ? object.lists.map((e: any) => siXiangSymbolFromJSON(e)) : [],
+      rows: isSet(object.rows) ? globalThis.Number(object.rows) : 0,
+      cols: isSet(object.cols) ? globalThis.Number(object.cols) : 0,
+      spinLists: globalThis.Array.isArray(object?.spinLists)
+        ? object.spinLists.map((e: any) => SpinSymbol.fromJSON(e))
+        : [],
     };
   },
 
@@ -1980,13 +1991,13 @@ export const SpinSymbol = {
   fromJSON(object: any): SpinSymbol {
     return {
       symbol: isSet(object.symbol) ? siXiangSymbolFromJSON(object.symbol) : 0,
-      col: isSet(object.col) ? Number(object.col) : 0,
-      row: isSet(object.row) ? Number(object.row) : 0,
-      ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
-      index: isSet(object.index) ? Number(object.index) : 0,
+      col: isSet(object.col) ? globalThis.Number(object.col) : 0,
+      row: isSet(object.row) ? globalThis.Number(object.row) : 0,
+      ratio: isSet(object.ratio) ? globalThis.Number(object.ratio) : 0,
+      index: isSet(object.index) ? globalThis.Number(object.index) : 0,
       winJp: isSet(object.winJp) ? winJackpotFromJSON(object.winJp) : 0,
-      winAmount: isSet(object.winAmount) ? Number(object.winAmount) : 0,
-      ratioBonus: isSet(object.ratioBonus) ? Number(object.ratioBonus) : 0,
+      winAmount: isSet(object.winAmount) ? globalThis.Number(object.winAmount) : 0,
+      ratioBonus: isSet(object.ratioBonus) ? globalThis.Number(object.ratioBonus) : 0,
     };
   },
 
@@ -2094,8 +2105,8 @@ export const CollectSymbol = {
   fromJSON(object: any): CollectSymbol {
     return {
       symbol: isSet(object.symbol) ? siXiangSymbolFromJSON(object.symbol) : 0,
-      qty: isSet(object.qty) ? Number(object.qty) : 0,
-      ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
+      qty: isSet(object.qty) ? globalThis.Number(object.qty) : 0,
+      ratio: isSet(object.ratio) ? globalThis.Number(object.ratio) : 0,
     };
   },
 
@@ -2203,10 +2214,10 @@ export const JackpotReward = {
   fromJSON(object: any): JackpotReward {
     return {
       winJackpot: isSet(object.winJackpot) ? winJackpotFromJSON(object.winJackpot) : 0,
-      ratio: isSet(object.ratio) ? Number(object.ratio) : 0,
-      count: isSet(object.count) ? Number(object.count) : 0,
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      chipsAccum: isSet(object.chipsAccum) ? Number(object.chipsAccum) : 0,
+      ratio: isSet(object.ratio) ? globalThis.Number(object.ratio) : 0,
+      count: isSet(object.count) ? globalThis.Number(object.count) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      chipsAccum: isSet(object.chipsAccum) ? globalThis.Number(object.chipsAccum) : 0,
     };
   },
 
@@ -2472,12 +2483,12 @@ export const Payline = {
 
   fromJSON(object: any): Payline {
     return {
-      id: isSet(object.id) ? Number(object.id) : 0,
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
       symbol: isSet(object.symbol) ? siXiangSymbolFromJSON(object.symbol) : 0,
-      numOccur: isSet(object.numOccur) ? Number(object.numOccur) : 0,
-      rate: isSet(object.rate) ? Number(object.rate) : 0,
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      indices: Array.isArray(object?.indices) ? object.indices.map((e: any) => Number(e)) : [],
+      numOccur: isSet(object.numOccur) ? globalThis.Number(object.numOccur) : 0,
+      rate: isSet(object.rate) ? globalThis.Number(object.rate) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      indices: globalThis.Array.isArray(object?.indices) ? object.indices.map((e: any) => globalThis.Number(e)) : [],
     };
   },
 
@@ -2723,23 +2734,27 @@ export const GameReward = {
 
   fromJSON(object: any): GameReward {
     return {
-      updateWallet: isSet(object.updateWallet) ? Boolean(object.updateWallet) : false,
-      balanceChipsWalletBefore: isSet(object.balanceChipsWalletBefore) ? Number(object.balanceChipsWalletBefore) : 0,
-      balanceChipsWalletAfter: isSet(object.balanceChipsWalletAfter) ? Number(object.balanceChipsWalletAfter) : 0,
-      chipsWin: isSet(object.chipsWin) ? Number(object.chipsWin) : 0,
-      totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? Number(object.totalChipsWinByGame) : 0,
-      updateChipsBonus: isSet(object.updateChipsBonus) ? Boolean(object.updateChipsBonus) : false,
-      ratioWin: isSet(object.ratioWin) ? Number(object.ratioWin) : 0,
-      lineWin: isSet(object.lineWin) ? Number(object.lineWin) : 0,
-      totalRatioWin: isSet(object.totalRatioWin) ? Number(object.totalRatioWin) : 0,
-      totalLineWin: isSet(object.totalLineWin) ? Number(object.totalLineWin) : 0,
-      chipBetFee: isSet(object.chipBetFee) ? Number(object.chipBetFee) : 0,
-      chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
-      ratioBonus: isSet(object.ratioBonus) ? Number(object.ratioBonus) : 0,
-      perlGreenForest: isSet(object.perlGreenForest) ? Number(object.perlGreenForest) : 0,
-      perlGreenForestChips: isSet(object.perlGreenForestChips) ? Number(object.perlGreenForestChips) : 0,
+      updateWallet: isSet(object.updateWallet) ? globalThis.Boolean(object.updateWallet) : false,
+      balanceChipsWalletBefore: isSet(object.balanceChipsWalletBefore)
+        ? globalThis.Number(object.balanceChipsWalletBefore)
+        : 0,
+      balanceChipsWalletAfter: isSet(object.balanceChipsWalletAfter)
+        ? globalThis.Number(object.balanceChipsWalletAfter)
+        : 0,
+      chipsWin: isSet(object.chipsWin) ? globalThis.Number(object.chipsWin) : 0,
+      totalChipsWinByGame: isSet(object.totalChipsWinByGame) ? globalThis.Number(object.totalChipsWinByGame) : 0,
+      updateChipsBonus: isSet(object.updateChipsBonus) ? globalThis.Boolean(object.updateChipsBonus) : false,
+      ratioWin: isSet(object.ratioWin) ? globalThis.Number(object.ratioWin) : 0,
+      lineWin: isSet(object.lineWin) ? globalThis.Number(object.lineWin) : 0,
+      totalRatioWin: isSet(object.totalRatioWin) ? globalThis.Number(object.totalRatioWin) : 0,
+      totalLineWin: isSet(object.totalLineWin) ? globalThis.Number(object.totalLineWin) : 0,
+      chipBetFee: isSet(object.chipBetFee) ? globalThis.Number(object.chipBetFee) : 0,
+      chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
+      ratioBonus: isSet(object.ratioBonus) ? globalThis.Number(object.ratioBonus) : 0,
+      perlGreenForest: isSet(object.perlGreenForest) ? globalThis.Number(object.perlGreenForest) : 0,
+      perlGreenForestChips: isSet(object.perlGreenForestChips) ? globalThis.Number(object.perlGreenForestChips) : 0,
       perlGreenForestChipsCollect: isSet(object.perlGreenForestChipsCollect)
-        ? Number(object.perlGreenForestChipsCollect)
+        ? globalThis.Number(object.perlGreenForestChipsCollect)
         : 0,
     };
   },
@@ -2869,8 +2884,8 @@ export const SaveGame = {
 
   fromJSON(object: any): SaveGame {
     return {
-      lastUpdateUnix: isSet(object.lastUpdateUnix) ? Number(object.lastUpdateUnix) : 0,
-      data: isSet(object.data) ? String(object.data) : "",
+      lastUpdateUnix: isSet(object.lastUpdateUnix) ? globalThis.Number(object.lastUpdateUnix) : 0,
+      data: isSet(object.data) ? globalThis.String(object.data) : "",
     };
   },
 
@@ -2896,29 +2911,11 @@ export const SaveGame = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -2927,8 +2924,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "api";
 
@@ -177,12 +177,12 @@ export const RpcFindMatchRequest = {
 
   fromJSON(object: any): RpcFindMatchRequest {
     return {
-      markUnit: isSet(object.markUnit) ? Number(object.markUnit) : 0,
-      gameCode: isSet(object.gameCode) ? String(object.gameCode) : "",
-      withNonOpen: isSet(object.withNonOpen) ? Boolean(object.withNonOpen) : false,
-      create: isSet(object.create) ? Boolean(object.create) : false,
-      mockCodeCard: isSet(object.mockCodeCard) ? Number(object.mockCodeCard) : 0,
-      userData: isSet(object.userData) ? String(object.userData) : "",
+      markUnit: isSet(object.markUnit) ? globalThis.Number(object.markUnit) : 0,
+      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
+      withNonOpen: isSet(object.withNonOpen) ? globalThis.Boolean(object.withNonOpen) : false,
+      create: isSet(object.create) ? globalThis.Boolean(object.create) : false,
+      mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
+      userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
     };
   },
 
@@ -331,14 +331,14 @@ export const Match = {
 
   fromJSON(object: any): Match {
     return {
-      matchId: isSet(object.matchId) ? String(object.matchId) : "",
-      size: isSet(object.size) ? Number(object.size) : 0,
-      maxSize: isSet(object.maxSize) ? Number(object.maxSize) : 0,
-      name: isSet(object.name) ? String(object.name) : "",
-      markUnit: isSet(object.markUnit) ? Number(object.markUnit) : 0,
-      open: isSet(object.open) ? Boolean(object.open) : false,
-      mockCodeCard: isSet(object.mockCodeCard) ? Number(object.mockCodeCard) : 0,
-      userData: isSet(object.userData) ? String(object.userData) : "",
+      matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
+      size: isSet(object.size) ? globalThis.Number(object.size) : 0,
+      maxSize: isSet(object.maxSize) ? globalThis.Number(object.maxSize) : 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      markUnit: isSet(object.markUnit) ? globalThis.Number(object.markUnit) : 0,
+      open: isSet(object.open) ? globalThis.Boolean(object.open) : false,
+      mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
+      userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
     };
   },
 
@@ -424,7 +424,9 @@ export const RpcFindMatchResponse = {
   },
 
   fromJSON(object: any): RpcFindMatchResponse {
-    return { matches: Array.isArray(object?.matches) ? object.matches.map((e: any) => Match.fromJSON(e)) : [] };
+    return {
+      matches: globalThis.Array.isArray(object?.matches) ? object.matches.map((e: any) => Match.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: RpcFindMatchResponse): unknown {
@@ -512,10 +514,10 @@ export const RpcCreateMatchRequest = {
 
   fromJSON(object: any): RpcCreateMatchRequest {
     return {
-      markUnit: isSet(object.markUnit) ? Number(object.markUnit) : 0,
-      gameCode: isSet(object.gameCode) ? String(object.gameCode) : "",
-      name: isSet(object.name) ? String(object.name) : "",
-      password: isSet(object.password) ? String(object.password) : "",
+      markUnit: isSet(object.markUnit) ? globalThis.Number(object.markUnit) : 0,
+      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      password: isSet(object.password) ? globalThis.String(object.password) : "",
     };
   },
 
@@ -585,7 +587,7 @@ export const RpcCreateMatchResponse = {
   },
 
   fromJSON(object: any): RpcCreateMatchResponse {
-    return { matchId: isSet(object.matchId) ? String(object.matchId) : "" };
+    return { matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "" };
   },
 
   toJSON(message: RpcCreateMatchResponse): unknown {
@@ -653,8 +655,8 @@ export const Bet = {
 
   fromJSON(object: any): Bet {
     return {
-      enable: isSet(object.enable) ? Boolean(object.enable) : false,
-      markUnit: isSet(object.markUnit) ? Number(object.markUnit) : 0,
+      enable: isSet(object.enable) ? globalThis.Boolean(object.enable) : false,
+      markUnit: isSet(object.markUnit) ? globalThis.Number(object.markUnit) : 0,
     };
   },
 
@@ -716,7 +718,7 @@ export const Bets = {
   },
 
   fromJSON(object: any): Bets {
-    return { bets: Array.isArray(object?.bets) ? object.bets.map((e: any) => Bet.fromJSON(e)) : [] };
+    return { bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => Bet.fromJSON(e)) : [] };
   },
 
   toJSON(message: Bets): unknown {
@@ -740,7 +742,8 @@ export const Bets = {
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 

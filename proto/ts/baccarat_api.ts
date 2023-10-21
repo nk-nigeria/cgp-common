@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { Card } from "./chinese_poker_game_api";
-import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -274,7 +274,7 @@ export const BaccaratBet = {
 
   fromJSON(object: any): BaccaratBet {
     return {
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       cell: isSet(object.cell) ? baccaratBetCellFromJSON(object.cell) : 0,
     };
   },
@@ -349,7 +349,7 @@ export const BaccaratBetResult = {
   fromJSON(object: any): BaccaratBetResult {
     return {
       bet: isSet(object.bet) ? BaccaratBet.fromJSON(object.bet) : undefined,
-      isWin: isSet(object.isWin) ? Boolean(object.isWin) : false,
+      isWin: isSet(object.isWin) ? globalThis.Boolean(object.isWin) : false,
     };
   },
 
@@ -432,9 +432,9 @@ export const BaccaratPlayerBet = {
 
   fromJSON(object: any): BaccaratPlayerBet {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       actionType: isSet(object.actionType) ? baccaratBetActionTypeFromJSON(object.actionType) : 0,
-      bets: Array.isArray(object?.bets) ? object.bets.map((e: any) => BaccaratBet.fromJSON(e)) : [],
+      bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => BaccaratBet.fromJSON(e)) : [],
     };
   },
 
@@ -511,8 +511,8 @@ export const BaccaratPlayerBetResult = {
 
   fromJSON(object: any): BaccaratPlayerBetResult {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      lists: Array.isArray(object?.lists) ? object.lists.map((e: any) => BaccaratBetResult.fromJSON(e)) : [],
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      lists: globalThis.Array.isArray(object?.lists) ? object.lists.map((e: any) => BaccaratBetResult.fromJSON(e)) : [],
     };
   },
 
@@ -595,9 +595,9 @@ export const BaccaratHand = {
 
   fromJSON(object: any): BaccaratHand {
     return {
-      cards: Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
-      point: isSet(object.point) ? Number(object.point) : 0,
-      isPair: isSet(object.isPair) ? Boolean(object.isPair) : false,
+      cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
+      point: isSet(object.point) ? globalThis.Number(object.point) : 0,
+      isPair: isSet(object.isPair) ? globalThis.Boolean(object.isPair) : false,
     };
   },
 
@@ -775,8 +775,10 @@ export const BaccaratGameFinish = {
   fromJSON(object: any): BaccaratGameFinish {
     return {
       hand: isSet(object.hand) ? BaccaratHands.fromJSON(object.hand) : undefined,
-      winCells: Array.isArray(object?.winCells) ? object.winCells.map((e: any) => baccaratBetCellFromJSON(e)) : [],
-      listBetResults: Array.isArray(object?.listBetResults)
+      winCells: globalThis.Array.isArray(object?.winCells)
+        ? object.winCells.map((e: any) => baccaratBetCellFromJSON(e))
+        : [],
+      listBetResults: globalThis.Array.isArray(object?.listBetResults)
         ? object.listBetResults.map((e: any) => BaccaratPlayerBetResult.fromJSON(e))
         : [],
     };
@@ -868,8 +870,8 @@ export const BaccaratBetCellInfo = {
   fromJSON(object: any): BaccaratBetCellInfo {
     return {
       cell: isSet(object.cell) ? baccaratBetCellFromJSON(object.cell) : 0,
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      nUserBet: isSet(object.nUserBet) ? Number(object.nUserBet) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      nUserBet: isSet(object.nUserBet) ? globalThis.Number(object.nUserBet) : 0,
     };
   },
 
@@ -956,9 +958,9 @@ export const BaccaratSimpleHistory = {
 
   fromJSON(object: any): BaccaratSimpleHistory {
     return {
-      bankerWin: isSet(object.bankerWin) ? Number(object.bankerWin) : 0,
-      playerWin: isSet(object.playerWin) ? Number(object.playerWin) : 0,
-      tie: isSet(object.tie) ? Number(object.tie) : 0,
+      bankerWin: isSet(object.bankerWin) ? globalThis.Number(object.bankerWin) : 0,
+      playerWin: isSet(object.playerWin) ? globalThis.Number(object.playerWin) : 0,
+      tie: isSet(object.tie) ? globalThis.Number(object.tie) : 0,
     };
   },
 
@@ -1093,12 +1095,12 @@ export const BaccaratUpdateDesk = {
 
   fromJSON(object: any): BaccaratUpdateDesk {
     return {
-      nPlayers: isSet(object.nPlayers) ? Number(object.nPlayers) : 0,
-      isUpdateUserBet: isSet(object.isUpdateUserBet) ? Boolean(object.isUpdateUserBet) : false,
-      isUpdateDeskCell: isSet(object.isUpdateDeskCell) ? Boolean(object.isUpdateDeskCell) : false,
-      isUpdateGameHistory: isSet(object.isUpdateGameHistory) ? Boolean(object.isUpdateGameHistory) : false,
+      nPlayers: isSet(object.nPlayers) ? globalThis.Number(object.nPlayers) : 0,
+      isUpdateUserBet: isSet(object.isUpdateUserBet) ? globalThis.Boolean(object.isUpdateUserBet) : false,
+      isUpdateDeskCell: isSet(object.isUpdateDeskCell) ? globalThis.Boolean(object.isUpdateDeskCell) : false,
+      isUpdateGameHistory: isSet(object.isUpdateGameHistory) ? globalThis.Boolean(object.isUpdateGameHistory) : false,
       userBet: isSet(object.userBet) ? BaccaratPlayerBet.fromJSON(object.userBet) : undefined,
-      deskCells: Array.isArray(object?.deskCells)
+      deskCells: globalThis.Array.isArray(object?.deskCells)
         ? object.deskCells.map((e: any) => BaccaratBetCellInfo.fromJSON(e))
         : [],
       history: isSet(object.history) ? BaccaratSimpleHistory.fromJSON(object.history) : undefined,
@@ -1265,8 +1267,8 @@ export const BaccaratUpdateDeal = {
 
   fromJSON(object: any): BaccaratUpdateDeal {
     return {
-      isPlayer: isSet(object.isPlayer) ? Boolean(object.isPlayer) : false,
-      cards: Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
+      isPlayer: isSet(object.isPlayer) ? globalThis.Boolean(object.isPlayer) : false,
+      cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
       hands: isSet(object.hands) ? BaccaratHands.fromJSON(object.hands) : undefined,
     };
   },
@@ -1299,29 +1301,11 @@ export const BaccaratUpdateDeal = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -1330,8 +1314,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

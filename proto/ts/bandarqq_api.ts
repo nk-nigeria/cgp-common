@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
-import Long = require("long");
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "api";
 
@@ -270,8 +270,8 @@ export const Domino = {
 
   fromJSON(object: any): Domino {
     return {
-      top: isSet(object.top) ? Number(object.top) : 0,
-      bottom: isSet(object.bottom) ? Number(object.bottom) : 0,
+      top: isSet(object.top) ? globalThis.Number(object.top) : 0,
+      bottom: isSet(object.bottom) ? globalThis.Number(object.bottom) : 0,
     };
   },
 
@@ -333,7 +333,9 @@ export const DominoList = {
   },
 
   fromJSON(object: any): DominoList {
-    return { dominos: Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [] };
+    return {
+      dominos: globalThis.Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: DominoList): unknown {
@@ -401,7 +403,7 @@ export const QQBet = {
 
   fromJSON(object: any): QQBet {
     return {
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       cell: isSet(object.cell) ? qQBetCellFromJSON(object.cell) : 0,
     };
   },
@@ -476,7 +478,7 @@ export const QQBetResult = {
   fromJSON(object: any): QQBetResult {
     return {
       bet: isSet(object.bet) ? QQBet.fromJSON(object.bet) : undefined,
-      isWin: isSet(object.isWin) ? Boolean(object.isWin) : false,
+      isWin: isSet(object.isWin) ? globalThis.Boolean(object.isWin) : false,
     };
   },
 
@@ -549,8 +551,8 @@ export const QQPlayerBets = {
 
   fromJSON(object: any): QQPlayerBets {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      bets: Array.isArray(object?.bets) ? object.bets.map((e: any) => QQBet.fromJSON(e)) : [],
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => QQBet.fromJSON(e)) : [],
     };
   },
 
@@ -623,8 +625,10 @@ export const QQPlayerBetResult = {
 
   fromJSON(object: any): QQPlayerBetResult {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      betResults: Array.isArray(object?.betResults) ? object.betResults.map((e: any) => QQBetResult.fromJSON(e)) : [],
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      betResults: globalThis.Array.isArray(object?.betResults)
+        ? object.betResults.map((e: any) => QQBetResult.fromJSON(e))
+        : [],
     };
   },
 
@@ -687,7 +691,9 @@ export const QQListPlayerBetResult = {
 
   fromJSON(object: any): QQListPlayerBetResult {
     return {
-      results: Array.isArray(object?.results) ? object.results.map((e: any) => QQPlayerBetResult.fromJSON(e)) : [],
+      results: globalThis.Array.isArray(object?.results)
+        ? object.results.map((e: any) => QQPlayerBetResult.fromJSON(e))
+        : [],
     };
   },
 
@@ -766,9 +772,9 @@ export const QQHand = {
 
   fromJSON(object: any): QQHand {
     return {
-      dominos: Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [],
+      dominos: globalThis.Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [],
       type: isSet(object.type) ? qQHandTypeFromJSON(object.type) : 0,
-      point: isSet(object.point) ? Number(object.point) : 0,
+      point: isSet(object.point) ? globalThis.Number(object.point) : 0,
     };
   },
 
@@ -868,7 +874,7 @@ export const QQGameFinish = {
   fromJSON(object: any): QQGameFinish {
     return {
       hands: isSet(object.hands) ? QQGameFinishHand.fromJSON(object.hands) : undefined,
-      winCells: Array.isArray(object?.winCells) ? object.winCells.map((e: any) => qQBetCellFromJSON(e)) : [],
+      winCells: globalThis.Array.isArray(object?.winCells) ? object.winCells.map((e: any) => qQBetCellFromJSON(e)) : [],
       result: isSet(object.result) ? QQListPlayerBetResult.fromJSON(object.result) : undefined,
     };
   },
@@ -1018,7 +1024,7 @@ export const QQHistory = {
 
   fromJSON(object: any): QQHistory {
     return {
-      handHistories: Array.isArray(object?.handHistories)
+      handHistories: globalThis.Array.isArray(object?.handHistories)
         ? object.handHistories.map((e: any) => QQGameFinishHand.fromJSON(e))
         : [],
     };
@@ -1100,8 +1106,8 @@ export const QQDeskCellBet = {
   fromJSON(object: any): QQDeskCellBet {
     return {
       cell: isSet(object.cell) ? qQBetCellFromJSON(object.cell) : 0,
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      nUserBet: isSet(object.nUserBet) ? Number(object.nUserBet) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      nUserBet: isSet(object.nUserBet) ? globalThis.Number(object.nUserBet) : 0,
     };
   },
 
@@ -1168,7 +1174,7 @@ export const QQDeskListCellBet = {
 
   fromJSON(object: any): QQDeskListCellBet {
     return {
-      listCellBet: Array.isArray(object?.listCellBet)
+      listCellBet: globalThis.Array.isArray(object?.listCellBet)
         ? object.listCellBet.map((e: any) => QQDeskCellBet.fromJSON(e))
         : [],
     };
@@ -1297,10 +1303,10 @@ export const QQUpdateDesk = {
 
   fromJSON(object: any): QQUpdateDesk {
     return {
-      nPlayers: isSet(object.nPlayers) ? Number(object.nPlayers) : 0,
-      updateUserBets: isSet(object.updateUserBets) ? Boolean(object.updateUserBets) : false,
-      updateCellBets: isSet(object.updateCellBets) ? Boolean(object.updateCellBets) : false,
-      updateGameHistory: isSet(object.updateGameHistory) ? Boolean(object.updateGameHistory) : false,
+      nPlayers: isSet(object.nPlayers) ? globalThis.Number(object.nPlayers) : 0,
+      updateUserBets: isSet(object.updateUserBets) ? globalThis.Boolean(object.updateUserBets) : false,
+      updateCellBets: isSet(object.updateCellBets) ? globalThis.Boolean(object.updateCellBets) : false,
+      updateGameHistory: isSet(object.updateGameHistory) ? globalThis.Boolean(object.updateGameHistory) : false,
       userBets: isSet(object.userBets) ? QQPlayerBets.fromJSON(object.userBets) : undefined,
       listCellBet: isSet(object.listCellBet) ? QQDeskListCellBet.fromJSON(object.listCellBet) : undefined,
       history: isSet(object.history) ? QQHistory.fromJSON(object.history) : undefined,
@@ -1355,29 +1361,11 @@ export const QQUpdateDesk = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -1386,8 +1374,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
