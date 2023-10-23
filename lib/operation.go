@@ -48,7 +48,10 @@ func NewReportGame(ctx context.Context) *reportGame {
 		reportEndpoint: DefaultHostReport,
 		reportHttpKey:  DefaultHttpKey,
 	}
-	runtimeVal := ctx.Value(runtime.RUNTIME_CTX_ENV).(map[string]string)
+	runtimeVal, ok := ctx.Value(runtime.RUNTIME_CTX_ENV).(map[string]string)
+	if !ok {
+		fmt.Printf("ctx value runtime.RUNTIME_CTX_ENV expect map[string]string , actual %v\r\n", ctx.Value(runtime.RUNTIME_CTX_ENV))
+	}
 	for k, v := range runtimeVal {
 		if strings.ToLower(k) == "report_endpoint" {
 			reportEndpoint := strings.ToLower(v)
