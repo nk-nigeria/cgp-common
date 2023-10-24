@@ -592,6 +592,8 @@ export interface Notification {
   senderId: string;
   read: boolean;
   createTimeUnix: number;
+  appPackage: string;
+  gameId: string;
 }
 
 export interface NotificationRequest {
@@ -635,6 +637,8 @@ export interface InAppMessage {
   startDate: number;
   endDate: number;
   createTimeUnix: number;
+  appPackage: string;
+  gameId: string;
 }
 
 export interface InAppMessageRequest {
@@ -4160,7 +4164,18 @@ export const AddNotificationRequest = {
 };
 
 function createBaseNotification(): Notification {
-  return { id: 0, recipientId: "", type: 0, title: "", content: "", senderId: "", read: false, createTimeUnix: 0 };
+  return {
+    id: 0,
+    recipientId: "",
+    type: 0,
+    title: "",
+    content: "",
+    senderId: "",
+    read: false,
+    createTimeUnix: 0,
+    appPackage: "",
+    gameId: "",
+  };
 }
 
 export const Notification = {
@@ -4188,6 +4203,12 @@ export const Notification = {
     }
     if (message.createTimeUnix !== 0) {
       writer.uint32(64).int64(message.createTimeUnix);
+    }
+    if (message.appPackage !== "") {
+      writer.uint32(74).string(message.appPackage);
+    }
+    if (message.gameId !== "") {
+      writer.uint32(82).string(message.gameId);
     }
     return writer;
   },
@@ -4255,6 +4276,20 @@ export const Notification = {
 
           message.createTimeUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.appPackage = reader.string();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.gameId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4274,6 +4309,8 @@ export const Notification = {
       senderId: isSet(object.senderId) ? globalThis.String(object.senderId) : "",
       read: isSet(object.read) ? globalThis.Boolean(object.read) : false,
       createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
+      appPackage: isSet(object.appPackage) ? globalThis.String(object.appPackage) : "",
+      gameId: isSet(object.gameId) ? globalThis.String(object.gameId) : "",
     };
   },
 
@@ -4303,6 +4340,12 @@ export const Notification = {
     if (message.createTimeUnix !== 0) {
       obj.createTimeUnix = Math.round(message.createTimeUnix);
     }
+    if (message.appPackage !== "") {
+      obj.appPackage = message.appPackage;
+    }
+    if (message.gameId !== "") {
+      obj.gameId = message.gameId;
+    }
     return obj;
   },
 
@@ -4319,6 +4362,8 @@ export const Notification = {
     message.senderId = object.senderId ?? "";
     message.read = object.read ?? false;
     message.createTimeUnix = object.createTimeUnix ?? 0;
+    message.appPackage = object.appPackage ?? "";
+    message.gameId = object.gameId ?? "";
     return message;
   },
 };
@@ -4831,6 +4876,8 @@ function createBaseInAppMessage(): InAppMessage {
     startDate: 0,
     endDate: 0,
     createTimeUnix: 0,
+    appPackage: "",
+    gameId: "",
   };
 }
 
@@ -4861,6 +4908,12 @@ export const InAppMessage = {
     }
     if (message.createTimeUnix !== 0) {
       writer.uint32(64).int64(message.createTimeUnix);
+    }
+    if (message.appPackage !== "") {
+      writer.uint32(74).string(message.appPackage);
+    }
+    if (message.gameId !== "") {
+      writer.uint32(82).string(message.gameId);
     }
     return writer;
   },
@@ -4938,6 +4991,20 @@ export const InAppMessage = {
 
           message.createTimeUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.appPackage = reader.string();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.gameId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4957,6 +5024,8 @@ export const InAppMessage = {
       startDate: isSet(object.startDate) ? globalThis.Number(object.startDate) : 0,
       endDate: isSet(object.endDate) ? globalThis.Number(object.endDate) : 0,
       createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
+      appPackage: isSet(object.appPackage) ? globalThis.String(object.appPackage) : "",
+      gameId: isSet(object.gameId) ? globalThis.String(object.gameId) : "",
     };
   },
 
@@ -4986,6 +5055,12 @@ export const InAppMessage = {
     if (message.createTimeUnix !== 0) {
       obj.createTimeUnix = Math.round(message.createTimeUnix);
     }
+    if (message.appPackage !== "") {
+      obj.appPackage = message.appPackage;
+    }
+    if (message.gameId !== "") {
+      obj.gameId = message.gameId;
+    }
     return obj;
   },
 
@@ -5004,6 +5079,8 @@ export const InAppMessage = {
     message.startDate = object.startDate ?? 0;
     message.endDate = object.endDate ?? 0;
     message.createTimeUnix = object.createTimeUnix ?? 0;
+    message.appPackage = object.appPackage ?? "";
+    message.gameId = object.gameId ?? "";
     return message;
   },
 };
