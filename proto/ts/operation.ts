@@ -227,6 +227,7 @@ export interface TopWin {
   offset: number;
   refGame: string;
   total: number;
+  gameId: number;
 }
 
 function createBaseOpPlayer(): OpPlayer {
@@ -3496,7 +3497,7 @@ export const Win = {
 };
 
 function createBaseTopWin(): TopWin {
-  return { wins: [], fromUnix: 0, toUnix: 0, limit: 0, offset: 0, refGame: "", total: 0 };
+  return { wins: [], fromUnix: 0, toUnix: 0, limit: 0, offset: 0, refGame: "", total: 0, gameId: 0 };
 }
 
 export const TopWin = {
@@ -3521,6 +3522,9 @@ export const TopWin = {
     }
     if (message.total !== 0) {
       writer.uint32(56).int64(message.total);
+    }
+    if (message.gameId !== 0) {
+      writer.uint32(64).int64(message.gameId);
     }
     return writer;
   },
@@ -3581,6 +3585,13 @@ export const TopWin = {
 
           message.total = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.gameId = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3599,6 +3610,7 @@ export const TopWin = {
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
       refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
       total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
     };
   },
 
@@ -3625,6 +3637,9 @@ export const TopWin = {
     if (message.total !== 0) {
       obj.total = Math.round(message.total);
     }
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
     return obj;
   },
 
@@ -3640,6 +3655,7 @@ export const TopWin = {
     message.offset = object.offset ?? 0;
     message.refGame = object.refGame ?? "";
     message.total = object.total ?? 0;
+    message.gameId = object.gameId ?? 0;
     return message;
   },
 };

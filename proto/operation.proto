@@ -228,4 +228,5 @@ message TopWin {
   int64 offset = 5;
   string ref_game = 6;
   int64 total = 7;
+  int64 game_id = 8;
 }
