@@ -59,11 +59,10 @@ export interface MatchDetailRequest {
   gameId: number;
   fromUnix: number;
   toUnix: number;
-  userId: string;
-  userPairId: string;
+  userSid: string;
+  userPairSid: string;
   limit: number;
   offset: number;
-  userSid: number;
 }
 
 export interface MatchDetailResponse {
@@ -1013,7 +1012,7 @@ export const MatchDetail = {
 };
 
 function createBaseMatchDetailRequest(): MatchDetailRequest {
-  return { gameId: 0, fromUnix: 0, toUnix: 0, userId: "", userPairId: "", limit: 0, offset: 0, userSid: 0 };
+  return { gameId: 0, fromUnix: 0, toUnix: 0, userSid: "", userPairSid: "", limit: 0, offset: 0 };
 }
 
 export const MatchDetailRequest = {
@@ -1027,20 +1026,17 @@ export const MatchDetailRequest = {
     if (message.toUnix !== 0) {
       writer.uint32(24).int64(message.toUnix);
     }
-    if (message.userId !== "") {
-      writer.uint32(34).string(message.userId);
+    if (message.userSid !== "") {
+      writer.uint32(34).string(message.userSid);
     }
-    if (message.userPairId !== "") {
-      writer.uint32(42).string(message.userPairId);
+    if (message.userPairSid !== "") {
+      writer.uint32(42).string(message.userPairSid);
     }
     if (message.limit !== 0) {
       writer.uint32(48).int64(message.limit);
     }
     if (message.offset !== 0) {
       writer.uint32(56).int64(message.offset);
-    }
-    if (message.userSid !== 0) {
-      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -1078,14 +1074,14 @@ export const MatchDetailRequest = {
             break;
           }
 
-          message.userId = reader.string();
+          message.userSid = reader.string();
           continue;
         case 5:
           if (tag !== 42) {
             break;
           }
 
-          message.userPairId = reader.string();
+          message.userPairSid = reader.string();
           continue;
         case 6:
           if (tag !== 48) {
@@ -1101,13 +1097,6 @@ export const MatchDetailRequest = {
 
           message.offset = longToNumber(reader.int64() as Long);
           continue;
-        case 8:
-          if (tag !== 64) {
-            break;
-          }
-
-          message.userSid = longToNumber(reader.int64() as Long);
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1122,11 +1111,10 @@ export const MatchDetailRequest = {
       gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
       fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
       toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      userPairId: isSet(object.userPairId) ? globalThis.String(object.userPairId) : "",
+      userSid: isSet(object.userSid) ? globalThis.String(object.userSid) : "",
+      userPairSid: isSet(object.userPairSid) ? globalThis.String(object.userPairSid) : "",
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
-      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -1141,20 +1129,17 @@ export const MatchDetailRequest = {
     if (message.toUnix !== 0) {
       obj.toUnix = Math.round(message.toUnix);
     }
-    if (message.userId !== "") {
-      obj.userId = message.userId;
+    if (message.userSid !== "") {
+      obj.userSid = message.userSid;
     }
-    if (message.userPairId !== "") {
-      obj.userPairId = message.userPairId;
+    if (message.userPairSid !== "") {
+      obj.userPairSid = message.userPairSid;
     }
     if (message.limit !== 0) {
       obj.limit = Math.round(message.limit);
     }
     if (message.offset !== 0) {
       obj.offset = Math.round(message.offset);
-    }
-    if (message.userSid !== 0) {
-      obj.userSid = Math.round(message.userSid);
     }
     return obj;
   },
@@ -1167,11 +1152,10 @@ export const MatchDetailRequest = {
     message.gameId = object.gameId ?? 0;
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
-    message.userId = object.userId ?? "";
-    message.userPairId = object.userPairId ?? "";
+    message.userSid = object.userSid ?? "";
+    message.userPairSid = object.userPairSid ?? "";
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;
-    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
