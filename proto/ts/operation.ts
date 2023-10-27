@@ -59,8 +59,8 @@ export interface MatchDetailRequest {
   gameId: number;
   fromUnix: number;
   toUnix: number;
-  userSid: string;
-  userPairSid: string;
+  userSid: number;
+  userPairSid: number;
   limit: number;
   offset: number;
 }
@@ -1012,7 +1012,7 @@ export const MatchDetail = {
 };
 
 function createBaseMatchDetailRequest(): MatchDetailRequest {
-  return { gameId: 0, fromUnix: 0, toUnix: 0, userSid: "", userPairSid: "", limit: 0, offset: 0 };
+  return { gameId: 0, fromUnix: 0, toUnix: 0, userSid: 0, userPairSid: 0, limit: 0, offset: 0 };
 }
 
 export const MatchDetailRequest = {
@@ -1026,11 +1026,11 @@ export const MatchDetailRequest = {
     if (message.toUnix !== 0) {
       writer.uint32(24).int64(message.toUnix);
     }
-    if (message.userSid !== "") {
-      writer.uint32(34).string(message.userSid);
+    if (message.userSid !== 0) {
+      writer.uint32(32).int64(message.userSid);
     }
-    if (message.userPairSid !== "") {
-      writer.uint32(42).string(message.userPairSid);
+    if (message.userPairSid !== 0) {
+      writer.uint32(40).int64(message.userPairSid);
     }
     if (message.limit !== 0) {
       writer.uint32(48).int64(message.limit);
@@ -1070,18 +1070,18 @@ export const MatchDetailRequest = {
           message.toUnix = longToNumber(reader.int64() as Long);
           continue;
         case 4:
-          if (tag !== 34) {
+          if (tag !== 32) {
             break;
           }
 
-          message.userSid = reader.string();
+          message.userSid = longToNumber(reader.int64() as Long);
           continue;
         case 5:
-          if (tag !== 42) {
+          if (tag !== 40) {
             break;
           }
 
-          message.userPairSid = reader.string();
+          message.userPairSid = longToNumber(reader.int64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
@@ -1111,8 +1111,8 @@ export const MatchDetailRequest = {
       gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
       fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
       toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      userSid: isSet(object.userSid) ? globalThis.String(object.userSid) : "",
-      userPairSid: isSet(object.userPairSid) ? globalThis.String(object.userPairSid) : "",
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
+      userPairSid: isSet(object.userPairSid) ? globalThis.Number(object.userPairSid) : 0,
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
     };
@@ -1129,11 +1129,11 @@ export const MatchDetailRequest = {
     if (message.toUnix !== 0) {
       obj.toUnix = Math.round(message.toUnix);
     }
-    if (message.userSid !== "") {
-      obj.userSid = message.userSid;
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
     }
-    if (message.userPairSid !== "") {
-      obj.userPairSid = message.userPairSid;
+    if (message.userPairSid !== 0) {
+      obj.userPairSid = Math.round(message.userPairSid);
     }
     if (message.limit !== 0) {
       obj.limit = Math.round(message.limit);
@@ -1152,8 +1152,8 @@ export const MatchDetailRequest = {
     message.gameId = object.gameId ?? 0;
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
-    message.userSid = object.userSid ?? "";
-    message.userPairSid = object.userPairSid ?? "";
+    message.userSid = object.userSid ?? 0;
+    message.userPairSid = object.userPairSid ?? 0;
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;
     return message;
