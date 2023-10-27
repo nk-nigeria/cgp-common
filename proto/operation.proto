@@ -21,6 +21,7 @@ message OpPlayer {
   string status = 12;
   int64 date_unix = 13;
   int64 mcb = 14;
+  int64 user_sid = 15;
 }
 
 message OpPlayerRequest {
@@ -31,6 +32,7 @@ message OpPlayerRequest {
   int64 action = 5;
   int64 offset = 6;
   int64 limit = 7;
+  int64 user_sid = 8;
 }
 
 message OpPlayerResponse {
@@ -62,6 +64,7 @@ message MatchDetailRequest {
   string user_pair_id = 5;
   int64 limit = 6;
   int64 offset = 7;
+  int64 user_sid = 8;
 }
 
 message MatchDetailResponse {
@@ -75,6 +78,7 @@ message PlayerData {
   string user_id = 1;
   int64 chip = 2;
   int64 chip_add = 3;
+  int64 user_sid = 8;
 }
 
 message MatchData {
@@ -136,6 +140,7 @@ message UserStatisticRequest {
   string user_id = 1;
   int64 from_unix = 2;
   int64 to_unix = 3;
+  int64 user_sid = 4;
 }
 
 message UserStatGameHistory {
@@ -167,6 +172,7 @@ message CashOut {
   int64 co = 5;
   int64 coo = 6;
   int64 lucky_percent = 7;
+  int64 user_sid = 8;
 }
 
 message TopCashOut {
@@ -195,6 +201,7 @@ message Vip {
   bool is_online = 14;
   int64 total_in = 15;
   int64 total_out = 16;
+  int64 user_sid = 17;
 }
 
 message TopVip {
@@ -218,6 +225,7 @@ message Win {
   int64 ci = 8;
   int64 co_rate = 9;
   int64 lucky_percent = 10;
+  int64 user_sid = 11;
 }
 
 message TopWin {

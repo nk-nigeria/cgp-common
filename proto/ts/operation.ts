@@ -20,6 +20,7 @@ export interface OpPlayer {
   status: string;
   dateUnix: number;
   mcb: number;
+  userSid: number;
 }
 
 export interface OpPlayerRequest {
@@ -30,6 +31,7 @@ export interface OpPlayerRequest {
   action: number;
   offset: number;
   limit: number;
+  userSid: number;
 }
 
 export interface OpPlayerResponse {
@@ -61,6 +63,7 @@ export interface MatchDetailRequest {
   userPairId: string;
   limit: number;
   offset: number;
+  userSid: number;
 }
 
 export interface MatchDetailResponse {
@@ -74,6 +77,7 @@ export interface PlayerData {
   userId: string;
   chip: number;
   chipAdd: number;
+  userSid: number;
 }
 
 export interface MatchData {
@@ -135,6 +139,7 @@ export interface UserStatisticRequest {
   userId: string;
   fromUnix: number;
   toUnix: number;
+  userSid: number;
 }
 
 export interface UserStatGameHistory {
@@ -166,6 +171,7 @@ export interface CashOut {
   co: number;
   coo: number;
   luckyPercent: number;
+  userSid: number;
 }
 
 export interface TopCashOut {
@@ -194,6 +200,7 @@ export interface Vip {
   isOnline: boolean;
   totalIn: number;
   totalOut: number;
+  userSid: number;
 }
 
 export interface TopVip {
@@ -217,6 +224,7 @@ export interface Win {
   ci: number;
   coRate: number;
   luckyPercent: number;
+  userSid: number;
 }
 
 export interface TopWin {
@@ -246,6 +254,7 @@ function createBaseOpPlayer(): OpPlayer {
     status: "",
     dateUnix: 0,
     mcb: 0,
+    userSid: 0,
   };
 }
 
@@ -292,6 +301,9 @@ export const OpPlayer = {
     }
     if (message.mcb !== 0) {
       writer.uint32(112).int64(message.mcb);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(120).int64(message.userSid);
     }
     return writer;
   },
@@ -401,6 +413,13 @@ export const OpPlayer = {
 
           message.mcb = longToNumber(reader.int64() as Long);
           continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -426,6 +445,7 @@ export const OpPlayer = {
       status: isSet(object.status) ? globalThis.String(object.status) : "",
       dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
       mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -473,6 +493,9 @@ export const OpPlayer = {
     if (message.mcb !== 0) {
       obj.mcb = Math.round(message.mcb);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -495,12 +518,13 @@ export const OpPlayer = {
     message.status = object.status ?? "";
     message.dateUnix = object.dateUnix ?? 0;
     message.mcb = object.mcb ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
 
 function createBaseOpPlayerRequest(): OpPlayerRequest {
-  return { userId: "", gameId: 0, fromUnix: 0, toUnix: 0, action: 0, offset: 0, limit: 0 };
+  return { userId: "", gameId: 0, fromUnix: 0, toUnix: 0, action: 0, offset: 0, limit: 0, userSid: 0 };
 }
 
 export const OpPlayerRequest = {
@@ -525,6 +549,9 @@ export const OpPlayerRequest = {
     }
     if (message.limit !== 0) {
       writer.uint32(56).int64(message.limit);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -585,6 +612,13 @@ export const OpPlayerRequest = {
 
           message.limit = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -603,6 +637,7 @@ export const OpPlayerRequest = {
       action: isSet(object.action) ? globalThis.Number(object.action) : 0,
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -629,6 +664,9 @@ export const OpPlayerRequest = {
     if (message.limit !== 0) {
       obj.limit = Math.round(message.limit);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -644,6 +682,7 @@ export const OpPlayerRequest = {
     message.action = object.action ?? 0;
     message.offset = object.offset ?? 0;
     message.limit = object.limit ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -974,7 +1013,7 @@ export const MatchDetail = {
 };
 
 function createBaseMatchDetailRequest(): MatchDetailRequest {
-  return { gameId: 0, fromUnix: 0, toUnix: 0, userId: "", userPairId: "", limit: 0, offset: 0 };
+  return { gameId: 0, fromUnix: 0, toUnix: 0, userId: "", userPairId: "", limit: 0, offset: 0, userSid: 0 };
 }
 
 export const MatchDetailRequest = {
@@ -999,6 +1038,9 @@ export const MatchDetailRequest = {
     }
     if (message.offset !== 0) {
       writer.uint32(56).int64(message.offset);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -1059,6 +1101,13 @@ export const MatchDetailRequest = {
 
           message.offset = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1077,6 +1126,7 @@ export const MatchDetailRequest = {
       userPairId: isSet(object.userPairId) ? globalThis.String(object.userPairId) : "",
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -1103,6 +1153,9 @@ export const MatchDetailRequest = {
     if (message.offset !== 0) {
       obj.offset = Math.round(message.offset);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -1118,6 +1171,7 @@ export const MatchDetailRequest = {
     message.userPairId = object.userPairId ?? "";
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -1229,7 +1283,7 @@ export const MatchDetailResponse = {
 };
 
 function createBasePlayerData(): PlayerData {
-  return { userId: "", chip: 0, chipAdd: 0 };
+  return { userId: "", chip: 0, chipAdd: 0, userSid: 0 };
 }
 
 export const PlayerData = {
@@ -1242,6 +1296,9 @@ export const PlayerData = {
     }
     if (message.chipAdd !== 0) {
       writer.uint32(24).int64(message.chipAdd);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -1274,6 +1331,13 @@ export const PlayerData = {
 
           message.chipAdd = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1288,6 +1352,7 @@ export const PlayerData = {
       userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       chip: isSet(object.chip) ? globalThis.Number(object.chip) : 0,
       chipAdd: isSet(object.chipAdd) ? globalThis.Number(object.chipAdd) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -1302,6 +1367,9 @@ export const PlayerData = {
     if (message.chipAdd !== 0) {
       obj.chipAdd = Math.round(message.chipAdd);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -1313,6 +1381,7 @@ export const PlayerData = {
     message.userId = object.userId ?? "";
     message.chip = object.chip ?? 0;
     message.chipAdd = object.chipAdd ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -2167,7 +2236,7 @@ export const UserStatistic = {
 };
 
 function createBaseUserStatisticRequest(): UserStatisticRequest {
-  return { userId: "", fromUnix: 0, toUnix: 0 };
+  return { userId: "", fromUnix: 0, toUnix: 0, userSid: 0 };
 }
 
 export const UserStatisticRequest = {
@@ -2180,6 +2249,9 @@ export const UserStatisticRequest = {
     }
     if (message.toUnix !== 0) {
       writer.uint32(24).int64(message.toUnix);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(32).int64(message.userSid);
     }
     return writer;
   },
@@ -2212,6 +2284,13 @@ export const UserStatisticRequest = {
 
           message.toUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2226,6 +2305,7 @@ export const UserStatisticRequest = {
       userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
       toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -2240,6 +2320,9 @@ export const UserStatisticRequest = {
     if (message.toUnix !== 0) {
       obj.toUnix = Math.round(message.toUnix);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -2251,6 +2334,7 @@ export const UserStatisticRequest = {
     message.userId = object.userId ?? "";
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -2570,7 +2654,7 @@ export const UserInfo = {
 };
 
 function createBaseCashOut(): CashOut {
-  return { userId: "", userName: "", ci: 0, cio: 0, co: 0, coo: 0, luckyPercent: 0 };
+  return { userId: "", userName: "", ci: 0, cio: 0, co: 0, coo: 0, luckyPercent: 0, userSid: 0 };
 }
 
 export const CashOut = {
@@ -2595,6 +2679,9 @@ export const CashOut = {
     }
     if (message.luckyPercent !== 0) {
       writer.uint32(56).int64(message.luckyPercent);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -2655,6 +2742,13 @@ export const CashOut = {
 
           message.luckyPercent = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2673,6 +2767,7 @@ export const CashOut = {
       co: isSet(object.co) ? globalThis.Number(object.co) : 0,
       coo: isSet(object.coo) ? globalThis.Number(object.coo) : 0,
       luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -2699,6 +2794,9 @@ export const CashOut = {
     if (message.luckyPercent !== 0) {
       obj.luckyPercent = Math.round(message.luckyPercent);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -2714,6 +2812,7 @@ export const CashOut = {
     message.co = object.co ?? 0;
     message.coo = object.coo ?? 0;
     message.luckyPercent = object.luckyPercent ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -2870,6 +2969,7 @@ function createBaseVip(): Vip {
     isOnline: false,
     totalIn: 0,
     totalOut: 0,
+    userSid: 0,
   };
 }
 
@@ -2922,6 +3022,9 @@ export const Vip = {
     }
     if (message.totalOut !== 0) {
       writer.uint32(128).int64(message.totalOut);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(136).int64(message.userSid);
     }
     return writer;
   },
@@ -3045,6 +3148,13 @@ export const Vip = {
 
           message.totalOut = longToNumber(reader.int64() as Long);
           continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3072,6 +3182,7 @@ export const Vip = {
       isOnline: isSet(object.isOnline) ? globalThis.Boolean(object.isOnline) : false,
       totalIn: isSet(object.totalIn) ? globalThis.Number(object.totalIn) : 0,
       totalOut: isSet(object.totalOut) ? globalThis.Number(object.totalOut) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -3125,6 +3236,9 @@ export const Vip = {
     if (message.totalOut !== 0) {
       obj.totalOut = Math.round(message.totalOut);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -3149,6 +3263,7 @@ export const Vip = {
     message.isOnline = object.isOnline ?? false;
     message.totalIn = object.totalIn ?? 0;
     message.totalOut = object.totalOut ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -3303,7 +3418,19 @@ export const TopVip = {
 };
 
 function createBaseWin(): Win {
-  return { userId: "", userName: "", vip: 0, gold: 0, ag: 0, agWin: 0, co: 0, ci: 0, coRate: 0, luckyPercent: 0 };
+  return {
+    userId: "",
+    userName: "",
+    vip: 0,
+    gold: 0,
+    ag: 0,
+    agWin: 0,
+    co: 0,
+    ci: 0,
+    coRate: 0,
+    luckyPercent: 0,
+    userSid: 0,
+  };
 }
 
 export const Win = {
@@ -3337,6 +3464,9 @@ export const Win = {
     }
     if (message.luckyPercent !== 0) {
       writer.uint32(80).int64(message.luckyPercent);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(88).int64(message.userSid);
     }
     return writer;
   },
@@ -3418,6 +3548,13 @@ export const Win = {
 
           message.luckyPercent = longToNumber(reader.int64() as Long);
           continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3439,6 +3576,7 @@ export const Win = {
       ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
       coRate: isSet(object.coRate) ? globalThis.Number(object.coRate) : 0,
       luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -3474,6 +3612,9 @@ export const Win = {
     if (message.luckyPercent !== 0) {
       obj.luckyPercent = Math.round(message.luckyPercent);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -3492,6 +3633,7 @@ export const Win = {
     message.ci = object.ci ?? 0;
     message.coRate = object.coRate ?? 0;
     message.luckyPercent = object.luckyPercent ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
