@@ -43,6 +43,7 @@ export interface Profile {
   isOnline: boolean;
   isBanned: boolean;
   lastLoginUnix: number;
+  userSid: number;
 }
 
 export interface PlayingMatch {
@@ -261,6 +262,7 @@ function createBaseProfile(): Profile {
     isOnline: false,
     isBanned: false,
     lastLoginUnix: 0,
+    userSid: 0,
   };
 }
 
@@ -349,6 +351,9 @@ export const Profile = {
     }
     if (message.lastLoginUnix !== 0) {
       writer.uint32(224).int64(message.lastLoginUnix);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(232).int64(message.userSid);
     }
     return writer;
   },
@@ -556,6 +561,13 @@ export const Profile = {
 
           message.lastLoginUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 29:
+          if (tag !== 232) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -599,6 +611,7 @@ export const Profile = {
       isOnline: isSet(object.isOnline) ? globalThis.Boolean(object.isOnline) : false,
       isBanned: isSet(object.isBanned) ? globalThis.Boolean(object.isBanned) : false,
       lastLoginUnix: isSet(object.lastLoginUnix) ? globalThis.Number(object.lastLoginUnix) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -688,6 +701,9 @@ export const Profile = {
     if (message.lastLoginUnix !== 0) {
       obj.lastLoginUnix = Math.round(message.lastLoginUnix);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -726,6 +742,7 @@ export const Profile = {
     message.isOnline = object.isOnline ?? false;
     message.isBanned = object.isBanned ?? false;
     message.lastLoginUnix = object.lastLoginUnix ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
