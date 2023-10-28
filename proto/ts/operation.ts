@@ -139,7 +139,7 @@ export interface UserStatisticRequest {
   fromUnix: number;
   toUnix: number;
   userSid: number;
-  deviceId: number;
+  deviceId: string;
 }
 
 export interface UserStatGameHistory {
@@ -2215,7 +2215,7 @@ export const UserStatistic = {
 };
 
 function createBaseUserStatisticRequest(): UserStatisticRequest {
-  return { userId: "", fromUnix: 0, toUnix: 0, userSid: 0, deviceId: 0 };
+  return { userId: "", fromUnix: 0, toUnix: 0, userSid: 0, deviceId: "" };
 }
 
 export const UserStatisticRequest = {
@@ -2232,8 +2232,8 @@ export const UserStatisticRequest = {
     if (message.userSid !== 0) {
       writer.uint32(32).int64(message.userSid);
     }
-    if (message.deviceId !== 0) {
-      writer.uint32(40).int64(message.deviceId);
+    if (message.deviceId !== "") {
+      writer.uint32(42).string(message.deviceId);
     }
     return writer;
   },
@@ -2274,11 +2274,11 @@ export const UserStatisticRequest = {
           message.userSid = longToNumber(reader.int64() as Long);
           continue;
         case 5:
-          if (tag !== 40) {
+          if (tag !== 42) {
             break;
           }
 
-          message.deviceId = longToNumber(reader.int64() as Long);
+          message.deviceId = reader.string();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2295,7 +2295,7 @@ export const UserStatisticRequest = {
       fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
       toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
       userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
-      deviceId: isSet(object.deviceId) ? Number(object.deviceId) : 0,
+      deviceId: isSet(object.deviceId) ? String(object.deviceId) : "",
     };
   },
 
@@ -2313,8 +2313,8 @@ export const UserStatisticRequest = {
     if (message.userSid !== 0) {
       obj.userSid = Math.round(message.userSid);
     }
-    if (message.deviceId !== 0) {
-      obj.deviceId = Math.round(message.deviceId);
+    if (message.deviceId !== "") {
+      obj.deviceId = message.deviceId;
     }
     return obj;
   },
@@ -2328,7 +2328,7 @@ export const UserStatisticRequest = {
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
     message.userSid = object.userSid ?? 0;
-    message.deviceId = object.deviceId ?? 0;
+    message.deviceId = object.deviceId ?? "";
     return message;
   },
 };
