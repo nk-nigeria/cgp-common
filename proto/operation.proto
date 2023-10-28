@@ -164,6 +164,11 @@ message UserInfo {
   int64 total_out = 3;
 }
 
+message UserInfoResponse {
+  repeated UserInfo user_infos  = 1;
+  int64 total = 2;
+}
+
 message CashOut {
   string user_id = 1;
   string user_name = 2;

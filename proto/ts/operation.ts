@@ -163,6 +163,11 @@ export interface UserInfo {
   totalOut: number;
 }
 
+export interface UserInfoResponse {
+  userInfos: UserInfo[];
+  total: number;
+}
+
 export interface CashOut {
   userId: string;
   userName: string;
@@ -2643,6 +2648,80 @@ export const UserInfo = {
       : undefined;
     message.totalIn = object.totalIn ?? 0;
     message.totalOut = object.totalOut ?? 0;
+    return message;
+  },
+};
+
+function createBaseUserInfoResponse(): UserInfoResponse {
+  return { userInfos: [], total: 0 };
+}
+
+export const UserInfoResponse = {
+  encode(message: UserInfoResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.userInfos) {
+      UserInfo.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.total !== 0) {
+      writer.uint32(16).int64(message.total);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UserInfoResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUserInfoResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userInfos.push(UserInfo.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UserInfoResponse {
+    return {
+      userInfos: Array.isArray(object?.userInfos) ? object.userInfos.map((e: any) => UserInfo.fromJSON(e)) : [],
+      total: isSet(object.total) ? Number(object.total) : 0,
+    };
+  },
+
+  toJSON(message: UserInfoResponse): unknown {
+    const obj: any = {};
+    if (message.userInfos?.length) {
+      obj.userInfos = message.userInfos.map((e) => UserInfo.toJSON(e));
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UserInfoResponse>, I>>(base?: I): UserInfoResponse {
+    return UserInfoResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<UserInfoResponse>, I>>(object: I): UserInfoResponse {
+    const message = createBaseUserInfoResponse();
+    message.userInfos = object.userInfos?.map((e) => UserInfo.fromPartial(e)) || [];
+    message.total = object.total ?? 0;
     return message;
   },
 };
