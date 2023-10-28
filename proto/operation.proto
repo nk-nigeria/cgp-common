@@ -167,6 +167,7 @@ message UserInfo {
 message UserInfoResponse {
   repeated UserInfo user_infos  = 1;
   int64 total = 2;
+  string device_id = 3;
 }
 
 message CashOut {

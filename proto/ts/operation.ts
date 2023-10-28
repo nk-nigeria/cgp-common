@@ -166,6 +166,7 @@ export interface UserInfo {
 export interface UserInfoResponse {
   userInfos: UserInfo[];
   total: number;
+  deviceId: string;
 }
 
 export interface CashOut {
@@ -2653,7 +2654,7 @@ export const UserInfo = {
 };
 
 function createBaseUserInfoResponse(): UserInfoResponse {
-  return { userInfos: [], total: 0 };
+  return { userInfos: [], total: 0, deviceId: "" };
 }
 
 export const UserInfoResponse = {
@@ -2663,6 +2664,9 @@ export const UserInfoResponse = {
     }
     if (message.total !== 0) {
       writer.uint32(16).int64(message.total);
+    }
+    if (message.deviceId !== "") {
+      writer.uint32(26).string(message.deviceId);
     }
     return writer;
   },
@@ -2688,6 +2692,13 @@ export const UserInfoResponse = {
 
           message.total = longToNumber(reader.int64() as Long);
           continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.deviceId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2701,6 +2712,7 @@ export const UserInfoResponse = {
     return {
       userInfos: Array.isArray(object?.userInfos) ? object.userInfos.map((e: any) => UserInfo.fromJSON(e)) : [],
       total: isSet(object.total) ? Number(object.total) : 0,
+      deviceId: isSet(object.deviceId) ? String(object.deviceId) : "",
     };
   },
 
@@ -2712,6 +2724,9 @@ export const UserInfoResponse = {
     if (message.total !== 0) {
       obj.total = Math.round(message.total);
     }
+    if (message.deviceId !== "") {
+      obj.deviceId = message.deviceId;
+    }
     return obj;
   },
 
@@ -2722,6 +2737,7 @@ export const UserInfoResponse = {
     const message = createBaseUserInfoResponse();
     message.userInfos = object.userInfos?.map((e) => UserInfo.fromPartial(e)) || [];
     message.total = object.total ?? 0;
+    message.deviceId = object.deviceId ?? "";
     return message;
   },
 };
