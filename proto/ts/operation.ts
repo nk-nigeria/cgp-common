@@ -167,6 +167,9 @@ export interface UserInfoResponse {
   userInfos: UserInfo[];
   total: number;
   deviceId: string;
+  totalIn: number;
+  totalOut: number;
+  totalLock: number;
 }
 
 export interface CashOut {
@@ -2654,7 +2657,7 @@ export const UserInfo = {
 };
 
 function createBaseUserInfoResponse(): UserInfoResponse {
-  return { userInfos: [], total: 0, deviceId: "" };
+  return { userInfos: [], total: 0, deviceId: "", totalIn: 0, totalOut: 0, totalLock: 0 };
 }
 
 export const UserInfoResponse = {
@@ -2667,6 +2670,15 @@ export const UserInfoResponse = {
     }
     if (message.deviceId !== "") {
       writer.uint32(26).string(message.deviceId);
+    }
+    if (message.totalIn !== 0) {
+      writer.uint32(32).int64(message.totalIn);
+    }
+    if (message.totalOut !== 0) {
+      writer.uint32(40).int64(message.totalOut);
+    }
+    if (message.totalLock !== 0) {
+      writer.uint32(48).int64(message.totalLock);
     }
     return writer;
   },
@@ -2699,6 +2711,27 @@ export const UserInfoResponse = {
 
           message.deviceId = reader.string();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.totalIn = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.totalOut = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.totalLock = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2713,6 +2746,9 @@ export const UserInfoResponse = {
       userInfos: Array.isArray(object?.userInfos) ? object.userInfos.map((e: any) => UserInfo.fromJSON(e)) : [],
       total: isSet(object.total) ? Number(object.total) : 0,
       deviceId: isSet(object.deviceId) ? String(object.deviceId) : "",
+      totalIn: isSet(object.totalIn) ? Number(object.totalIn) : 0,
+      totalOut: isSet(object.totalOut) ? Number(object.totalOut) : 0,
+      totalLock: isSet(object.totalLock) ? Number(object.totalLock) : 0,
     };
   },
 
@@ -2727,6 +2763,15 @@ export const UserInfoResponse = {
     if (message.deviceId !== "") {
       obj.deviceId = message.deviceId;
     }
+    if (message.totalIn !== 0) {
+      obj.totalIn = Math.round(message.totalIn);
+    }
+    if (message.totalOut !== 0) {
+      obj.totalOut = Math.round(message.totalOut);
+    }
+    if (message.totalLock !== 0) {
+      obj.totalLock = Math.round(message.totalLock);
+    }
     return obj;
   },
 
@@ -2738,6 +2783,9 @@ export const UserInfoResponse = {
     message.userInfos = object.userInfos?.map((e) => UserInfo.fromPartial(e)) || [];
     message.total = object.total ?? 0;
     message.deviceId = object.deviceId ?? "";
+    message.totalIn = object.totalIn ?? 0;
+    message.totalOut = object.totalOut ?? 0;
+    message.totalLock = object.totalLock ?? 0;
     return message;
   },
 };

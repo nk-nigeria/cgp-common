@@ -168,6 +168,9 @@ message UserInfoResponse {
   repeated UserInfo user_infos  = 1;
   int64 total = 2;
   string device_id = 3;
+  int64 total_in = 4;
+  int64 total_out = 5;
+  int64 total_lock = 6;
 }
 
 message CashOut {
