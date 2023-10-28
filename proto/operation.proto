@@ -140,6 +140,7 @@ message UserStatisticRequest {
   int64 from_unix = 2;
   int64 to_unix = 3;
   int64 user_sid = 4;
+  int64 device_id = 5;
 }
 
 message UserStatGameHistory {
