@@ -20,6 +20,7 @@ export interface OpPlayer {
   status: string;
   dateUnix: number;
   mcb: number;
+  userSid: number;
 }
 
 export interface OpPlayerRequest {
@@ -30,6 +31,7 @@ export interface OpPlayerRequest {
   action: number;
   offset: number;
   limit: number;
+  userSid: number;
 }
 
 export interface OpPlayerResponse {
@@ -57,8 +59,8 @@ export interface MatchDetailRequest {
   gameId: number;
   fromUnix: number;
   toUnix: number;
-  userId: string;
-  userPairId: string;
+  userSid: number;
+  userPairSid: number;
   limit: number;
   offset: number;
 }
@@ -74,6 +76,7 @@ export interface PlayerData {
   userId: string;
   chip: number;
   chipAdd: number;
+  userSid: number;
 }
 
 export interface MatchData {
@@ -135,6 +138,8 @@ export interface UserStatisticRequest {
   userId: string;
   fromUnix: number;
   toUnix: number;
+  userSid: number;
+  deviceId: string;
 }
 
 export interface UserStatGameHistory {
@@ -158,6 +163,15 @@ export interface UserInfo {
   totalOut: number;
 }
 
+export interface UserInfoResponse {
+  userInfos: UserInfo[];
+  total: number;
+  deviceId: string;
+  totalIn: number;
+  totalOut: number;
+  totalLock: number;
+}
+
 export interface CashOut {
   userId: string;
   userName: string;
@@ -166,6 +180,7 @@ export interface CashOut {
   co: number;
   coo: number;
   luckyPercent: number;
+  userSid: number;
 }
 
 export interface TopCashOut {
@@ -194,6 +209,7 @@ export interface Vip {
   isOnline: boolean;
   totalIn: number;
   totalOut: number;
+  userSid: number;
 }
 
 export interface TopVip {
@@ -217,6 +233,7 @@ export interface Win {
   ci: number;
   coRate: number;
   luckyPercent: number;
+  userSid: number;
 }
 
 export interface TopWin {
@@ -227,6 +244,7 @@ export interface TopWin {
   offset: number;
   refGame: string;
   total: number;
+  gameId: number;
 }
 
 function createBaseOpPlayer(): OpPlayer {
@@ -245,6 +263,7 @@ function createBaseOpPlayer(): OpPlayer {
     status: "",
     dateUnix: 0,
     mcb: 0,
+    userSid: 0,
   };
 }
 
@@ -291,6 +310,9 @@ export const OpPlayer = {
     }
     if (message.mcb !== 0) {
       writer.uint32(112).int64(message.mcb);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(120).int64(message.userSid);
     }
     return writer;
   },
@@ -400,6 +422,13 @@ export const OpPlayer = {
 
           message.mcb = longToNumber(reader.int64() as Long);
           continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -411,20 +440,21 @@ export const OpPlayer = {
 
   fromJSON(object: any): OpPlayer {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
-      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
-      gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
-      noBet: isSet(object.noBet) ? globalThis.Number(object.noBet) : 0,
-      noWin: isSet(object.noWin) ? globalThis.Number(object.noWin) : 0,
-      noLost: isSet(object.noLost) ? globalThis.Number(object.noLost) : 0,
-      chipWin: isSet(object.chipWin) ? globalThis.Number(object.chipWin) : 0,
-      chipLost: isSet(object.chipLost) ? globalThis.Number(object.chipLost) : 0,
-      chipBalance: isSet(object.chipBalance) ? globalThis.Number(object.chipBalance) : 0,
-      action: isSet(object.action) ? globalThis.Number(object.action) : 0,
-      status: isSet(object.status) ? globalThis.String(object.status) : "",
-      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
-      mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      userName: isSet(object.userName) ? String(object.userName) : "",
+      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
+      gameName: isSet(object.gameName) ? String(object.gameName) : "",
+      noBet: isSet(object.noBet) ? Number(object.noBet) : 0,
+      noWin: isSet(object.noWin) ? Number(object.noWin) : 0,
+      noLost: isSet(object.noLost) ? Number(object.noLost) : 0,
+      chipWin: isSet(object.chipWin) ? Number(object.chipWin) : 0,
+      chipLost: isSet(object.chipLost) ? Number(object.chipLost) : 0,
+      chipBalance: isSet(object.chipBalance) ? Number(object.chipBalance) : 0,
+      action: isSet(object.action) ? Number(object.action) : 0,
+      status: isSet(object.status) ? String(object.status) : "",
+      dateUnix: isSet(object.dateUnix) ? Number(object.dateUnix) : 0,
+      mcb: isSet(object.mcb) ? Number(object.mcb) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
     };
   },
 
@@ -472,6 +502,9 @@ export const OpPlayer = {
     if (message.mcb !== 0) {
       obj.mcb = Math.round(message.mcb);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -494,12 +527,13 @@ export const OpPlayer = {
     message.status = object.status ?? "";
     message.dateUnix = object.dateUnix ?? 0;
     message.mcb = object.mcb ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
 
 function createBaseOpPlayerRequest(): OpPlayerRequest {
-  return { userId: "", gameId: 0, fromUnix: 0, toUnix: 0, action: 0, offset: 0, limit: 0 };
+  return { userId: "", gameId: 0, fromUnix: 0, toUnix: 0, action: 0, offset: 0, limit: 0, userSid: 0 };
 }
 
 export const OpPlayerRequest = {
@@ -524,6 +558,9 @@ export const OpPlayerRequest = {
     }
     if (message.limit !== 0) {
       writer.uint32(56).int64(message.limit);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -584,6 +621,13 @@ export const OpPlayerRequest = {
 
           message.limit = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -595,13 +639,14 @@ export const OpPlayerRequest = {
 
   fromJSON(object: any): OpPlayerRequest {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
-      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      action: isSet(object.action) ? globalThis.Number(object.action) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      action: isSet(object.action) ? Number(object.action) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
     };
   },
 
@@ -628,6 +673,9 @@ export const OpPlayerRequest = {
     if (message.limit !== 0) {
       obj.limit = Math.round(message.limit);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -643,6 +691,7 @@ export const OpPlayerRequest = {
     message.action = object.action ?? 0;
     message.offset = object.offset ?? 0;
     message.limit = object.limit ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -734,14 +783,12 @@ export const OpPlayerResponse = {
 
   fromJSON(object: any): OpPlayerResponse {
     return {
-      opPlayers: globalThis.Array.isArray(object?.opPlayers)
-        ? object.opPlayers.map((e: any) => OpPlayer.fromJSON(e))
-        : [],
-      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
-      totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
+      opPlayers: Array.isArray(object?.opPlayers) ? object.opPlayers.map((e: any) => OpPlayer.fromJSON(e)) : [],
+      total: isSet(object.total) ? Number(object.total) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      totalChipWin: isSet(object.totalChipWin) ? Number(object.totalChipWin) : 0,
+      totalChipLost: isSet(object.totalChipLost) ? Number(object.totalChipLost) : 0,
     };
   },
 
@@ -910,15 +957,15 @@ export const MatchDetail = {
 
   fromJSON(object: any): MatchDetail {
     return {
-      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
-      gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
-      mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
-      numMatchPlayed: isSet(object.numMatchPlayed) ? globalThis.Number(object.numMatchPlayed) : 0,
-      chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
-      detail: isSet(object.detail) ? globalThis.String(object.detail) : "",
-      tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
-      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
-      createdAtUnix: isSet(object.createdAtUnix) ? globalThis.Number(object.createdAtUnix) : 0,
+      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
+      gameName: isSet(object.gameName) ? String(object.gameName) : "",
+      mcb: isSet(object.mcb) ? Number(object.mcb) : 0,
+      numMatchPlayed: isSet(object.numMatchPlayed) ? Number(object.numMatchPlayed) : 0,
+      chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
+      detail: isSet(object.detail) ? String(object.detail) : "",
+      tableId: isSet(object.tableId) ? String(object.tableId) : "",
+      dateUnix: isSet(object.dateUnix) ? Number(object.dateUnix) : 0,
+      createdAtUnix: isSet(object.createdAtUnix) ? Number(object.createdAtUnix) : 0,
     };
   },
 
@@ -973,7 +1020,7 @@ export const MatchDetail = {
 };
 
 function createBaseMatchDetailRequest(): MatchDetailRequest {
-  return { gameId: 0, fromUnix: 0, toUnix: 0, userId: "", userPairId: "", limit: 0, offset: 0 };
+  return { gameId: 0, fromUnix: 0, toUnix: 0, userSid: 0, userPairSid: 0, limit: 0, offset: 0 };
 }
 
 export const MatchDetailRequest = {
@@ -987,11 +1034,11 @@ export const MatchDetailRequest = {
     if (message.toUnix !== 0) {
       writer.uint32(24).int64(message.toUnix);
     }
-    if (message.userId !== "") {
-      writer.uint32(34).string(message.userId);
+    if (message.userSid !== 0) {
+      writer.uint32(32).int64(message.userSid);
     }
-    if (message.userPairId !== "") {
-      writer.uint32(42).string(message.userPairId);
+    if (message.userPairSid !== 0) {
+      writer.uint32(40).int64(message.userPairSid);
     }
     if (message.limit !== 0) {
       writer.uint32(48).int64(message.limit);
@@ -1031,18 +1078,18 @@ export const MatchDetailRequest = {
           message.toUnix = longToNumber(reader.int64() as Long);
           continue;
         case 4:
-          if (tag !== 34) {
+          if (tag !== 32) {
             break;
           }
 
-          message.userId = reader.string();
+          message.userSid = longToNumber(reader.int64() as Long);
           continue;
         case 5:
-          if (tag !== 42) {
+          if (tag !== 40) {
             break;
           }
 
-          message.userPairId = reader.string();
+          message.userPairSid = longToNumber(reader.int64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
@@ -1069,13 +1116,13 @@ export const MatchDetailRequest = {
 
   fromJSON(object: any): MatchDetailRequest {
     return {
-      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
-      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      userPairId: isSet(object.userPairId) ? globalThis.String(object.userPairId) : "",
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
+      userPairSid: isSet(object.userPairSid) ? Number(object.userPairSid) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
     };
   },
 
@@ -1090,11 +1137,11 @@ export const MatchDetailRequest = {
     if (message.toUnix !== 0) {
       obj.toUnix = Math.round(message.toUnix);
     }
-    if (message.userId !== "") {
-      obj.userId = message.userId;
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
     }
-    if (message.userPairId !== "") {
-      obj.userPairId = message.userPairId;
+    if (message.userPairSid !== 0) {
+      obj.userPairSid = Math.round(message.userPairSid);
     }
     if (message.limit !== 0) {
       obj.limit = Math.round(message.limit);
@@ -1113,8 +1160,8 @@ export const MatchDetailRequest = {
     message.gameId = object.gameId ?? 0;
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
-    message.userId = object.userId ?? "";
-    message.userPairId = object.userPairId ?? "";
+    message.userSid = object.userSid ?? 0;
+    message.userPairSid = object.userPairSid ?? 0;
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;
     return message;
@@ -1188,12 +1235,12 @@ export const MatchDetailResponse = {
 
   fromJSON(object: any): MatchDetailResponse {
     return {
-      matchDetails: globalThis.Array.isArray(object?.matchDetails)
+      matchDetails: Array.isArray(object?.matchDetails)
         ? object.matchDetails.map((e: any) => MatchDetail.fromJSON(e))
         : [],
-      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      total: isSet(object.total) ? Number(object.total) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
     };
   },
 
@@ -1228,7 +1275,7 @@ export const MatchDetailResponse = {
 };
 
 function createBasePlayerData(): PlayerData {
-  return { userId: "", chip: 0, chipAdd: 0 };
+  return { userId: "", chip: 0, chipAdd: 0, userSid: 0 };
 }
 
 export const PlayerData = {
@@ -1241,6 +1288,9 @@ export const PlayerData = {
     }
     if (message.chipAdd !== 0) {
       writer.uint32(24).int64(message.chipAdd);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -1273,6 +1323,13 @@ export const PlayerData = {
 
           message.chipAdd = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1284,9 +1341,10 @@ export const PlayerData = {
 
   fromJSON(object: any): PlayerData {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      chip: isSet(object.chip) ? globalThis.Number(object.chip) : 0,
-      chipAdd: isSet(object.chipAdd) ? globalThis.Number(object.chipAdd) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      chip: isSet(object.chip) ? Number(object.chip) : 0,
+      chipAdd: isSet(object.chipAdd) ? Number(object.chipAdd) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
     };
   },
 
@@ -1301,6 +1359,9 @@ export const PlayerData = {
     if (message.chipAdd !== 0) {
       obj.chipAdd = Math.round(message.chipAdd);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -1312,6 +1373,7 @@ export const PlayerData = {
     message.userId = object.userId ?? "";
     message.chip = object.chip ?? 0;
     message.chipAdd = object.chipAdd ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -1393,11 +1455,11 @@ export const MatchData = {
 
   fromJSON(object: any): MatchData {
     return {
-      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
-      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
-      mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
-      chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
-      matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
+      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
+      gameCode: isSet(object.gameCode) ? String(object.gameCode) : "",
+      mcb: isSet(object.mcb) ? Number(object.mcb) : 0,
+      chipFee: isSet(object.chipFee) ? Number(object.chipFee) : 0,
+      matchId: isSet(object.matchId) ? String(object.matchId) : "",
     };
   },
 
@@ -1482,9 +1544,7 @@ export const OpReport = {
 
   fromJSON(object: any): OpReport {
     return {
-      playerData: globalThis.Array.isArray(object?.playerData)
-        ? object.playerData.map((e: any) => PlayerData.fromJSON(e))
-        : [],
+      playerData: Array.isArray(object?.playerData) ? object.playerData.map((e: any) => PlayerData.fromJSON(e)) : [],
       matchData: isSet(object.matchData) ? MatchData.fromJSON(object.matchData) : undefined,
     };
   },
@@ -1610,15 +1670,13 @@ export const GoldStatistic = {
 
   fromJSON(object: any): GoldStatistic {
     return {
-      timeUpdateUnix: isSet(object.timeUpdateUnix) ? globalThis.Number(object.timeUpdateUnix) : 0,
-      pay: isSet(object.pay) ? globalThis.Number(object.pay) : 0,
-      promotion: isSet(object.promotion) ? globalThis.Number(object.promotion) : 0,
-      matchData: globalThis.Array.isArray(object?.matchData)
-        ? object.matchData.map((e: any) => MatchData.fromJSON(e))
-        : [],
-      agCashout: isSet(object.agCashout) ? globalThis.Number(object.agCashout) : 0,
-      agBank: isSet(object.agBank) ? globalThis.Number(object.agBank) : 0,
-      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      timeUpdateUnix: isSet(object.timeUpdateUnix) ? Number(object.timeUpdateUnix) : 0,
+      pay: isSet(object.pay) ? Number(object.pay) : 0,
+      promotion: isSet(object.promotion) ? Number(object.promotion) : 0,
+      matchData: Array.isArray(object?.matchData) ? object.matchData.map((e: any) => MatchData.fromJSON(e)) : [],
+      agCashout: isSet(object.agCashout) ? Number(object.agCashout) : 0,
+      agBank: isSet(object.agBank) ? Number(object.agBank) : 0,
+      chips: isSet(object.chips) ? Number(object.chips) : 0,
     };
   },
 
@@ -1731,10 +1789,10 @@ export const GoldStatisticRequest = {
 
   fromJSON(object: any): GoldStatisticRequest {
     return {
-      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
     };
   },
 
@@ -1835,12 +1893,12 @@ export const GoldStatisticResponse = {
 
   fromJSON(object: any): GoldStatisticResponse {
     return {
-      goldStatistics: globalThis.Array.isArray(object?.goldStatistics)
+      goldStatistics: Array.isArray(object?.goldStatistics)
         ? object.goldStatistics.map((e: any) => GoldStatistic.fromJSON(e))
         : [],
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
-      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      total: isSet(object.total) ? Number(object.total) : 0,
     };
   },
 
@@ -2067,25 +2125,25 @@ export const UserStatistic = {
 
   fromJSON(object: any): UserStatistic {
     return {
-      totalChipDeposit: isSet(object.totalChipDeposit) ? globalThis.Number(object.totalChipDeposit) : 0,
-      totalChipWithDraw: isSet(object.totalChipWithDraw) ? globalThis.Number(object.totalChipWithDraw) : 0,
-      totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
-      totalChipLose: isSet(object.totalChipLose) ? globalThis.Number(object.totalChipLose) : 0,
-      totalChipPromotion: isSet(object.totalChipPromotion) ? globalThis.Number(object.totalChipPromotion) : 0,
-      totalChipSend: isSet(object.totalChipSend) ? globalThis.Number(object.totalChipSend) : 0,
-      totalChipRecv: isSet(object.totalChipRecv) ? globalThis.Number(object.totalChipRecv) : 0,
-      coRatio: isSet(object.coRatio) ? globalThis.Number(object.coRatio) : 0,
-      totalChipDeposit3d: isSet(object.totalChipDeposit3d) ? globalThis.Number(object.totalChipDeposit3d) : 0,
-      totalChipWithDraw3d: isSet(object.totalChipWithDraw3d) ? globalThis.Number(object.totalChipWithDraw3d) : 0,
-      luck: isSet(object.luck) ? globalThis.Number(object.luck) : 0,
-      userCreateTimeUnix: isSet(object.userCreateTimeUnix) ? globalThis.Number(object.userCreateTimeUnix) : 0,
-      userStatGameHistories: globalThis.Array.isArray(object?.userStatGameHistories)
+      totalChipDeposit: isSet(object.totalChipDeposit) ? Number(object.totalChipDeposit) : 0,
+      totalChipWithDraw: isSet(object.totalChipWithDraw) ? Number(object.totalChipWithDraw) : 0,
+      totalChipWin: isSet(object.totalChipWin) ? Number(object.totalChipWin) : 0,
+      totalChipLose: isSet(object.totalChipLose) ? Number(object.totalChipLose) : 0,
+      totalChipPromotion: isSet(object.totalChipPromotion) ? Number(object.totalChipPromotion) : 0,
+      totalChipSend: isSet(object.totalChipSend) ? Number(object.totalChipSend) : 0,
+      totalChipRecv: isSet(object.totalChipRecv) ? Number(object.totalChipRecv) : 0,
+      coRatio: isSet(object.coRatio) ? Number(object.coRatio) : 0,
+      totalChipDeposit3d: isSet(object.totalChipDeposit3d) ? Number(object.totalChipDeposit3d) : 0,
+      totalChipWithDraw3d: isSet(object.totalChipWithDraw3d) ? Number(object.totalChipWithDraw3d) : 0,
+      luck: isSet(object.luck) ? Number(object.luck) : 0,
+      userCreateTimeUnix: isSet(object.userCreateTimeUnix) ? Number(object.userCreateTimeUnix) : 0,
+      userStatGameHistories: Array.isArray(object?.userStatGameHistories)
         ? object.userStatGameHistories.map((e: any) => UserStatGameHistory.fromJSON(e))
         : [],
-      recvChipStats: globalThis.Array.isArray(object?.recvChipStats)
+      recvChipStats: Array.isArray(object?.recvChipStats)
         ? object.recvChipStats.map((e: any) => UserTransferGoldStat.fromJSON(e))
         : [],
-      sendChipStats: globalThis.Array.isArray(object?.sendChipStats)
+      sendChipStats: Array.isArray(object?.sendChipStats)
         ? object.sendChipStats.map((e: any) => UserTransferGoldStat.fromJSON(e))
         : [],
     };
@@ -2166,7 +2224,7 @@ export const UserStatistic = {
 };
 
 function createBaseUserStatisticRequest(): UserStatisticRequest {
-  return { userId: "", fromUnix: 0, toUnix: 0 };
+  return { userId: "", fromUnix: 0, toUnix: 0, userSid: 0, deviceId: "" };
 }
 
 export const UserStatisticRequest = {
@@ -2179,6 +2237,12 @@ export const UserStatisticRequest = {
     }
     if (message.toUnix !== 0) {
       writer.uint32(24).int64(message.toUnix);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(32).int64(message.userSid);
+    }
+    if (message.deviceId !== "") {
+      writer.uint32(42).string(message.deviceId);
     }
     return writer;
   },
@@ -2211,6 +2275,20 @@ export const UserStatisticRequest = {
 
           message.toUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.deviceId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2222,9 +2300,11 @@ export const UserStatisticRequest = {
 
   fromJSON(object: any): UserStatisticRequest {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
+      deviceId: isSet(object.deviceId) ? String(object.deviceId) : "",
     };
   },
 
@@ -2239,6 +2319,12 @@ export const UserStatisticRequest = {
     if (message.toUnix !== 0) {
       obj.toUnix = Math.round(message.toUnix);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
+    if (message.deviceId !== "") {
+      obj.deviceId = message.deviceId;
+    }
     return obj;
   },
 
@@ -2250,6 +2336,8 @@ export const UserStatisticRequest = {
     message.userId = object.userId ?? "";
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
+    message.userSid = object.userSid ?? 0;
+    message.deviceId = object.deviceId ?? "";
     return message;
   },
 };
@@ -2321,10 +2409,10 @@ export const UserStatGameHistory = {
 
   fromJSON(object: any): UserStatGameHistory {
     return {
-      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
-      gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
-      totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
-      totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
+      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
+      gameName: isSet(object.gameName) ? String(object.gameName) : "",
+      totalChipWin: isSet(object.totalChipWin) ? Number(object.totalChipWin) : 0,
+      totalChipLost: isSet(object.totalChipLost) ? Number(object.totalChipLost) : 0,
     };
   },
 
@@ -2435,11 +2523,11 @@ export const UserTransferGoldStat = {
 
   fromJSON(object: any): UserTransferGoldStat {
     return {
-      userSendId: isSet(object.userSendId) ? globalThis.String(object.userSendId) : "",
-      userSendName: isSet(object.userSendName) ? globalThis.String(object.userSendName) : "",
-      userRecvId: isSet(object.userRecvId) ? globalThis.String(object.userRecvId) : "",
-      userRecvName: isSet(object.userRecvName) ? globalThis.String(object.userRecvName) : "",
-      chip: isSet(object.chip) ? globalThis.Number(object.chip) : 0,
+      userSendId: isSet(object.userSendId) ? String(object.userSendId) : "",
+      userSendName: isSet(object.userSendName) ? String(object.userSendName) : "",
+      userRecvId: isSet(object.userRecvId) ? String(object.userRecvId) : "",
+      userRecvName: isSet(object.userRecvName) ? String(object.userRecvName) : "",
+      chip: isSet(object.chip) ? Number(object.chip) : 0,
     };
   },
 
@@ -2535,8 +2623,8 @@ export const UserInfo = {
   fromJSON(object: any): UserInfo {
     return {
       profile: isSet(object.profile) ? Profile.fromJSON(object.profile) : undefined,
-      totalIn: isSet(object.totalIn) ? globalThis.Number(object.totalIn) : 0,
-      totalOut: isSet(object.totalOut) ? globalThis.Number(object.totalOut) : 0,
+      totalIn: isSet(object.totalIn) ? Number(object.totalIn) : 0,
+      totalOut: isSet(object.totalOut) ? Number(object.totalOut) : 0,
     };
   },
 
@@ -2568,8 +2656,142 @@ export const UserInfo = {
   },
 };
 
+function createBaseUserInfoResponse(): UserInfoResponse {
+  return { userInfos: [], total: 0, deviceId: "", totalIn: 0, totalOut: 0, totalLock: 0 };
+}
+
+export const UserInfoResponse = {
+  encode(message: UserInfoResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.userInfos) {
+      UserInfo.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.total !== 0) {
+      writer.uint32(16).int64(message.total);
+    }
+    if (message.deviceId !== "") {
+      writer.uint32(26).string(message.deviceId);
+    }
+    if (message.totalIn !== 0) {
+      writer.uint32(32).int64(message.totalIn);
+    }
+    if (message.totalOut !== 0) {
+      writer.uint32(40).int64(message.totalOut);
+    }
+    if (message.totalLock !== 0) {
+      writer.uint32(48).int64(message.totalLock);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UserInfoResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUserInfoResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userInfos.push(UserInfo.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.deviceId = reader.string();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.totalIn = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.totalOut = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.totalLock = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UserInfoResponse {
+    return {
+      userInfos: Array.isArray(object?.userInfos) ? object.userInfos.map((e: any) => UserInfo.fromJSON(e)) : [],
+      total: isSet(object.total) ? Number(object.total) : 0,
+      deviceId: isSet(object.deviceId) ? String(object.deviceId) : "",
+      totalIn: isSet(object.totalIn) ? Number(object.totalIn) : 0,
+      totalOut: isSet(object.totalOut) ? Number(object.totalOut) : 0,
+      totalLock: isSet(object.totalLock) ? Number(object.totalLock) : 0,
+    };
+  },
+
+  toJSON(message: UserInfoResponse): unknown {
+    const obj: any = {};
+    if (message.userInfos?.length) {
+      obj.userInfos = message.userInfos.map((e) => UserInfo.toJSON(e));
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.deviceId !== "") {
+      obj.deviceId = message.deviceId;
+    }
+    if (message.totalIn !== 0) {
+      obj.totalIn = Math.round(message.totalIn);
+    }
+    if (message.totalOut !== 0) {
+      obj.totalOut = Math.round(message.totalOut);
+    }
+    if (message.totalLock !== 0) {
+      obj.totalLock = Math.round(message.totalLock);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UserInfoResponse>, I>>(base?: I): UserInfoResponse {
+    return UserInfoResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<UserInfoResponse>, I>>(object: I): UserInfoResponse {
+    const message = createBaseUserInfoResponse();
+    message.userInfos = object.userInfos?.map((e) => UserInfo.fromPartial(e)) || [];
+    message.total = object.total ?? 0;
+    message.deviceId = object.deviceId ?? "";
+    message.totalIn = object.totalIn ?? 0;
+    message.totalOut = object.totalOut ?? 0;
+    message.totalLock = object.totalLock ?? 0;
+    return message;
+  },
+};
+
 function createBaseCashOut(): CashOut {
-  return { userId: "", userName: "", ci: 0, cio: 0, co: 0, coo: 0, luckyPercent: 0 };
+  return { userId: "", userName: "", ci: 0, cio: 0, co: 0, coo: 0, luckyPercent: 0, userSid: 0 };
 }
 
 export const CashOut = {
@@ -2594,6 +2816,9 @@ export const CashOut = {
     }
     if (message.luckyPercent !== 0) {
       writer.uint32(56).int64(message.luckyPercent);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(64).int64(message.userSid);
     }
     return writer;
   },
@@ -2654,6 +2879,13 @@ export const CashOut = {
 
           message.luckyPercent = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2665,13 +2897,14 @@ export const CashOut = {
 
   fromJSON(object: any): CashOut {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
-      ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
-      cio: isSet(object.cio) ? globalThis.Number(object.cio) : 0,
-      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
-      coo: isSet(object.coo) ? globalThis.Number(object.coo) : 0,
-      luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      userName: isSet(object.userName) ? String(object.userName) : "",
+      ci: isSet(object.ci) ? Number(object.ci) : 0,
+      cio: isSet(object.cio) ? Number(object.cio) : 0,
+      co: isSet(object.co) ? Number(object.co) : 0,
+      coo: isSet(object.coo) ? Number(object.coo) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
     };
   },
 
@@ -2698,6 +2931,9 @@ export const CashOut = {
     if (message.luckyPercent !== 0) {
       obj.luckyPercent = Math.round(message.luckyPercent);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -2713,6 +2949,7 @@ export const CashOut = {
     message.co = object.co ?? 0;
     message.coo = object.coo ?? 0;
     message.luckyPercent = object.luckyPercent ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -2804,12 +3041,12 @@ export const TopCashOut = {
 
   fromJSON(object: any): TopCashOut {
     return {
-      cashouts: globalThis.Array.isArray(object?.cashouts) ? object.cashouts.map((e: any) => CashOut.fromJSON(e)) : [],
-      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
-      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      cashouts: Array.isArray(object?.cashouts) ? object.cashouts.map((e: any) => CashOut.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      total: isSet(object.total) ? Number(object.total) : 0,
     };
   },
 
@@ -2869,6 +3106,7 @@ function createBaseVip(): Vip {
     isOnline: false,
     totalIn: 0,
     totalOut: 0,
+    userSid: 0,
   };
 }
 
@@ -2921,6 +3159,9 @@ export const Vip = {
     }
     if (message.totalOut !== 0) {
       writer.uint32(128).int64(message.totalOut);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(136).int64(message.userSid);
     }
     return writer;
   },
@@ -3044,6 +3285,13 @@ export const Vip = {
 
           message.totalOut = longToNumber(reader.int64() as Long);
           continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3055,22 +3303,23 @@ export const Vip = {
 
   fromJSON(object: any): Vip {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
-      cio: isSet(object.cio) ? globalThis.Number(object.cio) : 0,
-      totalChip: isSet(object.totalChip) ? globalThis.Number(object.totalChip) : 0,
-      lastLoginTimeUnix: isSet(object.lastLoginTimeUnix) ? globalThis.Number(object.lastLoginTimeUnix) : 0,
-      createdTimeUnix: isSet(object.createdTimeUnix) ? globalThis.Number(object.createdTimeUnix) : 0,
-      refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
-      ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
-      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
-      ci2d: isSet(object.ci2d) ? globalThis.Number(object.ci2d) : 0,
-      co2d: isSet(object.co2d) ? globalThis.Number(object.co2d) : 0,
-      luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
-      isBanned: isSet(object.isBanned) ? globalThis.Boolean(object.isBanned) : false,
-      isOnline: isSet(object.isOnline) ? globalThis.Boolean(object.isOnline) : false,
-      totalIn: isSet(object.totalIn) ? globalThis.Number(object.totalIn) : 0,
-      totalOut: isSet(object.totalOut) ? globalThis.Number(object.totalOut) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      userName: isSet(object.userName) ? String(object.userName) : "",
+      cio: isSet(object.cio) ? Number(object.cio) : 0,
+      totalChip: isSet(object.totalChip) ? Number(object.totalChip) : 0,
+      lastLoginTimeUnix: isSet(object.lastLoginTimeUnix) ? Number(object.lastLoginTimeUnix) : 0,
+      createdTimeUnix: isSet(object.createdTimeUnix) ? Number(object.createdTimeUnix) : 0,
+      refGame: isSet(object.refGame) ? String(object.refGame) : "",
+      ci: isSet(object.ci) ? Number(object.ci) : 0,
+      co: isSet(object.co) ? Number(object.co) : 0,
+      ci2d: isSet(object.ci2d) ? Number(object.ci2d) : 0,
+      co2d: isSet(object.co2d) ? Number(object.co2d) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+      isBanned: isSet(object.isBanned) ? Boolean(object.isBanned) : false,
+      isOnline: isSet(object.isOnline) ? Boolean(object.isOnline) : false,
+      totalIn: isSet(object.totalIn) ? Number(object.totalIn) : 0,
+      totalOut: isSet(object.totalOut) ? Number(object.totalOut) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
     };
   },
 
@@ -3124,6 +3373,9 @@ export const Vip = {
     if (message.totalOut !== 0) {
       obj.totalOut = Math.round(message.totalOut);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -3148,6 +3400,7 @@ export const Vip = {
     message.isOnline = object.isOnline ?? false;
     message.totalIn = object.totalIn ?? 0;
     message.totalOut = object.totalOut ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
@@ -3249,13 +3502,13 @@ export const TopVip = {
 
   fromJSON(object: any): TopVip {
     return {
-      vips: globalThis.Array.isArray(object?.vips) ? object.vips.map((e: any) => Vip.fromJSON(e)) : [],
-      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
-      refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
-      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      vips: Array.isArray(object?.vips) ? object.vips.map((e: any) => Vip.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      refGame: isSet(object.refGame) ? String(object.refGame) : "",
+      total: isSet(object.total) ? Number(object.total) : 0,
     };
   },
 
@@ -3302,7 +3555,19 @@ export const TopVip = {
 };
 
 function createBaseWin(): Win {
-  return { userId: "", userName: "", vip: 0, gold: 0, ag: 0, agWin: 0, co: 0, ci: 0, coRate: 0, luckyPercent: 0 };
+  return {
+    userId: "",
+    userName: "",
+    vip: 0,
+    gold: 0,
+    ag: 0,
+    agWin: 0,
+    co: 0,
+    ci: 0,
+    coRate: 0,
+    luckyPercent: 0,
+    userSid: 0,
+  };
 }
 
 export const Win = {
@@ -3336,6 +3601,9 @@ export const Win = {
     }
     if (message.luckyPercent !== 0) {
       writer.uint32(80).int64(message.luckyPercent);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(88).int64(message.userSid);
     }
     return writer;
   },
@@ -3417,6 +3685,13 @@ export const Win = {
 
           message.luckyPercent = longToNumber(reader.int64() as Long);
           continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3428,16 +3703,17 @@ export const Win = {
 
   fromJSON(object: any): Win {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
-      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
-      gold: isSet(object.gold) ? globalThis.Number(object.gold) : 0,
-      ag: isSet(object.ag) ? globalThis.Number(object.ag) : 0,
-      agWin: isSet(object.agWin) ? globalThis.Number(object.agWin) : 0,
-      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
-      ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
-      coRate: isSet(object.coRate) ? globalThis.Number(object.coRate) : 0,
-      luckyPercent: isSet(object.luckyPercent) ? globalThis.Number(object.luckyPercent) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      userName: isSet(object.userName) ? String(object.userName) : "",
+      vip: isSet(object.vip) ? Number(object.vip) : 0,
+      gold: isSet(object.gold) ? Number(object.gold) : 0,
+      ag: isSet(object.ag) ? Number(object.ag) : 0,
+      agWin: isSet(object.agWin) ? Number(object.agWin) : 0,
+      co: isSet(object.co) ? Number(object.co) : 0,
+      ci: isSet(object.ci) ? Number(object.ci) : 0,
+      coRate: isSet(object.coRate) ? Number(object.coRate) : 0,
+      luckyPercent: isSet(object.luckyPercent) ? Number(object.luckyPercent) : 0,
+      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
     };
   },
 
@@ -3473,6 +3749,9 @@ export const Win = {
     if (message.luckyPercent !== 0) {
       obj.luckyPercent = Math.round(message.luckyPercent);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -3491,12 +3770,13 @@ export const Win = {
     message.ci = object.ci ?? 0;
     message.coRate = object.coRate ?? 0;
     message.luckyPercent = object.luckyPercent ?? 0;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };
 
 function createBaseTopWin(): TopWin {
-  return { wins: [], fromUnix: 0, toUnix: 0, limit: 0, offset: 0, refGame: "", total: 0 };
+  return { wins: [], fromUnix: 0, toUnix: 0, limit: 0, offset: 0, refGame: "", total: 0, gameId: 0 };
 }
 
 export const TopWin = {
@@ -3521,6 +3801,9 @@ export const TopWin = {
     }
     if (message.total !== 0) {
       writer.uint32(56).int64(message.total);
+    }
+    if (message.gameId !== 0) {
+      writer.uint32(64).int64(message.gameId);
     }
     return writer;
   },
@@ -3581,6 +3864,13 @@ export const TopWin = {
 
           message.total = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.gameId = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3592,13 +3882,14 @@ export const TopWin = {
 
   fromJSON(object: any): TopWin {
     return {
-      wins: globalThis.Array.isArray(object?.wins) ? object.wins.map((e: any) => Win.fromJSON(e)) : [],
-      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
-      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
-      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
-      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
-      refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
-      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      wins: Array.isArray(object?.wins) ? object.wins.map((e: any) => Win.fromJSON(e)) : [],
+      fromUnix: isSet(object.fromUnix) ? Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      refGame: isSet(object.refGame) ? String(object.refGame) : "",
+      total: isSet(object.total) ? Number(object.total) : 0,
+      gameId: isSet(object.gameId) ? Number(object.gameId) : 0,
     };
   },
 
@@ -3625,6 +3916,9 @@ export const TopWin = {
     if (message.total !== 0) {
       obj.total = Math.round(message.total);
     }
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
     return obj;
   },
 
@@ -3640,15 +3934,34 @@ export const TopWin = {
     message.offset = object.offset ?? 0;
     message.refGame = object.refGame ?? "";
     message.total = object.total ?? 0;
+    message.gameId = object.gameId ?? 0;
     return message;
   },
 };
 
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  throw "Unable to locate global object";
+})();
+
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -3657,8 +3970,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

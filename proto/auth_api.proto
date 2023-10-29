@@ -44,6 +44,7 @@ message Profile {
   bool is_online = 26;
   bool is_banned = 27;
   int64 last_login_unix = 28;
+  int64 user_sid = 29;
 }
 
 message PlayingMatch {

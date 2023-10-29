@@ -365,7 +365,7 @@ export const BlackjackAction = {
 
   fromJSON(object: any): BlackjackAction {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userId: isSet(object.userId) ? String(object.userId) : "",
       code: isSet(object.code) ? blackjackActionCodeFromJSON(object.code) : 0,
     };
   },
@@ -449,8 +449,8 @@ export const BlackjackBet = {
 
   fromJSON(object: any): BlackjackBet {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      chips: isSet(object.chips) ? Number(object.chips) : 0,
       code: isSet(object.code) ? blackjackBetCodeFromJSON(object.code) : 0,
     };
   },
@@ -548,10 +548,10 @@ export const BlackjackBetResult = {
 
   fromJSON(object: any): BlackjackBetResult {
     return {
-      betAmount: isSet(object.betAmount) ? globalThis.Number(object.betAmount) : 0,
-      winAmount: isSet(object.winAmount) ? globalThis.Number(object.winAmount) : 0,
-      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
-      isWin: isSet(object.isWin) ? globalThis.Number(object.isWin) : 0,
+      betAmount: isSet(object.betAmount) ? Number(object.betAmount) : 0,
+      winAmount: isSet(object.winAmount) ? Number(object.winAmount) : 0,
+      total: isSet(object.total) ? Number(object.total) : 0,
+      isWin: isSet(object.isWin) ? Number(object.isWin) : 0,
     };
   },
 
@@ -652,10 +652,10 @@ export const BlackjackPlayerBet = {
 
   fromJSON(object: any): BlackjackPlayerBet {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      insurance: isSet(object.insurance) ? globalThis.Number(object.insurance) : 0,
-      first: isSet(object.first) ? globalThis.Number(object.first) : 0,
-      second: isSet(object.second) ? globalThis.Number(object.second) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      insurance: isSet(object.insurance) ? Number(object.insurance) : 0,
+      first: isSet(object.first) ? Number(object.first) : 0,
+      second: isSet(object.second) ? Number(object.second) : 0,
     };
   },
 
@@ -756,7 +756,7 @@ export const BlackjackPLayerBetResult = {
 
   fromJSON(object: any): BlackjackPLayerBetResult {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userId: isSet(object.userId) ? String(object.userId) : "",
       insurance: isSet(object.insurance) ? BlackjackBetResult.fromJSON(object.insurance) : undefined,
       first: isSet(object.first) ? BlackjackBetResult.fromJSON(object.first) : undefined,
       second: isSet(object.second) ? BlackjackBetResult.fromJSON(object.second) : undefined,
@@ -904,15 +904,15 @@ export const BlackjackUpdateDeal = {
 
   fromJSON(object: any): BlackjackUpdateDeal {
     return {
-      isBanker: isSet(object.isBanker) ? globalThis.Boolean(object.isBanker) : false,
+      isBanker: isSet(object.isBanker) ? Boolean(object.isBanker) : false,
       isRevealBankerHiddenCard: isSet(object.isRevealBankerHiddenCard)
-        ? globalThis.Boolean(object.isRevealBankerHiddenCard)
+        ? Boolean(object.isRevealBankerHiddenCard)
         : false,
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userId: isSet(object.userId) ? String(object.userId) : "",
       handN0: isSet(object.handN0) ? blackjackHandN0FromJSON(object.handN0) : 0,
-      newCards: globalThis.Array.isArray(object?.newCards) ? object.newCards.map((e: any) => Card.fromJSON(e)) : [],
+      newCards: Array.isArray(object?.newCards) ? object.newCards.map((e: any) => Card.fromJSON(e)) : [],
       hand: isSet(object.hand) ? BlackjackPlayerHand.fromJSON(object.hand) : undefined,
-      allPlayerHand: globalThis.Array.isArray(object?.allPlayerHand)
+      allPlayerHand: Array.isArray(object?.allPlayerHand)
         ? object.allPlayerHand.map((e: any) => BlackjackPlayerHand.fromJSON(e))
         : [],
     };
@@ -1021,10 +1021,8 @@ export const BlackjackLegalActions = {
 
   fromJSON(object: any): BlackjackLegalActions {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      actions: globalThis.Array.isArray(object?.actions)
-        ? object.actions.map((e: any) => blackjackActionCodeFromJSON(e))
-        : [],
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      actions: Array.isArray(object?.actions) ? object.actions.map((e: any) => blackjackActionCodeFromJSON(e)) : [],
     };
   },
 
@@ -1107,9 +1105,9 @@ export const BlackjackHand = {
 
   fromJSON(object: any): BlackjackHand {
     return {
-      cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
+      cards: Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
       type: isSet(object.type) ? blackjackHandTypeFromJSON(object.type) : 0,
-      point: isSet(object.point) ? globalThis.Number(object.point) : 0,
+      point: isSet(object.point) ? Number(object.point) : 0,
     };
   },
 
@@ -1196,7 +1194,7 @@ export const BlackjackPlayerHand = {
 
   fromJSON(object: any): BlackjackPlayerHand {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userId: isSet(object.userId) ? String(object.userId) : "",
       first: isSet(object.first) ? BlackjackHand.fromJSON(object.first) : undefined,
       second: isSet(object.second) ? BlackjackHand.fromJSON(object.second) : undefined,
     };
@@ -1289,8 +1287,8 @@ export const BlackjackPlayerTurn = {
 
   fromJSON(object: any): BlackjackPlayerTurn {
     return {
-      isPlayer: isSet(object.isPlayer) ? globalThis.String(object.isPlayer) : "",
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      isPlayer: isSet(object.isPlayer) ? String(object.isPlayer) : "",
+      userId: isSet(object.userId) ? String(object.userId) : "",
       handN0: isSet(object.handN0) ? blackjackHandN0FromJSON(object.handN0) : 0,
     };
   },
@@ -1481,22 +1479,18 @@ export const BlackjackUpdateDesk = {
 
   fromJSON(object: any): BlackjackUpdateDesk {
     return {
-      isInsuranceTurnEnter: isSet(object.isInsuranceTurnEnter)
-        ? globalThis.Boolean(object.isInsuranceTurnEnter)
-        : false,
-      isNewTurn: isSet(object.isNewTurn) ? globalThis.Boolean(object.isNewTurn) : false,
-      inTurn: isSet(object.inTurn) ? globalThis.String(object.inTurn) : "",
+      isInsuranceTurnEnter: isSet(object.isInsuranceTurnEnter) ? Boolean(object.isInsuranceTurnEnter) : false,
+      isNewTurn: isSet(object.isNewTurn) ? Boolean(object.isNewTurn) : false,
+      inTurn: isSet(object.inTurn) ? String(object.inTurn) : "",
       handN0: isSet(object.handN0) ? blackjackHandN0FromJSON(object.handN0) : 0,
-      isUpdateBet: isSet(object.isUpdateBet) ? globalThis.Boolean(object.isUpdateBet) : false,
+      isUpdateBet: isSet(object.isUpdateBet) ? Boolean(object.isUpdateBet) : false,
       bet: isSet(object.bet) ? BlackjackPlayerBet.fromJSON(object.bet) : undefined,
-      isUpdateLegalAction: isSet(object.isUpdateLegalAction) ? globalThis.Boolean(object.isUpdateLegalAction) : false,
+      isUpdateLegalAction: isSet(object.isUpdateLegalAction) ? Boolean(object.isUpdateLegalAction) : false,
       actions: isSet(object.actions) ? BlackjackLegalActions.fromJSON(object.actions) : undefined,
-      isSplitHand: isSet(object.isSplitHand) ? globalThis.Boolean(object.isSplitHand) : false,
+      isSplitHand: isSet(object.isSplitHand) ? Boolean(object.isSplitHand) : false,
       hand: isSet(object.hand) ? BlackjackPlayerHand.fromJSON(object.hand) : undefined,
-      isBankerNotBlackjack: isSet(object.isBankerNotBlackjack)
-        ? globalThis.Boolean(object.isBankerNotBlackjack)
-        : false,
-      playersBet: globalThis.Array.isArray(object?.playersBet)
+      isBankerNotBlackjack: isSet(object.isBankerNotBlackjack) ? Boolean(object.isBankerNotBlackjack) : false,
+      playersBet: Array.isArray(object?.playersBet)
         ? object.playersBet.map((e: any) => BlackjackPlayerBet.fromJSON(e))
         : [],
     };
@@ -1607,7 +1601,7 @@ export const BlackjackUpdateFinish = {
 
   fromJSON(object: any): BlackjackUpdateFinish {
     return {
-      betResults: globalThis.Array.isArray(object?.betResults)
+      betResults: Array.isArray(object?.betResults)
         ? object.betResults.map((e: any) => BlackjackPLayerBetResult.fromJSON(e))
         : [],
     };
@@ -1631,11 +1625,29 @@ export const BlackjackUpdateFinish = {
   },
 };
 
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  throw "Unable to locate global object";
+})();
+
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -1644,8 +1656,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

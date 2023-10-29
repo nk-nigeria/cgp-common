@@ -176,9 +176,9 @@ export const BetResult = {
 
   fromJSON(object: any): BetResult {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => InfoBet.fromJSON(e)) : [],
-      isWin: isSet(object.isWin) ? globalThis.Boolean(object.isWin) : false,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      bets: Array.isArray(object?.bets) ? object.bets.map((e: any) => InfoBet.fromJSON(e)) : [],
+      isWin: isSet(object.isWin) ? Boolean(object.isWin) : false,
     };
   },
 
@@ -266,9 +266,7 @@ export const ColorGameFinish = {
   fromJSON(object: any): ColorGameFinish {
     return {
       rollColor: isSet(object.rollColor) ? ListColor.fromJSON(object.rollColor) : undefined,
-      betResults: globalThis.Array.isArray(object?.betResults)
-        ? object.betResults.map((e: any) => BetResult.fromJSON(e))
-        : [],
+      betResults: Array.isArray(object?.betResults) ? object.betResults.map((e: any) => BetResult.fromJSON(e)) : [],
       historyRolls: isSet(object.historyRolls) ? HistoryRoll.fromJSON(object.historyRolls) : undefined,
     };
   },
@@ -351,9 +349,7 @@ export const ListColor = {
   },
 
   fromJSON(object: any): ListColor {
-    return {
-      colors: globalThis.Array.isArray(object?.colors) ? object.colors.map((e: any) => globalThis.Number(e)) : [],
-    };
+    return { colors: Array.isArray(object?.colors) ? object.colors.map((e: any) => Number(e)) : [] };
   },
 
   toJSON(message: ListColor): unknown {
@@ -421,8 +417,8 @@ export const RateColor = {
 
   fromJSON(object: any): RateColor {
     return {
-      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
-      percent: isSet(object.percent) ? globalThis.Number(object.percent) : 0,
+      id: isSet(object.id) ? Number(object.id) : 0,
+      percent: isSet(object.percent) ? Number(object.percent) : 0,
     };
   },
 
@@ -495,12 +491,8 @@ export const HistoryRoll = {
 
   fromJSON(object: any): HistoryRoll {
     return {
-      listColors: globalThis.Array.isArray(object?.listColors)
-        ? object.listColors.map((e: any) => ListColor.fromJSON(e))
-        : [],
-      rateColors: globalThis.Array.isArray(object?.rateColors)
-        ? object.rateColors.map((e: any) => RateColor.fromJSON(e))
-        : [],
+      listColors: Array.isArray(object?.listColors) ? object.listColors.map((e: any) => ListColor.fromJSON(e)) : [],
+      rateColors: Array.isArray(object?.rateColors) ? object.rateColors.map((e: any) => RateColor.fromJSON(e)) : [],
     };
   },
 
@@ -623,13 +615,13 @@ export const InfoBet = {
 
   fromJSON(object: any): InfoBet {
     return {
-      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
-      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
-      nUserBet: isSet(object.nUserBet) ? globalThis.Number(object.nUserBet) : 0,
-      desp: isSet(object.desp) ? globalThis.String(object.desp) : "",
-      reqSpecGame: isSet(object.reqSpecGame) ? globalThis.Number(object.reqSpecGame) : 0,
-      emitNewgameEvent: isSet(object.emitNewgameEvent) ? globalThis.Boolean(object.emitNewgameEvent) : false,
-      delayEmitResult: isSet(object.delayEmitResult) ? globalThis.String(object.delayEmitResult) : "",
+      id: isSet(object.id) ? Number(object.id) : 0,
+      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      nUserBet: isSet(object.nUserBet) ? Number(object.nUserBet) : 0,
+      desp: isSet(object.desp) ? String(object.desp) : "",
+      reqSpecGame: isSet(object.reqSpecGame) ? Number(object.reqSpecGame) : 0,
+      emitNewgameEvent: isSet(object.emitNewgameEvent) ? Boolean(object.emitNewgameEvent) : false,
+      delayEmitResult: isSet(object.delayEmitResult) ? String(object.delayEmitResult) : "",
     };
   },
 
@@ -711,9 +703,7 @@ export const ListInfoBet = {
   },
 
   fromJSON(object: any): ListInfoBet {
-    return {
-      listBets: globalThis.Array.isArray(object?.listBets) ? object.listBets.map((e: any) => InfoBet.fromJSON(e)) : [],
-    };
+    return { listBets: Array.isArray(object?.listBets) ? object.listBets.map((e: any) => InfoBet.fromJSON(e)) : [] };
   },
 
   toJSON(message: ListInfoBet): unknown {
@@ -839,12 +829,12 @@ export const UpdateDesk = {
 
   fromJSON(object: any): UpdateDesk {
     return {
-      nPlayer: isSet(object.nPlayer) ? globalThis.Number(object.nPlayer) : 0,
-      updateUserBets: isSet(object.updateUserBets) ? globalThis.Boolean(object.updateUserBets) : false,
-      updateCellBets: isSet(object.updateCellBets) ? globalThis.Boolean(object.updateCellBets) : false,
-      userBets: globalThis.Array.isArray(object?.userBets) ? object.userBets.map((e: any) => InfoBet.fromJSON(e)) : [],
-      cellBets: globalThis.Array.isArray(object?.cellBets) ? object.cellBets.map((e: any) => InfoBet.fromJSON(e)) : [],
-      updateHistoryRoll: isSet(object.updateHistoryRoll) ? globalThis.Boolean(object.updateHistoryRoll) : false,
+      nPlayer: isSet(object.nPlayer) ? Number(object.nPlayer) : 0,
+      updateUserBets: isSet(object.updateUserBets) ? Boolean(object.updateUserBets) : false,
+      updateCellBets: isSet(object.updateCellBets) ? Boolean(object.updateCellBets) : false,
+      userBets: Array.isArray(object?.userBets) ? object.userBets.map((e: any) => InfoBet.fromJSON(e)) : [],
+      cellBets: Array.isArray(object?.cellBets) ? object.cellBets.map((e: any) => InfoBet.fromJSON(e)) : [],
+      updateHistoryRoll: isSet(object.updateHistoryRoll) ? Boolean(object.updateHistoryRoll) : false,
       historyRolls: isSet(object.historyRolls) ? HistoryRoll.fromJSON(object.historyRolls) : undefined,
     };
   },
@@ -893,11 +883,29 @@ export const UpdateDesk = {
   },
 };
 
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  throw "Unable to locate global object";
+})();
+
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -906,8 +914,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

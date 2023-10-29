@@ -237,7 +237,7 @@ export const GapleDominoAction = {
 
   fromJSON(object: any): GapleDominoAction {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userId: isSet(object.userId) ? String(object.userId) : "",
       domino: isSet(object.domino) ? Domino.fromJSON(object.domino) : undefined,
       position: isSet(object.position) ? gapleDominoChainPositionFromJSON(object.position) : 0,
     };
@@ -350,11 +350,11 @@ export const GapleDominoPenalty = {
 
   fromJSON(object: any): GapleDominoPenalty {
     return {
-      gainPlayer: isSet(object.gainPlayer) ? globalThis.String(object.gainPlayer) : "",
-      lostPlayer: isSet(object.lostPlayer) ? globalThis.String(object.lostPlayer) : "",
-      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
-      lostPlayerNotHaveFacelets: globalThis.Array.isArray(object?.lostPlayerNotHaveFacelets)
-        ? object.lostPlayerNotHaveFacelets.map((e: any) => globalThis.Number(e))
+      gainPlayer: isSet(object.gainPlayer) ? String(object.gainPlayer) : "",
+      lostPlayer: isSet(object.lostPlayer) ? String(object.lostPlayer) : "",
+      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      lostPlayerNotHaveFacelets: Array.isArray(object?.lostPlayerNotHaveFacelets)
+        ? object.lostPlayerNotHaveFacelets.map((e: any) => Number(e))
         : [],
     };
   },
@@ -437,7 +437,7 @@ export const GapleDominoChainNode = {
   fromJSON(object: any): GapleDominoChainNode {
     return {
       domino: isSet(object.domino) ? Domino.fromJSON(object.domino) : undefined,
-      turnNumber: isSet(object.turnNumber) ? globalThis.Number(object.turnNumber) : 0,
+      turnNumber: isSet(object.turnNumber) ? Number(object.turnNumber) : 0,
     };
   },
 
@@ -659,33 +659,25 @@ export const GapleDominoUpdateDesk = {
 
   fromJSON(object: any): GapleDominoUpdateDesk {
     return {
-      nPlayers: isSet(object.nPlayers) ? globalThis.Number(object.nPlayers) : 0,
-      isNewTurn: isSet(object.isNewTurn) ? globalThis.Boolean(object.isNewTurn) : false,
-      isUpdateChain: isSet(object.isUpdateChain) ? globalThis.Boolean(object.isUpdateChain) : false,
-      isAppendDominoToChain: isSet(object.isAppendDominoToChain)
-        ? globalThis.Boolean(object.isAppendDominoToChain)
-        : false,
-      isPenaltyOccur: isSet(object.isPenaltyOccur) ? globalThis.Boolean(object.isPenaltyOccur) : false,
-      isUpdateLegalActions: isSet(object.isUpdateLegalActions)
-        ? globalThis.Boolean(object.isUpdateLegalActions)
-        : false,
-      isUpdateNumRemainedCard: isSet(object.isUpdateNumRemainedCard)
-        ? globalThis.Boolean(object.isUpdateNumRemainedCard)
-        : false,
-      chain: globalThis.Array.isArray(object?.chain)
-        ? object.chain.map((e: any) => GapleDominoChainNode.fromJSON(e))
-        : [],
+      nPlayers: isSet(object.nPlayers) ? Number(object.nPlayers) : 0,
+      isNewTurn: isSet(object.isNewTurn) ? Boolean(object.isNewTurn) : false,
+      isUpdateChain: isSet(object.isUpdateChain) ? Boolean(object.isUpdateChain) : false,
+      isAppendDominoToChain: isSet(object.isAppendDominoToChain) ? Boolean(object.isAppendDominoToChain) : false,
+      isPenaltyOccur: isSet(object.isPenaltyOccur) ? Boolean(object.isPenaltyOccur) : false,
+      isUpdateLegalActions: isSet(object.isUpdateLegalActions) ? Boolean(object.isUpdateLegalActions) : false,
+      isUpdateNumRemainedCard: isSet(object.isUpdateNumRemainedCard) ? Boolean(object.isUpdateNumRemainedCard) : false,
+      chain: Array.isArray(object?.chain) ? object.chain.map((e: any) => GapleDominoChainNode.fromJSON(e)) : [],
       action: isSet(object.action) ? GapleDominoAction.fromJSON(object.action) : undefined,
-      legalActions: globalThis.Array.isArray(object?.legalActions)
+      legalActions: Array.isArray(object?.legalActions)
         ? object.legalActions.map((e: any) => GapleDominoAction.fromJSON(e))
         : [],
       penalty: isSet(object.penalty) ? GapleDominoPenalty.fromJSON(object.penalty) : undefined,
-      remaineds: globalThis.Array.isArray(object?.remaineds)
+      remaineds: Array.isArray(object?.remaineds)
         ? object.remaineds.map((e: any) => GapleDominoPresenceNumRemained.fromJSON(e))
         : [],
-      inTurn: isSet(object.inTurn) ? globalThis.String(object.inTurn) : "",
-      remainedFaceletsCount: globalThis.Array.isArray(object?.remainedFaceletsCount)
-        ? object.remainedFaceletsCount.map((e: any) => globalThis.Number(e))
+      inTurn: isSet(object.inTurn) ? String(object.inTurn) : "",
+      remainedFaceletsCount: Array.isArray(object?.remainedFaceletsCount)
+        ? object.remainedFaceletsCount.map((e: any) => Number(e))
         : [],
     };
   },
@@ -811,8 +803,8 @@ export const GapleDominoPresenceNumRemained = {
 
   fromJSON(object: any): GapleDominoPresenceNumRemained {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      numCard: isSet(object.numCard) ? globalThis.Number(object.numCard) : 0,
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      numCard: isSet(object.numCard) ? Number(object.numCard) : 0,
     };
   },
 
@@ -887,8 +879,8 @@ export const GapleDominoPresenceHand = {
 
   fromJSON(object: any): GapleDominoPresenceHand {
     return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      dominos: globalThis.Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [],
+      userId: isSet(object.userId) ? String(object.userId) : "",
+      dominos: Array.isArray(object?.dominos) ? object.dominos.map((e: any) => Domino.fromJSON(e)) : [],
     };
   },
 
@@ -1031,10 +1023,8 @@ export const GapleDoninoUpdateFinish = {
   fromJSON(object: any): GapleDoninoUpdateFinish {
     return {
       type: isSet(object.type) ? gapleDominoFinishGameTypeFromJSON(object.type) : 0,
-      winner: isSet(object.winner) ? globalThis.String(object.winner) : "",
-      hands: globalThis.Array.isArray(object?.hands)
-        ? object.hands.map((e: any) => GapleDominoPresenceHand.fromJSON(e))
-        : [],
+      winner: isSet(object.winner) ? String(object.winner) : "",
+      hands: Array.isArray(object?.hands) ? object.hands.map((e: any) => GapleDominoPresenceHand.fromJSON(e)) : [],
     };
   },
 
@@ -1067,8 +1057,7 @@ export const GapleDoninoUpdateFinish = {
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
