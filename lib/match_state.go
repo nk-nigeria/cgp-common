@@ -10,12 +10,13 @@ import (
 )
 
 type MatchLabel struct {
-	Open     int32  `json:"open"`
-	Bet      int32  `json:"bet"`
-	Code     string `json:"code"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	MaxSize  int32  `json:"max_size"`
+	Open     int32  `json:"open,omitempty"`
+	Bet      int32  `json:"bet,omitempty"`
+	Code     string `json:"code,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Password string `json:"password,omitempty"`
+	MaxSize  int32  `json:"max_size,omitempty"`
+	TableId  int64  `json:"table_id,omitempty"`
 }
 
 type NewPrecenseFn func(ctx context.Context, nk runtime.NakamaModule, precense runtime.Presence) runtime.Presence
