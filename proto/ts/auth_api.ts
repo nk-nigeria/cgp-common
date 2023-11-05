@@ -131,8 +131,8 @@ export const ChangePasswordRequest = {
 
   fromJSON(object: any): ChangePasswordRequest {
     return {
-      oldPassword: isSet(object.oldPassword) ? String(object.oldPassword) : "",
-      password: isSet(object.password) ? String(object.password) : "",
+      oldPassword: isSet(object.oldPassword) ? globalThis.String(object.oldPassword) : "",
+      password: isSet(object.password) ? globalThis.String(object.password) : "",
     };
   },
 
@@ -205,8 +205,8 @@ export const RegisterRequest = {
 
   fromJSON(object: any): RegisterRequest {
     return {
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      password: isSet(object.password) ? String(object.password) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      password: isSet(object.password) ? globalThis.String(object.password) : "",
     };
   },
 
@@ -579,37 +579,39 @@ export const Profile = {
 
   fromJSON(object: any): Profile {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      displayName: isSet(object.displayName) ? String(object.displayName) : "",
-      avatarUrl: isSet(object.avatarUrl) ? String(object.avatarUrl) : "",
-      status: isSet(object.status) ? String(object.status) : "",
-      accountChip: isSet(object.accountChip) ? Number(object.accountChip) : 0,
-      bankChip: isSet(object.bankChip) ? Number(object.bankChip) : 0,
-      refCode: isSet(object.refCode) ? String(object.refCode) : "",
-      langTag: isSet(object.langTag) ? String(object.langTag) : "",
-      linkGroup: isSet(object.linkGroup) ? String(object.linkGroup) : "",
-      linkFanpageFb: isSet(object.linkFanpageFb) ? String(object.linkFanpageFb) : "",
-      appConfig: isSet(object.appConfig) ? String(object.appConfig) : "",
-      avatarId: isSet(object.avatarId) ? String(object.avatarId) : "",
-      registrable: isSet(object.registrable) ? Boolean(object.registrable) : false,
-      vipLevel: isSet(object.vipLevel) ? Number(object.vipLevel) : 0,
-      lastOnlineTimeUnix: isSet(object.lastOnlineTimeUnix) ? Number(object.lastOnlineTimeUnix) : 0,
-      createTimeUnix: isSet(object.createTimeUnix) ? Number(object.createTimeUnix) : 0,
-      remainTimeInputRefCode: isSet(object.remainTimeInputRefCode) ? Number(object.remainTimeInputRefCode) : 0,
-      langAvailables: Array.isArray(object?.langAvailables)
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      displayName: isSet(object.displayName) ? globalThis.String(object.displayName) : "",
+      avatarUrl: isSet(object.avatarUrl) ? globalThis.String(object.avatarUrl) : "",
+      status: isSet(object.status) ? globalThis.String(object.status) : "",
+      accountChip: isSet(object.accountChip) ? globalThis.Number(object.accountChip) : 0,
+      bankChip: isSet(object.bankChip) ? globalThis.Number(object.bankChip) : 0,
+      refCode: isSet(object.refCode) ? globalThis.String(object.refCode) : "",
+      langTag: isSet(object.langTag) ? globalThis.String(object.langTag) : "",
+      linkGroup: isSet(object.linkGroup) ? globalThis.String(object.linkGroup) : "",
+      linkFanpageFb: isSet(object.linkFanpageFb) ? globalThis.String(object.linkFanpageFb) : "",
+      appConfig: isSet(object.appConfig) ? globalThis.String(object.appConfig) : "",
+      avatarId: isSet(object.avatarId) ? globalThis.String(object.avatarId) : "",
+      registrable: isSet(object.registrable) ? globalThis.Boolean(object.registrable) : false,
+      vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
+      lastOnlineTimeUnix: isSet(object.lastOnlineTimeUnix) ? globalThis.Number(object.lastOnlineTimeUnix) : 0,
+      createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
+      remainTimeInputRefCode: isSet(object.remainTimeInputRefCode)
+        ? globalThis.Number(object.remainTimeInputRefCode)
+        : 0,
+      langAvailables: globalThis.Array.isArray(object?.langAvailables)
         ? object.langAvailables.map((e: any) => LangCode.fromJSON(e))
         : [],
       playingMatch: isSet(object.playingMatch) ? PlayingMatch.fromJSON(object.playingMatch) : undefined,
-      deviceId: isSet(object.deviceId) ? String(object.deviceId) : "",
-      lastDeviceId: isSet(object.lastDeviceId) ? String(object.lastDeviceId) : "",
-      refGame: isSet(object.refGame) ? String(object.refGame) : "",
-      currentIp: isSet(object.currentIp) ? String(object.currentIp) : "",
-      vipPoint: isSet(object.vipPoint) ? Number(object.vipPoint) : 0,
-      isOnline: isSet(object.isOnline) ? Boolean(object.isOnline) : false,
-      isBanned: isSet(object.isBanned) ? Boolean(object.isBanned) : false,
-      lastLoginUnix: isSet(object.lastLoginUnix) ? Number(object.lastLoginUnix) : 0,
-      userSid: isSet(object.userSid) ? Number(object.userSid) : 0,
+      deviceId: isSet(object.deviceId) ? globalThis.String(object.deviceId) : "",
+      lastDeviceId: isSet(object.lastDeviceId) ? globalThis.String(object.lastDeviceId) : "",
+      refGame: isSet(object.refGame) ? globalThis.String(object.refGame) : "",
+      currentIp: isSet(object.currentIp) ? globalThis.String(object.currentIp) : "",
+      vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
+      isOnline: isSet(object.isOnline) ? globalThis.Boolean(object.isOnline) : false,
+      isBanned: isSet(object.isBanned) ? globalThis.Boolean(object.isBanned) : false,
+      lastLoginUnix: isSet(object.lastLoginUnix) ? globalThis.Number(object.lastLoginUnix) : 0,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -792,8 +794,8 @@ export const PlayingMatch = {
 
   fromJSON(object: any): PlayingMatch {
     return {
-      code: isSet(object.code) ? String(object.code) : "",
-      matchId: isSet(object.matchId) ? String(object.matchId) : "",
+      code: isSet(object.code) ? globalThis.String(object.code) : "",
+      matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
     };
   },
 
@@ -855,7 +857,9 @@ export const ListProfile = {
   },
 
   fromJSON(object: any): ListProfile {
-    return { profiles: Array.isArray(object?.profiles) ? object.profiles.map((e: any) => Profile.fromJSON(e)) : [] };
+    return {
+      profiles: globalThis.Array.isArray(object?.profiles) ? object.profiles.map((e: any) => Profile.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: ListProfile): unknown {
@@ -992,13 +996,13 @@ export const SimpleProfile = {
 
   fromJSON(object: any): SimpleProfile {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      userName: isSet(object.userName) ? String(object.userName) : "",
-      displayName: isSet(object.displayName) ? String(object.displayName) : "",
-      status: isSet(object.status) ? String(object.status) : "",
-      accountChip: isSet(object.accountChip) ? Number(object.accountChip) : 0,
-      avatarId: isSet(object.avatarId) ? String(object.avatarId) : "",
-      vipLevel: isSet(object.vipLevel) ? Number(object.vipLevel) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      displayName: isSet(object.displayName) ? globalThis.String(object.displayName) : "",
+      status: isSet(object.status) ? globalThis.String(object.status) : "",
+      accountChip: isSet(object.accountChip) ? globalThis.Number(object.accountChip) : 0,
+      avatarId: isSet(object.avatarId) ? globalThis.String(object.avatarId) : "",
+      vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
       playingMatch: isSet(object.playingMatch) ? PlayingMatch.fromJSON(object.playingMatch) : undefined,
     };
   },
@@ -1088,7 +1092,9 @@ export const ListSimpleProfile = {
 
   fromJSON(object: any): ListSimpleProfile {
     return {
-      profiles: Array.isArray(object?.profiles) ? object.profiles.map((e: any) => SimpleProfile.fromJSON(e)) : [],
+      profiles: globalThis.Array.isArray(object?.profiles)
+        ? object.profiles.map((e: any) => SimpleProfile.fromJSON(e))
+        : [],
     };
   },
 
@@ -1146,7 +1152,7 @@ export const QuickChatUpdateRequest = {
   },
 
   fromJSON(object: any): QuickChatUpdateRequest {
-    return { texts: Array.isArray(object?.texts) ? object.texts.map((e: any) => String(e)) : [] };
+    return { texts: globalThis.Array.isArray(object?.texts) ? object.texts.map((e: any) => globalThis.String(e)) : [] };
   },
 
   toJSON(message: QuickChatUpdateRequest): unknown {
@@ -1203,7 +1209,7 @@ export const QuickChatResponse = {
   },
 
   fromJSON(object: any): QuickChatResponse {
-    return { texts: Array.isArray(object?.texts) ? object.texts.map((e: any) => String(e)) : [] };
+    return { texts: globalThis.Array.isArray(object?.texts) ? object.texts.map((e: any) => globalThis.String(e)) : [] };
   },
 
   toJSON(message: QuickChatResponse): unknown {
@@ -1281,9 +1287,9 @@ export const LangCode = {
 
   fromJSON(object: any): LangCode {
     return {
-      isoCode: isSet(object.isoCode) ? String(object.isoCode) : "",
-      displayName: isSet(object.displayName) ? String(object.displayName) : "",
-      sourceUrl: isSet(object.sourceUrl) ? String(object.sourceUrl) : "",
+      isoCode: isSet(object.isoCode) ? globalThis.String(object.isoCode) : "",
+      displayName: isSet(object.displayName) ? globalThis.String(object.displayName) : "",
+      sourceUrl: isSet(object.sourceUrl) ? globalThis.String(object.sourceUrl) : "",
     };
   },
 
@@ -1313,29 +1319,11 @@ export const LangCode = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -1344,8 +1332,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

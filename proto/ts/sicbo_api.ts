@@ -462,7 +462,7 @@ export const SicboBet = {
 
   fromJSON(object: any): SicboBet {
     return {
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       cell: isSet(object.cell) ? sicboBetCellFromJSON(object.cell) : 0,
     };
   },
@@ -537,7 +537,7 @@ export const SicboBetResult = {
   fromJSON(object: any): SicboBetResult {
     return {
       bet: isSet(object.bet) ? SicboBet.fromJSON(object.bet) : undefined,
-      isWin: isSet(object.isWin) ? Boolean(object.isWin) : false,
+      isWin: isSet(object.isWin) ? globalThis.Boolean(object.isWin) : false,
     };
   },
 
@@ -620,9 +620,9 @@ export const SicboPlayerBet = {
 
   fromJSON(object: any): SicboPlayerBet {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       action: isSet(object.action) ? sicboBetActionFromJSON(object.action) : 0,
-      bets: Array.isArray(object?.bets) ? object.bets.map((e: any) => SicboBet.fromJSON(e)) : [],
+      bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => SicboBet.fromJSON(e)) : [],
     };
   },
 
@@ -699,8 +699,8 @@ export const SicboPlayerBetResult = {
 
   fromJSON(object: any): SicboPlayerBetResult {
     return {
-      userId: isSet(object.userId) ? String(object.userId) : "",
-      list: Array.isArray(object?.list) ? object.list.map((e: any) => SicboBetResult.fromJSON(e)) : [],
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      list: globalThis.Array.isArray(object?.list) ? object.list.map((e: any) => SicboBetResult.fromJSON(e)) : [],
     };
   },
 
@@ -774,7 +774,7 @@ export const SicboHand = {
   },
 
   fromJSON(object: any): SicboHand {
-    return { dices: Array.isArray(object?.dices) ? object.dices.map((e: any) => diceFromJSON(e)) : [] };
+    return { dices: globalThis.Array.isArray(object?.dices) ? object.dices.map((e: any) => diceFromJSON(e)) : [] };
   },
 
   toJSON(message: SicboHand): unknown {
@@ -865,8 +865,10 @@ export const SicboGameFinish = {
   fromJSON(object: any): SicboGameFinish {
     return {
       hand: isSet(object.hand) ? SicboHand.fromJSON(object.hand) : undefined,
-      winCells: Array.isArray(object?.winCells) ? object.winCells.map((e: any) => sicboBetCellFromJSON(e)) : [],
-      listBetResult: Array.isArray(object?.listBetResult)
+      winCells: globalThis.Array.isArray(object?.winCells)
+        ? object.winCells.map((e: any) => sicboBetCellFromJSON(e))
+        : [],
+      listBetResult: globalThis.Array.isArray(object?.listBetResult)
         ? object.listBetResult.map((e: any) => SicboPlayerBetResult.fromJSON(e))
         : [],
     };
@@ -956,8 +958,8 @@ export const SicboBetCellInfo = {
   fromJSON(object: any): SicboBetCellInfo {
     return {
       cell: isSet(object.cell) ? sicboBetCellFromJSON(object.cell) : 0,
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      nUserBet: isSet(object.nUserBet) ? Number(object.nUserBet) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      nUserBet: isSet(object.nUserBet) ? globalThis.Number(object.nUserBet) : 0,
     };
   },
 
@@ -1092,13 +1094,15 @@ export const SicboUpdateDesk = {
 
   fromJSON(object: any): SicboUpdateDesk {
     return {
-      nPlayers: isSet(object.nPlayers) ? Number(object.nPlayers) : 0,
-      isUpdateUserBet: isSet(object.isUpdateUserBet) ? Boolean(object.isUpdateUserBet) : false,
-      isUpdateDeskCell: isSet(object.isUpdateDeskCell) ? Boolean(object.isUpdateDeskCell) : false,
-      isUpdateGameHistory: isSet(object.isUpdateGameHistory) ? Boolean(object.isUpdateGameHistory) : false,
+      nPlayers: isSet(object.nPlayers) ? globalThis.Number(object.nPlayers) : 0,
+      isUpdateUserBet: isSet(object.isUpdateUserBet) ? globalThis.Boolean(object.isUpdateUserBet) : false,
+      isUpdateDeskCell: isSet(object.isUpdateDeskCell) ? globalThis.Boolean(object.isUpdateDeskCell) : false,
+      isUpdateGameHistory: isSet(object.isUpdateGameHistory) ? globalThis.Boolean(object.isUpdateGameHistory) : false,
       userBet: isSet(object.userBet) ? SicboPlayerBet.fromJSON(object.userBet) : undefined,
-      deskCell: Array.isArray(object?.deskCell) ? object.deskCell.map((e: any) => SicboBetCellInfo.fromJSON(e)) : [],
-      history: Array.isArray(object?.history) ? object.history.map((e: any) => SicboHand.fromJSON(e)) : [],
+      deskCell: globalThis.Array.isArray(object?.deskCell)
+        ? object.deskCell.map((e: any) => SicboBetCellInfo.fromJSON(e))
+        : [],
+      history: globalThis.Array.isArray(object?.history) ? object.history.map((e: any) => SicboHand.fromJSON(e)) : [],
     };
   },
 
@@ -1203,29 +1207,11 @@ export const SicboActionReject = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -1234,8 +1220,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
