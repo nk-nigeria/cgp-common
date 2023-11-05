@@ -36,10 +36,11 @@ func init() {
 type reportGame struct {
 	reportEndpoint string
 	reportHttpKey  string
-	Users          []*pb.PlayerData `json:"users"`
-	Game           *pb.Game         `json:"game"`
-	Match          *pb.MatchData    `json:"match"`
-	Fee            int64            `json:"fee"`
+	Users          []*pb.PlayerData `json:"users,omitempty"`
+	Game           *pb.Game         `json:"game,omitempty"`
+	Match          *pb.MatchData    `json:"match,omitempty"`
+	Fee            int64            `json:"fee,omitempty"`
+	TableId        int64            `json:"table_id,omitempty"`
 }
 
 func NewReportGame(ctx context.Context) *reportGame {

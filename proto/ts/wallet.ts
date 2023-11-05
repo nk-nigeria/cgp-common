@@ -200,15 +200,15 @@ export const Bank = {
 
   fromJSON(object: any): Bank {
     return {
-      senderId: isSet(object.senderId) ? String(object.senderId) : "",
-      recipientId: isSet(object.recipientId) ? String(object.recipientId) : "",
-      chips: isSet(object.chips) ? Number(object.chips) : 0,
-      chipsInBank: isSet(object.chipsInBank) ? Number(object.chipsInBank) : 0,
+      senderId: isSet(object.senderId) ? globalThis.String(object.senderId) : "",
+      recipientId: isSet(object.recipientId) ? globalThis.String(object.recipientId) : "",
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      chipsInBank: isSet(object.chipsInBank) ? globalThis.Number(object.chipsInBank) : 0,
       action: isSet(object.action) ? bank_ActionFromJSON(object.action) : 0,
-      balancePrev: isSet(object.balancePrev) ? Number(object.balancePrev) : 0,
-      balanceCurr: isSet(object.balanceCurr) ? Number(object.balanceCurr) : 0,
-      percenFee: isSet(object.percenFee) ? Number(object.percenFee) : 0,
-      amountFee: isSet(object.amountFee) ? Number(object.amountFee) : 0,
+      balancePrev: isSet(object.balancePrev) ? globalThis.Number(object.balancePrev) : 0,
+      balanceCurr: isSet(object.balanceCurr) ? globalThis.Number(object.balanceCurr) : 0,
+      percenFee: isSet(object.percenFee) ? globalThis.Number(object.percenFee) : 0,
+      amountFee: isSet(object.amountFee) ? globalThis.Number(object.amountFee) : 0,
     };
   },
 
@@ -262,29 +262,11 @@ export const Bank = {
   },
 };
 
-declare const self: any | undefined;
-declare const window: any | undefined;
-declare const global: any | undefined;
-const tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
-
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
@@ -293,8 +275,8 @@ export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
