@@ -51,7 +51,7 @@ message MatchDetail {
   int64 num_match_played = 4;
   uint64 chip_fee = 5;
   string detail = 6;
-  string table_id = 7;
+  int64 table_id = 7;
   int64 date_unix = 8;
   int64 created_at_unix = 9;
 }

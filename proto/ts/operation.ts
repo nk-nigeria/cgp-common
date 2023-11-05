@@ -50,7 +50,7 @@ export interface MatchDetail {
   numMatchPlayed: number;
   chipFee: number;
   detail: string;
-  tableId: string;
+  tableId: number;
   dateUnix: number;
   createdAtUnix: number;
 }
@@ -841,7 +841,7 @@ function createBaseMatchDetail(): MatchDetail {
     numMatchPlayed: 0,
     chipFee: 0,
     detail: "",
-    tableId: "",
+    tableId: 0,
     dateUnix: 0,
     createdAtUnix: 0,
   };
@@ -867,8 +867,8 @@ export const MatchDetail = {
     if (message.detail !== "") {
       writer.uint32(50).string(message.detail);
     }
-    if (message.tableId !== "") {
-      writer.uint32(58).string(message.tableId);
+    if (message.tableId !== 0) {
+      writer.uint32(56).int64(message.tableId);
     }
     if (message.dateUnix !== 0) {
       writer.uint32(64).int64(message.dateUnix);
@@ -929,11 +929,11 @@ export const MatchDetail = {
           message.detail = reader.string();
           continue;
         case 7:
-          if (tag !== 58) {
+          if (tag !== 56) {
             break;
           }
 
-          message.tableId = reader.string();
+          message.tableId = longToNumber(reader.int64() as Long);
           continue;
         case 8:
           if (tag !== 64) {
@@ -966,7 +966,7 @@ export const MatchDetail = {
       numMatchPlayed: isSet(object.numMatchPlayed) ? globalThis.Number(object.numMatchPlayed) : 0,
       chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
       detail: isSet(object.detail) ? globalThis.String(object.detail) : "",
-      tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
+      tableId: isSet(object.tableId) ? globalThis.Number(object.tableId) : 0,
       dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
       createdAtUnix: isSet(object.createdAtUnix) ? globalThis.Number(object.createdAtUnix) : 0,
     };
@@ -992,8 +992,8 @@ export const MatchDetail = {
     if (message.detail !== "") {
       obj.detail = message.detail;
     }
-    if (message.tableId !== "") {
-      obj.tableId = message.tableId;
+    if (message.tableId !== 0) {
+      obj.tableId = Math.round(message.tableId);
     }
     if (message.dateUnix !== 0) {
       obj.dateUnix = Math.round(message.dateUnix);
@@ -1015,7 +1015,7 @@ export const MatchDetail = {
     message.numMatchPlayed = object.numMatchPlayed ?? 0;
     message.chipFee = object.chipFee ?? 0;
     message.detail = object.detail ?? "";
-    message.tableId = object.tableId ?? "";
+    message.tableId = object.tableId ?? 0;
     message.dateUnix = object.dateUnix ?? 0;
     message.createdAtUnix = object.createdAtUnix ?? 0;
     return message;
