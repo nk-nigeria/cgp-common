@@ -10,7 +10,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ciaolink-game-platform/cgp-common/define"
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
+	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -73,9 +75,18 @@ func (o reportGame) ReportEndpoint() string {
 }
 
 // call persistent data
-func (o *reportGame) Commit() ([]byte, int, error) {
-	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", o.reportEndpoint)
+func (o *reportGame) Commit(ctx context.Context, nk runtime.NakamaModule) ([]byte, int, error) {
 	data, _ := json.Marshal(o)
+	if ctx != nil && nk != nil {
+		properties := make(map[string]string)
+		properties["payload"] = string(data)
+		nk.Event(ctx, &api.Event{
+			Name:       string(define.EventName_Game_Report),
+			Properties: properties,
+		})
+		return []byte(string("commit over nk event")), 200, nil
+	}
+	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", o.reportEndpoint)
 	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(data))
 	if err != nil {
 		return nil, 0, err
