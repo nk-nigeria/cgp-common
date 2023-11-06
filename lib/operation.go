@@ -81,7 +81,7 @@ func (o *reportGame) Commit(ctx context.Context, nk runtime.NakamaModule) ([]byt
 		properties := make(map[string]string)
 		properties["payload"] = string(data)
 		nk.Event(ctx, &api.Event{
-			Name:       string(define.EventName_TopUp),
+			Name:       string(define.EventName_Game_Report),
 			Properties: properties,
 		})
 		return []byte(string("commit over nk event")), 200, nil
