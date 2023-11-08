@@ -53,6 +53,8 @@ export interface MatchDetail {
   tableId: number;
   dateUnix: number;
   createdAtUnix: number;
+  chipWin: number;
+  chipLose: number;
 }
 
 export interface MatchDetailRequest {
@@ -844,6 +846,8 @@ function createBaseMatchDetail(): MatchDetail {
     tableId: 0,
     dateUnix: 0,
     createdAtUnix: 0,
+    chipWin: 0,
+    chipLose: 0,
   };
 }
 
@@ -875,6 +879,12 @@ export const MatchDetail = {
     }
     if (message.createdAtUnix !== 0) {
       writer.uint32(72).int64(message.createdAtUnix);
+    }
+    if (message.chipWin !== 0) {
+      writer.uint32(80).int64(message.chipWin);
+    }
+    if (message.chipLose !== 0) {
+      writer.uint32(88).int64(message.chipLose);
     }
     return writer;
   },
@@ -949,6 +959,20 @@ export const MatchDetail = {
 
           message.createdAtUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.chipWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.chipLose = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -969,6 +993,8 @@ export const MatchDetail = {
       tableId: isSet(object.tableId) ? globalThis.Number(object.tableId) : 0,
       dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
       createdAtUnix: isSet(object.createdAtUnix) ? globalThis.Number(object.createdAtUnix) : 0,
+      chipWin: isSet(object.chipWin) ? globalThis.Number(object.chipWin) : 0,
+      chipLose: isSet(object.chipLose) ? globalThis.Number(object.chipLose) : 0,
     };
   },
 
@@ -1001,6 +1027,12 @@ export const MatchDetail = {
     if (message.createdAtUnix !== 0) {
       obj.createdAtUnix = Math.round(message.createdAtUnix);
     }
+    if (message.chipWin !== 0) {
+      obj.chipWin = Math.round(message.chipWin);
+    }
+    if (message.chipLose !== 0) {
+      obj.chipLose = Math.round(message.chipLose);
+    }
     return obj;
   },
 
@@ -1018,6 +1050,8 @@ export const MatchDetail = {
     message.tableId = object.tableId ?? 0;
     message.dateUnix = object.dateUnix ?? 0;
     message.createdAtUnix = object.createdAtUnix ?? 0;
+    message.chipWin = object.chipWin ?? 0;
+    message.chipLose = object.chipLose ?? 0;
     return message;
   },
 };
