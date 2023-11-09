@@ -261,13 +261,14 @@ message TransactionRequest {
 
 message TransactionDetail {
   string id = 1;
-  int64 user_sid = 2;
-  string user_name = 3;
-  int64 vip = 4;
-  int64 rp = 5; // Số tiền nạp 
-  string type_topup=6;
-  int64 chips_topup = 7;//Số chip user được nhận của giao dịch 
-  int64 created_unix = 8;
+  string user_id = 2;
+  int64 user_sid = 3;
+  string user_name = 4;
+  int64 vip = 5;
+  int64 rp = 6; // Số tiền nạp 
+  string type_topup= 7;
+  int64 chips_topup = 8;//Số chip user được nhận của giao dịch 
+  int64 created_unix = 9;
 }
 
 message TransactionResponse {

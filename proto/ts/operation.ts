@@ -260,6 +260,7 @@ export interface TransactionRequest {
 
 export interface TransactionDetail {
   id: string;
+  userId: string;
   userSid: number;
   userName: string;
   vip: number;
@@ -4146,7 +4147,7 @@ export const TransactionRequest = {
 };
 
 function createBaseTransactionDetail(): TransactionDetail {
-  return { id: "", userSid: 0, userName: "", vip: 0, rp: 0, typeTopup: "", chipsTopup: 0, createdUnix: 0 };
+  return { id: "", userId: "", userSid: 0, userName: "", vip: 0, rp: 0, typeTopup: "", chipsTopup: 0, createdUnix: 0 };
 }
 
 export const TransactionDetail = {
@@ -4154,26 +4155,29 @@ export const TransactionDetail = {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
     if (message.userSid !== 0) {
-      writer.uint32(16).int64(message.userSid);
+      writer.uint32(24).int64(message.userSid);
     }
     if (message.userName !== "") {
-      writer.uint32(26).string(message.userName);
+      writer.uint32(34).string(message.userName);
     }
     if (message.vip !== 0) {
-      writer.uint32(32).int64(message.vip);
+      writer.uint32(40).int64(message.vip);
     }
     if (message.rp !== 0) {
-      writer.uint32(40).int64(message.rp);
+      writer.uint32(48).int64(message.rp);
     }
     if (message.typeTopup !== "") {
-      writer.uint32(50).string(message.typeTopup);
+      writer.uint32(58).string(message.typeTopup);
     }
     if (message.chipsTopup !== 0) {
-      writer.uint32(56).int64(message.chipsTopup);
+      writer.uint32(64).int64(message.chipsTopup);
     }
     if (message.createdUnix !== 0) {
-      writer.uint32(64).int64(message.createdUnix);
+      writer.uint32(72).int64(message.createdUnix);
     }
     return writer;
   },
@@ -4193,49 +4197,56 @@ export const TransactionDetail = {
           message.id = reader.string();
           continue;
         case 2:
-          if (tag !== 16) {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
             break;
           }
 
           message.userSid = longToNumber(reader.int64() as Long);
           continue;
-        case 3:
-          if (tag !== 26) {
+        case 4:
+          if (tag !== 34) {
             break;
           }
 
           message.userName = reader.string();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.vip = longToNumber(reader.int64() as Long);
           continue;
         case 5:
           if (tag !== 40) {
             break;
           }
 
-          message.rp = longToNumber(reader.int64() as Long);
+          message.vip = longToNumber(reader.int64() as Long);
           continue;
         case 6:
-          if (tag !== 50) {
+          if (tag !== 48) {
+            break;
+          }
+
+          message.rp = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 58) {
             break;
           }
 
           message.typeTopup = reader.string();
           continue;
-        case 7:
-          if (tag !== 56) {
+        case 8:
+          if (tag !== 64) {
             break;
           }
 
           message.chipsTopup = longToNumber(reader.int64() as Long);
           continue;
-        case 8:
-          if (tag !== 64) {
+        case 9:
+          if (tag !== 72) {
             break;
           }
 
@@ -4253,6 +4264,7 @@ export const TransactionDetail = {
   fromJSON(object: any): TransactionDetail {
     return {
       id: isSet(object.id) ? globalThis.String(object.id) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
       userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
       vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
@@ -4267,6 +4279,9 @@ export const TransactionDetail = {
     const obj: any = {};
     if (message.id !== "") {
       obj.id = message.id;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
     }
     if (message.userSid !== 0) {
       obj.userSid = Math.round(message.userSid);
@@ -4298,6 +4313,7 @@ export const TransactionDetail = {
   fromPartial<I extends Exact<DeepPartial<TransactionDetail>, I>>(object: I): TransactionDetail {
     const message = createBaseTransactionDetail();
     message.id = object.id ?? "";
+    message.userId = object.userId ?? "";
     message.userSid = object.userSid ?? 0;
     message.userName = object.userName ?? "";
     message.vip = object.vip ?? 0;
