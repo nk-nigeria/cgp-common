@@ -250,6 +250,36 @@ export interface TopWin {
   gameId: number;
 }
 
+export interface TransactionRequest {
+  userSid: number;
+  fromUnix: number;
+  toUnix: number;
+  limit: number;
+  offset: number;
+}
+
+export interface TransactionDetail {
+  id: string;
+  userId: string;
+  userSid: number;
+  userName: string;
+  vip: number;
+  /** Số tiền nạp */
+  rp: number;
+  typeTopup: string;
+  /** Số chip user được nhận của giao dịch */
+  chipsTopup: number;
+  createdUnix: number;
+}
+
+export interface TransactionResponse {
+  transDetails: TransactionDetail[];
+  totalRp: number;
+  limit: number;
+  offset: number;
+  total: number;
+}
+
 function createBaseOpPlayer(): OpPlayer {
   return {
     userId: "",
@@ -3993,6 +4023,425 @@ export const TopWin = {
     message.refGame = object.refGame ?? "";
     message.total = object.total ?? 0;
     message.gameId = object.gameId ?? 0;
+    return message;
+  },
+};
+
+function createBaseTransactionRequest(): TransactionRequest {
+  return { userSid: 0, fromUnix: 0, toUnix: 0, limit: 0, offset: 0 };
+}
+
+export const TransactionRequest = {
+  encode(message: TransactionRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userSid !== 0) {
+      writer.uint32(8).int64(message.userSid);
+    }
+    if (message.fromUnix !== 0) {
+      writer.uint32(16).int64(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      writer.uint32(24).int64(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(40).int64(message.offset);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TransactionRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTransactionRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.toUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TransactionRequest {
+    return {
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+    };
+  },
+
+  toJSON(message: TransactionRequest): unknown {
+    const obj: any = {};
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TransactionRequest>, I>>(base?: I): TransactionRequest {
+    return TransactionRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<TransactionRequest>, I>>(object: I): TransactionRequest {
+    const message = createBaseTransactionRequest();
+    message.userSid = object.userSid ?? 0;
+    message.fromUnix = object.fromUnix ?? 0;
+    message.toUnix = object.toUnix ?? 0;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    return message;
+  },
+};
+
+function createBaseTransactionDetail(): TransactionDetail {
+  return { id: "", userId: "", userSid: 0, userName: "", vip: 0, rp: 0, typeTopup: "", chipsTopup: 0, createdUnix: 0 };
+}
+
+export const TransactionDetail = {
+  encode(message: TransactionDetail, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(24).int64(message.userSid);
+    }
+    if (message.userName !== "") {
+      writer.uint32(34).string(message.userName);
+    }
+    if (message.vip !== 0) {
+      writer.uint32(40).int64(message.vip);
+    }
+    if (message.rp !== 0) {
+      writer.uint32(48).int64(message.rp);
+    }
+    if (message.typeTopup !== "") {
+      writer.uint32(58).string(message.typeTopup);
+    }
+    if (message.chipsTopup !== 0) {
+      writer.uint32(64).int64(message.chipsTopup);
+    }
+    if (message.createdUnix !== 0) {
+      writer.uint32(72).int64(message.createdUnix);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TransactionDetail {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTransactionDetail();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.userName = reader.string();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.vip = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.rp = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.typeTopup = reader.string();
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.chipsTopup = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.createdUnix = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TransactionDetail {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
+      rp: isSet(object.rp) ? globalThis.Number(object.rp) : 0,
+      typeTopup: isSet(object.typeTopup) ? globalThis.String(object.typeTopup) : "",
+      chipsTopup: isSet(object.chipsTopup) ? globalThis.Number(object.chipsTopup) : 0,
+      createdUnix: isSet(object.createdUnix) ? globalThis.Number(object.createdUnix) : 0,
+    };
+  },
+
+  toJSON(message: TransactionDetail): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    if (message.rp !== 0) {
+      obj.rp = Math.round(message.rp);
+    }
+    if (message.typeTopup !== "") {
+      obj.typeTopup = message.typeTopup;
+    }
+    if (message.chipsTopup !== 0) {
+      obj.chipsTopup = Math.round(message.chipsTopup);
+    }
+    if (message.createdUnix !== 0) {
+      obj.createdUnix = Math.round(message.createdUnix);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TransactionDetail>, I>>(base?: I): TransactionDetail {
+    return TransactionDetail.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<TransactionDetail>, I>>(object: I): TransactionDetail {
+    const message = createBaseTransactionDetail();
+    message.id = object.id ?? "";
+    message.userId = object.userId ?? "";
+    message.userSid = object.userSid ?? 0;
+    message.userName = object.userName ?? "";
+    message.vip = object.vip ?? 0;
+    message.rp = object.rp ?? 0;
+    message.typeTopup = object.typeTopup ?? "";
+    message.chipsTopup = object.chipsTopup ?? 0;
+    message.createdUnix = object.createdUnix ?? 0;
+    return message;
+  },
+};
+
+function createBaseTransactionResponse(): TransactionResponse {
+  return { transDetails: [], totalRp: 0, limit: 0, offset: 0, total: 0 };
+}
+
+export const TransactionResponse = {
+  encode(message: TransactionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.transDetails) {
+      TransactionDetail.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.totalRp !== 0) {
+      writer.uint32(16).int64(message.totalRp);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(24).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(32).int64(message.offset);
+    }
+    if (message.total !== 0) {
+      writer.uint32(40).int64(message.total);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TransactionResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTransactionResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.transDetails.push(TransactionDetail.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.totalRp = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TransactionResponse {
+    return {
+      transDetails: globalThis.Array.isArray(object?.transDetails)
+        ? object.transDetails.map((e: any) => TransactionDetail.fromJSON(e))
+        : [],
+      totalRp: isSet(object.totalRp) ? globalThis.Number(object.totalRp) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+    };
+  },
+
+  toJSON(message: TransactionResponse): unknown {
+    const obj: any = {};
+    if (message.transDetails?.length) {
+      obj.transDetails = message.transDetails.map((e) => TransactionDetail.toJSON(e));
+    }
+    if (message.totalRp !== 0) {
+      obj.totalRp = Math.round(message.totalRp);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TransactionResponse>, I>>(base?: I): TransactionResponse {
+    return TransactionResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<TransactionResponse>, I>>(object: I): TransactionResponse {
+    const message = createBaseTransactionResponse();
+    message.transDetails = object.transDetails?.map((e) => TransactionDetail.fromPartial(e)) || [];
+    message.totalRp = object.totalRp ?? 0;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    message.total = object.total ?? 0;
     return message;
   },
 };
