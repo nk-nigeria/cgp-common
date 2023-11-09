@@ -271,7 +271,7 @@ export interface TransactionDetail {
   createdUnix: number;
 }
 
-export interface TransactionRespose {
+export interface TransactionResponse {
   transDetails: TransactionDetail[];
   totalRp: number;
   limit: number;
@@ -4309,12 +4309,12 @@ export const TransactionDetail = {
   },
 };
 
-function createBaseTransactionRespose(): TransactionRespose {
+function createBaseTransactionResponse(): TransactionResponse {
   return { transDetails: [], totalRp: 0, limit: 0, offset: 0, total: 0 };
 }
 
-export const TransactionRespose = {
-  encode(message: TransactionRespose, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const TransactionResponse = {
+  encode(message: TransactionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.transDetails) {
       TransactionDetail.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -4333,10 +4333,10 @@ export const TransactionRespose = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): TransactionRespose {
+  decode(input: _m0.Reader | Uint8Array, length?: number): TransactionResponse {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseTransactionRespose();
+    const message = createBaseTransactionResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -4384,7 +4384,7 @@ export const TransactionRespose = {
     return message;
   },
 
-  fromJSON(object: any): TransactionRespose {
+  fromJSON(object: any): TransactionResponse {
     return {
       transDetails: globalThis.Array.isArray(object?.transDetails)
         ? object.transDetails.map((e: any) => TransactionDetail.fromJSON(e))
@@ -4396,7 +4396,7 @@ export const TransactionRespose = {
     };
   },
 
-  toJSON(message: TransactionRespose): unknown {
+  toJSON(message: TransactionResponse): unknown {
     const obj: any = {};
     if (message.transDetails?.length) {
       obj.transDetails = message.transDetails.map((e) => TransactionDetail.toJSON(e));
@@ -4416,11 +4416,11 @@ export const TransactionRespose = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<TransactionRespose>, I>>(base?: I): TransactionRespose {
-    return TransactionRespose.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<TransactionResponse>, I>>(base?: I): TransactionResponse {
+    return TransactionResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<TransactionRespose>, I>>(object: I): TransactionRespose {
-    const message = createBaseTransactionRespose();
+  fromPartial<I extends Exact<DeepPartial<TransactionResponse>, I>>(object: I): TransactionResponse {
+    const message = createBaseTransactionResponse();
     message.transDetails = object.transDetails?.map((e) => TransactionDetail.fromPartial(e)) || [];
     message.totalRp = object.totalRp ?? 0;
     message.limit = object.limit ?? 0;

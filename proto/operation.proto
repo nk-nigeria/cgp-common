@@ -270,7 +270,7 @@ message TransactionDetail {
   int64 created_unix = 8;
 }
 
-message TransactionRespose {
+message TransactionResponse {
   repeated TransactionDetail trans_details = 1;
   int64 total_rp = 2;
   int64 limit = 3;
