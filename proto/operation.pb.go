@@ -2340,6 +2340,267 @@ func (x *TopWin) GetGameId() int64 {
 	return 0
 }
 
+type TransactionRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserSid  int64 `protobuf:"varint,1,opt,name=user_sid,json=userSid,proto3" json:"user_sid,omitempty"`
+	FromUnix int64 `protobuf:"varint,2,opt,name=from_unix,json=fromUnix,proto3" json:"from_unix,omitempty"`
+	ToUnix   int64 `protobuf:"varint,3,opt,name=to_unix,json=toUnix,proto3" json:"to_unix,omitempty"`
+	Limit    int64 `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
+	Offset   int64 `protobuf:"varint,5,opt,name=offset,proto3" json:"offset,omitempty"`
+}
+
+func (x *TransactionRequest) Reset() {
+	*x = TransactionRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_operation_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransactionRequest) ProtoMessage() {}
+
+func (x *TransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_operation_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransactionRequest.ProtoReflect.Descriptor instead.
+func (*TransactionRequest) Descriptor() ([]byte, []int) {
+	return file_operation_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *TransactionRequest) GetUserSid() int64 {
+	if x != nil {
+		return x.UserSid
+	}
+	return 0
+}
+
+func (x *TransactionRequest) GetFromUnix() int64 {
+	if x != nil {
+		return x.FromUnix
+	}
+	return 0
+}
+
+func (x *TransactionRequest) GetToUnix() int64 {
+	if x != nil {
+		return x.ToUnix
+	}
+	return 0
+}
+
+func (x *TransactionRequest) GetLimit() int64 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *TransactionRequest) GetOffset() int64 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+type TransactionDetail struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id          string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserSid     int64  `protobuf:"varint,2,opt,name=user_sid,json=userSid,proto3" json:"user_sid,omitempty"`
+	UserName    string `protobuf:"bytes,3,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
+	Vip         int64  `protobuf:"varint,4,opt,name=vip,proto3" json:"vip,omitempty"`
+	Rp          int64  `protobuf:"varint,5,opt,name=rp,proto3" json:"rp,omitempty"` // Số tiền nạp
+	TypeTopup   string `protobuf:"bytes,6,opt,name=type_topup,json=typeTopup,proto3" json:"type_topup,omitempty"`
+	ChipsTopup  int64  `protobuf:"varint,7,opt,name=chips_topup,json=chipsTopup,proto3" json:"chips_topup,omitempty"` //Số chip user được nhận của giao dịch
+	CreatedUnix int64  `protobuf:"varint,8,opt,name=created_unix,json=createdUnix,proto3" json:"created_unix,omitempty"`
+}
+
+func (x *TransactionDetail) Reset() {
+	*x = TransactionDetail{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_operation_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TransactionDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransactionDetail) ProtoMessage() {}
+
+func (x *TransactionDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_operation_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransactionDetail.ProtoReflect.Descriptor instead.
+func (*TransactionDetail) Descriptor() ([]byte, []int) {
+	return file_operation_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *TransactionDetail) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *TransactionDetail) GetUserSid() int64 {
+	if x != nil {
+		return x.UserSid
+	}
+	return 0
+}
+
+func (x *TransactionDetail) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+func (x *TransactionDetail) GetVip() int64 {
+	if x != nil {
+		return x.Vip
+	}
+	return 0
+}
+
+func (x *TransactionDetail) GetRp() int64 {
+	if x != nil {
+		return x.Rp
+	}
+	return 0
+}
+
+func (x *TransactionDetail) GetTypeTopup() string {
+	if x != nil {
+		return x.TypeTopup
+	}
+	return ""
+}
+
+func (x *TransactionDetail) GetChipsTopup() int64 {
+	if x != nil {
+		return x.ChipsTopup
+	}
+	return 0
+}
+
+func (x *TransactionDetail) GetCreatedUnix() int64 {
+	if x != nil {
+		return x.CreatedUnix
+	}
+	return 0
+}
+
+type TransactionRespose struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TransDetails []*TransactionDetail `protobuf:"bytes,1,rep,name=trans_details,json=transDetails,proto3" json:"trans_details,omitempty"`
+	TotalRp      int64                `protobuf:"varint,2,opt,name=total_rp,json=totalRp,proto3" json:"total_rp,omitempty"`
+	Limit        int64                `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	Offset       int64                `protobuf:"varint,4,opt,name=offset,proto3" json:"offset,omitempty"`
+	Total        int64                `protobuf:"varint,5,opt,name=total,proto3" json:"total,omitempty"`
+}
+
+func (x *TransactionRespose) Reset() {
+	*x = TransactionRespose{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_operation_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TransactionRespose) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransactionRespose) ProtoMessage() {}
+
+func (x *TransactionRespose) ProtoReflect() protoreflect.Message {
+	mi := &file_operation_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransactionRespose.ProtoReflect.Descriptor instead.
+func (*TransactionRespose) Descriptor() ([]byte, []int) {
+	return file_operation_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *TransactionRespose) GetTransDetails() []*TransactionDetail {
+	if x != nil {
+		return x.TransDetails
+	}
+	return nil
+}
+
+func (x *TransactionRespose) GetTotalRp() int64 {
+	if x != nil {
+		return x.TotalRp
+	}
+	return 0
+}
+
+func (x *TransactionRespose) GetLimit() int64 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *TransactionRespose) GetOffset() int64 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+func (x *TransactionRespose) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
 var File_operation_proto protoreflect.FileDescriptor
 
 var file_operation_proto_rawDesc = []byte{
@@ -2689,12 +2950,46 @@ var file_operation_proto_rawDesc = []byte{
 	0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x72, 0x65, 0x66, 0x47, 0x61, 0x6d, 0x65,
 	0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52,
 	0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x17, 0x0a, 0x07, 0x67, 0x61, 0x6d, 0x65, 0x5f, 0x69,
-	0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x67, 0x61, 0x6d, 0x65, 0x49, 0x64, 0x42,
-	0x38, 0x5a, 0x36, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x69,
-	0x61, 0x6f, 0x6c, 0x69, 0x6e, 0x6b, 0x2d, 0x67, 0x61, 0x6d, 0x65, 0x2d, 0x70, 0x6c, 0x61, 0x74,
-	0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x63, 0x67, 0x62, 0x2d, 0x6c, 0x6f, 0x62, 0x62, 0x79, 0x2d, 0x6d,
-	0x6f, 0x64, 0x75, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x67, 0x61, 0x6d, 0x65, 0x49, 0x64, 0x22,
+	0x93, 0x01, 0x0a, 0x12, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x73,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x53, 0x69,
+	0x64, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x75, 0x6e, 0x69, 0x78, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x66, 0x72, 0x6f, 0x6d, 0x55, 0x6e, 0x69, 0x78, 0x12, 0x17,
+	0x0a, 0x07, 0x74, 0x6f, 0x5f, 0x75, 0x6e, 0x69, 0x78, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x06, 0x74, 0x6f, 0x55, 0x6e, 0x69, 0x78, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x12, 0x16, 0x0a,
+	0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x6f,
+	0x66, 0x66, 0x73, 0x65, 0x74, 0x22, 0xe0, 0x01, 0x0a, 0x11, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x53, 0x69, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x76, 0x69, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x03, 0x76, 0x69, 0x70, 0x12, 0x0e, 0x0a, 0x02, 0x72, 0x70, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x02, 0x72, 0x70, 0x12, 0x1d, 0x0a, 0x0a, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x74, 0x6f,
+	0x70, 0x75, 0x70, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x74, 0x79, 0x70, 0x65, 0x54,
+	0x6f, 0x70, 0x75, 0x70, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x68, 0x69, 0x70, 0x73, 0x5f, 0x74, 0x6f,
+	0x70, 0x75, 0x70, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0a, 0x63, 0x68, 0x69, 0x70, 0x73,
+	0x54, 0x6f, 0x70, 0x75, 0x70, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64,
+	0x5f, 0x75, 0x6e, 0x69, 0x78, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x63, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x64, 0x55, 0x6e, 0x69, 0x78, 0x22, 0xb0, 0x01, 0x0a, 0x12, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x73, 0x65, 0x12,
+	0x3b, 0x0a, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x0c,
+	0x74, 0x72, 0x61, 0x6e, 0x73, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x19, 0x0a, 0x08,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x72, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x52, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x12, 0x16, 0x0a,
+	0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x6f,
+	0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x42, 0x38, 0x5a, 0x36, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x69, 0x61, 0x6f, 0x6c, 0x69,
+	0x6e, 0x6b, 0x2d, 0x67, 0x61, 0x6d, 0x65, 0x2d, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d,
+	0x2f, 0x63, 0x67, 0x62, 0x2d, 0x6c, 0x6f, 0x62, 0x62, 0x79, 0x2d, 0x6d, 0x6f, 0x64, 0x75, 0x6c,
+	0x65, 0x2f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2709,7 +3004,7 @@ func file_operation_proto_rawDescGZIP() []byte {
 	return file_operation_proto_rawDescData
 }
 
-var file_operation_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_operation_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_operation_proto_goTypes = []interface{}{
 	(*OpPlayer)(nil),              // 0: api.OpPlayer
 	(*OpPlayerRequest)(nil),       // 1: api.OpPlayerRequest
@@ -2735,7 +3030,10 @@ var file_operation_proto_goTypes = []interface{}{
 	(*TopVip)(nil),                // 21: api.TopVip
 	(*Win)(nil),                   // 22: api.Win
 	(*TopWin)(nil),                // 23: api.TopWin
-	(*Profile)(nil),               // 24: api.Profile
+	(*TransactionRequest)(nil),    // 24: api.TransactionRequest
+	(*TransactionDetail)(nil),     // 25: api.TransactionDetail
+	(*TransactionRespose)(nil),    // 26: api.TransactionRespose
+	(*Profile)(nil),               // 27: api.Profile
 }
 var file_operation_proto_depIdxs = []int32{
 	0,  // 0: api.OpPlayerResponse.op_players:type_name -> api.OpPlayer
@@ -2747,16 +3045,17 @@ var file_operation_proto_depIdxs = []int32{
 	14, // 6: api.UserStatistic.user_stat_game_histories:type_name -> api.UserStatGameHistory
 	15, // 7: api.UserStatistic.recv_chip_stats:type_name -> api.UserTransferGoldStat
 	15, // 8: api.UserStatistic.send_chip_stats:type_name -> api.UserTransferGoldStat
-	24, // 9: api.UserInfo.profile:type_name -> api.Profile
+	27, // 9: api.UserInfo.profile:type_name -> api.Profile
 	16, // 10: api.UserInfoResponse.user_infos:type_name -> api.UserInfo
 	18, // 11: api.TopCashOut.cashouts:type_name -> api.CashOut
 	20, // 12: api.TopVip.vips:type_name -> api.Vip
 	22, // 13: api.TopWin.wins:type_name -> api.Win
-	14, // [14:14] is the sub-list for method output_type
-	14, // [14:14] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	25, // 14: api.TransactionRespose.trans_details:type_name -> api.TransactionDetail
+	15, // [15:15] is the sub-list for method output_type
+	15, // [15:15] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_operation_proto_init() }
@@ -3054,6 +3353,42 @@ func file_operation_proto_init() {
 				return nil
 			}
 		}
+		file_operation_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TransactionRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_operation_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TransactionDetail); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_operation_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TransactionRespose); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3061,7 +3396,7 @@ func file_operation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_operation_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   24,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

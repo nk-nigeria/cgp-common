@@ -250,3 +250,30 @@ message TopWin {
   int64 total = 7;
   int64 game_id = 8;
 }
+
+message TransactionRequest {
+  int64 user_sid = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+}
+
+message TransactionDetail {
+  string id = 1;
+  int64 user_sid = 2;
+  string user_name = 3;
+  int64 vip = 4;
+  int64 rp = 5; // Số tiền nạp 
+  string type_topup=6;
+  int64 chips_topup = 7;//Số chip user được nhận của giao dịch 
+  int64 created_unix = 8;
+}
+
+message TransactionRespose {
+  repeated TransactionDetail trans_details = 1;
+  int64 total_rp = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  int64 total = 5;
+}
