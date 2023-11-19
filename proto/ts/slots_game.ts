@@ -1,7 +1,7 @@
 /* eslint-disable */
-import Long from "long";
-import _m0 from "protobufjs/minimal";
+import * as _m0 from "protobufjs/minimal";
 import { InfoBet } from "./color_game";
+import Long = require("long");
 
 export const protobufPackage = "api";
 

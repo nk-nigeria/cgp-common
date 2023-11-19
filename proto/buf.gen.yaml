@@ -1,10 +1,11 @@
 version: v1
 plugins:
-  - name: ts
+  - plugin: buf.build/community/stephenh-ts-proto
     out: ./ts
-    strategy: all
-    path: protoc-gen-ts_proto
-    opt: esModuleInterop=true
+    # strategy: all
+    # path: protoc-gen-ts_proto
+    opt: 
+      - ts_proto_opt=onlyTypes=true
   - plugin: go
     path: ["go", "run", "google.golang.org/protobuf/cmd/protoc-gen-go"]
     out: ./
