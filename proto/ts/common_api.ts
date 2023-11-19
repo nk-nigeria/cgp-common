@@ -279,6 +279,9 @@ export interface GiftCode {
 
 export interface ListGiftCode {
   giftCodes: GiftCode[];
+  total: number;
+  offset: number;
+  limit: number;
 }
 
 export interface AddNotificationRequest {
