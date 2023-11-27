@@ -3,12 +3,11 @@ module github.com/ciaolink-game-platform/cgp-common
 go 1.21
 
 require (
-	github.com/ciaolink-game-platform/cgp-operation-gw v0.0.0-20231127143900-b4f5437b2459
 	github.com/emirpasic/gods v1.18.1
 	github.com/heroiclabs/nakama-common v1.30.0
 	github.com/qmuntal/stateless v1.6.8
 	github.com/stretchr/testify v1.8.4
-	go.uber.org/zap v1.26.0
+	go.uber.org/zap v1.24.0
 	google.golang.org/protobuf v1.31.0
 )
 
@@ -21,8 +20,9 @@ require (
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/goleak v1.2.1 // indirect
-	go.uber.org/multierr v1.10.0 // indirect
+	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/net v0.18.0 // indirect
 	golang.org/x/sys v0.14.1-0.20231108175955-e4099bfacb8c // indirect
 	golang.org/x/text v0.14.0 // indirect
