@@ -442,3 +442,13 @@ message Error {
   int64 code = 1;
   string error = 2;
 }
+
+message Request{
+  string user_id = 1;
+  string body = 2;
+}
+
+message Response{
+  string body = 1;
+  string error_message = 2;
+}

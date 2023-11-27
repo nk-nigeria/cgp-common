@@ -732,6 +732,16 @@ export interface Error {
   error: string;
 }
 
+export interface Request {
+  userId: string;
+  body: string;
+}
+
+export interface Response {
+  body: string;
+  errorMessage: string;
+}
+
 function createBaseGame(): Game {
   return { code: "", active: false, lobbyId: "", layout: undefined };
 }
@@ -6460,6 +6470,154 @@ export const Error = {
     const message = createBaseError();
     message.code = object.code ?? 0;
     message.error = object.error ?? "";
+    return message;
+  },
+};
+
+function createBaseRequest(): Request {
+  return { userId: "", body: "" };
+}
+
+export const Request = {
+  encode(message: Request, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.body !== "") {
+      writer.uint32(18).string(message.body);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Request {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.body = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Request {
+    return {
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      body: isSet(object.body) ? globalThis.String(object.body) : "",
+    };
+  },
+
+  toJSON(message: Request): unknown {
+    const obj: any = {};
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.body !== "") {
+      obj.body = message.body;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Request>, I>>(base?: I): Request {
+    return Request.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Request>, I>>(object: I): Request {
+    const message = createBaseRequest();
+    message.userId = object.userId ?? "";
+    message.body = object.body ?? "";
+    return message;
+  },
+};
+
+function createBaseResponse(): Response {
+  return { body: "", errorMessage: "" };
+}
+
+export const Response = {
+  encode(message: Response, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.body !== "") {
+      writer.uint32(10).string(message.body);
+    }
+    if (message.errorMessage !== "") {
+      writer.uint32(18).string(message.errorMessage);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Response {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.body = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.errorMessage = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Response {
+    return {
+      body: isSet(object.body) ? globalThis.String(object.body) : "",
+      errorMessage: isSet(object.errorMessage) ? globalThis.String(object.errorMessage) : "",
+    };
+  },
+
+  toJSON(message: Response): unknown {
+    const obj: any = {};
+    if (message.body !== "") {
+      obj.body = message.body;
+    }
+    if (message.errorMessage !== "") {
+      obj.errorMessage = message.errorMessage;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Response>, I>>(base?: I): Response {
+    return Response.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Response>, I>>(object: I): Response {
+    const message = createBaseResponse();
+    message.body = object.body ?? "";
+    message.errorMessage = object.errorMessage ?? "";
     return message;
   },
 };

@@ -4,7 +4,6 @@ plugins:
     out: ./ts
     # strategy: all
     # path: protoc-gen-ts_proto
-    opt: 
   - plugin: go
     path: ["go", "run", "google.golang.org/protobuf/cmd/protoc-gen-go"]
     out: ./

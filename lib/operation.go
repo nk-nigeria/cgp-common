@@ -12,7 +12,6 @@ import (
 
 	"github.com/ciaolink-game-platform/cgp-common/define"
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
-	gw "github.com/ciaolink-game-platform/cgp-operation-gw/api/metric/v1"
 	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -109,7 +108,7 @@ func (o *reportGame) Commit(ctx context.Context, nk runtime.NakamaModule) ([]byt
 	// }
 	// return bodyRes, res.StatusCode, err
 	event := "match-end"
-	req := &gw.Request{
+	req := &pb.Request{
 		UserId: "",
 		Body:   string(data),
 	}
@@ -118,7 +117,7 @@ func (o *reportGame) Commit(ctx context.Context, nk runtime.NakamaModule) ([]byt
 }
 
 func (o *reportGame) Report(ctx context.Context, userId string, payload string) ([]byte, int, error) {
-	req := &gw.Request{
+	req := &pb.Request{
 		UserId: userId,
 		Body:   payload,
 	}
