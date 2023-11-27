@@ -1,6 +1,6 @@
 /* eslint-disable */
-import Long from "long";
-import _m0 from "protobufjs/minimal";
+import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -572,6 +572,9 @@ export interface GiftCode {
 
 export interface ListGiftCode {
   giftCodes: GiftCode[];
+  total: number;
+  offset: number;
+  limit: number;
 }
 
 export interface AddNotificationRequest {
@@ -3967,13 +3970,22 @@ export const GiftCode = {
 };
 
 function createBaseListGiftCode(): ListGiftCode {
-  return { giftCodes: [] };
+  return { giftCodes: [], total: 0, offset: 0, limit: 0 };
 }
 
 export const ListGiftCode = {
   encode(message: ListGiftCode, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.giftCodes) {
       GiftCode.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.total !== 0) {
+      writer.uint32(16).int64(message.total);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(24).int64(message.offset);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
     }
     return writer;
   },
@@ -3992,6 +4004,27 @@ export const ListGiftCode = {
 
           message.giftCodes.push(GiftCode.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4006,6 +4039,9 @@ export const ListGiftCode = {
       giftCodes: globalThis.Array.isArray(object?.giftCodes)
         ? object.giftCodes.map((e: any) => GiftCode.fromJSON(e))
         : [],
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
   },
 
@@ -4013,6 +4049,15 @@ export const ListGiftCode = {
     const obj: any = {};
     if (message.giftCodes?.length) {
       obj.giftCodes = message.giftCodes.map((e) => GiftCode.toJSON(e));
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
     }
     return obj;
   },
@@ -4023,6 +4068,9 @@ export const ListGiftCode = {
   fromPartial<I extends Exact<DeepPartial<ListGiftCode>, I>>(object: I): ListGiftCode {
     const message = createBaseListGiftCode();
     message.giftCodes = object.giftCodes?.map((e) => GiftCode.fromPartial(e)) || [];
+    message.total = object.total ?? 0;
+    message.offset = object.offset ?? 0;
+    message.limit = object.limit ?? 0;
     return message;
   },
 };
