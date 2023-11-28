@@ -126,7 +126,7 @@ func (o *reportGame) Report(ctx context.Context, userId string, payload string) 
 }
 
 func (o reportGame) sendHttpReq(event string, body []byte) ([]byte, int, error) {
-	targetUrl := fmt.Sprintf("%s//metric/event/%s", o.reportEndpoint, event)
+	targetUrl := fmt.Sprintf("%s/metric/event/%s", o.reportEndpoint, event)
 	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(body))
 	if err != nil {
 		return nil, 0, err
