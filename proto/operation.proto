@@ -283,3 +283,71 @@ enum CurrencyUnitId {
   CURRENCY_UNIT_ID_UNSPECIFIED = 0;
   CURRENCY_UNIT_ID_VN = 1;
 }
+
+
+message IAPSummary {
+  int64 id = 1;
+  string user_id = 2;
+  int64 create_at_unix = 3;
+  int64 total_topup = 4;
+  int64 vip_point = 5;
+  int64 total_cashout = 6;
+}
+
+message CashInInfo {
+  int64 id = 1;
+  string user_id = 2;
+  int64 create_at_unix = 3;
+  int64 chips_topup = 4;
+  int64 vip_point = 5;
+  int64 publisher = 6;
+  int64 currency = 7;
+  int64 currency_unit_id = 8; // vi_vn, en_us follow Locale name standard
+  string trans_id = 9;
+  string currency_unit_name = 10;
+}
+
+
+message CashOutInfo {
+  int64 id = 1;
+  string user_id = 2;
+  int64 create_at_unix = 3;
+  int64 chips_cashout = 4;
+  int64 vip_point = 5;
+  int64 publisher = 6;
+  int64 currency = 7;
+  int64 currency_unit_id = 8; // vi_vn, en_us follow Locale name standard
+  string trans_id = 9;
+  int64 date_unix = 10;
+  int64 num_transaction = 11;
+  int64 currency_value = 12; // 10, 20, 30 ...
+  string currency_unit_name = 13;
+  map<int64, int64> num_trans_by_currency_value = 14;
+}
+
+message CashOutRequest{
+  int64 from_unix = 1;
+  int64 to_unix = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  int64 publisher = 5;
+  CurrencyUnitId currency_id =6;
+}
+
+
+message CashOutResponse{
+  repeated CashOutInfo cashout_infos = 1;
+  int64 total_cash = 2;
+  int64 total_account = 3;
+}
+
+message UserGameCount {
+  int64 date_unix = 1;
+  int64 count_game = 2;
+}
+
+message UserGameStats {
+  string user_id = 1;
+  int64 game_no = 2;
+  repeated UserGameCount user_game_counts = 3;
+}

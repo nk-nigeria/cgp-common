@@ -313,6 +313,79 @@ export interface TransactionResponse {
   total: number;
 }
 
+export interface IAPSummary {
+  id: number;
+  userId: string;
+  createAtUnix: number;
+  totalTopup: number;
+  vipPoint: number;
+  totalCashout: number;
+}
+
+export interface CashInInfo {
+  id: number;
+  userId: string;
+  createAtUnix: number;
+  chipsTopup: number;
+  vipPoint: number;
+  publisher: number;
+  currency: number;
+  /** vi_vn, en_us follow Locale name standard */
+  currencyUnitId: number;
+  transId: string;
+  currencyUnitName: string;
+}
+
+export interface CashOutInfo {
+  id: number;
+  userId: string;
+  createAtUnix: number;
+  chipsCashout: number;
+  vipPoint: number;
+  publisher: number;
+  currency: number;
+  /** vi_vn, en_us follow Locale name standard */
+  currencyUnitId: number;
+  transId: string;
+  dateUnix: number;
+  numTransaction: number;
+  /** 10, 20, 30 ... */
+  currencyValue: number;
+  currencyUnitName: string;
+  numTransByCurrencyValue: { [key: number]: number };
+}
+
+export interface CashOutInfo_NumTransByCurrencyValueEntry {
+  key: number;
+  value: number;
+}
+
+export interface CashOutRequest {
+  fromUnix: number;
+  toUnix: number;
+  limit: number;
+  offset: number;
+  publisher: number;
+  currencyId: CurrencyUnitId;
+}
+
+export interface CashOutResponse {
+  cashoutInfos: CashOutInfo[];
+  totalCash: number;
+  totalAccount: number;
+}
+
+export interface UserGameCount {
+  dateUnix: number;
+  countGame: number;
+}
+
+export interface UserGameStats {
+  userId: string;
+  gameNo: number;
+  userGameCounts: UserGameCount[];
+}
+
 function createBaseOpPlayer(): OpPlayer {
   return {
     userId: "",
@@ -4479,6 +4552,1103 @@ export const TransactionResponse = {
   },
 };
 
+function createBaseIAPSummary(): IAPSummary {
+  return { id: 0, userId: "", createAtUnix: 0, totalTopup: 0, vipPoint: 0, totalCashout: 0 };
+}
+
+export const IAPSummary = {
+  encode(message: IAPSummary, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int64(message.id);
+    }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
+    if (message.createAtUnix !== 0) {
+      writer.uint32(24).int64(message.createAtUnix);
+    }
+    if (message.totalTopup !== 0) {
+      writer.uint32(32).int64(message.totalTopup);
+    }
+    if (message.vipPoint !== 0) {
+      writer.uint32(40).int64(message.vipPoint);
+    }
+    if (message.totalCashout !== 0) {
+      writer.uint32(48).int64(message.totalCashout);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): IAPSummary {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseIAPSummary();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.id = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.createAtUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.totalTopup = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.vipPoint = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.totalCashout = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): IAPSummary {
+    return {
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      createAtUnix: isSet(object.createAtUnix) ? globalThis.Number(object.createAtUnix) : 0,
+      totalTopup: isSet(object.totalTopup) ? globalThis.Number(object.totalTopup) : 0,
+      vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
+      totalCashout: isSet(object.totalCashout) ? globalThis.Number(object.totalCashout) : 0,
+    };
+  },
+
+  toJSON(message: IAPSummary): unknown {
+    const obj: any = {};
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.createAtUnix !== 0) {
+      obj.createAtUnix = Math.round(message.createAtUnix);
+    }
+    if (message.totalTopup !== 0) {
+      obj.totalTopup = Math.round(message.totalTopup);
+    }
+    if (message.vipPoint !== 0) {
+      obj.vipPoint = Math.round(message.vipPoint);
+    }
+    if (message.totalCashout !== 0) {
+      obj.totalCashout = Math.round(message.totalCashout);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<IAPSummary>, I>>(base?: I): IAPSummary {
+    return IAPSummary.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<IAPSummary>, I>>(object: I): IAPSummary {
+    const message = createBaseIAPSummary();
+    message.id = object.id ?? 0;
+    message.userId = object.userId ?? "";
+    message.createAtUnix = object.createAtUnix ?? 0;
+    message.totalTopup = object.totalTopup ?? 0;
+    message.vipPoint = object.vipPoint ?? 0;
+    message.totalCashout = object.totalCashout ?? 0;
+    return message;
+  },
+};
+
+function createBaseCashInInfo(): CashInInfo {
+  return {
+    id: 0,
+    userId: "",
+    createAtUnix: 0,
+    chipsTopup: 0,
+    vipPoint: 0,
+    publisher: 0,
+    currency: 0,
+    currencyUnitId: 0,
+    transId: "",
+    currencyUnitName: "",
+  };
+}
+
+export const CashInInfo = {
+  encode(message: CashInInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int64(message.id);
+    }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
+    if (message.createAtUnix !== 0) {
+      writer.uint32(24).int64(message.createAtUnix);
+    }
+    if (message.chipsTopup !== 0) {
+      writer.uint32(32).int64(message.chipsTopup);
+    }
+    if (message.vipPoint !== 0) {
+      writer.uint32(40).int64(message.vipPoint);
+    }
+    if (message.publisher !== 0) {
+      writer.uint32(48).int64(message.publisher);
+    }
+    if (message.currency !== 0) {
+      writer.uint32(56).int64(message.currency);
+    }
+    if (message.currencyUnitId !== 0) {
+      writer.uint32(64).int64(message.currencyUnitId);
+    }
+    if (message.transId !== "") {
+      writer.uint32(74).string(message.transId);
+    }
+    if (message.currencyUnitName !== "") {
+      writer.uint32(82).string(message.currencyUnitName);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashInInfo {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashInInfo();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.id = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.createAtUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.chipsTopup = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.vipPoint = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.publisher = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.currency = longToNumber(reader.int64() as Long);
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.currencyUnitId = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.transId = reader.string();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.currencyUnitName = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashInInfo {
+    return {
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      createAtUnix: isSet(object.createAtUnix) ? globalThis.Number(object.createAtUnix) : 0,
+      chipsTopup: isSet(object.chipsTopup) ? globalThis.Number(object.chipsTopup) : 0,
+      vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
+      publisher: isSet(object.publisher) ? globalThis.Number(object.publisher) : 0,
+      currency: isSet(object.currency) ? globalThis.Number(object.currency) : 0,
+      currencyUnitId: isSet(object.currencyUnitId) ? globalThis.Number(object.currencyUnitId) : 0,
+      transId: isSet(object.transId) ? globalThis.String(object.transId) : "",
+      currencyUnitName: isSet(object.currencyUnitName) ? globalThis.String(object.currencyUnitName) : "",
+    };
+  },
+
+  toJSON(message: CashInInfo): unknown {
+    const obj: any = {};
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.createAtUnix !== 0) {
+      obj.createAtUnix = Math.round(message.createAtUnix);
+    }
+    if (message.chipsTopup !== 0) {
+      obj.chipsTopup = Math.round(message.chipsTopup);
+    }
+    if (message.vipPoint !== 0) {
+      obj.vipPoint = Math.round(message.vipPoint);
+    }
+    if (message.publisher !== 0) {
+      obj.publisher = Math.round(message.publisher);
+    }
+    if (message.currency !== 0) {
+      obj.currency = Math.round(message.currency);
+    }
+    if (message.currencyUnitId !== 0) {
+      obj.currencyUnitId = Math.round(message.currencyUnitId);
+    }
+    if (message.transId !== "") {
+      obj.transId = message.transId;
+    }
+    if (message.currencyUnitName !== "") {
+      obj.currencyUnitName = message.currencyUnitName;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashInInfo>, I>>(base?: I): CashInInfo {
+    return CashInInfo.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashInInfo>, I>>(object: I): CashInInfo {
+    const message = createBaseCashInInfo();
+    message.id = object.id ?? 0;
+    message.userId = object.userId ?? "";
+    message.createAtUnix = object.createAtUnix ?? 0;
+    message.chipsTopup = object.chipsTopup ?? 0;
+    message.vipPoint = object.vipPoint ?? 0;
+    message.publisher = object.publisher ?? 0;
+    message.currency = object.currency ?? 0;
+    message.currencyUnitId = object.currencyUnitId ?? 0;
+    message.transId = object.transId ?? "";
+    message.currencyUnitName = object.currencyUnitName ?? "";
+    return message;
+  },
+};
+
+function createBaseCashOutInfo(): CashOutInfo {
+  return {
+    id: 0,
+    userId: "",
+    createAtUnix: 0,
+    chipsCashout: 0,
+    vipPoint: 0,
+    publisher: 0,
+    currency: 0,
+    currencyUnitId: 0,
+    transId: "",
+    dateUnix: 0,
+    numTransaction: 0,
+    currencyValue: 0,
+    currencyUnitName: "",
+    numTransByCurrencyValue: {},
+  };
+}
+
+export const CashOutInfo = {
+  encode(message: CashOutInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int64(message.id);
+    }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
+    if (message.createAtUnix !== 0) {
+      writer.uint32(24).int64(message.createAtUnix);
+    }
+    if (message.chipsCashout !== 0) {
+      writer.uint32(32).int64(message.chipsCashout);
+    }
+    if (message.vipPoint !== 0) {
+      writer.uint32(40).int64(message.vipPoint);
+    }
+    if (message.publisher !== 0) {
+      writer.uint32(48).int64(message.publisher);
+    }
+    if (message.currency !== 0) {
+      writer.uint32(56).int64(message.currency);
+    }
+    if (message.currencyUnitId !== 0) {
+      writer.uint32(64).int64(message.currencyUnitId);
+    }
+    if (message.transId !== "") {
+      writer.uint32(74).string(message.transId);
+    }
+    if (message.dateUnix !== 0) {
+      writer.uint32(80).int64(message.dateUnix);
+    }
+    if (message.numTransaction !== 0) {
+      writer.uint32(88).int64(message.numTransaction);
+    }
+    if (message.currencyValue !== 0) {
+      writer.uint32(96).int64(message.currencyValue);
+    }
+    if (message.currencyUnitName !== "") {
+      writer.uint32(106).string(message.currencyUnitName);
+    }
+    Object.entries(message.numTransByCurrencyValue).forEach(([key, value]) => {
+      CashOutInfo_NumTransByCurrencyValueEntry.encode({ key: key as any, value }, writer.uint32(114).fork()).ldelim();
+    });
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutInfo {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashOutInfo();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.id = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.createAtUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.chipsCashout = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.vipPoint = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.publisher = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.currency = longToNumber(reader.int64() as Long);
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.currencyUnitId = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.transId = reader.string();
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.dateUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.numTransaction = longToNumber(reader.int64() as Long);
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.currencyValue = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.currencyUnitName = reader.string();
+          continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          const entry14 = CashOutInfo_NumTransByCurrencyValueEntry.decode(reader, reader.uint32());
+          if (entry14.value !== undefined) {
+            message.numTransByCurrencyValue[entry14.key] = entry14.value;
+          }
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashOutInfo {
+    return {
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      createAtUnix: isSet(object.createAtUnix) ? globalThis.Number(object.createAtUnix) : 0,
+      chipsCashout: isSet(object.chipsCashout) ? globalThis.Number(object.chipsCashout) : 0,
+      vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
+      publisher: isSet(object.publisher) ? globalThis.Number(object.publisher) : 0,
+      currency: isSet(object.currency) ? globalThis.Number(object.currency) : 0,
+      currencyUnitId: isSet(object.currencyUnitId) ? globalThis.Number(object.currencyUnitId) : 0,
+      transId: isSet(object.transId) ? globalThis.String(object.transId) : "",
+      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
+      numTransaction: isSet(object.numTransaction) ? globalThis.Number(object.numTransaction) : 0,
+      currencyValue: isSet(object.currencyValue) ? globalThis.Number(object.currencyValue) : 0,
+      currencyUnitName: isSet(object.currencyUnitName) ? globalThis.String(object.currencyUnitName) : "",
+      numTransByCurrencyValue: isObject(object.numTransByCurrencyValue)
+        ? Object.entries(object.numTransByCurrencyValue).reduce<{ [key: number]: number }>((acc, [key, value]) => {
+          acc[globalThis.Number(key)] = Number(value);
+          return acc;
+        }, {})
+        : {},
+    };
+  },
+
+  toJSON(message: CashOutInfo): unknown {
+    const obj: any = {};
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.createAtUnix !== 0) {
+      obj.createAtUnix = Math.round(message.createAtUnix);
+    }
+    if (message.chipsCashout !== 0) {
+      obj.chipsCashout = Math.round(message.chipsCashout);
+    }
+    if (message.vipPoint !== 0) {
+      obj.vipPoint = Math.round(message.vipPoint);
+    }
+    if (message.publisher !== 0) {
+      obj.publisher = Math.round(message.publisher);
+    }
+    if (message.currency !== 0) {
+      obj.currency = Math.round(message.currency);
+    }
+    if (message.currencyUnitId !== 0) {
+      obj.currencyUnitId = Math.round(message.currencyUnitId);
+    }
+    if (message.transId !== "") {
+      obj.transId = message.transId;
+    }
+    if (message.dateUnix !== 0) {
+      obj.dateUnix = Math.round(message.dateUnix);
+    }
+    if (message.numTransaction !== 0) {
+      obj.numTransaction = Math.round(message.numTransaction);
+    }
+    if (message.currencyValue !== 0) {
+      obj.currencyValue = Math.round(message.currencyValue);
+    }
+    if (message.currencyUnitName !== "") {
+      obj.currencyUnitName = message.currencyUnitName;
+    }
+    if (message.numTransByCurrencyValue) {
+      const entries = Object.entries(message.numTransByCurrencyValue);
+      if (entries.length > 0) {
+        obj.numTransByCurrencyValue = {};
+        entries.forEach(([k, v]) => {
+          obj.numTransByCurrencyValue[k] = Math.round(v);
+        });
+      }
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashOutInfo>, I>>(base?: I): CashOutInfo {
+    return CashOutInfo.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashOutInfo>, I>>(object: I): CashOutInfo {
+    const message = createBaseCashOutInfo();
+    message.id = object.id ?? 0;
+    message.userId = object.userId ?? "";
+    message.createAtUnix = object.createAtUnix ?? 0;
+    message.chipsCashout = object.chipsCashout ?? 0;
+    message.vipPoint = object.vipPoint ?? 0;
+    message.publisher = object.publisher ?? 0;
+    message.currency = object.currency ?? 0;
+    message.currencyUnitId = object.currencyUnitId ?? 0;
+    message.transId = object.transId ?? "";
+    message.dateUnix = object.dateUnix ?? 0;
+    message.numTransaction = object.numTransaction ?? 0;
+    message.currencyValue = object.currencyValue ?? 0;
+    message.currencyUnitName = object.currencyUnitName ?? "";
+    message.numTransByCurrencyValue = Object.entries(object.numTransByCurrencyValue ?? {}).reduce<
+      { [key: number]: number }
+    >((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[globalThis.Number(key)] = globalThis.Number(value);
+      }
+      return acc;
+    }, {});
+    return message;
+  },
+};
+
+function createBaseCashOutInfo_NumTransByCurrencyValueEntry(): CashOutInfo_NumTransByCurrencyValueEntry {
+  return { key: 0, value: 0 };
+}
+
+export const CashOutInfo_NumTransByCurrencyValueEntry = {
+  encode(message: CashOutInfo_NumTransByCurrencyValueEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== 0) {
+      writer.uint32(8).int64(message.key);
+    }
+    if (message.value !== 0) {
+      writer.uint32(16).int64(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutInfo_NumTransByCurrencyValueEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashOutInfo_NumTransByCurrencyValueEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.key = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.value = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashOutInfo_NumTransByCurrencyValueEntry {
+    return {
+      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
+      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
+    };
+  },
+
+  toJSON(message: CashOutInfo_NumTransByCurrencyValueEntry): unknown {
+    const obj: any = {};
+    if (message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== 0) {
+      obj.value = Math.round(message.value);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashOutInfo_NumTransByCurrencyValueEntry>, I>>(
+    base?: I,
+  ): CashOutInfo_NumTransByCurrencyValueEntry {
+    return CashOutInfo_NumTransByCurrencyValueEntry.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashOutInfo_NumTransByCurrencyValueEntry>, I>>(
+    object: I,
+  ): CashOutInfo_NumTransByCurrencyValueEntry {
+    const message = createBaseCashOutInfo_NumTransByCurrencyValueEntry();
+    message.key = object.key ?? 0;
+    message.value = object.value ?? 0;
+    return message;
+  },
+};
+
+function createBaseCashOutRequest(): CashOutRequest {
+  return { fromUnix: 0, toUnix: 0, limit: 0, offset: 0, publisher: 0, currencyId: 0 };
+}
+
+export const CashOutRequest = {
+  encode(message: CashOutRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.fromUnix !== 0) {
+      writer.uint32(8).int64(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      writer.uint32(16).int64(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(24).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(32).int64(message.offset);
+    }
+    if (message.publisher !== 0) {
+      writer.uint32(40).int64(message.publisher);
+    }
+    if (message.currencyId !== 0) {
+      writer.uint32(48).int32(message.currencyId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashOutRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.toUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.publisher = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.currencyId = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashOutRequest {
+    return {
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      publisher: isSet(object.publisher) ? globalThis.Number(object.publisher) : 0,
+      currencyId: isSet(object.currencyId) ? currencyUnitIdFromJSON(object.currencyId) : 0,
+    };
+  },
+
+  toJSON(message: CashOutRequest): unknown {
+    const obj: any = {};
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.publisher !== 0) {
+      obj.publisher = Math.round(message.publisher);
+    }
+    if (message.currencyId !== 0) {
+      obj.currencyId = currencyUnitIdToJSON(message.currencyId);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashOutRequest>, I>>(base?: I): CashOutRequest {
+    return CashOutRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashOutRequest>, I>>(object: I): CashOutRequest {
+    const message = createBaseCashOutRequest();
+    message.fromUnix = object.fromUnix ?? 0;
+    message.toUnix = object.toUnix ?? 0;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    message.publisher = object.publisher ?? 0;
+    message.currencyId = object.currencyId ?? 0;
+    return message;
+  },
+};
+
+function createBaseCashOutResponse(): CashOutResponse {
+  return { cashoutInfos: [], totalCash: 0, totalAccount: 0 };
+}
+
+export const CashOutResponse = {
+  encode(message: CashOutResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.cashoutInfos) {
+      CashOutInfo.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.totalCash !== 0) {
+      writer.uint32(16).int64(message.totalCash);
+    }
+    if (message.totalAccount !== 0) {
+      writer.uint32(24).int64(message.totalAccount);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashOutResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.cashoutInfos.push(CashOutInfo.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.totalCash = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.totalAccount = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashOutResponse {
+    return {
+      cashoutInfos: globalThis.Array.isArray(object?.cashoutInfos)
+        ? object.cashoutInfos.map((e: any) => CashOutInfo.fromJSON(e))
+        : [],
+      totalCash: isSet(object.totalCash) ? globalThis.Number(object.totalCash) : 0,
+      totalAccount: isSet(object.totalAccount) ? globalThis.Number(object.totalAccount) : 0,
+    };
+  },
+
+  toJSON(message: CashOutResponse): unknown {
+    const obj: any = {};
+    if (message.cashoutInfos?.length) {
+      obj.cashoutInfos = message.cashoutInfos.map((e) => CashOutInfo.toJSON(e));
+    }
+    if (message.totalCash !== 0) {
+      obj.totalCash = Math.round(message.totalCash);
+    }
+    if (message.totalAccount !== 0) {
+      obj.totalAccount = Math.round(message.totalAccount);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashOutResponse>, I>>(base?: I): CashOutResponse {
+    return CashOutResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashOutResponse>, I>>(object: I): CashOutResponse {
+    const message = createBaseCashOutResponse();
+    message.cashoutInfos = object.cashoutInfos?.map((e) => CashOutInfo.fromPartial(e)) || [];
+    message.totalCash = object.totalCash ?? 0;
+    message.totalAccount = object.totalAccount ?? 0;
+    return message;
+  },
+};
+
+function createBaseUserGameCount(): UserGameCount {
+  return { dateUnix: 0, countGame: 0 };
+}
+
+export const UserGameCount = {
+  encode(message: UserGameCount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.dateUnix !== 0) {
+      writer.uint32(8).int64(message.dateUnix);
+    }
+    if (message.countGame !== 0) {
+      writer.uint32(16).int64(message.countGame);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UserGameCount {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUserGameCount();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.dateUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.countGame = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UserGameCount {
+    return {
+      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
+      countGame: isSet(object.countGame) ? globalThis.Number(object.countGame) : 0,
+    };
+  },
+
+  toJSON(message: UserGameCount): unknown {
+    const obj: any = {};
+    if (message.dateUnix !== 0) {
+      obj.dateUnix = Math.round(message.dateUnix);
+    }
+    if (message.countGame !== 0) {
+      obj.countGame = Math.round(message.countGame);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UserGameCount>, I>>(base?: I): UserGameCount {
+    return UserGameCount.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<UserGameCount>, I>>(object: I): UserGameCount {
+    const message = createBaseUserGameCount();
+    message.dateUnix = object.dateUnix ?? 0;
+    message.countGame = object.countGame ?? 0;
+    return message;
+  },
+};
+
+function createBaseUserGameStats(): UserGameStats {
+  return { userId: "", gameNo: 0, userGameCounts: [] };
+}
+
+export const UserGameStats = {
+  encode(message: UserGameStats, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.gameNo !== 0) {
+      writer.uint32(16).int64(message.gameNo);
+    }
+    for (const v of message.userGameCounts) {
+      UserGameCount.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UserGameStats {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUserGameStats();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.gameNo = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.userGameCounts.push(UserGameCount.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UserGameStats {
+    return {
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      gameNo: isSet(object.gameNo) ? globalThis.Number(object.gameNo) : 0,
+      userGameCounts: globalThis.Array.isArray(object?.userGameCounts)
+        ? object.userGameCounts.map((e: any) => UserGameCount.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: UserGameStats): unknown {
+    const obj: any = {};
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.gameNo !== 0) {
+      obj.gameNo = Math.round(message.gameNo);
+    }
+    if (message.userGameCounts?.length) {
+      obj.userGameCounts = message.userGameCounts.map((e) => UserGameCount.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UserGameStats>, I>>(base?: I): UserGameStats {
+    return UserGameStats.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<UserGameStats>, I>>(object: I): UserGameStats {
+    const message = createBaseUserGameStats();
+    message.userId = object.userId ?? "";
+    message.gameNo = object.gameNo ?? 0;
+    message.userGameCounts = object.userGameCounts?.map((e) => UserGameCount.fromPartial(e)) || [];
+    return message;
+  },
+};
+
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
@@ -4501,6 +5671,10 @@ function longToNumber(long: Long): number {
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
 }
 
 function isSet(value: any): boolean {
