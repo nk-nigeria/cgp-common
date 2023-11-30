@@ -5,6 +5,39 @@ import Long = require("long");
 
 export const protobufPackage = "api";
 
+export enum CurrencyUnitId {
+  CURRENCY_UNIT_ID_UNSPECIFIED = 0,
+  CURRENCY_UNIT_ID_VN = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function currencyUnitIdFromJSON(object: any): CurrencyUnitId {
+  switch (object) {
+    case 0:
+    case "CURRENCY_UNIT_ID_UNSPECIFIED":
+      return CurrencyUnitId.CURRENCY_UNIT_ID_UNSPECIFIED;
+    case 1:
+    case "CURRENCY_UNIT_ID_VN":
+      return CurrencyUnitId.CURRENCY_UNIT_ID_VN;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return CurrencyUnitId.UNRECOGNIZED;
+  }
+}
+
+export function currencyUnitIdToJSON(object: CurrencyUnitId): string {
+  switch (object) {
+    case CurrencyUnitId.CURRENCY_UNIT_ID_UNSPECIFIED:
+      return "CURRENCY_UNIT_ID_UNSPECIFIED";
+    case CurrencyUnitId.CURRENCY_UNIT_ID_VN:
+      return "CURRENCY_UNIT_ID_VN";
+    case CurrencyUnitId.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export interface OpPlayer {
   userId: string;
   userName: string;

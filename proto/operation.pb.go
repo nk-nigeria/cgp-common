@@ -20,6 +20,52 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type CurrencyUnitId int32
+
+const (
+	CurrencyUnitId_CURRENCY_UNIT_ID_UNSPECIFIED CurrencyUnitId = 0
+	CurrencyUnitId_CURRENCY_UNIT_ID_VN          CurrencyUnitId = 1
+)
+
+// Enum value maps for CurrencyUnitId.
+var (
+	CurrencyUnitId_name = map[int32]string{
+		0: "CURRENCY_UNIT_ID_UNSPECIFIED",
+		1: "CURRENCY_UNIT_ID_VN",
+	}
+	CurrencyUnitId_value = map[string]int32{
+		"CURRENCY_UNIT_ID_UNSPECIFIED": 0,
+		"CURRENCY_UNIT_ID_VN":          1,
+	}
+)
+
+func (x CurrencyUnitId) Enum() *CurrencyUnitId {
+	p := new(CurrencyUnitId)
+	*p = x
+	return p
+}
+
+func (x CurrencyUnitId) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CurrencyUnitId) Descriptor() protoreflect.EnumDescriptor {
+	return file_operation_proto_enumTypes[0].Descriptor()
+}
+
+func (CurrencyUnitId) Type() protoreflect.EnumType {
+	return &file_operation_proto_enumTypes[0]
+}
+
+func (x CurrencyUnitId) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CurrencyUnitId.Descriptor instead.
+func (CurrencyUnitId) EnumDescriptor() ([]byte, []int) {
+	return file_operation_proto_rawDescGZIP(), []int{0}
+}
+
 type OpPlayer struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2995,11 +3041,16 @@ var file_operation_proto_rawDesc = []byte{
 	0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65,
 	0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12,
 	0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05,
-	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x42, 0x38, 0x5a, 0x36, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x69, 0x61, 0x6f, 0x6c, 0x69, 0x6e, 0x6b, 0x2d, 0x67, 0x61, 0x6d,
-	0x65, 0x2d, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x63, 0x67, 0x62, 0x2d, 0x6c,
-	0x6f, 0x62, 0x62, 0x79, 0x2d, 0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x2a, 0x4b, 0x0a, 0x0e, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x63,
+	0x79, 0x55, 0x6e, 0x69, 0x74, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x1c, 0x43, 0x55, 0x52, 0x52, 0x45,
+	0x4e, 0x43, 0x59, 0x5f, 0x55, 0x4e, 0x49, 0x54, 0x5f, 0x49, 0x44, 0x5f, 0x55, 0x4e, 0x53, 0x50,
+	0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x17, 0x0a, 0x13, 0x43, 0x55, 0x52,
+	0x52, 0x45, 0x4e, 0x43, 0x59, 0x5f, 0x55, 0x4e, 0x49, 0x54, 0x5f, 0x49, 0x44, 0x5f, 0x56, 0x4e,
+	0x10, 0x01, 0x42, 0x38, 0x5a, 0x36, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2f, 0x63, 0x69, 0x61, 0x6f, 0x6c, 0x69, 0x6e, 0x6b, 0x2d, 0x67, 0x61, 0x6d, 0x65, 0x2d, 0x70,
+	0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x63, 0x67, 0x62, 0x2d, 0x6c, 0x6f, 0x62, 0x62,
+	0x79, 0x2d, 0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3014,53 +3065,55 @@ func file_operation_proto_rawDescGZIP() []byte {
 	return file_operation_proto_rawDescData
 }
 
+var file_operation_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_operation_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_operation_proto_goTypes = []interface{}{
-	(*OpPlayer)(nil),              // 0: api.OpPlayer
-	(*OpPlayerRequest)(nil),       // 1: api.OpPlayerRequest
-	(*OpPlayerResponse)(nil),      // 2: api.OpPlayerResponse
-	(*MatchDetail)(nil),           // 3: api.MatchDetail
-	(*MatchDetailRequest)(nil),    // 4: api.MatchDetailRequest
-	(*MatchDetailResponse)(nil),   // 5: api.MatchDetailResponse
-	(*PlayerData)(nil),            // 6: api.PlayerData
-	(*MatchData)(nil),             // 7: api.MatchData
-	(*OpReport)(nil),              // 8: api.OpReport
-	(*GoldStatistic)(nil),         // 9: api.GoldStatistic
-	(*GoldStatisticRequest)(nil),  // 10: api.GoldStatisticRequest
-	(*GoldStatisticResponse)(nil), // 11: api.GoldStatisticResponse
-	(*UserStatistic)(nil),         // 12: api.UserStatistic
-	(*UserStatisticRequest)(nil),  // 13: api.UserStatisticRequest
-	(*UserStatGameHistory)(nil),   // 14: api.UserStatGameHistory
-	(*UserTransferGoldStat)(nil),  // 15: api.UserTransferGoldStat
-	(*UserInfo)(nil),              // 16: api.UserInfo
-	(*UserInfoResponse)(nil),      // 17: api.UserInfoResponse
-	(*CashOut)(nil),               // 18: api.CashOut
-	(*TopCashOut)(nil),            // 19: api.TopCashOut
-	(*Vip)(nil),                   // 20: api.Vip
-	(*TopVip)(nil),                // 21: api.TopVip
-	(*Win)(nil),                   // 22: api.Win
-	(*TopWin)(nil),                // 23: api.TopWin
-	(*TransactionRequest)(nil),    // 24: api.TransactionRequest
-	(*TransactionDetail)(nil),     // 25: api.TransactionDetail
-	(*TransactionResponse)(nil),   // 26: api.TransactionResponse
-	(*Profile)(nil),               // 27: api.Profile
+	(CurrencyUnitId)(0),           // 0: api.CurrencyUnitId
+	(*OpPlayer)(nil),              // 1: api.OpPlayer
+	(*OpPlayerRequest)(nil),       // 2: api.OpPlayerRequest
+	(*OpPlayerResponse)(nil),      // 3: api.OpPlayerResponse
+	(*MatchDetail)(nil),           // 4: api.MatchDetail
+	(*MatchDetailRequest)(nil),    // 5: api.MatchDetailRequest
+	(*MatchDetailResponse)(nil),   // 6: api.MatchDetailResponse
+	(*PlayerData)(nil),            // 7: api.PlayerData
+	(*MatchData)(nil),             // 8: api.MatchData
+	(*OpReport)(nil),              // 9: api.OpReport
+	(*GoldStatistic)(nil),         // 10: api.GoldStatistic
+	(*GoldStatisticRequest)(nil),  // 11: api.GoldStatisticRequest
+	(*GoldStatisticResponse)(nil), // 12: api.GoldStatisticResponse
+	(*UserStatistic)(nil),         // 13: api.UserStatistic
+	(*UserStatisticRequest)(nil),  // 14: api.UserStatisticRequest
+	(*UserStatGameHistory)(nil),   // 15: api.UserStatGameHistory
+	(*UserTransferGoldStat)(nil),  // 16: api.UserTransferGoldStat
+	(*UserInfo)(nil),              // 17: api.UserInfo
+	(*UserInfoResponse)(nil),      // 18: api.UserInfoResponse
+	(*CashOut)(nil),               // 19: api.CashOut
+	(*TopCashOut)(nil),            // 20: api.TopCashOut
+	(*Vip)(nil),                   // 21: api.Vip
+	(*TopVip)(nil),                // 22: api.TopVip
+	(*Win)(nil),                   // 23: api.Win
+	(*TopWin)(nil),                // 24: api.TopWin
+	(*TransactionRequest)(nil),    // 25: api.TransactionRequest
+	(*TransactionDetail)(nil),     // 26: api.TransactionDetail
+	(*TransactionResponse)(nil),   // 27: api.TransactionResponse
+	(*Profile)(nil),               // 28: api.Profile
 }
 var file_operation_proto_depIdxs = []int32{
-	0,  // 0: api.OpPlayerResponse.op_players:type_name -> api.OpPlayer
-	3,  // 1: api.MatchDetailResponse.match_details:type_name -> api.MatchDetail
-	6,  // 2: api.OpReport.player_data:type_name -> api.PlayerData
-	7,  // 3: api.OpReport.match_data:type_name -> api.MatchData
-	7,  // 4: api.GoldStatistic.match_data:type_name -> api.MatchData
-	9,  // 5: api.GoldStatisticResponse.gold_statistics:type_name -> api.GoldStatistic
-	14, // 6: api.UserStatistic.user_stat_game_histories:type_name -> api.UserStatGameHistory
-	15, // 7: api.UserStatistic.recv_chip_stats:type_name -> api.UserTransferGoldStat
-	15, // 8: api.UserStatistic.send_chip_stats:type_name -> api.UserTransferGoldStat
-	27, // 9: api.UserInfo.profile:type_name -> api.Profile
-	16, // 10: api.UserInfoResponse.user_infos:type_name -> api.UserInfo
-	18, // 11: api.TopCashOut.cashouts:type_name -> api.CashOut
-	20, // 12: api.TopVip.vips:type_name -> api.Vip
-	22, // 13: api.TopWin.wins:type_name -> api.Win
-	25, // 14: api.TransactionResponse.trans_details:type_name -> api.TransactionDetail
+	1,  // 0: api.OpPlayerResponse.op_players:type_name -> api.OpPlayer
+	4,  // 1: api.MatchDetailResponse.match_details:type_name -> api.MatchDetail
+	7,  // 2: api.OpReport.player_data:type_name -> api.PlayerData
+	8,  // 3: api.OpReport.match_data:type_name -> api.MatchData
+	8,  // 4: api.GoldStatistic.match_data:type_name -> api.MatchData
+	10, // 5: api.GoldStatisticResponse.gold_statistics:type_name -> api.GoldStatistic
+	15, // 6: api.UserStatistic.user_stat_game_histories:type_name -> api.UserStatGameHistory
+	16, // 7: api.UserStatistic.recv_chip_stats:type_name -> api.UserTransferGoldStat
+	16, // 8: api.UserStatistic.send_chip_stats:type_name -> api.UserTransferGoldStat
+	28, // 9: api.UserInfo.profile:type_name -> api.Profile
+	17, // 10: api.UserInfoResponse.user_infos:type_name -> api.UserInfo
+	19, // 11: api.TopCashOut.cashouts:type_name -> api.CashOut
+	21, // 12: api.TopVip.vips:type_name -> api.Vip
+	23, // 13: api.TopWin.wins:type_name -> api.Win
+	26, // 14: api.TransactionResponse.trans_details:type_name -> api.TransactionDetail
 	15, // [15:15] is the sub-list for method output_type
 	15, // [15:15] is the sub-list for method input_type
 	15, // [15:15] is the sub-list for extension type_name
@@ -3405,13 +3458,14 @@ func file_operation_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_operation_proto_rawDesc,
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_operation_proto_goTypes,
 		DependencyIndexes: file_operation_proto_depIdxs,
+		EnumInfos:         file_operation_proto_enumTypes,
 		MessageInfos:      file_operation_proto_msgTypes,
 	}.Build()
 	File_operation_proto = out.File

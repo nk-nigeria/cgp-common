@@ -278,3 +278,8 @@ message TransactionResponse {
   int64 offset = 4;
   int64 total = 5;
 }
+
+enum CurrencyUnitId {
+  CURRENCY_UNIT_ID_UNSPECIFIED = 0;
+  CURRENCY_UNIT_ID_VN = 1;
+}
