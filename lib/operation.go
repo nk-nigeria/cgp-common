@@ -116,13 +116,17 @@ func (o *reportGame) Commit(ctx context.Context, nk runtime.NakamaModule) ([]byt
 	return o.sendHttpReq(event, reqjson)
 }
 
-func (o *reportGame) Report(ctx context.Context, userId string, payload string) ([]byte, int, error) {
+func (o *reportGame) ReportIap(ctx context.Context, userId string, payload string) ([]byte, int, error) {
+	return o.ReportEvent(ctx, "iap", userId, payload)
+}
+
+func (o *reportGame) ReportEvent(ctx context.Context, event string, userId string, payload string) ([]byte, int, error) {
 	req := &pb.Request{
 		UserId: userId,
 		Body:   payload,
 	}
 	reqjson, _ := json.Marshal(req)
-	return o.sendHttpReq("iap", reqjson)
+	return o.sendHttpReq(event, reqjson)
 }
 
 func (o reportGame) sendHttpReq(event string, body []byte) ([]byte, int, error) {
