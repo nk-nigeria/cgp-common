@@ -353,6 +353,7 @@ export interface CashOutInfo {
   currencyValue: number;
   currencyUnitName: string;
   numTransByCurrencyValue: { [key: number]: number };
+  numAccountUnique: number;
 }
 
 export interface CashOutInfo_NumTransByCurrencyValueEntry {
@@ -4907,6 +4908,7 @@ function createBaseCashOutInfo(): CashOutInfo {
     currencyValue: 0,
     currencyUnitName: "",
     numTransByCurrencyValue: {},
+    numAccountUnique: 0,
   };
 }
 
@@ -4954,6 +4956,9 @@ export const CashOutInfo = {
     Object.entries(message.numTransByCurrencyValue).forEach(([key, value]) => {
       CashOutInfo_NumTransByCurrencyValueEntry.encode({ key: key as any, value }, writer.uint32(114).fork()).ldelim();
     });
+    if (message.numAccountUnique !== 0) {
+      writer.uint32(120).int64(message.numAccountUnique);
+    }
     return writer;
   },
 
@@ -5065,6 +5070,13 @@ export const CashOutInfo = {
             message.numTransByCurrencyValue[entry14.key] = entry14.value;
           }
           continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.numAccountUnique = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5095,6 +5107,7 @@ export const CashOutInfo = {
           return acc;
         }, {})
         : {},
+      numAccountUnique: isSet(object.numAccountUnique) ? globalThis.Number(object.numAccountUnique) : 0,
     };
   },
 
@@ -5148,6 +5161,9 @@ export const CashOutInfo = {
         });
       }
     }
+    if (message.numAccountUnique !== 0) {
+      obj.numAccountUnique = Math.round(message.numAccountUnique);
+    }
     return obj;
   },
 
@@ -5177,6 +5193,7 @@ export const CashOutInfo = {
       }
       return acc;
     }, {});
+    message.numAccountUnique = object.numAccountUnique ?? 0;
     return message;
   },
 };

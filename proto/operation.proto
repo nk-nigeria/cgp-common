@@ -54,7 +54,7 @@ message MatchDetail {
   int64 table_id = 7;
   int64 date_unix = 8;
   int64 created_at_unix = 9;
-  int64 chip_win =  10;
+  int64 chip_win = 10;
   int64 chip_lose = 11;
 }
 
@@ -168,7 +168,7 @@ message UserInfo {
 }
 
 message UserInfoResponse {
-  repeated UserInfo user_infos  = 1;
+  repeated UserInfo user_infos = 1;
   int64 total = 2;
   string device_id = 3;
   int64 total_in = 4;
@@ -265,9 +265,9 @@ message TransactionDetail {
   int64 user_sid = 3;
   string user_name = 4;
   int64 vip = 5;
-  int64 rp = 6; // Số tiền nạp 
-  string type_topup= 7;
-  int64 chips_topup = 8;//Số chip user được nhận của giao dịch 
+  int64 rp = 6; // Số tiền nạp
+  string type_topup = 7;
+  int64 chips_topup = 8; // Số chip user được nhận của giao dịch
   int64 created_unix = 9;
 }
 
@@ -283,7 +283,6 @@ enum CurrencyUnitId {
   CURRENCY_UNIT_ID_UNSPECIFIED = 0;
   CURRENCY_UNIT_ID_VN = 1;
 }
-
 
 message IAPSummary {
   int64 id = 1;
@@ -307,7 +306,6 @@ message CashInInfo {
   string currency_unit_name = 10;
 }
 
-
 message CashOutInfo {
   int64 id = 1;
   string user_id = 2;
@@ -323,19 +321,19 @@ message CashOutInfo {
   int64 currency_value = 12; // 10, 20, 30 ...
   string currency_unit_name = 13;
   map<int64, int64> num_trans_by_currency_value = 14;
+  int64 num_account_unique = 15;
 }
 
-message CashOutRequest{
+message CashOutRequest {
   int64 from_unix = 1;
   int64 to_unix = 2;
   int64 limit = 3;
   int64 offset = 4;
   int64 publisher = 5;
-  CurrencyUnitId currency_id =6;
+  CurrencyUnitId currency_id = 6;
 }
 
-
-message CashOutResponse{
+message CashOutResponse {
   repeated CashOutInfo cashout_infos = 1;
   int64 total_cash = 2;
   int64 total_account = 3;
