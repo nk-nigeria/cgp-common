@@ -322,31 +322,7 @@ export interface IAPSummary {
   totalCashout: number;
 }
 
-export interface CashInInfo {
-  id: number;
-  userId: string;
-  createAtUnix: number;
-  chipsTopup: number;
-  vipPoint: number;
-  publisher: number;
-  currency: number;
-  /** vi_vn, en_us follow Locale name standard */
-  currencyUnitId: number;
-  transId: string;
-  dateUnix: number;
-  numTransaction: number;
-  /** 10, 20, 30 ... */
-  currencyValue: number;
-  currencyUnitName: string;
-  numTransByCurrencyValue: { [key: number]: number };
-}
-
-export interface CashInInfo_NumTransByCurrencyValueEntry {
-  key: number;
-  value: number;
-}
-
-export interface CashOutInfo {
+export interface CashInfo {
   id: number;
   userId: string;
   createAtUnix: number;
@@ -366,12 +342,12 @@ export interface CashOutInfo {
   numAccountUnique: number;
 }
 
-export interface CashOutInfo_NumTransByCurrencyValueEntry {
+export interface CashInfo_NumTransByCurrencyValueEntry {
   key: number;
   value: number;
 }
 
-export interface CashOutRequest {
+export interface CashInfoRequest {
   fromUnix: number;
   toUnix: number;
   limit: number;
@@ -380,8 +356,8 @@ export interface CashOutRequest {
   currencyId: CurrencyUnitId;
 }
 
-export interface CashOutResponse {
-  cashoutInfos: CashOutInfo[];
+export interface CashInfoResponse {
+  cashoutInfos: CashInfo[];
   totalCash: number;
   totalAccount: number;
 }
@@ -4697,375 +4673,7 @@ export const IAPSummary = {
   },
 };
 
-function createBaseCashInInfo(): CashInInfo {
-  return {
-    id: 0,
-    userId: "",
-    createAtUnix: 0,
-    chipsTopup: 0,
-    vipPoint: 0,
-    publisher: 0,
-    currency: 0,
-    currencyUnitId: 0,
-    transId: "",
-    dateUnix: 0,
-    numTransaction: 0,
-    currencyValue: 0,
-    currencyUnitName: "",
-    numTransByCurrencyValue: {},
-  };
-}
-
-export const CashInInfo = {
-  encode(message: CashInInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.id !== 0) {
-      writer.uint32(8).int64(message.id);
-    }
-    if (message.userId !== "") {
-      writer.uint32(18).string(message.userId);
-    }
-    if (message.createAtUnix !== 0) {
-      writer.uint32(24).int64(message.createAtUnix);
-    }
-    if (message.chipsTopup !== 0) {
-      writer.uint32(32).int64(message.chipsTopup);
-    }
-    if (message.vipPoint !== 0) {
-      writer.uint32(40).int64(message.vipPoint);
-    }
-    if (message.publisher !== 0) {
-      writer.uint32(48).int64(message.publisher);
-    }
-    if (message.currency !== 0) {
-      writer.uint32(56).int64(message.currency);
-    }
-    if (message.currencyUnitId !== 0) {
-      writer.uint32(64).int64(message.currencyUnitId);
-    }
-    if (message.transId !== "") {
-      writer.uint32(74).string(message.transId);
-    }
-    if (message.dateUnix !== 0) {
-      writer.uint32(80).int64(message.dateUnix);
-    }
-    if (message.numTransaction !== 0) {
-      writer.uint32(88).int64(message.numTransaction);
-    }
-    if (message.currencyValue !== 0) {
-      writer.uint32(96).int64(message.currencyValue);
-    }
-    if (message.currencyUnitName !== "") {
-      writer.uint32(106).string(message.currencyUnitName);
-    }
-    Object.entries(message.numTransByCurrencyValue).forEach(([key, value]) => {
-      CashInInfo_NumTransByCurrencyValueEntry.encode({ key: key as any, value }, writer.uint32(114).fork()).ldelim();
-    });
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CashInInfo {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCashInInfo();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.id = longToNumber(reader.int64() as Long);
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.userId = reader.string();
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.createAtUnix = longToNumber(reader.int64() as Long);
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.chipsTopup = longToNumber(reader.int64() as Long);
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
-
-          message.vipPoint = longToNumber(reader.int64() as Long);
-          continue;
-        case 6:
-          if (tag !== 48) {
-            break;
-          }
-
-          message.publisher = longToNumber(reader.int64() as Long);
-          continue;
-        case 7:
-          if (tag !== 56) {
-            break;
-          }
-
-          message.currency = longToNumber(reader.int64() as Long);
-          continue;
-        case 8:
-          if (tag !== 64) {
-            break;
-          }
-
-          message.currencyUnitId = longToNumber(reader.int64() as Long);
-          continue;
-        case 9:
-          if (tag !== 74) {
-            break;
-          }
-
-          message.transId = reader.string();
-          continue;
-        case 10:
-          if (tag !== 80) {
-            break;
-          }
-
-          message.dateUnix = longToNumber(reader.int64() as Long);
-          continue;
-        case 11:
-          if (tag !== 88) {
-            break;
-          }
-
-          message.numTransaction = longToNumber(reader.int64() as Long);
-          continue;
-        case 12:
-          if (tag !== 96) {
-            break;
-          }
-
-          message.currencyValue = longToNumber(reader.int64() as Long);
-          continue;
-        case 13:
-          if (tag !== 106) {
-            break;
-          }
-
-          message.currencyUnitName = reader.string();
-          continue;
-        case 14:
-          if (tag !== 114) {
-            break;
-          }
-
-          const entry14 = CashInInfo_NumTransByCurrencyValueEntry.decode(reader, reader.uint32());
-          if (entry14.value !== undefined) {
-            message.numTransByCurrencyValue[entry14.key] = entry14.value;
-          }
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CashInInfo {
-    return {
-      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      createAtUnix: isSet(object.createAtUnix) ? globalThis.Number(object.createAtUnix) : 0,
-      chipsTopup: isSet(object.chipsTopup) ? globalThis.Number(object.chipsTopup) : 0,
-      vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
-      publisher: isSet(object.publisher) ? globalThis.Number(object.publisher) : 0,
-      currency: isSet(object.currency) ? globalThis.Number(object.currency) : 0,
-      currencyUnitId: isSet(object.currencyUnitId) ? globalThis.Number(object.currencyUnitId) : 0,
-      transId: isSet(object.transId) ? globalThis.String(object.transId) : "",
-      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
-      numTransaction: isSet(object.numTransaction) ? globalThis.Number(object.numTransaction) : 0,
-      currencyValue: isSet(object.currencyValue) ? globalThis.Number(object.currencyValue) : 0,
-      currencyUnitName: isSet(object.currencyUnitName) ? globalThis.String(object.currencyUnitName) : "",
-      numTransByCurrencyValue: isObject(object.numTransByCurrencyValue)
-        ? Object.entries(object.numTransByCurrencyValue).reduce<{ [key: number]: number }>((acc, [key, value]) => {
-          acc[globalThis.Number(key)] = Number(value);
-          return acc;
-        }, {})
-        : {},
-    };
-  },
-
-  toJSON(message: CashInInfo): unknown {
-    const obj: any = {};
-    if (message.id !== 0) {
-      obj.id = Math.round(message.id);
-    }
-    if (message.userId !== "") {
-      obj.userId = message.userId;
-    }
-    if (message.createAtUnix !== 0) {
-      obj.createAtUnix = Math.round(message.createAtUnix);
-    }
-    if (message.chipsTopup !== 0) {
-      obj.chipsTopup = Math.round(message.chipsTopup);
-    }
-    if (message.vipPoint !== 0) {
-      obj.vipPoint = Math.round(message.vipPoint);
-    }
-    if (message.publisher !== 0) {
-      obj.publisher = Math.round(message.publisher);
-    }
-    if (message.currency !== 0) {
-      obj.currency = Math.round(message.currency);
-    }
-    if (message.currencyUnitId !== 0) {
-      obj.currencyUnitId = Math.round(message.currencyUnitId);
-    }
-    if (message.transId !== "") {
-      obj.transId = message.transId;
-    }
-    if (message.dateUnix !== 0) {
-      obj.dateUnix = Math.round(message.dateUnix);
-    }
-    if (message.numTransaction !== 0) {
-      obj.numTransaction = Math.round(message.numTransaction);
-    }
-    if (message.currencyValue !== 0) {
-      obj.currencyValue = Math.round(message.currencyValue);
-    }
-    if (message.currencyUnitName !== "") {
-      obj.currencyUnitName = message.currencyUnitName;
-    }
-    if (message.numTransByCurrencyValue) {
-      const entries = Object.entries(message.numTransByCurrencyValue);
-      if (entries.length > 0) {
-        obj.numTransByCurrencyValue = {};
-        entries.forEach(([k, v]) => {
-          obj.numTransByCurrencyValue[k] = Math.round(v);
-        });
-      }
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<CashInInfo>, I>>(base?: I): CashInInfo {
-    return CashInInfo.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<CashInInfo>, I>>(object: I): CashInInfo {
-    const message = createBaseCashInInfo();
-    message.id = object.id ?? 0;
-    message.userId = object.userId ?? "";
-    message.createAtUnix = object.createAtUnix ?? 0;
-    message.chipsTopup = object.chipsTopup ?? 0;
-    message.vipPoint = object.vipPoint ?? 0;
-    message.publisher = object.publisher ?? 0;
-    message.currency = object.currency ?? 0;
-    message.currencyUnitId = object.currencyUnitId ?? 0;
-    message.transId = object.transId ?? "";
-    message.dateUnix = object.dateUnix ?? 0;
-    message.numTransaction = object.numTransaction ?? 0;
-    message.currencyValue = object.currencyValue ?? 0;
-    message.currencyUnitName = object.currencyUnitName ?? "";
-    message.numTransByCurrencyValue = Object.entries(object.numTransByCurrencyValue ?? {}).reduce<
-      { [key: number]: number }
-    >((acc, [key, value]) => {
-      if (value !== undefined) {
-        acc[globalThis.Number(key)] = globalThis.Number(value);
-      }
-      return acc;
-    }, {});
-    return message;
-  },
-};
-
-function createBaseCashInInfo_NumTransByCurrencyValueEntry(): CashInInfo_NumTransByCurrencyValueEntry {
-  return { key: 0, value: 0 };
-}
-
-export const CashInInfo_NumTransByCurrencyValueEntry = {
-  encode(message: CashInInfo_NumTransByCurrencyValueEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.key !== 0) {
-      writer.uint32(8).int64(message.key);
-    }
-    if (message.value !== 0) {
-      writer.uint32(16).int64(message.value);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): CashInInfo_NumTransByCurrencyValueEntry {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCashInInfo_NumTransByCurrencyValueEntry();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.key = longToNumber(reader.int64() as Long);
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.value = longToNumber(reader.int64() as Long);
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CashInInfo_NumTransByCurrencyValueEntry {
-    return {
-      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
-      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
-    };
-  },
-
-  toJSON(message: CashInInfo_NumTransByCurrencyValueEntry): unknown {
-    const obj: any = {};
-    if (message.key !== 0) {
-      obj.key = Math.round(message.key);
-    }
-    if (message.value !== 0) {
-      obj.value = Math.round(message.value);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<CashInInfo_NumTransByCurrencyValueEntry>, I>>(
-    base?: I,
-  ): CashInInfo_NumTransByCurrencyValueEntry {
-    return CashInInfo_NumTransByCurrencyValueEntry.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<CashInInfo_NumTransByCurrencyValueEntry>, I>>(
-    object: I,
-  ): CashInInfo_NumTransByCurrencyValueEntry {
-    const message = createBaseCashInInfo_NumTransByCurrencyValueEntry();
-    message.key = object.key ?? 0;
-    message.value = object.value ?? 0;
-    return message;
-  },
-};
-
-function createBaseCashOutInfo(): CashOutInfo {
+function createBaseCashInfo(): CashInfo {
   return {
     id: 0,
     userId: "",
@@ -5085,8 +4693,8 @@ function createBaseCashOutInfo(): CashOutInfo {
   };
 }
 
-export const CashOutInfo = {
-  encode(message: CashOutInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CashInfo = {
+  encode(message: CashInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== 0) {
       writer.uint32(8).int64(message.id);
     }
@@ -5127,7 +4735,7 @@ export const CashOutInfo = {
       writer.uint32(106).string(message.currencyUnitName);
     }
     Object.entries(message.numTransByCurrencyValue).forEach(([key, value]) => {
-      CashOutInfo_NumTransByCurrencyValueEntry.encode({ key: key as any, value }, writer.uint32(114).fork()).ldelim();
+      CashInfo_NumTransByCurrencyValueEntry.encode({ key: key as any, value }, writer.uint32(114).fork()).ldelim();
     });
     if (message.numAccountUnique !== 0) {
       writer.uint32(120).int64(message.numAccountUnique);
@@ -5135,10 +4743,10 @@ export const CashOutInfo = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutInfo {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashInfo {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCashOutInfo();
+    const message = createBaseCashInfo();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -5238,7 +4846,7 @@ export const CashOutInfo = {
             break;
           }
 
-          const entry14 = CashOutInfo_NumTransByCurrencyValueEntry.decode(reader, reader.uint32());
+          const entry14 = CashInfo_NumTransByCurrencyValueEntry.decode(reader, reader.uint32());
           if (entry14.value !== undefined) {
             message.numTransByCurrencyValue[entry14.key] = entry14.value;
           }
@@ -5259,7 +4867,7 @@ export const CashOutInfo = {
     return message;
   },
 
-  fromJSON(object: any): CashOutInfo {
+  fromJSON(object: any): CashInfo {
     return {
       id: isSet(object.id) ? globalThis.Number(object.id) : 0,
       userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
@@ -5284,7 +4892,7 @@ export const CashOutInfo = {
     };
   },
 
-  toJSON(message: CashOutInfo): unknown {
+  toJSON(message: CashInfo): unknown {
     const obj: any = {};
     if (message.id !== 0) {
       obj.id = Math.round(message.id);
@@ -5340,11 +4948,11 @@ export const CashOutInfo = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CashOutInfo>, I>>(base?: I): CashOutInfo {
-    return CashOutInfo.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<CashInfo>, I>>(base?: I): CashInfo {
+    return CashInfo.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CashOutInfo>, I>>(object: I): CashOutInfo {
-    const message = createBaseCashOutInfo();
+  fromPartial<I extends Exact<DeepPartial<CashInfo>, I>>(object: I): CashInfo {
+    const message = createBaseCashInfo();
     message.id = object.id ?? 0;
     message.userId = object.userId ?? "";
     message.createAtUnix = object.createAtUnix ?? 0;
@@ -5371,12 +4979,12 @@ export const CashOutInfo = {
   },
 };
 
-function createBaseCashOutInfo_NumTransByCurrencyValueEntry(): CashOutInfo_NumTransByCurrencyValueEntry {
+function createBaseCashInfo_NumTransByCurrencyValueEntry(): CashInfo_NumTransByCurrencyValueEntry {
   return { key: 0, value: 0 };
 }
 
-export const CashOutInfo_NumTransByCurrencyValueEntry = {
-  encode(message: CashOutInfo_NumTransByCurrencyValueEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CashInfo_NumTransByCurrencyValueEntry = {
+  encode(message: CashInfo_NumTransByCurrencyValueEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== 0) {
       writer.uint32(8).int64(message.key);
     }
@@ -5386,10 +4994,10 @@ export const CashOutInfo_NumTransByCurrencyValueEntry = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutInfo_NumTransByCurrencyValueEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashInfo_NumTransByCurrencyValueEntry {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCashOutInfo_NumTransByCurrencyValueEntry();
+    const message = createBaseCashInfo_NumTransByCurrencyValueEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -5416,14 +5024,14 @@ export const CashOutInfo_NumTransByCurrencyValueEntry = {
     return message;
   },
 
-  fromJSON(object: any): CashOutInfo_NumTransByCurrencyValueEntry {
+  fromJSON(object: any): CashInfo_NumTransByCurrencyValueEntry {
     return {
       key: isSet(object.key) ? globalThis.Number(object.key) : 0,
       value: isSet(object.value) ? globalThis.Number(object.value) : 0,
     };
   },
 
-  toJSON(message: CashOutInfo_NumTransByCurrencyValueEntry): unknown {
+  toJSON(message: CashInfo_NumTransByCurrencyValueEntry): unknown {
     const obj: any = {};
     if (message.key !== 0) {
       obj.key = Math.round(message.key);
@@ -5434,27 +5042,27 @@ export const CashOutInfo_NumTransByCurrencyValueEntry = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CashOutInfo_NumTransByCurrencyValueEntry>, I>>(
+  create<I extends Exact<DeepPartial<CashInfo_NumTransByCurrencyValueEntry>, I>>(
     base?: I,
-  ): CashOutInfo_NumTransByCurrencyValueEntry {
-    return CashOutInfo_NumTransByCurrencyValueEntry.fromPartial(base ?? ({} as any));
+  ): CashInfo_NumTransByCurrencyValueEntry {
+    return CashInfo_NumTransByCurrencyValueEntry.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CashOutInfo_NumTransByCurrencyValueEntry>, I>>(
+  fromPartial<I extends Exact<DeepPartial<CashInfo_NumTransByCurrencyValueEntry>, I>>(
     object: I,
-  ): CashOutInfo_NumTransByCurrencyValueEntry {
-    const message = createBaseCashOutInfo_NumTransByCurrencyValueEntry();
+  ): CashInfo_NumTransByCurrencyValueEntry {
+    const message = createBaseCashInfo_NumTransByCurrencyValueEntry();
     message.key = object.key ?? 0;
     message.value = object.value ?? 0;
     return message;
   },
 };
 
-function createBaseCashOutRequest(): CashOutRequest {
+function createBaseCashInfoRequest(): CashInfoRequest {
   return { fromUnix: 0, toUnix: 0, limit: 0, offset: 0, publisher: 0, currencyId: 0 };
 }
 
-export const CashOutRequest = {
-  encode(message: CashOutRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CashInfoRequest = {
+  encode(message: CashInfoRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.fromUnix !== 0) {
       writer.uint32(8).int64(message.fromUnix);
     }
@@ -5476,10 +5084,10 @@ export const CashOutRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashInfoRequest {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCashOutRequest();
+    const message = createBaseCashInfoRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -5534,7 +5142,7 @@ export const CashOutRequest = {
     return message;
   },
 
-  fromJSON(object: any): CashOutRequest {
+  fromJSON(object: any): CashInfoRequest {
     return {
       fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
       toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
@@ -5545,7 +5153,7 @@ export const CashOutRequest = {
     };
   },
 
-  toJSON(message: CashOutRequest): unknown {
+  toJSON(message: CashInfoRequest): unknown {
     const obj: any = {};
     if (message.fromUnix !== 0) {
       obj.fromUnix = Math.round(message.fromUnix);
@@ -5568,11 +5176,11 @@ export const CashOutRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CashOutRequest>, I>>(base?: I): CashOutRequest {
-    return CashOutRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<CashInfoRequest>, I>>(base?: I): CashInfoRequest {
+    return CashInfoRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CashOutRequest>, I>>(object: I): CashOutRequest {
-    const message = createBaseCashOutRequest();
+  fromPartial<I extends Exact<DeepPartial<CashInfoRequest>, I>>(object: I): CashInfoRequest {
+    const message = createBaseCashInfoRequest();
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
     message.limit = object.limit ?? 0;
@@ -5583,14 +5191,14 @@ export const CashOutRequest = {
   },
 };
 
-function createBaseCashOutResponse(): CashOutResponse {
+function createBaseCashInfoResponse(): CashInfoResponse {
   return { cashoutInfos: [], totalCash: 0, totalAccount: 0 };
 }
 
-export const CashOutResponse = {
-  encode(message: CashOutResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CashInfoResponse = {
+  encode(message: CashInfoResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.cashoutInfos) {
-      CashOutInfo.encode(v!, writer.uint32(10).fork()).ldelim();
+      CashInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.totalCash !== 0) {
       writer.uint32(16).int64(message.totalCash);
@@ -5601,10 +5209,10 @@ export const CashOutResponse = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): CashOutResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashInfoResponse {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCashOutResponse();
+    const message = createBaseCashInfoResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -5613,7 +5221,7 @@ export const CashOutResponse = {
             break;
           }
 
-          message.cashoutInfos.push(CashOutInfo.decode(reader, reader.uint32()));
+          message.cashoutInfos.push(CashInfo.decode(reader, reader.uint32()));
           continue;
         case 2:
           if (tag !== 16) {
@@ -5638,20 +5246,20 @@ export const CashOutResponse = {
     return message;
   },
 
-  fromJSON(object: any): CashOutResponse {
+  fromJSON(object: any): CashInfoResponse {
     return {
       cashoutInfos: globalThis.Array.isArray(object?.cashoutInfos)
-        ? object.cashoutInfos.map((e: any) => CashOutInfo.fromJSON(e))
+        ? object.cashoutInfos.map((e: any) => CashInfo.fromJSON(e))
         : [],
       totalCash: isSet(object.totalCash) ? globalThis.Number(object.totalCash) : 0,
       totalAccount: isSet(object.totalAccount) ? globalThis.Number(object.totalAccount) : 0,
     };
   },
 
-  toJSON(message: CashOutResponse): unknown {
+  toJSON(message: CashInfoResponse): unknown {
     const obj: any = {};
     if (message.cashoutInfos?.length) {
-      obj.cashoutInfos = message.cashoutInfos.map((e) => CashOutInfo.toJSON(e));
+      obj.cashoutInfos = message.cashoutInfos.map((e) => CashInfo.toJSON(e));
     }
     if (message.totalCash !== 0) {
       obj.totalCash = Math.round(message.totalCash);
@@ -5662,12 +5270,12 @@ export const CashOutResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CashOutResponse>, I>>(base?: I): CashOutResponse {
-    return CashOutResponse.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<CashInfoResponse>, I>>(base?: I): CashInfoResponse {
+    return CashInfoResponse.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CashOutResponse>, I>>(object: I): CashOutResponse {
-    const message = createBaseCashOutResponse();
-    message.cashoutInfos = object.cashoutInfos?.map((e) => CashOutInfo.fromPartial(e)) || [];
+  fromPartial<I extends Exact<DeepPartial<CashInfoResponse>, I>>(object: I): CashInfoResponse {
+    const message = createBaseCashInfoResponse();
+    message.cashoutInfos = object.cashoutInfos?.map((e) => CashInfo.fromPartial(e)) || [];
     message.totalCash = object.totalCash ?? 0;
     message.totalAccount = object.totalAccount ?? 0;
     return message;
