@@ -326,7 +326,7 @@ export interface CashInfo {
   id: number;
   userId: string;
   createAtUnix: number;
-  chipsCashout: number;
+  chips: number;
   vipPoint: number;
   publisher: number;
   currency: number;
@@ -4678,7 +4678,7 @@ function createBaseCashInfo(): CashInfo {
     id: 0,
     userId: "",
     createAtUnix: 0,
-    chipsCashout: 0,
+    chips: 0,
     vipPoint: 0,
     publisher: 0,
     currency: 0,
@@ -4704,8 +4704,8 @@ export const CashInfo = {
     if (message.createAtUnix !== 0) {
       writer.uint32(24).int64(message.createAtUnix);
     }
-    if (message.chipsCashout !== 0) {
-      writer.uint32(32).int64(message.chipsCashout);
+    if (message.chips !== 0) {
+      writer.uint32(32).int64(message.chips);
     }
     if (message.vipPoint !== 0) {
       writer.uint32(40).int64(message.vipPoint);
@@ -4776,7 +4776,7 @@ export const CashInfo = {
             break;
           }
 
-          message.chipsCashout = longToNumber(reader.int64() as Long);
+          message.chips = longToNumber(reader.int64() as Long);
           continue;
         case 5:
           if (tag !== 40) {
@@ -4872,7 +4872,7 @@ export const CashInfo = {
       id: isSet(object.id) ? globalThis.Number(object.id) : 0,
       userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       createAtUnix: isSet(object.createAtUnix) ? globalThis.Number(object.createAtUnix) : 0,
-      chipsCashout: isSet(object.chipsCashout) ? globalThis.Number(object.chipsCashout) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
       publisher: isSet(object.publisher) ? globalThis.Number(object.publisher) : 0,
       currency: isSet(object.currency) ? globalThis.Number(object.currency) : 0,
@@ -4903,8 +4903,8 @@ export const CashInfo = {
     if (message.createAtUnix !== 0) {
       obj.createAtUnix = Math.round(message.createAtUnix);
     }
-    if (message.chipsCashout !== 0) {
-      obj.chipsCashout = Math.round(message.chipsCashout);
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
     }
     if (message.vipPoint !== 0) {
       obj.vipPoint = Math.round(message.vipPoint);
@@ -4956,7 +4956,7 @@ export const CashInfo = {
     message.id = object.id ?? 0;
     message.userId = object.userId ?? "";
     message.createAtUnix = object.createAtUnix ?? 0;
-    message.chipsCashout = object.chipsCashout ?? 0;
+    message.chips = object.chips ?? 0;
     message.vipPoint = object.vipPoint ?? 0;
     message.publisher = object.publisher ?? 0;
     message.currency = object.currency ?? 0;

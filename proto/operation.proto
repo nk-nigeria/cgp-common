@@ -297,7 +297,7 @@ message CashInfo {
   int64 id = 1;
   string user_id = 2;
   int64 create_at_unix = 3;
-  int64 chips_cashout = 4;
+  int64 chips = 4;
   int64 vip_point = 5;
   int64 publisher = 6;
   int64 currency = 7;
