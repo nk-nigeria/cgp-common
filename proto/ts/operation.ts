@@ -333,7 +333,17 @@ export interface CashInInfo {
   /** vi_vn, en_us follow Locale name standard */
   currencyUnitId: number;
   transId: string;
+  dateUnix: number;
+  numTransaction: number;
+  /** 10, 20, 30 ... */
+  currencyValue: number;
   currencyUnitName: string;
+  numTransByCurrencyValue: { [key: number]: number };
+}
+
+export interface CashInInfo_NumTransByCurrencyValueEntry {
+  key: number;
+  value: number;
 }
 
 export interface CashOutInfo {
@@ -4698,7 +4708,11 @@ function createBaseCashInInfo(): CashInInfo {
     currency: 0,
     currencyUnitId: 0,
     transId: "",
+    dateUnix: 0,
+    numTransaction: 0,
+    currencyValue: 0,
     currencyUnitName: "",
+    numTransByCurrencyValue: {},
   };
 }
 
@@ -4731,9 +4745,21 @@ export const CashInInfo = {
     if (message.transId !== "") {
       writer.uint32(74).string(message.transId);
     }
-    if (message.currencyUnitName !== "") {
-      writer.uint32(82).string(message.currencyUnitName);
+    if (message.dateUnix !== 0) {
+      writer.uint32(80).int64(message.dateUnix);
     }
+    if (message.numTransaction !== 0) {
+      writer.uint32(88).int64(message.numTransaction);
+    }
+    if (message.currencyValue !== 0) {
+      writer.uint32(96).int64(message.currencyValue);
+    }
+    if (message.currencyUnitName !== "") {
+      writer.uint32(106).string(message.currencyUnitName);
+    }
+    Object.entries(message.numTransByCurrencyValue).forEach(([key, value]) => {
+      CashInInfo_NumTransByCurrencyValueEntry.encode({ key: key as any, value }, writer.uint32(114).fork()).ldelim();
+    });
     return writer;
   },
 
@@ -4808,11 +4834,42 @@ export const CashInInfo = {
           message.transId = reader.string();
           continue;
         case 10:
-          if (tag !== 82) {
+          if (tag !== 80) {
+            break;
+          }
+
+          message.dateUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.numTransaction = longToNumber(reader.int64() as Long);
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.currencyValue = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 106) {
             break;
           }
 
           message.currencyUnitName = reader.string();
+          continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          const entry14 = CashInInfo_NumTransByCurrencyValueEntry.decode(reader, reader.uint32());
+          if (entry14.value !== undefined) {
+            message.numTransByCurrencyValue[entry14.key] = entry14.value;
+          }
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -4834,7 +4891,16 @@ export const CashInInfo = {
       currency: isSet(object.currency) ? globalThis.Number(object.currency) : 0,
       currencyUnitId: isSet(object.currencyUnitId) ? globalThis.Number(object.currencyUnitId) : 0,
       transId: isSet(object.transId) ? globalThis.String(object.transId) : "",
+      dateUnix: isSet(object.dateUnix) ? globalThis.Number(object.dateUnix) : 0,
+      numTransaction: isSet(object.numTransaction) ? globalThis.Number(object.numTransaction) : 0,
+      currencyValue: isSet(object.currencyValue) ? globalThis.Number(object.currencyValue) : 0,
       currencyUnitName: isSet(object.currencyUnitName) ? globalThis.String(object.currencyUnitName) : "",
+      numTransByCurrencyValue: isObject(object.numTransByCurrencyValue)
+        ? Object.entries(object.numTransByCurrencyValue).reduce<{ [key: number]: number }>((acc, [key, value]) => {
+          acc[globalThis.Number(key)] = Number(value);
+          return acc;
+        }, {})
+        : {},
     };
   },
 
@@ -4867,8 +4933,26 @@ export const CashInInfo = {
     if (message.transId !== "") {
       obj.transId = message.transId;
     }
+    if (message.dateUnix !== 0) {
+      obj.dateUnix = Math.round(message.dateUnix);
+    }
+    if (message.numTransaction !== 0) {
+      obj.numTransaction = Math.round(message.numTransaction);
+    }
+    if (message.currencyValue !== 0) {
+      obj.currencyValue = Math.round(message.currencyValue);
+    }
     if (message.currencyUnitName !== "") {
       obj.currencyUnitName = message.currencyUnitName;
+    }
+    if (message.numTransByCurrencyValue) {
+      const entries = Object.entries(message.numTransByCurrencyValue);
+      if (entries.length > 0) {
+        obj.numTransByCurrencyValue = {};
+        entries.forEach(([k, v]) => {
+          obj.numTransByCurrencyValue[k] = Math.round(v);
+        });
+      }
     }
     return obj;
   },
@@ -4887,7 +4971,96 @@ export const CashInInfo = {
     message.currency = object.currency ?? 0;
     message.currencyUnitId = object.currencyUnitId ?? 0;
     message.transId = object.transId ?? "";
+    message.dateUnix = object.dateUnix ?? 0;
+    message.numTransaction = object.numTransaction ?? 0;
+    message.currencyValue = object.currencyValue ?? 0;
     message.currencyUnitName = object.currencyUnitName ?? "";
+    message.numTransByCurrencyValue = Object.entries(object.numTransByCurrencyValue ?? {}).reduce<
+      { [key: number]: number }
+    >((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[globalThis.Number(key)] = globalThis.Number(value);
+      }
+      return acc;
+    }, {});
+    return message;
+  },
+};
+
+function createBaseCashInInfo_NumTransByCurrencyValueEntry(): CashInInfo_NumTransByCurrencyValueEntry {
+  return { key: 0, value: 0 };
+}
+
+export const CashInInfo_NumTransByCurrencyValueEntry = {
+  encode(message: CashInInfo_NumTransByCurrencyValueEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== 0) {
+      writer.uint32(8).int64(message.key);
+    }
+    if (message.value !== 0) {
+      writer.uint32(16).int64(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashInInfo_NumTransByCurrencyValueEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashInInfo_NumTransByCurrencyValueEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.key = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.value = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashInInfo_NumTransByCurrencyValueEntry {
+    return {
+      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
+      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
+    };
+  },
+
+  toJSON(message: CashInInfo_NumTransByCurrencyValueEntry): unknown {
+    const obj: any = {};
+    if (message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== 0) {
+      obj.value = Math.round(message.value);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashInInfo_NumTransByCurrencyValueEntry>, I>>(
+    base?: I,
+  ): CashInInfo_NumTransByCurrencyValueEntry {
+    return CashInInfo_NumTransByCurrencyValueEntry.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashInInfo_NumTransByCurrencyValueEntry>, I>>(
+    object: I,
+  ): CashInInfo_NumTransByCurrencyValueEntry {
+    const message = createBaseCashInInfo_NumTransByCurrencyValueEntry();
+    message.key = object.key ?? 0;
+    message.value = object.value ?? 0;
     return message;
   },
 };

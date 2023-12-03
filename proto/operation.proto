@@ -303,7 +303,11 @@ message CashInInfo {
   int64 currency = 7;
   int64 currency_unit_id = 8; // vi_vn, en_us follow Locale name standard
   string trans_id = 9;
-  string currency_unit_name = 10;
+  int64 date_unix = 10;
+  int64 num_transaction = 11;
+  int64 currency_value = 12; // 10, 20, 30 ...
+  string currency_unit_name = 13;
+  map<int64, int64> num_trans_by_currency_value = 14;
 }
 
 message CashOutInfo {
