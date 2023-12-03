@@ -86,8 +86,52 @@ func (o *reportGame) Commit(ctx context.Context, nk runtime.NakamaModule) ([]byt
 		})
 		return []byte(string("commit over nk event")), 200, nil
 	}
-	targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", o.reportEndpoint)
-	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(data))
+	// targetUrl := fmt.Sprintf("%s/v2/rpc/op-report", o.reportEndpoint)
+	// req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(data))
+	// if err != nil {
+	// 	return nil, 0, err
+	// }
+
+	// query := req.URL.Query()
+	// query.Add("http_key", o.reportHttpKey)
+	// query.Add("unwrap", "true")
+	// req.URL.RawQuery = query.Encode()
+	// // res, err := httpClient.Post(targetUrl, http.DetectContentType(data), bytes.NewReader(data))
+	// res, err := httpClient.Do(req)
+	// if err != nil {
+	// 	return nil, 0, err
+	// }
+	// var bodyRes []byte
+	// if res != nil {
+	// 	bodyRes, err = io.ReadAll(res.Body)
+	// 	res.Body.Close()
+	// }
+	// return bodyRes, res.StatusCode, err
+	event := "match-end"
+	req := &pb.Request{
+		UserId: "",
+		Body:   string(data),
+	}
+	reqjson, _ := json.Marshal(req)
+	return o.sendHttpReq(event, reqjson)
+}
+
+func (o *reportGame) ReportIap(ctx context.Context, userId string, payload string) ([]byte, int, error) {
+	return o.ReportEvent(ctx, "iap", userId, payload)
+}
+
+func (o *reportGame) ReportEvent(ctx context.Context, event string, userId string, payload string) ([]byte, int, error) {
+	req := &pb.Request{
+		UserId: userId,
+		Body:   payload,
+	}
+	reqjson, _ := json.Marshal(req)
+	return o.sendHttpReq(event, reqjson)
+}
+
+func (o reportGame) sendHttpReq(event string, body []byte) ([]byte, int, error) {
+	targetUrl := fmt.Sprintf("%s/metric/event/%s", o.reportEndpoint, event)
+	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(body))
 	if err != nil {
 		return nil, 0, err
 	}
@@ -95,6 +139,8 @@ func (o *reportGame) Commit(ctx context.Context, nk runtime.NakamaModule) ([]byt
 	query := req.URL.Query()
 	query.Add("http_key", o.reportHttpKey)
 	query.Add("unwrap", "true")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("http_key", o.reportHttpKey)
 	req.URL.RawQuery = query.Encode()
 	// res, err := httpClient.Post(targetUrl, http.DetectContentType(data), bytes.NewReader(data))
 	res, err := httpClient.Do(req)

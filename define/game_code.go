@@ -37,3 +37,25 @@ func IsAllowJoinInGameOnProgress(gameCode string) bool {
 		return true
 	}
 }
+
+type CurrencyName string
+
+const (
+	CurrencyNameVND = "vnd"
+	CurrencyNameUS  = "$"
+)
+
+func (g CurrencyName) String() string {
+	return string(g)
+}
+
+func (g CurrencyName) FromId(id int) string {
+	switch id {
+	case 1:
+		return CurrencyNameVND
+	case 2:
+		return CurrencyNameUS
+	default:
+		return ""
+	}
+}

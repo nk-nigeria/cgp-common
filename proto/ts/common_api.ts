@@ -1,6 +1,6 @@
 /* eslint-disable */
-import Long from "long";
-import _m0 from "protobufjs/minimal";
+import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -572,6 +572,9 @@ export interface GiftCode {
 
 export interface ListGiftCode {
   giftCodes: GiftCode[];
+  total: number;
+  offset: number;
+  limit: number;
 }
 
 export interface AddNotificationRequest {
@@ -727,6 +730,16 @@ export interface WalletTransRequest {
 export interface Error {
   code: number;
   error: string;
+}
+
+export interface Request {
+  userId: string;
+  body: string;
+}
+
+export interface Response {
+  body: string;
+  errorMessage: string;
 }
 
 function createBaseGame(): Game {
@@ -3967,13 +3980,22 @@ export const GiftCode = {
 };
 
 function createBaseListGiftCode(): ListGiftCode {
-  return { giftCodes: [] };
+  return { giftCodes: [], total: 0, offset: 0, limit: 0 };
 }
 
 export const ListGiftCode = {
   encode(message: ListGiftCode, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.giftCodes) {
       GiftCode.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.total !== 0) {
+      writer.uint32(16).int64(message.total);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(24).int64(message.offset);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
     }
     return writer;
   },
@@ -3992,6 +4014,27 @@ export const ListGiftCode = {
 
           message.giftCodes.push(GiftCode.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4006,6 +4049,9 @@ export const ListGiftCode = {
       giftCodes: globalThis.Array.isArray(object?.giftCodes)
         ? object.giftCodes.map((e: any) => GiftCode.fromJSON(e))
         : [],
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
     };
   },
 
@@ -4013,6 +4059,15 @@ export const ListGiftCode = {
     const obj: any = {};
     if (message.giftCodes?.length) {
       obj.giftCodes = message.giftCodes.map((e) => GiftCode.toJSON(e));
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
     }
     return obj;
   },
@@ -4023,6 +4078,9 @@ export const ListGiftCode = {
   fromPartial<I extends Exact<DeepPartial<ListGiftCode>, I>>(object: I): ListGiftCode {
     const message = createBaseListGiftCode();
     message.giftCodes = object.giftCodes?.map((e) => GiftCode.fromPartial(e)) || [];
+    message.total = object.total ?? 0;
+    message.offset = object.offset ?? 0;
+    message.limit = object.limit ?? 0;
     return message;
   },
 };
@@ -6412,6 +6470,154 @@ export const Error = {
     const message = createBaseError();
     message.code = object.code ?? 0;
     message.error = object.error ?? "";
+    return message;
+  },
+};
+
+function createBaseRequest(): Request {
+  return { userId: "", body: "" };
+}
+
+export const Request = {
+  encode(message: Request, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.body !== "") {
+      writer.uint32(18).string(message.body);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Request {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.body = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Request {
+    return {
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      body: isSet(object.body) ? globalThis.String(object.body) : "",
+    };
+  },
+
+  toJSON(message: Request): unknown {
+    const obj: any = {};
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.body !== "") {
+      obj.body = message.body;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Request>, I>>(base?: I): Request {
+    return Request.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Request>, I>>(object: I): Request {
+    const message = createBaseRequest();
+    message.userId = object.userId ?? "";
+    message.body = object.body ?? "";
+    return message;
+  },
+};
+
+function createBaseResponse(): Response {
+  return { body: "", errorMessage: "" };
+}
+
+export const Response = {
+  encode(message: Response, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.body !== "") {
+      writer.uint32(10).string(message.body);
+    }
+    if (message.errorMessage !== "") {
+      writer.uint32(18).string(message.errorMessage);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Response {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.body = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.errorMessage = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Response {
+    return {
+      body: isSet(object.body) ? globalThis.String(object.body) : "",
+      errorMessage: isSet(object.errorMessage) ? globalThis.String(object.errorMessage) : "",
+    };
+  },
+
+  toJSON(message: Response): unknown {
+    const obj: any = {};
+    if (message.body !== "") {
+      obj.body = message.body;
+    }
+    if (message.errorMessage !== "") {
+      obj.errorMessage = message.errorMessage;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Response>, I>>(base?: I): Response {
+    return Response.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Response>, I>>(object: I): Response {
+    const message = createBaseResponse();
+    message.body = object.body ?? "";
+    message.errorMessage = object.errorMessage ?? "";
     return message;
   },
 };

@@ -263,6 +263,9 @@ message GiftCode {
 
 message ListGiftCode {
   repeated GiftCode gift_codes = 1;
+  int64 total = 2;
+  int64 offset = 3;
+  int64 limit = 4;
 }
 
 enum TypeNotification {
@@ -438,4 +441,14 @@ message WalletTransRequest {
 message Error {
   int64 code = 1;
   string error = 2;
+}
+
+message Request{
+  string user_id = 1;
+  string body = 2;
+}
+
+message Response{
+  string body = 1;
+  string error_message = 2;
 }
