@@ -340,6 +340,7 @@ export interface CashInfo {
   currencyUnitName: string;
   numTransByCurrencyValue: { [key: number]: number };
   numAccountUnique: number;
+  netRev: number;
 }
 
 export interface CashInfo_NumTransByCurrencyValueEntry {
@@ -360,6 +361,9 @@ export interface CashInfoResponse {
   cashoutInfos: CashInfo[];
   totalCash: number;
   totalAccount: number;
+  avgCash: number;
+  totalRev: number;
+  avgRev: number;
 }
 
 export interface UserGameCount {
@@ -4690,6 +4694,7 @@ function createBaseCashInfo(): CashInfo {
     currencyUnitName: "",
     numTransByCurrencyValue: {},
     numAccountUnique: 0,
+    netRev: 0,
   };
 }
 
@@ -4739,6 +4744,9 @@ export const CashInfo = {
     });
     if (message.numAccountUnique !== 0) {
       writer.uint32(120).int64(message.numAccountUnique);
+    }
+    if (message.netRev !== 0) {
+      writer.uint32(128).int64(message.netRev);
     }
     return writer;
   },
@@ -4858,6 +4866,13 @@ export const CashInfo = {
 
           message.numAccountUnique = longToNumber(reader.int64() as Long);
           continue;
+        case 16:
+          if (tag !== 128) {
+            break;
+          }
+
+          message.netRev = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4889,6 +4904,7 @@ export const CashInfo = {
         }, {})
         : {},
       numAccountUnique: isSet(object.numAccountUnique) ? globalThis.Number(object.numAccountUnique) : 0,
+      netRev: isSet(object.netRev) ? globalThis.Number(object.netRev) : 0,
     };
   },
 
@@ -4945,6 +4961,9 @@ export const CashInfo = {
     if (message.numAccountUnique !== 0) {
       obj.numAccountUnique = Math.round(message.numAccountUnique);
     }
+    if (message.netRev !== 0) {
+      obj.netRev = Math.round(message.netRev);
+    }
     return obj;
   },
 
@@ -4975,6 +4994,7 @@ export const CashInfo = {
       return acc;
     }, {});
     message.numAccountUnique = object.numAccountUnique ?? 0;
+    message.netRev = object.netRev ?? 0;
     return message;
   },
 };
@@ -5192,7 +5212,7 @@ export const CashInfoRequest = {
 };
 
 function createBaseCashInfoResponse(): CashInfoResponse {
-  return { cashoutInfos: [], totalCash: 0, totalAccount: 0 };
+  return { cashoutInfos: [], totalCash: 0, totalAccount: 0, avgCash: 0, totalRev: 0, avgRev: 0 };
 }
 
 export const CashInfoResponse = {
@@ -5205,6 +5225,15 @@ export const CashInfoResponse = {
     }
     if (message.totalAccount !== 0) {
       writer.uint32(24).int64(message.totalAccount);
+    }
+    if (message.avgCash !== 0) {
+      writer.uint32(32).int64(message.avgCash);
+    }
+    if (message.totalRev !== 0) {
+      writer.uint32(40).int64(message.totalRev);
+    }
+    if (message.avgRev !== 0) {
+      writer.uint32(48).int64(message.avgRev);
     }
     return writer;
   },
@@ -5237,6 +5266,27 @@ export const CashInfoResponse = {
 
           message.totalAccount = longToNumber(reader.int64() as Long);
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.avgCash = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.totalRev = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.avgRev = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5253,6 +5303,9 @@ export const CashInfoResponse = {
         : [],
       totalCash: isSet(object.totalCash) ? globalThis.Number(object.totalCash) : 0,
       totalAccount: isSet(object.totalAccount) ? globalThis.Number(object.totalAccount) : 0,
+      avgCash: isSet(object.avgCash) ? globalThis.Number(object.avgCash) : 0,
+      totalRev: isSet(object.totalRev) ? globalThis.Number(object.totalRev) : 0,
+      avgRev: isSet(object.avgRev) ? globalThis.Number(object.avgRev) : 0,
     };
   },
 
@@ -5267,6 +5320,15 @@ export const CashInfoResponse = {
     if (message.totalAccount !== 0) {
       obj.totalAccount = Math.round(message.totalAccount);
     }
+    if (message.avgCash !== 0) {
+      obj.avgCash = Math.round(message.avgCash);
+    }
+    if (message.totalRev !== 0) {
+      obj.totalRev = Math.round(message.totalRev);
+    }
+    if (message.avgRev !== 0) {
+      obj.avgRev = Math.round(message.avgRev);
+    }
     return obj;
   },
 
@@ -5278,6 +5340,9 @@ export const CashInfoResponse = {
     message.cashoutInfos = object.cashoutInfos?.map((e) => CashInfo.fromPartial(e)) || [];
     message.totalCash = object.totalCash ?? 0;
     message.totalAccount = object.totalAccount ?? 0;
+    message.avgCash = object.avgCash ?? 0;
+    message.totalRev = object.totalRev ?? 0;
+    message.avgRev = object.avgRev ?? 0;
     return message;
   },
 };

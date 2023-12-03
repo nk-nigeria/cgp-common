@@ -309,6 +309,7 @@ message CashInfo {
   string currency_unit_name = 13;
   map<int64, int64> num_trans_by_currency_value = 14;
   int64 num_account_unique = 15;
+  int64 net_rev = 16;
 }
 
 message CashInfoRequest {
@@ -324,7 +325,11 @@ message CashInfoResponse {
   repeated CashInfo cashout_infos = 1;
   int64 total_cash = 2;
   int64 total_account = 3;
+  int64 avg_cash = 4;
+  int64 total_rev = 5;
+  int64 avg_rev = 6;
 }
+
 
 message UserGameCount {
   int64 date_unix = 1;
