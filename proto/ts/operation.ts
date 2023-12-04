@@ -321,6 +321,8 @@ export interface IAPSummary {
   vipPoint: number;
   totalCashout: number;
   vip: number;
+  currencyTopup: number;
+  currencyCashout: number;
 }
 
 export interface CashInfo {
@@ -4559,7 +4561,17 @@ export const TransactionResponse = {
 };
 
 function createBaseIAPSummary(): IAPSummary {
-  return { id: 0, userId: "", createAtUnix: 0, totalTopup: 0, vipPoint: 0, totalCashout: 0, vip: 0 };
+  return {
+    id: 0,
+    userId: "",
+    createAtUnix: 0,
+    totalTopup: 0,
+    vipPoint: 0,
+    totalCashout: 0,
+    vip: 0,
+    currencyTopup: 0,
+    currencyCashout: 0,
+  };
 }
 
 export const IAPSummary = {
@@ -4584,6 +4596,12 @@ export const IAPSummary = {
     }
     if (message.vip !== 0) {
       writer.uint32(56).int64(message.vip);
+    }
+    if (message.currencyTopup !== 0) {
+      writer.uint32(64).int64(message.currencyTopup);
+    }
+    if (message.currencyCashout !== 0) {
+      writer.uint32(72).int64(message.currencyCashout);
     }
     return writer;
   },
@@ -4644,6 +4662,20 @@ export const IAPSummary = {
 
           message.vip = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.currencyTopup = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.currencyCashout = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4662,6 +4694,8 @@ export const IAPSummary = {
       vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
       totalCashout: isSet(object.totalCashout) ? globalThis.Number(object.totalCashout) : 0,
       vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
+      currencyTopup: isSet(object.currencyTopup) ? globalThis.Number(object.currencyTopup) : 0,
+      currencyCashout: isSet(object.currencyCashout) ? globalThis.Number(object.currencyCashout) : 0,
     };
   },
 
@@ -4688,6 +4722,12 @@ export const IAPSummary = {
     if (message.vip !== 0) {
       obj.vip = Math.round(message.vip);
     }
+    if (message.currencyTopup !== 0) {
+      obj.currencyTopup = Math.round(message.currencyTopup);
+    }
+    if (message.currencyCashout !== 0) {
+      obj.currencyCashout = Math.round(message.currencyCashout);
+    }
     return obj;
   },
 
@@ -4703,6 +4743,8 @@ export const IAPSummary = {
     message.vipPoint = object.vipPoint ?? 0;
     message.totalCashout = object.totalCashout ?? 0;
     message.vip = object.vip ?? 0;
+    message.currencyTopup = object.currencyTopup ?? 0;
+    message.currencyCashout = object.currencyCashout ?? 0;
     return message;
   },
 };

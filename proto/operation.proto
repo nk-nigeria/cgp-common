@@ -292,6 +292,8 @@ message IAPSummary {
   int64 vip_point = 5;
   int64 total_cashout = 6;
   int64 vip = 7;
+  int64 currency_topup = 8;
+  int64 currency_cashout = 9;
 }
 
 message CashInfo {
