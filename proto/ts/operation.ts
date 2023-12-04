@@ -377,6 +377,14 @@ export interface UserGameStats {
   userGameCounts: UserGameCount[];
 }
 
+export interface PaymentByVip {
+  vip: number;
+  co: number;
+  chips: number;
+  numTrans: number;
+  numAccount: number;
+}
+
 function createBaseOpPlayer(): OpPlayer {
   return {
     userId: "",
@@ -5508,6 +5516,125 @@ export const UserGameStats = {
     message.userId = object.userId ?? "";
     message.gameNo = object.gameNo ?? 0;
     message.userGameCounts = object.userGameCounts?.map((e) => UserGameCount.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBasePaymentByVip(): PaymentByVip {
+  return { vip: 0, co: 0, chips: 0, numTrans: 0, numAccount: 0 };
+}
+
+export const PaymentByVip = {
+  encode(message: PaymentByVip, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.vip !== 0) {
+      writer.uint32(8).int64(message.vip);
+    }
+    if (message.co !== 0) {
+      writer.uint32(16).int64(message.co);
+    }
+    if (message.chips !== 0) {
+      writer.uint32(24).int64(message.chips);
+    }
+    if (message.numTrans !== 0) {
+      writer.uint32(32).int64(message.numTrans);
+    }
+    if (message.numAccount !== 0) {
+      writer.uint32(40).int64(message.numAccount);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PaymentByVip {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePaymentByVip();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.vip = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.co = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.chips = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.numTrans = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.numAccount = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PaymentByVip {
+    return {
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
+      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      numTrans: isSet(object.numTrans) ? globalThis.Number(object.numTrans) : 0,
+      numAccount: isSet(object.numAccount) ? globalThis.Number(object.numAccount) : 0,
+    };
+  },
+
+  toJSON(message: PaymentByVip): unknown {
+    const obj: any = {};
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    if (message.co !== 0) {
+      obj.co = Math.round(message.co);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.numTrans !== 0) {
+      obj.numTrans = Math.round(message.numTrans);
+    }
+    if (message.numAccount !== 0) {
+      obj.numAccount = Math.round(message.numAccount);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PaymentByVip>, I>>(base?: I): PaymentByVip {
+    return PaymentByVip.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<PaymentByVip>, I>>(object: I): PaymentByVip {
+    const message = createBasePaymentByVip();
+    message.vip = object.vip ?? 0;
+    message.co = object.co ?? 0;
+    message.chips = object.chips ?? 0;
+    message.numTrans = object.numTrans ?? 0;
+    message.numAccount = object.numAccount ?? 0;
     return message;
   },
 };

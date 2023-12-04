@@ -341,3 +341,12 @@ message UserGameStats {
   int64 game_no = 2;
   repeated UserGameCount user_game_counts = 3;
 }
+
+
+message PaymentByVip {
+  int64 vip = 1;
+  int64 co = 2;
+  int64 chips = 3;
+  int64 num_trans = 4;
+  int64 num_account = 5;
+}
