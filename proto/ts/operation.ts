@@ -385,6 +385,12 @@ export interface PaymentByVip {
   numAccount: number;
 }
 
+export interface PaymentsByVip {
+  payments: PaymentByVip[];
+  fromUnix: number;
+  toUnix: number;
+}
+
 function createBaseOpPlayer(): OpPlayer {
   return {
     userId: "",
@@ -5635,6 +5641,97 @@ export const PaymentByVip = {
     message.chips = object.chips ?? 0;
     message.numTrans = object.numTrans ?? 0;
     message.numAccount = object.numAccount ?? 0;
+    return message;
+  },
+};
+
+function createBasePaymentsByVip(): PaymentsByVip {
+  return { payments: [], fromUnix: 0, toUnix: 0 };
+}
+
+export const PaymentsByVip = {
+  encode(message: PaymentsByVip, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.payments) {
+      PaymentByVip.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.fromUnix !== 0) {
+      writer.uint32(16).int64(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      writer.uint32(24).int64(message.toUnix);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PaymentsByVip {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePaymentsByVip();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.payments.push(PaymentByVip.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.toUnix = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PaymentsByVip {
+    return {
+      payments: globalThis.Array.isArray(object?.payments)
+        ? object.payments.map((e: any) => PaymentByVip.fromJSON(e))
+        : [],
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+    };
+  },
+
+  toJSON(message: PaymentsByVip): unknown {
+    const obj: any = {};
+    if (message.payments?.length) {
+      obj.payments = message.payments.map((e) => PaymentByVip.toJSON(e));
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PaymentsByVip>, I>>(base?: I): PaymentsByVip {
+    return PaymentsByVip.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<PaymentsByVip>, I>>(object: I): PaymentsByVip {
+    const message = createBasePaymentsByVip();
+    message.payments = object.payments?.map((e) => PaymentByVip.fromPartial(e)) || [];
+    message.fromUnix = object.fromUnix ?? 0;
+    message.toUnix = object.toUnix ?? 0;
     return message;
   },
 };

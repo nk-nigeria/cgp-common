@@ -350,3 +350,9 @@ message PaymentByVip {
   int64 num_trans = 4;
   int64 num_account = 5;
 }
+
+message PaymentsByVip {
+  repeated PaymentByVip payments = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
+}
