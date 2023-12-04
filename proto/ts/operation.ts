@@ -320,6 +320,7 @@ export interface IAPSummary {
   totalTopup: number;
   vipPoint: number;
   totalCashout: number;
+  vip: number;
 }
 
 export interface CashInfo {
@@ -4558,7 +4559,7 @@ export const TransactionResponse = {
 };
 
 function createBaseIAPSummary(): IAPSummary {
-  return { id: 0, userId: "", createAtUnix: 0, totalTopup: 0, vipPoint: 0, totalCashout: 0 };
+  return { id: 0, userId: "", createAtUnix: 0, totalTopup: 0, vipPoint: 0, totalCashout: 0, vip: 0 };
 }
 
 export const IAPSummary = {
@@ -4580,6 +4581,9 @@ export const IAPSummary = {
     }
     if (message.totalCashout !== 0) {
       writer.uint32(48).int64(message.totalCashout);
+    }
+    if (message.vip !== 0) {
+      writer.uint32(56).int64(message.vip);
     }
     return writer;
   },
@@ -4633,6 +4637,13 @@ export const IAPSummary = {
 
           message.totalCashout = longToNumber(reader.int64() as Long);
           continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.vip = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4650,6 +4661,7 @@ export const IAPSummary = {
       totalTopup: isSet(object.totalTopup) ? globalThis.Number(object.totalTopup) : 0,
       vipPoint: isSet(object.vipPoint) ? globalThis.Number(object.vipPoint) : 0,
       totalCashout: isSet(object.totalCashout) ? globalThis.Number(object.totalCashout) : 0,
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
     };
   },
 
@@ -4673,6 +4685,9 @@ export const IAPSummary = {
     if (message.totalCashout !== 0) {
       obj.totalCashout = Math.round(message.totalCashout);
     }
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
     return obj;
   },
 
@@ -4687,6 +4702,7 @@ export const IAPSummary = {
     message.totalTopup = object.totalTopup ?? 0;
     message.vipPoint = object.vipPoint ?? 0;
     message.totalCashout = object.totalCashout ?? 0;
+    message.vip = object.vip ?? 0;
     return message;
   },
 };
