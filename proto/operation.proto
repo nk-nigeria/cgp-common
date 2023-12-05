@@ -291,6 +291,9 @@ message IAPSummary {
   int64 total_topup = 4;
   int64 vip_point = 5;
   int64 total_cashout = 6;
+  int64 vip = 7;
+  int64 currency_topup = 8;
+  int64 currency_cashout = 9;
 }
 
 message CashInfo {
@@ -340,4 +343,33 @@ message UserGameStats {
   string user_id = 1;
   int64 game_no = 2;
   repeated UserGameCount user_game_counts = 3;
+}
+
+
+message PaymentByVip {
+  int64 vip = 1;
+  int64 ci = 2;
+  int64 chips = 3;
+  int64 num_trans = 4;
+  int64 num_account = 5;
+}
+
+message PaymentsByVip {
+  repeated PaymentByVip payments = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
+}
+
+message CashoutByVip {
+  int64 vip = 1;
+  int64 co = 2;
+  int64 chips = 3;
+  int64 num_trans = 4;
+  int64 num_account = 5;
+}
+
+message CashoutsByVip {
+  repeated CashoutByVip cashouts = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
 }
