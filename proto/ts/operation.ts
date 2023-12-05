@@ -382,7 +382,7 @@ export interface UserGameStats {
 
 export interface PaymentByVip {
   vip: number;
-  co: number;
+  ci: number;
   chips: number;
   numTrans: number;
   numAccount: number;
@@ -390,6 +390,20 @@ export interface PaymentByVip {
 
 export interface PaymentsByVip {
   payments: PaymentByVip[];
+  fromUnix: number;
+  toUnix: number;
+}
+
+export interface CashoutByVip {
+  vip: number;
+  co: number;
+  chips: number;
+  numTrans: number;
+  numAccount: number;
+}
+
+export interface CashoutsByVip {
+  cashouts: CashoutByVip[];
   fromUnix: number;
   toUnix: number;
 }
@@ -5585,7 +5599,7 @@ export const UserGameStats = {
 };
 
 function createBasePaymentByVip(): PaymentByVip {
-  return { vip: 0, co: 0, chips: 0, numTrans: 0, numAccount: 0 };
+  return { vip: 0, ci: 0, chips: 0, numTrans: 0, numAccount: 0 };
 }
 
 export const PaymentByVip = {
@@ -5593,8 +5607,8 @@ export const PaymentByVip = {
     if (message.vip !== 0) {
       writer.uint32(8).int64(message.vip);
     }
-    if (message.co !== 0) {
-      writer.uint32(16).int64(message.co);
+    if (message.ci !== 0) {
+      writer.uint32(16).int64(message.ci);
     }
     if (message.chips !== 0) {
       writer.uint32(24).int64(message.chips);
@@ -5627,7 +5641,7 @@ export const PaymentByVip = {
             break;
           }
 
-          message.co = longToNumber(reader.int64() as Long);
+          message.ci = longToNumber(reader.int64() as Long);
           continue;
         case 3:
           if (tag !== 24) {
@@ -5662,7 +5676,7 @@ export const PaymentByVip = {
   fromJSON(object: any): PaymentByVip {
     return {
       vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
-      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
+      ci: isSet(object.ci) ? globalThis.Number(object.ci) : 0,
       chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       numTrans: isSet(object.numTrans) ? globalThis.Number(object.numTrans) : 0,
       numAccount: isSet(object.numAccount) ? globalThis.Number(object.numAccount) : 0,
@@ -5674,8 +5688,8 @@ export const PaymentByVip = {
     if (message.vip !== 0) {
       obj.vip = Math.round(message.vip);
     }
-    if (message.co !== 0) {
-      obj.co = Math.round(message.co);
+    if (message.ci !== 0) {
+      obj.ci = Math.round(message.ci);
     }
     if (message.chips !== 0) {
       obj.chips = Math.round(message.chips);
@@ -5695,7 +5709,7 @@ export const PaymentByVip = {
   fromPartial<I extends Exact<DeepPartial<PaymentByVip>, I>>(object: I): PaymentByVip {
     const message = createBasePaymentByVip();
     message.vip = object.vip ?? 0;
-    message.co = object.co ?? 0;
+    message.ci = object.ci ?? 0;
     message.chips = object.chips ?? 0;
     message.numTrans = object.numTrans ?? 0;
     message.numAccount = object.numAccount ?? 0;
@@ -5788,6 +5802,216 @@ export const PaymentsByVip = {
   fromPartial<I extends Exact<DeepPartial<PaymentsByVip>, I>>(object: I): PaymentsByVip {
     const message = createBasePaymentsByVip();
     message.payments = object.payments?.map((e) => PaymentByVip.fromPartial(e)) || [];
+    message.fromUnix = object.fromUnix ?? 0;
+    message.toUnix = object.toUnix ?? 0;
+    return message;
+  },
+};
+
+function createBaseCashoutByVip(): CashoutByVip {
+  return { vip: 0, co: 0, chips: 0, numTrans: 0, numAccount: 0 };
+}
+
+export const CashoutByVip = {
+  encode(message: CashoutByVip, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.vip !== 0) {
+      writer.uint32(8).int64(message.vip);
+    }
+    if (message.co !== 0) {
+      writer.uint32(16).int64(message.co);
+    }
+    if (message.chips !== 0) {
+      writer.uint32(24).int64(message.chips);
+    }
+    if (message.numTrans !== 0) {
+      writer.uint32(32).int64(message.numTrans);
+    }
+    if (message.numAccount !== 0) {
+      writer.uint32(40).int64(message.numAccount);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashoutByVip {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashoutByVip();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.vip = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.co = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.chips = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.numTrans = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.numAccount = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashoutByVip {
+    return {
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
+      co: isSet(object.co) ? globalThis.Number(object.co) : 0,
+      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
+      numTrans: isSet(object.numTrans) ? globalThis.Number(object.numTrans) : 0,
+      numAccount: isSet(object.numAccount) ? globalThis.Number(object.numAccount) : 0,
+    };
+  },
+
+  toJSON(message: CashoutByVip): unknown {
+    const obj: any = {};
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    if (message.co !== 0) {
+      obj.co = Math.round(message.co);
+    }
+    if (message.chips !== 0) {
+      obj.chips = Math.round(message.chips);
+    }
+    if (message.numTrans !== 0) {
+      obj.numTrans = Math.round(message.numTrans);
+    }
+    if (message.numAccount !== 0) {
+      obj.numAccount = Math.round(message.numAccount);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashoutByVip>, I>>(base?: I): CashoutByVip {
+    return CashoutByVip.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashoutByVip>, I>>(object: I): CashoutByVip {
+    const message = createBaseCashoutByVip();
+    message.vip = object.vip ?? 0;
+    message.co = object.co ?? 0;
+    message.chips = object.chips ?? 0;
+    message.numTrans = object.numTrans ?? 0;
+    message.numAccount = object.numAccount ?? 0;
+    return message;
+  },
+};
+
+function createBaseCashoutsByVip(): CashoutsByVip {
+  return { cashouts: [], fromUnix: 0, toUnix: 0 };
+}
+
+export const CashoutsByVip = {
+  encode(message: CashoutsByVip, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.cashouts) {
+      CashoutByVip.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.fromUnix !== 0) {
+      writer.uint32(16).int64(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      writer.uint32(24).int64(message.toUnix);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): CashoutsByVip {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCashoutsByVip();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.cashouts.push(CashoutByVip.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.toUnix = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CashoutsByVip {
+    return {
+      cashouts: globalThis.Array.isArray(object?.cashouts)
+        ? object.cashouts.map((e: any) => CashoutByVip.fromJSON(e))
+        : [],
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      toUnix: isSet(object.toUnix) ? globalThis.Number(object.toUnix) : 0,
+    };
+  },
+
+  toJSON(message: CashoutsByVip): unknown {
+    const obj: any = {};
+    if (message.cashouts?.length) {
+      obj.cashouts = message.cashouts.map((e) => CashoutByVip.toJSON(e));
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.toUnix !== 0) {
+      obj.toUnix = Math.round(message.toUnix);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CashoutsByVip>, I>>(base?: I): CashoutsByVip {
+    return CashoutsByVip.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<CashoutsByVip>, I>>(object: I): CashoutsByVip {
+    const message = createBaseCashoutsByVip();
+    message.cashouts = object.cashouts?.map((e) => CashoutByVip.fromPartial(e)) || [];
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
     return message;

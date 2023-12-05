@@ -348,7 +348,7 @@ message UserGameStats {
 
 message PaymentByVip {
   int64 vip = 1;
-  int64 co = 2;
+  int64 ci = 2;
   int64 chips = 3;
   int64 num_trans = 4;
   int64 num_account = 5;
@@ -356,6 +356,20 @@ message PaymentByVip {
 
 message PaymentsByVip {
   repeated PaymentByVip payments = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
+}
+
+message CashoutByVip {
+  int64 vip = 1;
+  int64 co = 2;
+  int64 chips = 3;
+  int64 num_trans = 4;
+  int64 num_account = 5;
+}
+
+message CashoutsByVip {
+  repeated CashoutByVip cashouts = 1;
   int64 from_unix = 2;
   int64 to_unix = 3;
 }
