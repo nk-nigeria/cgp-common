@@ -251,6 +251,31 @@ message TopWin {
   int64 game_id = 8;
 }
 
+message Lost {
+  string user_id = 1;
+  string user_name = 2;
+  int64 vip = 3;
+  int64 gold = 4;
+  int64 ag = 5;
+  int64 ag_lost = 6;
+  int64 co = 7;
+  int64 ci = 8;
+  int64 co_rate = 9;
+  int64 lucky_percent = 10;
+  int64 user_sid = 11;
+}
+
+message TopLost {
+  repeated Lost losts = 1;
+  int64 from_unix = 2;
+  int64 to_unix = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  string ref_game = 6;
+  int64 total = 7;
+  int64 game_id = 8;
+}
+
 message TransactionRequest {
   int64 user_sid = 1;
   int64 from_unix = 2;
