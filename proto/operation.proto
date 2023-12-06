@@ -151,6 +151,8 @@ message UserStatGameHistory {
   string game_name = 2;
   int64 total_chip_win = 3;
   int64 total_chip_lost = 4;
+  int64 no_game_win = 5;
+  int64 no_game_lost = 6;
 }
 
 message UserTransferGoldStat {

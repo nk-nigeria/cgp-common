@@ -183,6 +183,8 @@ export interface UserStatGameHistory {
   gameName: string;
   totalChipWin: number;
   totalChipLost: number;
+  noGameWin: number;
+  noGameLost: number;
 }
 
 export interface UserTransferGoldStat {
@@ -2599,7 +2601,7 @@ export const UserStatisticRequest = {
 };
 
 function createBaseUserStatGameHistory(): UserStatGameHistory {
-  return { gameId: 0, gameName: "", totalChipWin: 0, totalChipLost: 0 };
+  return { gameId: 0, gameName: "", totalChipWin: 0, totalChipLost: 0, noGameWin: 0, noGameLost: 0 };
 }
 
 export const UserStatGameHistory = {
@@ -2615,6 +2617,12 @@ export const UserStatGameHistory = {
     }
     if (message.totalChipLost !== 0) {
       writer.uint32(32).int64(message.totalChipLost);
+    }
+    if (message.noGameWin !== 0) {
+      writer.uint32(40).int64(message.noGameWin);
+    }
+    if (message.noGameLost !== 0) {
+      writer.uint32(48).int64(message.noGameLost);
     }
     return writer;
   },
@@ -2654,6 +2662,20 @@ export const UserStatGameHistory = {
 
           message.totalChipLost = longToNumber(reader.int64() as Long);
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.noGameWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.noGameLost = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2669,6 +2691,8 @@ export const UserStatGameHistory = {
       gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
       totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
       totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
+      noGameWin: isSet(object.noGameWin) ? globalThis.Number(object.noGameWin) : 0,
+      noGameLost: isSet(object.noGameLost) ? globalThis.Number(object.noGameLost) : 0,
     };
   },
 
@@ -2686,6 +2710,12 @@ export const UserStatGameHistory = {
     if (message.totalChipLost !== 0) {
       obj.totalChipLost = Math.round(message.totalChipLost);
     }
+    if (message.noGameWin !== 0) {
+      obj.noGameWin = Math.round(message.noGameWin);
+    }
+    if (message.noGameLost !== 0) {
+      obj.noGameLost = Math.round(message.noGameLost);
+    }
     return obj;
   },
 
@@ -2698,6 +2728,8 @@ export const UserStatGameHistory = {
     message.gameName = object.gameName ?? "";
     message.totalChipWin = object.totalChipWin ?? 0;
     message.totalChipLost = object.totalChipLost ?? 0;
+    message.noGameWin = object.noGameWin ?? 0;
+    message.noGameLost = object.noGameLost ?? 0;
     return message;
   },
 };
