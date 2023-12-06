@@ -398,3 +398,20 @@ message CashoutsByVip {
   int64 from_unix = 2;
   int64 to_unix = 3;
 }
+
+message VipStats {
+  int64 time_update_unix = 1;
+  string user_id =2;
+  string user_name = 3;
+  int64 no_win = 4;
+  int64 no_lose = 5;
+  int64 chips_win = 6;
+  int64 chips_lose = 7;
+  int64 cash_in = 8;
+  int64 cash_in5 = 9;
+  int64 cash_in10 = 10;
+  int64 cash_out = 11;
+  int64 cash_out5 = 12;
+  int64 cash_out10 = 13;
+  int64 vip = 14;
+}
