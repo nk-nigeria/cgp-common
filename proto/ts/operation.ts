@@ -185,6 +185,7 @@ export interface UserStatGameHistory {
   totalChipLost: number;
   noGameWin: number;
   noGameLost: number;
+  userId: string;
 }
 
 export interface UserTransferGoldStat {
@@ -2601,7 +2602,7 @@ export const UserStatisticRequest = {
 };
 
 function createBaseUserStatGameHistory(): UserStatGameHistory {
-  return { gameId: 0, gameName: "", totalChipWin: 0, totalChipLost: 0, noGameWin: 0, noGameLost: 0 };
+  return { gameId: 0, gameName: "", totalChipWin: 0, totalChipLost: 0, noGameWin: 0, noGameLost: 0, userId: "" };
 }
 
 export const UserStatGameHistory = {
@@ -2623,6 +2624,9 @@ export const UserStatGameHistory = {
     }
     if (message.noGameLost !== 0) {
       writer.uint32(48).int64(message.noGameLost);
+    }
+    if (message.userId !== "") {
+      writer.uint32(58).string(message.userId);
     }
     return writer;
   },
@@ -2676,6 +2680,13 @@ export const UserStatGameHistory = {
 
           message.noGameLost = longToNumber(reader.int64() as Long);
           continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2693,6 +2704,7 @@ export const UserStatGameHistory = {
       totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
       noGameWin: isSet(object.noGameWin) ? globalThis.Number(object.noGameWin) : 0,
       noGameLost: isSet(object.noGameLost) ? globalThis.Number(object.noGameLost) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
     };
   },
 
@@ -2716,6 +2728,9 @@ export const UserStatGameHistory = {
     if (message.noGameLost !== 0) {
       obj.noGameLost = Math.round(message.noGameLost);
     }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
     return obj;
   },
 
@@ -2730,6 +2745,7 @@ export const UserStatGameHistory = {
     message.totalChipLost = object.totalChipLost ?? 0;
     message.noGameWin = object.noGameWin ?? 0;
     message.noGameLost = object.noGameLost ?? 0;
+    message.userId = object.userId ?? "";
     return message;
   },
 };
