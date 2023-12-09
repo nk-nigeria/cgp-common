@@ -183,6 +183,9 @@ export interface UserStatGameHistory {
   gameName: string;
   totalChipWin: number;
   totalChipLost: number;
+  noGameWin: number;
+  noGameLost: number;
+  userId: string;
 }
 
 export interface UserTransferGoldStat {
@@ -431,6 +434,23 @@ export interface CashoutsByVip {
   cashouts: CashoutByVip[];
   fromUnix: number;
   toUnix: number;
+}
+
+export interface VipStats {
+  timeUpdateUnix: number;
+  userId: string;
+  userName: string;
+  noWin: number;
+  noLose: number;
+  chipsWin: number;
+  chipsLose: number;
+  cashIn: number;
+  cashIn5: number;
+  cashIn10: number;
+  cashOut: number;
+  cashOut5: number;
+  cashOut10: number;
+  vip: number;
 }
 
 function createBaseOpPlayer(): OpPlayer {
@@ -2582,7 +2602,7 @@ export const UserStatisticRequest = {
 };
 
 function createBaseUserStatGameHistory(): UserStatGameHistory {
-  return { gameId: 0, gameName: "", totalChipWin: 0, totalChipLost: 0 };
+  return { gameId: 0, gameName: "", totalChipWin: 0, totalChipLost: 0, noGameWin: 0, noGameLost: 0, userId: "" };
 }
 
 export const UserStatGameHistory = {
@@ -2598,6 +2618,15 @@ export const UserStatGameHistory = {
     }
     if (message.totalChipLost !== 0) {
       writer.uint32(32).int64(message.totalChipLost);
+    }
+    if (message.noGameWin !== 0) {
+      writer.uint32(40).int64(message.noGameWin);
+    }
+    if (message.noGameLost !== 0) {
+      writer.uint32(48).int64(message.noGameLost);
+    }
+    if (message.userId !== "") {
+      writer.uint32(58).string(message.userId);
     }
     return writer;
   },
@@ -2637,6 +2666,27 @@ export const UserStatGameHistory = {
 
           message.totalChipLost = longToNumber(reader.int64() as Long);
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.noGameWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.noGameLost = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2652,6 +2702,9 @@ export const UserStatGameHistory = {
       gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
       totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
       totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
+      noGameWin: isSet(object.noGameWin) ? globalThis.Number(object.noGameWin) : 0,
+      noGameLost: isSet(object.noGameLost) ? globalThis.Number(object.noGameLost) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
     };
   },
 
@@ -2669,6 +2722,15 @@ export const UserStatGameHistory = {
     if (message.totalChipLost !== 0) {
       obj.totalChipLost = Math.round(message.totalChipLost);
     }
+    if (message.noGameWin !== 0) {
+      obj.noGameWin = Math.round(message.noGameWin);
+    }
+    if (message.noGameLost !== 0) {
+      obj.noGameLost = Math.round(message.noGameLost);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
     return obj;
   },
 
@@ -2681,6 +2743,9 @@ export const UserStatGameHistory = {
     message.gameName = object.gameName ?? "";
     message.totalChipWin = object.totalChipWin ?? 0;
     message.totalChipLost = object.totalChipLost ?? 0;
+    message.noGameWin = object.noGameWin ?? 0;
+    message.noGameLost = object.noGameLost ?? 0;
+    message.userId = object.userId ?? "";
     return message;
   },
 };
@@ -6424,6 +6489,275 @@ export const CashoutsByVip = {
     message.cashouts = object.cashouts?.map((e) => CashoutByVip.fromPartial(e)) || [];
     message.fromUnix = object.fromUnix ?? 0;
     message.toUnix = object.toUnix ?? 0;
+    return message;
+  },
+};
+
+function createBaseVipStats(): VipStats {
+  return {
+    timeUpdateUnix: 0,
+    userId: "",
+    userName: "",
+    noWin: 0,
+    noLose: 0,
+    chipsWin: 0,
+    chipsLose: 0,
+    cashIn: 0,
+    cashIn5: 0,
+    cashIn10: 0,
+    cashOut: 0,
+    cashOut5: 0,
+    cashOut10: 0,
+    vip: 0,
+  };
+}
+
+export const VipStats = {
+  encode(message: VipStats, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.timeUpdateUnix !== 0) {
+      writer.uint32(8).int64(message.timeUpdateUnix);
+    }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
+    if (message.userName !== "") {
+      writer.uint32(26).string(message.userName);
+    }
+    if (message.noWin !== 0) {
+      writer.uint32(32).int64(message.noWin);
+    }
+    if (message.noLose !== 0) {
+      writer.uint32(40).int64(message.noLose);
+    }
+    if (message.chipsWin !== 0) {
+      writer.uint32(48).int64(message.chipsWin);
+    }
+    if (message.chipsLose !== 0) {
+      writer.uint32(56).int64(message.chipsLose);
+    }
+    if (message.cashIn !== 0) {
+      writer.uint32(64).int64(message.cashIn);
+    }
+    if (message.cashIn5 !== 0) {
+      writer.uint32(72).int64(message.cashIn5);
+    }
+    if (message.cashIn10 !== 0) {
+      writer.uint32(80).int64(message.cashIn10);
+    }
+    if (message.cashOut !== 0) {
+      writer.uint32(88).int64(message.cashOut);
+    }
+    if (message.cashOut5 !== 0) {
+      writer.uint32(96).int64(message.cashOut5);
+    }
+    if (message.cashOut10 !== 0) {
+      writer.uint32(104).int64(message.cashOut10);
+    }
+    if (message.vip !== 0) {
+      writer.uint32(112).int64(message.vip);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): VipStats {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVipStats();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.timeUpdateUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.userName = reader.string();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.noWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.noLose = longToNumber(reader.int64() as Long);
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.chipsWin = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.chipsLose = longToNumber(reader.int64() as Long);
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.cashIn = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.cashIn5 = longToNumber(reader.int64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.cashIn10 = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.cashOut = longToNumber(reader.int64() as Long);
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.cashOut5 = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.cashOut10 = longToNumber(reader.int64() as Long);
+          continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.vip = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): VipStats {
+    return {
+      timeUpdateUnix: isSet(object.timeUpdateUnix) ? globalThis.Number(object.timeUpdateUnix) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
+      noWin: isSet(object.noWin) ? globalThis.Number(object.noWin) : 0,
+      noLose: isSet(object.noLose) ? globalThis.Number(object.noLose) : 0,
+      chipsWin: isSet(object.chipsWin) ? globalThis.Number(object.chipsWin) : 0,
+      chipsLose: isSet(object.chipsLose) ? globalThis.Number(object.chipsLose) : 0,
+      cashIn: isSet(object.cashIn) ? globalThis.Number(object.cashIn) : 0,
+      cashIn5: isSet(object.cashIn5) ? globalThis.Number(object.cashIn5) : 0,
+      cashIn10: isSet(object.cashIn10) ? globalThis.Number(object.cashIn10) : 0,
+      cashOut: isSet(object.cashOut) ? globalThis.Number(object.cashOut) : 0,
+      cashOut5: isSet(object.cashOut5) ? globalThis.Number(object.cashOut5) : 0,
+      cashOut10: isSet(object.cashOut10) ? globalThis.Number(object.cashOut10) : 0,
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
+    };
+  },
+
+  toJSON(message: VipStats): unknown {
+    const obj: any = {};
+    if (message.timeUpdateUnix !== 0) {
+      obj.timeUpdateUnix = Math.round(message.timeUpdateUnix);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.userName !== "") {
+      obj.userName = message.userName;
+    }
+    if (message.noWin !== 0) {
+      obj.noWin = Math.round(message.noWin);
+    }
+    if (message.noLose !== 0) {
+      obj.noLose = Math.round(message.noLose);
+    }
+    if (message.chipsWin !== 0) {
+      obj.chipsWin = Math.round(message.chipsWin);
+    }
+    if (message.chipsLose !== 0) {
+      obj.chipsLose = Math.round(message.chipsLose);
+    }
+    if (message.cashIn !== 0) {
+      obj.cashIn = Math.round(message.cashIn);
+    }
+    if (message.cashIn5 !== 0) {
+      obj.cashIn5 = Math.round(message.cashIn5);
+    }
+    if (message.cashIn10 !== 0) {
+      obj.cashIn10 = Math.round(message.cashIn10);
+    }
+    if (message.cashOut !== 0) {
+      obj.cashOut = Math.round(message.cashOut);
+    }
+    if (message.cashOut5 !== 0) {
+      obj.cashOut5 = Math.round(message.cashOut5);
+    }
+    if (message.cashOut10 !== 0) {
+      obj.cashOut10 = Math.round(message.cashOut10);
+    }
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<VipStats>, I>>(base?: I): VipStats {
+    return VipStats.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<VipStats>, I>>(object: I): VipStats {
+    const message = createBaseVipStats();
+    message.timeUpdateUnix = object.timeUpdateUnix ?? 0;
+    message.userId = object.userId ?? "";
+    message.userName = object.userName ?? "";
+    message.noWin = object.noWin ?? 0;
+    message.noLose = object.noLose ?? 0;
+    message.chipsWin = object.chipsWin ?? 0;
+    message.chipsLose = object.chipsLose ?? 0;
+    message.cashIn = object.cashIn ?? 0;
+    message.cashIn5 = object.cashIn5 ?? 0;
+    message.cashIn10 = object.cashIn10 ?? 0;
+    message.cashOut = object.cashOut ?? 0;
+    message.cashOut5 = object.cashOut5 ?? 0;
+    message.cashOut10 = object.cashOut10 ?? 0;
+    message.vip = object.vip ?? 0;
     return message;
   },
 };
