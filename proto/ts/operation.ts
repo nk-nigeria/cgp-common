@@ -455,6 +455,7 @@ export interface VipStats {
 
 export interface VipStatsReponse {
   vipsStats: VipStats[];
+  total: number;
   fromUnix: number;
   limit: number;
   offset: number;
@@ -6770,7 +6771,7 @@ export const VipStats = {
 };
 
 function createBaseVipStatsReponse(): VipStatsReponse {
-  return { vipsStats: [], fromUnix: 0, limit: 0, offset: 0 };
+  return { vipsStats: [], total: 0, fromUnix: 0, limit: 0, offset: 0 };
 }
 
 export const VipStatsReponse = {
@@ -6778,14 +6779,17 @@ export const VipStatsReponse = {
     for (const v of message.vipsStats) {
       VipStats.encode(v!, writer.uint32(10).fork()).ldelim();
     }
+    if (message.total !== 0) {
+      writer.uint32(16).int64(message.total);
+    }
     if (message.fromUnix !== 0) {
-      writer.uint32(16).int64(message.fromUnix);
+      writer.uint32(24).int64(message.fromUnix);
     }
     if (message.limit !== 0) {
-      writer.uint32(24).int64(message.limit);
+      writer.uint32(32).int64(message.limit);
     }
     if (message.offset !== 0) {
-      writer.uint32(32).int64(message.offset);
+      writer.uint32(40).int64(message.offset);
     }
     return writer;
   },
@@ -6809,17 +6813,24 @@ export const VipStatsReponse = {
             break;
           }
 
-          message.fromUnix = longToNumber(reader.int64() as Long);
+          message.total = longToNumber(reader.int64() as Long);
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.limit = longToNumber(reader.int64() as Long);
+          message.fromUnix = longToNumber(reader.int64() as Long);
           continue;
         case 4:
           if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
             break;
           }
 
@@ -6839,6 +6850,7 @@ export const VipStatsReponse = {
       vipsStats: globalThis.Array.isArray(object?.vipsStats)
         ? object.vipsStats.map((e: any) => VipStats.fromJSON(e))
         : [],
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
       fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
@@ -6849,6 +6861,9 @@ export const VipStatsReponse = {
     const obj: any = {};
     if (message.vipsStats?.length) {
       obj.vipsStats = message.vipsStats.map((e) => VipStats.toJSON(e));
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
     }
     if (message.fromUnix !== 0) {
       obj.fromUnix = Math.round(message.fromUnix);
@@ -6868,6 +6883,7 @@ export const VipStatsReponse = {
   fromPartial<I extends Exact<DeepPartial<VipStatsReponse>, I>>(object: I): VipStatsReponse {
     const message = createBaseVipStatsReponse();
     message.vipsStats = object.vipsStats?.map((e) => VipStats.fromPartial(e)) || [];
+    message.total = object.total ?? 0;
     message.fromUnix = object.fromUnix ?? 0;
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;

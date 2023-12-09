@@ -421,7 +421,8 @@ message VipStats {
 
 message VipStatsReponse {
   repeated VipStats vips_stats = 1;
-  int64 from_unix = 2;
-  int64 limit = 3;
-  int64 offset = 4;
+  int64 total = 2;
+  int64 from_unix = 3;
+  int64 limit = 4;
+  int64 offset = 5;
 }
