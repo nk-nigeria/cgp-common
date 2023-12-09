@@ -453,6 +453,13 @@ export interface VipStats {
   vip: number;
 }
 
+export interface VipStatsReponse {
+  vipsStats: VipStats[];
+  fromUnix: number;
+  limit: number;
+  offset: number;
+}
+
 function createBaseOpPlayer(): OpPlayer {
   return {
     userId: "",
@@ -6758,6 +6765,112 @@ export const VipStats = {
     message.cashOut5 = object.cashOut5 ?? 0;
     message.cashOut10 = object.cashOut10 ?? 0;
     message.vip = object.vip ?? 0;
+    return message;
+  },
+};
+
+function createBaseVipStatsReponse(): VipStatsReponse {
+  return { vipsStats: [], fromUnix: 0, limit: 0, offset: 0 };
+}
+
+export const VipStatsReponse = {
+  encode(message: VipStatsReponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.vipsStats) {
+      VipStats.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.fromUnix !== 0) {
+      writer.uint32(16).int64(message.fromUnix);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(24).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(32).int64(message.offset);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): VipStatsReponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVipStatsReponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.vipsStats.push(VipStats.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.fromUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): VipStatsReponse {
+    return {
+      vipsStats: globalThis.Array.isArray(object?.vipsStats)
+        ? object.vipsStats.map((e: any) => VipStats.fromJSON(e))
+        : [],
+      fromUnix: isSet(object.fromUnix) ? globalThis.Number(object.fromUnix) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+    };
+  },
+
+  toJSON(message: VipStatsReponse): unknown {
+    const obj: any = {};
+    if (message.vipsStats?.length) {
+      obj.vipsStats = message.vipsStats.map((e) => VipStats.toJSON(e));
+    }
+    if (message.fromUnix !== 0) {
+      obj.fromUnix = Math.round(message.fromUnix);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<VipStatsReponse>, I>>(base?: I): VipStatsReponse {
+    return VipStatsReponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<VipStatsReponse>, I>>(object: I): VipStatsReponse {
+    const message = createBaseVipStatsReponse();
+    message.vipsStats = object.vipsStats?.map((e) => VipStats.fromPartial(e)) || [];
+    message.fromUnix = object.fromUnix ?? 0;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
     return message;
   },
 };
