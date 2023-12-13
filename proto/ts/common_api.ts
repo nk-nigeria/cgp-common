@@ -399,12 +399,66 @@ export interface FreeChip {
   chips: number;
   claimable: boolean;
   action: string;
+  claimTimeUnix: number;
+  claimStaus: FreeChip_ClaimStatus;
+}
+
+export enum FreeChip_ClaimStatus {
+  CLAIM_STATUS_UNSPECIFIED = 0,
+  CLAIM_STATUS_WAIT_ADMIN_ACCEPT = 1,
+  CLAIM_STATUS_WAIT_USER_CLAIM = 2,
+  CLAIM_STATUS_CLAIMED = 3,
+  CLAIM_STATUS_REJECT = 4,
+  UNRECOGNIZED = -1,
+}
+
+export function freeChip_ClaimStatusFromJSON(object: any): FreeChip_ClaimStatus {
+  switch (object) {
+    case 0:
+    case "CLAIM_STATUS_UNSPECIFIED":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_UNSPECIFIED;
+    case 1:
+    case "CLAIM_STATUS_WAIT_ADMIN_ACCEPT":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_ADMIN_ACCEPT;
+    case 2:
+    case "CLAIM_STATUS_WAIT_USER_CLAIM":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_USER_CLAIM;
+    case 3:
+    case "CLAIM_STATUS_CLAIMED":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_CLAIMED;
+    case 4:
+    case "CLAIM_STATUS_REJECT":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_REJECT;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return FreeChip_ClaimStatus.UNRECOGNIZED;
+  }
+}
+
+export function freeChip_ClaimStatusToJSON(object: FreeChip_ClaimStatus): string {
+  switch (object) {
+    case FreeChip_ClaimStatus.CLAIM_STATUS_UNSPECIFIED:
+      return "CLAIM_STATUS_UNSPECIFIED";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_ADMIN_ACCEPT:
+      return "CLAIM_STATUS_WAIT_ADMIN_ACCEPT";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_USER_CLAIM:
+      return "CLAIM_STATUS_WAIT_USER_CLAIM";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_CLAIMED:
+      return "CLAIM_STATUS_CLAIMED";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_REJECT:
+      return "CLAIM_STATUS_REJECT";
+    case FreeChip_ClaimStatus.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
 }
 
 export interface FreeChipRequest {
   userId: string;
   limit: number;
   cusor: string;
+  claimStaus: FreeChip_ClaimStatus;
 }
 
 export interface ListFreeChip {
@@ -1225,7 +1279,18 @@ export const Chat = {
 };
 
 function createBaseFreeChip(): FreeChip {
-  return { id: 0, senderId: "", recipientId: "", title: "", content: "", chips: 0, claimable: false, action: "" };
+  return {
+    id: 0,
+    senderId: "",
+    recipientId: "",
+    title: "",
+    content: "",
+    chips: 0,
+    claimable: false,
+    action: "",
+    claimTimeUnix: 0,
+    claimStaus: 0,
+  };
 }
 
 export const FreeChip = {
@@ -1253,6 +1318,12 @@ export const FreeChip = {
     }
     if (message.action !== "") {
       writer.uint32(66).string(message.action);
+    }
+    if (message.claimTimeUnix !== 0) {
+      writer.uint32(72).int64(message.claimTimeUnix);
+    }
+    if (message.claimStaus !== 0) {
+      writer.uint32(80).int32(message.claimStaus);
     }
     return writer;
   },
@@ -1320,6 +1391,20 @@ export const FreeChip = {
 
           message.action = reader.string();
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.claimTimeUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.claimStaus = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1339,6 +1424,8 @@ export const FreeChip = {
       chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       claimable: isSet(object.claimable) ? globalThis.Boolean(object.claimable) : false,
       action: isSet(object.action) ? globalThis.String(object.action) : "",
+      claimTimeUnix: isSet(object.claimTimeUnix) ? globalThis.Number(object.claimTimeUnix) : 0,
+      claimStaus: isSet(object.claimStaus) ? freeChip_ClaimStatusFromJSON(object.claimStaus) : 0,
     };
   },
 
@@ -1368,6 +1455,12 @@ export const FreeChip = {
     if (message.action !== "") {
       obj.action = message.action;
     }
+    if (message.claimTimeUnix !== 0) {
+      obj.claimTimeUnix = Math.round(message.claimTimeUnix);
+    }
+    if (message.claimStaus !== 0) {
+      obj.claimStaus = freeChip_ClaimStatusToJSON(message.claimStaus);
+    }
     return obj;
   },
 
@@ -1384,12 +1477,14 @@ export const FreeChip = {
     message.chips = object.chips ?? 0;
     message.claimable = object.claimable ?? false;
     message.action = object.action ?? "";
+    message.claimTimeUnix = object.claimTimeUnix ?? 0;
+    message.claimStaus = object.claimStaus ?? 0;
     return message;
   },
 };
 
 function createBaseFreeChipRequest(): FreeChipRequest {
-  return { userId: "", limit: 0, cusor: "" };
+  return { userId: "", limit: 0, cusor: "", claimStaus: 0 };
 }
 
 export const FreeChipRequest = {
@@ -1402,6 +1497,9 @@ export const FreeChipRequest = {
     }
     if (message.cusor !== "") {
       writer.uint32(26).string(message.cusor);
+    }
+    if (message.claimStaus !== 0) {
+      writer.uint32(32).int32(message.claimStaus);
     }
     return writer;
   },
@@ -1434,6 +1532,13 @@ export const FreeChipRequest = {
 
           message.cusor = reader.string();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.claimStaus = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1448,6 +1553,7 @@ export const FreeChipRequest = {
       userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
       cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
+      claimStaus: isSet(object.claimStaus) ? freeChip_ClaimStatusFromJSON(object.claimStaus) : 0,
     };
   },
 
@@ -1462,6 +1568,9 @@ export const FreeChipRequest = {
     if (message.cusor !== "") {
       obj.cusor = message.cusor;
     }
+    if (message.claimStaus !== 0) {
+      obj.claimStaus = freeChip_ClaimStatusToJSON(message.claimStaus);
+    }
     return obj;
   },
 
@@ -1473,6 +1582,7 @@ export const FreeChipRequest = {
     message.userId = object.userId ?? "";
     message.limit = object.limit ?? 0;
     message.cusor = object.cusor ?? "";
+    message.claimStaus = object.claimStaus ?? 0;
     return message;
   },
 };
