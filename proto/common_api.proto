@@ -67,6 +67,7 @@ message FreeChip {
   int64 chips = 6;
   bool claimable = 7;
   string action = 8;
+  int64 claim_time_unix = 9;
 }
 
 message FreeChipRequest {

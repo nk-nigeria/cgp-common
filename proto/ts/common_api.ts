@@ -399,6 +399,7 @@ export interface FreeChip {
   chips: number;
   claimable: boolean;
   action: string;
+  claimTimeUnix: number;
 }
 
 export interface FreeChipRequest {
@@ -1225,7 +1226,17 @@ export const Chat = {
 };
 
 function createBaseFreeChip(): FreeChip {
-  return { id: 0, senderId: "", recipientId: "", title: "", content: "", chips: 0, claimable: false, action: "" };
+  return {
+    id: 0,
+    senderId: "",
+    recipientId: "",
+    title: "",
+    content: "",
+    chips: 0,
+    claimable: false,
+    action: "",
+    claimTimeUnix: 0,
+  };
 }
 
 export const FreeChip = {
@@ -1253,6 +1264,9 @@ export const FreeChip = {
     }
     if (message.action !== "") {
       writer.uint32(66).string(message.action);
+    }
+    if (message.claimTimeUnix !== 0) {
+      writer.uint32(72).int64(message.claimTimeUnix);
     }
     return writer;
   },
@@ -1320,6 +1334,13 @@ export const FreeChip = {
 
           message.action = reader.string();
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.claimTimeUnix = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1339,6 +1360,7 @@ export const FreeChip = {
       chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
       claimable: isSet(object.claimable) ? globalThis.Boolean(object.claimable) : false,
       action: isSet(object.action) ? globalThis.String(object.action) : "",
+      claimTimeUnix: isSet(object.claimTimeUnix) ? globalThis.Number(object.claimTimeUnix) : 0,
     };
   },
 
@@ -1368,6 +1390,9 @@ export const FreeChip = {
     if (message.action !== "") {
       obj.action = message.action;
     }
+    if (message.claimTimeUnix !== 0) {
+      obj.claimTimeUnix = Math.round(message.claimTimeUnix);
+    }
     return obj;
   },
 
@@ -1384,6 +1409,7 @@ export const FreeChip = {
     message.chips = object.chips ?? 0;
     message.claimable = object.claimable ?? false;
     message.action = object.action ?? "";
+    message.claimTimeUnix = object.claimTimeUnix ?? 0;
     return message;
   },
 };
