@@ -407,7 +407,8 @@ export enum FreeChip_ClaimStatus {
   CLAIM_STATUS_UNSPECIFIED = 0,
   CLAIM_STATUS_WAIT_ADMIN_ACCEPT = 1,
   CLAIM_STATUS_WAIT_USER_CLAIM = 2,
-  CLAIM_STATUS_REJECT = 3,
+  CLAIM_STATUS_CLAIMED = 3,
+  CLAIM_STATUS_REJECT = 4,
   UNRECOGNIZED = -1,
 }
 
@@ -423,6 +424,9 @@ export function freeChip_ClaimStatusFromJSON(object: any): FreeChip_ClaimStatus 
     case "CLAIM_STATUS_WAIT_USER_CLAIM":
       return FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_USER_CLAIM;
     case 3:
+    case "CLAIM_STATUS_CLAIMED":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_CLAIMED;
+    case 4:
     case "CLAIM_STATUS_REJECT":
       return FreeChip_ClaimStatus.CLAIM_STATUS_REJECT;
     case -1:
@@ -440,6 +444,8 @@ export function freeChip_ClaimStatusToJSON(object: FreeChip_ClaimStatus): string
       return "CLAIM_STATUS_WAIT_ADMIN_ACCEPT";
     case FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_USER_CLAIM:
       return "CLAIM_STATUS_WAIT_USER_CLAIM";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_CLAIMED:
+      return "CLAIM_STATUS_CLAIMED";
     case FreeChip_ClaimStatus.CLAIM_STATUS_REJECT:
       return "CLAIM_STATUS_REJECT";
     case FreeChip_ClaimStatus.UNRECOGNIZED:

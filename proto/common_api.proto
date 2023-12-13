@@ -72,7 +72,8 @@ message FreeChip {
     CLAIM_STATUS_UNSPECIFIED = 0;
     CLAIM_STATUS_WAIT_ADMIN_ACCEPT = 1;
     CLAIM_STATUS_WAIT_USER_CLAIM = 2;
-    CLAIM_STATUS_REJECT = 3;
+    CLAIM_STATUS_CLAIMED = 3;
+    CLAIM_STATUS_REJECT = 4;
   }
   ClaimStatus claim_staus = 10;
 }
