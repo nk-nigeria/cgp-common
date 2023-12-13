@@ -400,49 +400,49 @@ export interface FreeChip {
   claimable: boolean;
   action: string;
   claimTimeUnix: number;
-  claimStaus: FreeChip_FreeChipClaimStatus;
+  claimStaus: FreeChip_ClaimStatus;
 }
 
-export enum FreeChip_FreeChipClaimStatus {
-  FREE_CHIP_CLAIM_STATUS_UNSPECIFIED = 0,
-  FREE_CHIP_CLAIM_STATUS_WAIT_ADMIN_ACCEPT = 1,
-  FREE_CHIP_CLAIM_STATUS_WAIT_USER_CLAIM = 2,
-  FREE_CHIP_CLAIM_STATUS_REJECT = 3,
+export enum FreeChip_ClaimStatus {
+  CLAIM_STATUS_UNSPECIFIED = 0,
+  CLAIM_STATUS_WAIT_ADMIN_ACCEPT = 1,
+  CLAIM_STATUS_WAIT_USER_CLAIM = 2,
+  CLAIM_STATUS_REJECT = 3,
   UNRECOGNIZED = -1,
 }
 
-export function freeChip_FreeChipClaimStatusFromJSON(object: any): FreeChip_FreeChipClaimStatus {
+export function freeChip_ClaimStatusFromJSON(object: any): FreeChip_ClaimStatus {
   switch (object) {
     case 0:
-    case "FREE_CHIP_CLAIM_STATUS_UNSPECIFIED":
-      return FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_UNSPECIFIED;
+    case "CLAIM_STATUS_UNSPECIFIED":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_UNSPECIFIED;
     case 1:
-    case "FREE_CHIP_CLAIM_STATUS_WAIT_ADMIN_ACCEPT":
-      return FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_WAIT_ADMIN_ACCEPT;
+    case "CLAIM_STATUS_WAIT_ADMIN_ACCEPT":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_ADMIN_ACCEPT;
     case 2:
-    case "FREE_CHIP_CLAIM_STATUS_WAIT_USER_CLAIM":
-      return FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_WAIT_USER_CLAIM;
+    case "CLAIM_STATUS_WAIT_USER_CLAIM":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_USER_CLAIM;
     case 3:
-    case "FREE_CHIP_CLAIM_STATUS_REJECT":
-      return FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_REJECT;
+    case "CLAIM_STATUS_REJECT":
+      return FreeChip_ClaimStatus.CLAIM_STATUS_REJECT;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return FreeChip_FreeChipClaimStatus.UNRECOGNIZED;
+      return FreeChip_ClaimStatus.UNRECOGNIZED;
   }
 }
 
-export function freeChip_FreeChipClaimStatusToJSON(object: FreeChip_FreeChipClaimStatus): string {
+export function freeChip_ClaimStatusToJSON(object: FreeChip_ClaimStatus): string {
   switch (object) {
-    case FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_UNSPECIFIED:
-      return "FREE_CHIP_CLAIM_STATUS_UNSPECIFIED";
-    case FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_WAIT_ADMIN_ACCEPT:
-      return "FREE_CHIP_CLAIM_STATUS_WAIT_ADMIN_ACCEPT";
-    case FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_WAIT_USER_CLAIM:
-      return "FREE_CHIP_CLAIM_STATUS_WAIT_USER_CLAIM";
-    case FreeChip_FreeChipClaimStatus.FREE_CHIP_CLAIM_STATUS_REJECT:
-      return "FREE_CHIP_CLAIM_STATUS_REJECT";
-    case FreeChip_FreeChipClaimStatus.UNRECOGNIZED:
+    case FreeChip_ClaimStatus.CLAIM_STATUS_UNSPECIFIED:
+      return "CLAIM_STATUS_UNSPECIFIED";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_ADMIN_ACCEPT:
+      return "CLAIM_STATUS_WAIT_ADMIN_ACCEPT";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_WAIT_USER_CLAIM:
+      return "CLAIM_STATUS_WAIT_USER_CLAIM";
+    case FreeChip_ClaimStatus.CLAIM_STATUS_REJECT:
+      return "CLAIM_STATUS_REJECT";
+    case FreeChip_ClaimStatus.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
@@ -452,6 +452,7 @@ export interface FreeChipRequest {
   userId: string;
   limit: number;
   cusor: string;
+  claimStaus: FreeChip_ClaimStatus;
 }
 
 export interface ListFreeChip {
@@ -1418,7 +1419,7 @@ export const FreeChip = {
       claimable: isSet(object.claimable) ? globalThis.Boolean(object.claimable) : false,
       action: isSet(object.action) ? globalThis.String(object.action) : "",
       claimTimeUnix: isSet(object.claimTimeUnix) ? globalThis.Number(object.claimTimeUnix) : 0,
-      claimStaus: isSet(object.claimStaus) ? freeChip_FreeChipClaimStatusFromJSON(object.claimStaus) : 0,
+      claimStaus: isSet(object.claimStaus) ? freeChip_ClaimStatusFromJSON(object.claimStaus) : 0,
     };
   },
 
@@ -1452,7 +1453,7 @@ export const FreeChip = {
       obj.claimTimeUnix = Math.round(message.claimTimeUnix);
     }
     if (message.claimStaus !== 0) {
-      obj.claimStaus = freeChip_FreeChipClaimStatusToJSON(message.claimStaus);
+      obj.claimStaus = freeChip_ClaimStatusToJSON(message.claimStaus);
     }
     return obj;
   },
@@ -1477,7 +1478,7 @@ export const FreeChip = {
 };
 
 function createBaseFreeChipRequest(): FreeChipRequest {
-  return { userId: "", limit: 0, cusor: "" };
+  return { userId: "", limit: 0, cusor: "", claimStaus: 0 };
 }
 
 export const FreeChipRequest = {
@@ -1490,6 +1491,9 @@ export const FreeChipRequest = {
     }
     if (message.cusor !== "") {
       writer.uint32(26).string(message.cusor);
+    }
+    if (message.claimStaus !== 0) {
+      writer.uint32(32).int32(message.claimStaus);
     }
     return writer;
   },
@@ -1522,6 +1526,13 @@ export const FreeChipRequest = {
 
           message.cusor = reader.string();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.claimStaus = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1536,6 +1547,7 @@ export const FreeChipRequest = {
       userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
       cusor: isSet(object.cusor) ? globalThis.String(object.cusor) : "",
+      claimStaus: isSet(object.claimStaus) ? freeChip_ClaimStatusFromJSON(object.claimStaus) : 0,
     };
   },
 
@@ -1550,6 +1562,9 @@ export const FreeChipRequest = {
     if (message.cusor !== "") {
       obj.cusor = message.cusor;
     }
+    if (message.claimStaus !== 0) {
+      obj.claimStaus = freeChip_ClaimStatusToJSON(message.claimStaus);
+    }
     return obj;
   },
 
@@ -1561,6 +1576,7 @@ export const FreeChipRequest = {
     message.userId = object.userId ?? "";
     message.limit = object.limit ?? 0;
     message.cusor = object.cusor ?? "";
+    message.claimStaus = object.claimStaus ?? 0;
     return message;
   },
 };
