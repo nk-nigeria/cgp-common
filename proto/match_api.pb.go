@@ -451,18 +451,18 @@ type Bet struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Enable    bool  `protobuf:"varint,1,opt,name=enable,proto3" json:"enable,omitempty"`
-	MarkUnit  int64 `protobuf:"varint,2,opt,name=mark_unit,json=markUnit,proto3" json:"mark_unit,omitempty"` // mức cược (chip)
-	GameId    int64 `protobuf:"varint,3,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
-	XJoin     int64 `protobuf:"varint,4,opt,name=x_join,json=xJoin,proto3" json:"x_join,omitempty"`
-	AgJoin    int64 `protobuf:"varint,5,opt,name=ag_join,json=agJoin,proto3" json:"ag_join,omitempty"`
-	XPlayNow  int64 `protobuf:"varint,6,opt,name=x_play_now,json=xPlayNow,proto3" json:"x_play_now,omitempty"`
-	AgPlayNow int64 `protobuf:"varint,7,opt,name=ag_play_now,json=agPlayNow,proto3" json:"ag_play_now,omitempty"`
-	XLeave    int64 `protobuf:"varint,8,opt,name=x_leave,json=xLeave,proto3" json:"x_leave,omitempty"`
-	AgLeave   int64 `protobuf:"varint,9,opt,name=ag_leave,json=agLeave,proto3" json:"ag_leave,omitempty"`
-	XFee      int64 `protobuf:"varint,10,opt,name=x_fee,json=xFee,proto3" json:"x_fee,omitempty"`
-	AgFee     int64 `protobuf:"varint,11,opt,name=ag_fee,json=agFee,proto3" json:"ag_fee,omitempty"`
-	NewFee    int64 `protobuf:"varint,12,opt,name=new_fee,json=newFee,proto3" json:"new_fee,omitempty"`
+	Enable    bool    `protobuf:"varint,1,opt,name=enable,proto3" json:"enable,omitempty"`
+	MarkUnit  int64   `protobuf:"varint,2,opt,name=mark_unit,json=markUnit,proto3" json:"mark_unit,omitempty"` // mức cược (chip)
+	GameId    int64   `protobuf:"varint,3,opt,name=game_id,json=gameId,proto3" json:"game_id,omitempty"`
+	XJoin     int64   `protobuf:"varint,4,opt,name=x_join,json=xJoin,proto3" json:"x_join,omitempty"`
+	AgJoin    int64   `protobuf:"varint,5,opt,name=ag_join,json=agJoin,proto3" json:"ag_join,omitempty"`
+	XPlayNow  int64   `protobuf:"varint,6,opt,name=x_play_now,json=xPlayNow,proto3" json:"x_play_now,omitempty"`
+	AgPlayNow int64   `protobuf:"varint,7,opt,name=ag_play_now,json=agPlayNow,proto3" json:"ag_play_now,omitempty"`
+	XLeave    int64   `protobuf:"varint,8,opt,name=x_leave,json=xLeave,proto3" json:"x_leave,omitempty"`
+	AgLeave   int64   `protobuf:"varint,9,opt,name=ag_leave,json=agLeave,proto3" json:"ag_leave,omitempty"`
+	XFee      int64   `protobuf:"varint,10,opt,name=x_fee,json=xFee,proto3" json:"x_fee,omitempty"`
+	AgFee     int64   `protobuf:"varint,11,opt,name=ag_fee,json=agFee,proto3" json:"ag_fee,omitempty"`
+	NewFee    float32 `protobuf:"fixed32,12,opt,name=new_fee,json=newFee,proto3" json:"new_fee,omitempty"`
 }
 
 func (x *Bet) Reset() {
@@ -574,7 +574,7 @@ func (x *Bet) GetAgFee() int64 {
 	return 0
 }
 
-func (x *Bet) GetNewFee() int64 {
+func (x *Bet) GetNewFee() float32 {
 	if x != nil {
 		return x.NewFee
 	}
@@ -693,7 +693,7 @@ var file_match_api_proto_rawDesc = []byte{
 	0x76, 0x65, 0x12, 0x13, 0x0a, 0x05, 0x78, 0x5f, 0x66, 0x65, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28,
 	0x03, 0x52, 0x04, 0x78, 0x46, 0x65, 0x65, 0x12, 0x15, 0x0a, 0x06, 0x61, 0x67, 0x5f, 0x66, 0x65,
 	0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x61, 0x67, 0x46, 0x65, 0x65, 0x12, 0x17,
-	0x0a, 0x07, 0x6e, 0x65, 0x77, 0x5f, 0x66, 0x65, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x0a, 0x07, 0x6e, 0x65, 0x77, 0x5f, 0x66, 0x65, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x02, 0x52,
 	0x06, 0x6e, 0x65, 0x77, 0x46, 0x65, 0x65, 0x22, 0x24, 0x0a, 0x04, 0x42, 0x65, 0x74, 0x73, 0x12,
 	0x1c, 0x0a, 0x04, 0x62, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x08, 0x2e,
 	0x61, 0x70, 0x69, 0x2e, 0x42, 0x65, 0x74, 0x52, 0x04, 0x62, 0x65, 0x74, 0x73, 0x2a, 0x33, 0x0a,

@@ -80,7 +80,7 @@ message Bet {
   int64 ag_leave = 9;
   int64 x_fee = 10;
   int64 ag_fee = 11;
-  int64 new_fee =12;
+  float new_fee =12;
 }
 
 message Bets {

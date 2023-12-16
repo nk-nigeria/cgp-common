@@ -672,7 +672,7 @@ export const Bet = {
       writer.uint32(88).int64(message.agFee);
     }
     if (message.newFee !== 0) {
-      writer.uint32(96).int64(message.newFee);
+      writer.uint32(101).float(message.newFee);
     }
     return writer;
   },
@@ -762,11 +762,11 @@ export const Bet = {
           message.agFee = longToNumber(reader.int64() as Long);
           continue;
         case 12:
-          if (tag !== 96) {
+          if (tag !== 101) {
             break;
           }
 
-          message.newFee = longToNumber(reader.int64() as Long);
+          message.newFee = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -830,7 +830,7 @@ export const Bet = {
       obj.agFee = Math.round(message.agFee);
     }
     if (message.newFee !== 0) {
-      obj.newFee = Math.round(message.newFee);
+      obj.newFee = message.newFee;
     }
     return obj;
   },
