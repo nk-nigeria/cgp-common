@@ -82,6 +82,7 @@ export interface RpcCreateMatchResponse {
 }
 
 export interface Bet {
+  id: number;
   enable: boolean;
   /** mức cược (chip) */
   markUnit: number;
@@ -621,6 +622,7 @@ export const RpcCreateMatchResponse = {
 
 function createBaseBet(): Bet {
   return {
+    id: 0,
     enable: false,
     markUnit: 0,
     gameId: 0,
@@ -638,41 +640,44 @@ function createBaseBet(): Bet {
 
 export const Bet = {
   encode(message: Bet, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int64(message.id);
+    }
     if (message.enable === true) {
-      writer.uint32(8).bool(message.enable);
+      writer.uint32(16).bool(message.enable);
     }
     if (message.markUnit !== 0) {
-      writer.uint32(16).int64(message.markUnit);
+      writer.uint32(24).int64(message.markUnit);
     }
     if (message.gameId !== 0) {
-      writer.uint32(24).int64(message.gameId);
+      writer.uint32(32).int64(message.gameId);
     }
     if (message.xJoin !== 0) {
-      writer.uint32(32).int64(message.xJoin);
+      writer.uint32(40).int64(message.xJoin);
     }
     if (message.agJoin !== 0) {
-      writer.uint32(40).int64(message.agJoin);
+      writer.uint32(48).int64(message.agJoin);
     }
     if (message.xPlayNow !== 0) {
-      writer.uint32(48).int64(message.xPlayNow);
+      writer.uint32(56).int64(message.xPlayNow);
     }
     if (message.agPlayNow !== 0) {
-      writer.uint32(56).int64(message.agPlayNow);
+      writer.uint32(64).int64(message.agPlayNow);
     }
     if (message.xLeave !== 0) {
-      writer.uint32(64).int64(message.xLeave);
+      writer.uint32(72).int64(message.xLeave);
     }
     if (message.agLeave !== 0) {
-      writer.uint32(72).int64(message.agLeave);
+      writer.uint32(80).int64(message.agLeave);
     }
     if (message.xFee !== 0) {
-      writer.uint32(80).int64(message.xFee);
+      writer.uint32(88).int64(message.xFee);
     }
     if (message.agFee !== 0) {
-      writer.uint32(88).int64(message.agFee);
+      writer.uint32(96).int64(message.agFee);
     }
     if (message.newFee !== 0) {
-      writer.uint32(101).float(message.newFee);
+      writer.uint32(109).float(message.newFee);
     }
     return writer;
   },
@@ -689,80 +694,87 @@ export const Bet = {
             break;
           }
 
-          message.enable = reader.bool();
+          message.id = longToNumber(reader.int64() as Long);
           continue;
         case 2:
           if (tag !== 16) {
             break;
           }
 
-          message.markUnit = longToNumber(reader.int64() as Long);
+          message.enable = reader.bool();
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.gameId = longToNumber(reader.int64() as Long);
+          message.markUnit = longToNumber(reader.int64() as Long);
           continue;
         case 4:
           if (tag !== 32) {
             break;
           }
 
-          message.xJoin = longToNumber(reader.int64() as Long);
+          message.gameId = longToNumber(reader.int64() as Long);
           continue;
         case 5:
           if (tag !== 40) {
             break;
           }
 
-          message.agJoin = longToNumber(reader.int64() as Long);
+          message.xJoin = longToNumber(reader.int64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
             break;
           }
 
-          message.xPlayNow = longToNumber(reader.int64() as Long);
+          message.agJoin = longToNumber(reader.int64() as Long);
           continue;
         case 7:
           if (tag !== 56) {
             break;
           }
 
-          message.agPlayNow = longToNumber(reader.int64() as Long);
+          message.xPlayNow = longToNumber(reader.int64() as Long);
           continue;
         case 8:
           if (tag !== 64) {
             break;
           }
 
-          message.xLeave = longToNumber(reader.int64() as Long);
+          message.agPlayNow = longToNumber(reader.int64() as Long);
           continue;
         case 9:
           if (tag !== 72) {
             break;
           }
 
-          message.agLeave = longToNumber(reader.int64() as Long);
+          message.xLeave = longToNumber(reader.int64() as Long);
           continue;
         case 10:
           if (tag !== 80) {
             break;
           }
 
-          message.xFee = longToNumber(reader.int64() as Long);
+          message.agLeave = longToNumber(reader.int64() as Long);
           continue;
         case 11:
           if (tag !== 88) {
             break;
           }
 
-          message.agFee = longToNumber(reader.int64() as Long);
+          message.xFee = longToNumber(reader.int64() as Long);
           continue;
         case 12:
-          if (tag !== 101) {
+          if (tag !== 96) {
+            break;
+          }
+
+          message.agFee = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 109) {
             break;
           }
 
@@ -779,6 +791,7 @@ export const Bet = {
 
   fromJSON(object: any): Bet {
     return {
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
       enable: isSet(object.enable) ? globalThis.Boolean(object.enable) : false,
       markUnit: isSet(object.markUnit) ? globalThis.Number(object.markUnit) : 0,
       gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
@@ -796,6 +809,9 @@ export const Bet = {
 
   toJSON(message: Bet): unknown {
     const obj: any = {};
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
     if (message.enable === true) {
       obj.enable = message.enable;
     }
@@ -840,6 +856,7 @@ export const Bet = {
   },
   fromPartial<I extends Exact<DeepPartial<Bet>, I>>(object: I): Bet {
     const message = createBaseBet();
+    message.id = object.id ?? 0;
     message.enable = object.enable ?? false;
     message.markUnit = object.markUnit ?? 0;
     message.gameId = object.gameId ?? 0;

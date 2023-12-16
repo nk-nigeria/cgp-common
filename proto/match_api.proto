@@ -69,18 +69,19 @@ message RpcCreateMatchResponse {
 }
 
 message Bet {
-  bool enable = 1;
-  int64 mark_unit = 2; // mức cược (chip)
-  int64 game_id = 3;
-  int64 x_join = 4;
-  int64 ag_join = 5;
-  int64 x_play_now = 6;
-  int64 ag_play_now = 7;
-  int64 x_leave = 8;
-  int64 ag_leave = 9;
-  int64 x_fee = 10;
-  int64 ag_fee = 11;
-  float new_fee =12;
+  int64 id = 1;
+  bool enable = 2;
+  int64 mark_unit = 3; // mức cược (chip)
+  int64 game_id = 4;
+  int64 x_join = 5;
+  int64 ag_join = 6;
+  int64 x_play_now = 7;
+  int64 ag_play_now = 8;
+  int64 x_leave = 9;
+  int64 ag_leave = 10;
+  int64 x_fee = 11;
+  int64 ag_fee = 12;
+  float new_fee = 13;
 }
 
 message Bets {
