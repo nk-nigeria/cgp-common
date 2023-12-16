@@ -100,6 +100,15 @@ export interface Bet {
 
 export interface Bets {
   bets: Bet[];
+  total: number;
+  offset: number;
+  limit: number;
+}
+
+export interface BetRequest {
+  gameId: number;
+  offset: number;
+  limit: number;
 }
 
 function createBaseRpcFindMatchRequest(): RpcFindMatchRequest {
@@ -874,13 +883,22 @@ export const Bet = {
 };
 
 function createBaseBets(): Bets {
-  return { bets: [] };
+  return { bets: [], total: 0, offset: 0, limit: 0 };
 }
 
 export const Bets = {
   encode(message: Bets, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.bets) {
       Bet.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.total !== 0) {
+      writer.uint32(16).int64(message.total);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(24).int64(message.offset);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
     }
     return writer;
   },
@@ -899,6 +917,27 @@ export const Bets = {
 
           message.bets.push(Bet.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -909,13 +948,27 @@ export const Bets = {
   },
 
   fromJSON(object: any): Bets {
-    return { bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => Bet.fromJSON(e)) : [] };
+    return {
+      bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => Bet.fromJSON(e)) : [],
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+    };
   },
 
   toJSON(message: Bets): unknown {
     const obj: any = {};
     if (message.bets?.length) {
       obj.bets = message.bets.map((e) => Bet.toJSON(e));
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
     }
     return obj;
   },
@@ -926,6 +979,98 @@ export const Bets = {
   fromPartial<I extends Exact<DeepPartial<Bets>, I>>(object: I): Bets {
     const message = createBaseBets();
     message.bets = object.bets?.map((e) => Bet.fromPartial(e)) || [];
+    message.total = object.total ?? 0;
+    message.offset = object.offset ?? 0;
+    message.limit = object.limit ?? 0;
+    return message;
+  },
+};
+
+function createBaseBetRequest(): BetRequest {
+  return { gameId: 0, offset: 0, limit: 0 };
+}
+
+export const BetRequest = {
+  encode(message: BetRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.gameId !== 0) {
+      writer.uint32(8).int64(message.gameId);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(16).int64(message.offset);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(24).int64(message.limit);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): BetRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseBetRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.gameId = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): BetRequest {
+    return {
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+    };
+  },
+
+  toJSON(message: BetRequest): unknown {
+    const obj: any = {};
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<BetRequest>, I>>(base?: I): BetRequest {
+    return BetRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<BetRequest>, I>>(object: I): BetRequest {
+    const message = createBaseBetRequest();
+    message.gameId = object.gameId ?? 0;
+    message.offset = object.offset ?? 0;
+    message.limit = object.limit ?? 0;
     return message;
   },
 };
