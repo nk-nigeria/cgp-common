@@ -363,6 +363,7 @@ export interface Game {
   active: boolean;
   lobbyId: string;
   layout: Layout | undefined;
+  id: number;
 }
 
 export interface Layout {
@@ -797,7 +798,7 @@ export interface Response {
 }
 
 function createBaseGame(): Game {
-  return { code: "", active: false, lobbyId: "", layout: undefined };
+  return { code: "", active: false, lobbyId: "", layout: undefined, id: 0 };
 }
 
 export const Game = {
@@ -813,6 +814,9 @@ export const Game = {
     }
     if (message.layout !== undefined) {
       Layout.encode(message.layout, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.id !== 0) {
+      writer.uint32(40).int64(message.id);
     }
     return writer;
   },
@@ -852,6 +856,13 @@ export const Game = {
 
           message.layout = Layout.decode(reader, reader.uint32());
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.id = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -867,6 +878,7 @@ export const Game = {
       active: isSet(object.active) ? globalThis.Boolean(object.active) : false,
       lobbyId: isSet(object.lobbyId) ? globalThis.String(object.lobbyId) : "",
       layout: isSet(object.layout) ? Layout.fromJSON(object.layout) : undefined,
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
     };
   },
 
@@ -884,6 +896,9 @@ export const Game = {
     if (message.layout !== undefined) {
       obj.layout = Layout.toJSON(message.layout);
     }
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
     return obj;
   },
 
@@ -898,6 +913,7 @@ export const Game = {
     message.layout = (object.layout !== undefined && object.layout !== null)
       ? Layout.fromPartial(object.layout)
       : undefined;
+    message.id = object.id ?? 0;
     return message;
   },
 };
