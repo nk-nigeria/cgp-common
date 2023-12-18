@@ -1,5 +1,6 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -81,13 +82,33 @@ export interface RpcCreateMatchResponse {
 }
 
 export interface Bet {
+  id: number;
   enable: boolean;
   /** mức cược (chip) */
   markUnit: number;
+  gameId: number;
+  xJoin: number;
+  agJoin: number;
+  xPlayNow: number;
+  agPlayNow: number;
+  xLeave: number;
+  agLeave: number;
+  xFee: number;
+  agFee: number;
+  newFee: number;
 }
 
 export interface Bets {
   bets: Bet[];
+  total: number;
+  offset: number;
+  limit: number;
+}
+
+export interface BetRequest {
+  gameId: number;
+  offset: number;
+  limit: number;
 }
 
 function createBaseRpcFindMatchRequest(): RpcFindMatchRequest {
@@ -609,16 +630,63 @@ export const RpcCreateMatchResponse = {
 };
 
 function createBaseBet(): Bet {
-  return { enable: false, markUnit: 0 };
+  return {
+    id: 0,
+    enable: false,
+    markUnit: 0,
+    gameId: 0,
+    xJoin: 0,
+    agJoin: 0,
+    xPlayNow: 0,
+    agPlayNow: 0,
+    xLeave: 0,
+    agLeave: 0,
+    xFee: 0,
+    agFee: 0,
+    newFee: 0,
+  };
 }
 
 export const Bet = {
   encode(message: Bet, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int64(message.id);
+    }
     if (message.enable === true) {
-      writer.uint32(8).bool(message.enable);
+      writer.uint32(16).bool(message.enable);
     }
     if (message.markUnit !== 0) {
-      writer.uint32(16).int32(message.markUnit);
+      writer.uint32(29).float(message.markUnit);
+    }
+    if (message.gameId !== 0) {
+      writer.uint32(32).int64(message.gameId);
+    }
+    if (message.xJoin !== 0) {
+      writer.uint32(45).float(message.xJoin);
+    }
+    if (message.agJoin !== 0) {
+      writer.uint32(48).int64(message.agJoin);
+    }
+    if (message.xPlayNow !== 0) {
+      writer.uint32(61).float(message.xPlayNow);
+    }
+    if (message.agPlayNow !== 0) {
+      writer.uint32(64).int64(message.agPlayNow);
+    }
+    if (message.xLeave !== 0) {
+      writer.uint32(77).float(message.xLeave);
+    }
+    if (message.agLeave !== 0) {
+      writer.uint32(80).int64(message.agLeave);
+    }
+    if (message.xFee !== 0) {
+      writer.uint32(93).float(message.xFee);
+    }
+    if (message.agFee !== 0) {
+      writer.uint32(96).int64(message.agFee);
+    }
+    if (message.newFee !== 0) {
+      writer.uint32(109).float(message.newFee);
     }
     return writer;
   },
@@ -635,14 +703,91 @@ export const Bet = {
             break;
           }
 
-          message.enable = reader.bool();
+          message.id = longToNumber(reader.int64() as Long);
           continue;
         case 2:
           if (tag !== 16) {
             break;
           }
 
-          message.markUnit = reader.int32();
+          message.enable = reader.bool();
+          continue;
+        case 3:
+          if (tag !== 29) {
+            break;
+          }
+
+          message.markUnit = reader.float();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.gameId = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 45) {
+            break;
+          }
+
+          message.xJoin = reader.float();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.agJoin = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 61) {
+            break;
+          }
+
+          message.xPlayNow = reader.float();
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.agPlayNow = longToNumber(reader.int64() as Long);
+          continue;
+        case 9:
+          if (tag !== 77) {
+            break;
+          }
+
+          message.xLeave = reader.float();
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.agLeave = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 93) {
+            break;
+          }
+
+          message.xFee = reader.float();
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.agFee = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 109) {
+            break;
+          }
+
+          message.newFee = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -655,18 +800,62 @@ export const Bet = {
 
   fromJSON(object: any): Bet {
     return {
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
       enable: isSet(object.enable) ? globalThis.Boolean(object.enable) : false,
       markUnit: isSet(object.markUnit) ? globalThis.Number(object.markUnit) : 0,
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      xJoin: isSet(object.xJoin) ? globalThis.Number(object.xJoin) : 0,
+      agJoin: isSet(object.agJoin) ? globalThis.Number(object.agJoin) : 0,
+      xPlayNow: isSet(object.xPlayNow) ? globalThis.Number(object.xPlayNow) : 0,
+      agPlayNow: isSet(object.agPlayNow) ? globalThis.Number(object.agPlayNow) : 0,
+      xLeave: isSet(object.xLeave) ? globalThis.Number(object.xLeave) : 0,
+      agLeave: isSet(object.agLeave) ? globalThis.Number(object.agLeave) : 0,
+      xFee: isSet(object.xFee) ? globalThis.Number(object.xFee) : 0,
+      agFee: isSet(object.agFee) ? globalThis.Number(object.agFee) : 0,
+      newFee: isSet(object.newFee) ? globalThis.Number(object.newFee) : 0,
     };
   },
 
   toJSON(message: Bet): unknown {
     const obj: any = {};
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
     if (message.enable === true) {
       obj.enable = message.enable;
     }
     if (message.markUnit !== 0) {
-      obj.markUnit = Math.round(message.markUnit);
+      obj.markUnit = message.markUnit;
+    }
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.xJoin !== 0) {
+      obj.xJoin = message.xJoin;
+    }
+    if (message.agJoin !== 0) {
+      obj.agJoin = Math.round(message.agJoin);
+    }
+    if (message.xPlayNow !== 0) {
+      obj.xPlayNow = message.xPlayNow;
+    }
+    if (message.agPlayNow !== 0) {
+      obj.agPlayNow = Math.round(message.agPlayNow);
+    }
+    if (message.xLeave !== 0) {
+      obj.xLeave = message.xLeave;
+    }
+    if (message.agLeave !== 0) {
+      obj.agLeave = Math.round(message.agLeave);
+    }
+    if (message.xFee !== 0) {
+      obj.xFee = message.xFee;
+    }
+    if (message.agFee !== 0) {
+      obj.agFee = Math.round(message.agFee);
+    }
+    if (message.newFee !== 0) {
+      obj.newFee = message.newFee;
     }
     return obj;
   },
@@ -676,20 +865,40 @@ export const Bet = {
   },
   fromPartial<I extends Exact<DeepPartial<Bet>, I>>(object: I): Bet {
     const message = createBaseBet();
+    message.id = object.id ?? 0;
     message.enable = object.enable ?? false;
     message.markUnit = object.markUnit ?? 0;
+    message.gameId = object.gameId ?? 0;
+    message.xJoin = object.xJoin ?? 0;
+    message.agJoin = object.agJoin ?? 0;
+    message.xPlayNow = object.xPlayNow ?? 0;
+    message.agPlayNow = object.agPlayNow ?? 0;
+    message.xLeave = object.xLeave ?? 0;
+    message.agLeave = object.agLeave ?? 0;
+    message.xFee = object.xFee ?? 0;
+    message.agFee = object.agFee ?? 0;
+    message.newFee = object.newFee ?? 0;
     return message;
   },
 };
 
 function createBaseBets(): Bets {
-  return { bets: [] };
+  return { bets: [], total: 0, offset: 0, limit: 0 };
 }
 
 export const Bets = {
   encode(message: Bets, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.bets) {
       Bet.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.total !== 0) {
+      writer.uint32(16).int64(message.total);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(24).int64(message.offset);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(32).int64(message.limit);
     }
     return writer;
   },
@@ -708,6 +917,27 @@ export const Bets = {
 
           message.bets.push(Bet.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -718,13 +948,27 @@ export const Bets = {
   },
 
   fromJSON(object: any): Bets {
-    return { bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => Bet.fromJSON(e)) : [] };
+    return {
+      bets: globalThis.Array.isArray(object?.bets) ? object.bets.map((e: any) => Bet.fromJSON(e)) : [],
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+    };
   },
 
   toJSON(message: Bets): unknown {
     const obj: any = {};
     if (message.bets?.length) {
       obj.bets = message.bets.map((e) => Bet.toJSON(e));
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
     }
     return obj;
   },
@@ -735,6 +979,98 @@ export const Bets = {
   fromPartial<I extends Exact<DeepPartial<Bets>, I>>(object: I): Bets {
     const message = createBaseBets();
     message.bets = object.bets?.map((e) => Bet.fromPartial(e)) || [];
+    message.total = object.total ?? 0;
+    message.offset = object.offset ?? 0;
+    message.limit = object.limit ?? 0;
+    return message;
+  },
+};
+
+function createBaseBetRequest(): BetRequest {
+  return { gameId: 0, offset: 0, limit: 0 };
+}
+
+export const BetRequest = {
+  encode(message: BetRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.gameId !== 0) {
+      writer.uint32(8).int64(message.gameId);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(16).int64(message.offset);
+    }
+    if (message.limit !== 0) {
+      writer.uint32(24).int64(message.limit);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): BetRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseBetRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.gameId = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): BetRequest {
+    return {
+      gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+    };
+  },
+
+  toJSON(message: BetRequest): unknown {
+    const obj: any = {};
+    if (message.gameId !== 0) {
+      obj.gameId = Math.round(message.gameId);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<BetRequest>, I>>(base?: I): BetRequest {
+    return BetRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<BetRequest>, I>>(object: I): BetRequest {
+    const message = createBaseBetRequest();
+    message.gameId = object.gameId ?? 0;
+    message.offset = object.offset ?? 0;
+    message.limit = object.limit ?? 0;
     return message;
   },
 };
@@ -750,6 +1086,18 @@ export type DeepPartial<T> = T extends Builtin ? T
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function longToNumber(long: Long): number {
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

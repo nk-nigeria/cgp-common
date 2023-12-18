@@ -24,6 +24,7 @@ message Game {
   bool active = 2;
   string lobby_id = 3;
   Layout layout = 4;
+  int64 id = 5;
 }
 
 message Layout {
