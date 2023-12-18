@@ -656,34 +656,34 @@ export const Bet = {
       writer.uint32(16).bool(message.enable);
     }
     if (message.markUnit !== 0) {
-      writer.uint32(24).int64(message.markUnit);
+      writer.uint32(29).float(message.markUnit);
     }
     if (message.gameId !== 0) {
       writer.uint32(32).int64(message.gameId);
     }
     if (message.xJoin !== 0) {
-      writer.uint32(40).int64(message.xJoin);
+      writer.uint32(45).float(message.xJoin);
     }
     if (message.agJoin !== 0) {
-      writer.uint32(48).int64(message.agJoin);
+      writer.uint32(53).float(message.agJoin);
     }
     if (message.xPlayNow !== 0) {
-      writer.uint32(56).int64(message.xPlayNow);
+      writer.uint32(61).float(message.xPlayNow);
     }
     if (message.agPlayNow !== 0) {
-      writer.uint32(64).int64(message.agPlayNow);
+      writer.uint32(69).float(message.agPlayNow);
     }
     if (message.xLeave !== 0) {
-      writer.uint32(72).int64(message.xLeave);
+      writer.uint32(77).float(message.xLeave);
     }
     if (message.agLeave !== 0) {
-      writer.uint32(80).int64(message.agLeave);
+      writer.uint32(85).float(message.agLeave);
     }
     if (message.xFee !== 0) {
-      writer.uint32(88).int64(message.xFee);
+      writer.uint32(93).float(message.xFee);
     }
     if (message.agFee !== 0) {
-      writer.uint32(96).int64(message.agFee);
+      writer.uint32(101).float(message.agFee);
     }
     if (message.newFee !== 0) {
       writer.uint32(109).float(message.newFee);
@@ -713,11 +713,11 @@ export const Bet = {
           message.enable = reader.bool();
           continue;
         case 3:
-          if (tag !== 24) {
+          if (tag !== 29) {
             break;
           }
 
-          message.markUnit = longToNumber(reader.int64() as Long);
+          message.markUnit = reader.float();
           continue;
         case 4:
           if (tag !== 32) {
@@ -727,60 +727,60 @@ export const Bet = {
           message.gameId = longToNumber(reader.int64() as Long);
           continue;
         case 5:
-          if (tag !== 40) {
+          if (tag !== 45) {
             break;
           }
 
-          message.xJoin = longToNumber(reader.int64() as Long);
+          message.xJoin = reader.float();
           continue;
         case 6:
-          if (tag !== 48) {
+          if (tag !== 53) {
             break;
           }
 
-          message.agJoin = longToNumber(reader.int64() as Long);
+          message.agJoin = reader.float();
           continue;
         case 7:
-          if (tag !== 56) {
+          if (tag !== 61) {
             break;
           }
 
-          message.xPlayNow = longToNumber(reader.int64() as Long);
+          message.xPlayNow = reader.float();
           continue;
         case 8:
-          if (tag !== 64) {
+          if (tag !== 69) {
             break;
           }
 
-          message.agPlayNow = longToNumber(reader.int64() as Long);
+          message.agPlayNow = reader.float();
           continue;
         case 9:
-          if (tag !== 72) {
+          if (tag !== 77) {
             break;
           }
 
-          message.xLeave = longToNumber(reader.int64() as Long);
+          message.xLeave = reader.float();
           continue;
         case 10:
-          if (tag !== 80) {
+          if (tag !== 85) {
             break;
           }
 
-          message.agLeave = longToNumber(reader.int64() as Long);
+          message.agLeave = reader.float();
           continue;
         case 11:
-          if (tag !== 88) {
+          if (tag !== 93) {
             break;
           }
 
-          message.xFee = longToNumber(reader.int64() as Long);
+          message.xFee = reader.float();
           continue;
         case 12:
-          if (tag !== 96) {
+          if (tag !== 101) {
             break;
           }
 
-          message.agFee = longToNumber(reader.int64() as Long);
+          message.agFee = reader.float();
           continue;
         case 13:
           if (tag !== 109) {
@@ -825,34 +825,34 @@ export const Bet = {
       obj.enable = message.enable;
     }
     if (message.markUnit !== 0) {
-      obj.markUnit = Math.round(message.markUnit);
+      obj.markUnit = message.markUnit;
     }
     if (message.gameId !== 0) {
       obj.gameId = Math.round(message.gameId);
     }
     if (message.xJoin !== 0) {
-      obj.xJoin = Math.round(message.xJoin);
+      obj.xJoin = message.xJoin;
     }
     if (message.agJoin !== 0) {
-      obj.agJoin = Math.round(message.agJoin);
+      obj.agJoin = message.agJoin;
     }
     if (message.xPlayNow !== 0) {
-      obj.xPlayNow = Math.round(message.xPlayNow);
+      obj.xPlayNow = message.xPlayNow;
     }
     if (message.agPlayNow !== 0) {
-      obj.agPlayNow = Math.round(message.agPlayNow);
+      obj.agPlayNow = message.agPlayNow;
     }
     if (message.xLeave !== 0) {
-      obj.xLeave = Math.round(message.xLeave);
+      obj.xLeave = message.xLeave;
     }
     if (message.agLeave !== 0) {
-      obj.agLeave = Math.round(message.agLeave);
+      obj.agLeave = message.agLeave;
     }
     if (message.xFee !== 0) {
-      obj.xFee = Math.round(message.xFee);
+      obj.xFee = message.xFee;
     }
     if (message.agFee !== 0) {
-      obj.agFee = Math.round(message.agFee);
+      obj.agFee = message.agFee;
     }
     if (message.newFee !== 0) {
       obj.newFee = message.newFee;
