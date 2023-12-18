@@ -665,25 +665,25 @@ export const Bet = {
       writer.uint32(45).float(message.xJoin);
     }
     if (message.agJoin !== 0) {
-      writer.uint32(53).float(message.agJoin);
+      writer.uint32(48).int64(message.agJoin);
     }
     if (message.xPlayNow !== 0) {
       writer.uint32(61).float(message.xPlayNow);
     }
     if (message.agPlayNow !== 0) {
-      writer.uint32(69).float(message.agPlayNow);
+      writer.uint32(64).int64(message.agPlayNow);
     }
     if (message.xLeave !== 0) {
       writer.uint32(77).float(message.xLeave);
     }
     if (message.agLeave !== 0) {
-      writer.uint32(85).float(message.agLeave);
+      writer.uint32(80).int64(message.agLeave);
     }
     if (message.xFee !== 0) {
       writer.uint32(93).float(message.xFee);
     }
     if (message.agFee !== 0) {
-      writer.uint32(101).float(message.agFee);
+      writer.uint32(96).int64(message.agFee);
     }
     if (message.newFee !== 0) {
       writer.uint32(109).float(message.newFee);
@@ -734,11 +734,11 @@ export const Bet = {
           message.xJoin = reader.float();
           continue;
         case 6:
-          if (tag !== 53) {
+          if (tag !== 48) {
             break;
           }
 
-          message.agJoin = reader.float();
+          message.agJoin = longToNumber(reader.int64() as Long);
           continue;
         case 7:
           if (tag !== 61) {
@@ -748,11 +748,11 @@ export const Bet = {
           message.xPlayNow = reader.float();
           continue;
         case 8:
-          if (tag !== 69) {
+          if (tag !== 64) {
             break;
           }
 
-          message.agPlayNow = reader.float();
+          message.agPlayNow = longToNumber(reader.int64() as Long);
           continue;
         case 9:
           if (tag !== 77) {
@@ -762,11 +762,11 @@ export const Bet = {
           message.xLeave = reader.float();
           continue;
         case 10:
-          if (tag !== 85) {
+          if (tag !== 80) {
             break;
           }
 
-          message.agLeave = reader.float();
+          message.agLeave = longToNumber(reader.int64() as Long);
           continue;
         case 11:
           if (tag !== 93) {
@@ -776,11 +776,11 @@ export const Bet = {
           message.xFee = reader.float();
           continue;
         case 12:
-          if (tag !== 101) {
+          if (tag !== 96) {
             break;
           }
 
-          message.agFee = reader.float();
+          message.agFee = longToNumber(reader.int64() as Long);
           continue;
         case 13:
           if (tag !== 109) {
@@ -834,25 +834,25 @@ export const Bet = {
       obj.xJoin = message.xJoin;
     }
     if (message.agJoin !== 0) {
-      obj.agJoin = message.agJoin;
+      obj.agJoin = Math.round(message.agJoin);
     }
     if (message.xPlayNow !== 0) {
       obj.xPlayNow = message.xPlayNow;
     }
     if (message.agPlayNow !== 0) {
-      obj.agPlayNow = message.agPlayNow;
+      obj.agPlayNow = Math.round(message.agPlayNow);
     }
     if (message.xLeave !== 0) {
       obj.xLeave = message.xLeave;
     }
     if (message.agLeave !== 0) {
-      obj.agLeave = message.agLeave;
+      obj.agLeave = Math.round(message.agLeave);
     }
     if (message.xFee !== 0) {
       obj.xFee = message.xFee;
     }
     if (message.agFee !== 0) {
-      obj.agFee = message.agFee;
+      obj.agFee = Math.round(message.agFee);
     }
     if (message.newFee !== 0) {
       obj.newFee = message.newFee;
