@@ -580,17 +580,9 @@ export interface DailyRewardTemplate {
   rewardTemplates: RewardTemplate[];
 }
 
-export interface UserGroupCondition {
-  operator: string;
-  value: string;
-}
-
 export interface UserGroup {
   id: number;
   name: string;
-  type: string;
-  data: string;
-  condition: UserGroupCondition | undefined;
 }
 
 export interface ListUserGroup {
@@ -3415,82 +3407,8 @@ export const DailyRewardTemplate = {
   },
 };
 
-function createBaseUserGroupCondition(): UserGroupCondition {
-  return { operator: "", value: "" };
-}
-
-export const UserGroupCondition = {
-  encode(message: UserGroupCondition, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.operator !== "") {
-      writer.uint32(10).string(message.operator);
-    }
-    if (message.value !== "") {
-      writer.uint32(18).string(message.value);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): UserGroupCondition {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUserGroupCondition();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.operator = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.value = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UserGroupCondition {
-    return {
-      operator: isSet(object.operator) ? globalThis.String(object.operator) : "",
-      value: isSet(object.value) ? globalThis.String(object.value) : "",
-    };
-  },
-
-  toJSON(message: UserGroupCondition): unknown {
-    const obj: any = {};
-    if (message.operator !== "") {
-      obj.operator = message.operator;
-    }
-    if (message.value !== "") {
-      obj.value = message.value;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UserGroupCondition>, I>>(base?: I): UserGroupCondition {
-    return UserGroupCondition.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<UserGroupCondition>, I>>(object: I): UserGroupCondition {
-    const message = createBaseUserGroupCondition();
-    message.operator = object.operator ?? "";
-    message.value = object.value ?? "";
-    return message;
-  },
-};
-
 function createBaseUserGroup(): UserGroup {
-  return { id: 0, name: "", type: "", data: "", condition: undefined };
+  return { id: 0, name: "" };
 }
 
 export const UserGroup = {
@@ -3500,15 +3418,6 @@ export const UserGroup = {
     }
     if (message.name !== "") {
       writer.uint32(18).string(message.name);
-    }
-    if (message.type !== "") {
-      writer.uint32(26).string(message.type);
-    }
-    if (message.data !== "") {
-      writer.uint32(34).string(message.data);
-    }
-    if (message.condition !== undefined) {
-      UserGroupCondition.encode(message.condition, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -3534,27 +3443,6 @@ export const UserGroup = {
 
           message.name = reader.string();
           continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.type = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
-          message.data = reader.string();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
-
-          message.condition = UserGroupCondition.decode(reader, reader.uint32());
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3568,9 +3456,6 @@ export const UserGroup = {
     return {
       id: isSet(object.id) ? globalThis.Number(object.id) : 0,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      type: isSet(object.type) ? globalThis.String(object.type) : "",
-      data: isSet(object.data) ? globalThis.String(object.data) : "",
-      condition: isSet(object.condition) ? UserGroupCondition.fromJSON(object.condition) : undefined,
     };
   },
 
@@ -3582,15 +3467,6 @@ export const UserGroup = {
     if (message.name !== "") {
       obj.name = message.name;
     }
-    if (message.type !== "") {
-      obj.type = message.type;
-    }
-    if (message.data !== "") {
-      obj.data = message.data;
-    }
-    if (message.condition !== undefined) {
-      obj.condition = UserGroupCondition.toJSON(message.condition);
-    }
     return obj;
   },
 
@@ -3601,11 +3477,6 @@ export const UserGroup = {
     const message = createBaseUserGroup();
     message.id = object.id ?? 0;
     message.name = object.name ?? "";
-    message.type = object.type ?? "";
-    message.data = object.data ?? "";
-    message.condition = (object.condition !== undefined && object.condition !== null)
-      ? UserGroupCondition.fromPartial(object.condition)
-      : undefined;
     return message;
   },
 };
