@@ -2,17 +2,15 @@ package bot
 
 import "sort"
 
-type BotTurn struct {
+type botTurn struct {
 	maxTick int
 	ticks   []int
-	opaque  interface{}
-	fnTurn  func(opaque interface{})
+	fnTurn  func()
 }
 
-func NewBotTurn(maxTick int, maxOccur int, opaque interface{}, fnTurn func(opaque interface{})) *BotTurn {
-	b := &BotTurn{
+func NewBotTurn(maxTick int, maxOccur int, fnTurn func()) *botTurn {
+	b := &botTurn{
 		maxTick: maxTick,
-		opaque:  opaque,
 		fnTurn:  fnTurn,
 	}
 	numOccur := RandomInt(0, maxOccur)
@@ -27,7 +25,7 @@ func NewBotTurn(maxTick int, maxOccur int, opaque interface{}, fnTurn func(opaqu
 	return b
 }
 
-func (b *BotTurn) Loop() bool {
+func (b *botTurn) Loop() bool {
 	if len(b.ticks) == 0 {
 		return false
 	}
@@ -42,7 +40,9 @@ func (b *BotTurn) Loop() bool {
 		}
 		b.ticks[idx] = tick
 		if tick == 0 {
-			b.fnTurn(b.opaque)
+			if b != nil {
+				b.fnTurn()
+			}
 		}
 	}
 	return isAllFinish

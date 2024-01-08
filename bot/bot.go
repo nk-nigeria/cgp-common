@@ -31,6 +31,7 @@ var _ runtime.MatchData = (*botMatchData)(nil)
 type BotPresence struct {
 	id   string
 	Tick int
+	turn *botTurn
 }
 
 func NewBotPresences(numBots int) []*BotPresence {
@@ -39,7 +40,8 @@ func NewBotPresences(numBots int) []*BotPresence {
 	for _, uuid := range BotUids {
 		num++
 		b := &BotPresence{
-			id: uuid,
+			id:   uuid,
+			turn: NewBotTurn(0, 0, nil),
 		}
 		ml = append(ml, b)
 		if num >= numBots {
@@ -47,6 +49,14 @@ func NewBotPresences(numBots int) []*BotPresence {
 		}
 	}
 	return ml
+}
+
+func (b *BotPresence) InitTurn(maxTick int, maxOccur int, fnTurn func()) {
+	b.turn = NewBotTurn(maxTick, maxOccur, fnTurn)
+}
+
+func (b *BotPresence) Loop() {
+	b.turn.Loop()
 }
 
 // GetHidden implements runtime.Presence.

@@ -10,13 +10,12 @@ func TestNewBotTurn(t *testing.T) {
 	name := "TestNewBotTurn"
 	maxTick := 10
 	maxOccur := 3
-	var opaque interface{}
 	numOccur := 0
-	fnTurn := func(opaque interface{}) {
+	fnTurn := func() {
 		numOccur++
 	}
 	t.Run(name, func(t *testing.T) {
-		botTurn := NewBotTurn(maxTick, maxOccur, opaque, fnTurn)
+		botTurn := NewBotTurn(maxTick, maxOccur, fnTurn)
 		assert.NotNil(t, botTurn)
 		for {
 			if !botTurn.Loop() {
