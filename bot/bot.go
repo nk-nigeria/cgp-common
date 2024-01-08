@@ -25,20 +25,20 @@ func IsBot(userId string) bool {
 	return false
 }
 
-var _ runtime.Presence = (*botPresence)(nil)
+var _ runtime.Presence = (*BotPresence)(nil)
 var _ runtime.MatchData = (*botMatchData)(nil)
 
-type botPresence struct {
+type BotPresence struct {
 	id   string
 	Tick int
 }
 
-func NewBotPresences(numBots int) []*botPresence {
+func NewBotPresences(numBots int) []*BotPresence {
 	num := 0
-	ml := make([]*botPresence, 0, numBots)
+	ml := make([]*BotPresence, 0, numBots)
 	for _, uuid := range BotUids {
 		num++
-		b := &botPresence{
+		b := &BotPresence{
 			id: uuid,
 		}
 		ml = append(ml, b)
@@ -50,49 +50,49 @@ func NewBotPresences(numBots int) []*botPresence {
 }
 
 // GetHidden implements runtime.Presence.
-func (*botPresence) GetHidden() bool {
+func (*BotPresence) GetHidden() bool {
 	return false
 }
 
 // GetNodeId implements runtime.Presence.
-func (*botPresence) GetNodeId() string {
+func (*BotPresence) GetNodeId() string {
 	return ""
 }
 
 // GetPersistence implements runtime.Presence.
-func (*botPresence) GetPersistence() bool {
+func (*BotPresence) GetPersistence() bool {
 	return false
 }
 
 // GetReason implements runtime.Presence.
-func (*botPresence) GetReason() runtime.PresenceReason {
+func (*BotPresence) GetReason() runtime.PresenceReason {
 	return runtime.PresenceReasonUnknown
 }
 
 // GetSessionId implements runtime.Presence.
-func (*botPresence) GetSessionId() string {
+func (*BotPresence) GetSessionId() string {
 	return ""
 }
 
 // GetStatus implements runtime.Presence.
-func (*botPresence) GetStatus() string {
+func (*BotPresence) GetStatus() string {
 	return ""
 }
 
 // GetUserId implements runtime.Presence.
-func (b *botPresence) GetUserId() string {
+func (b *BotPresence) GetUserId() string {
 	return b.id
 }
 
 // GetUsername implements runtime.Presence.
-func (*botPresence) GetUsername() string {
+func (*BotPresence) GetUsername() string {
 	return "bot-player"
 }
 
 type botMatchData struct {
 	opCode pb.OpCodeRequest
 	data   []byte
-	*botPresence
+	*BotPresence
 }
 
 // GetData implements runtime.MatchData.
