@@ -2,15 +2,15 @@ package bot
 
 import "sort"
 
-type botTurn struct {
+type BotTurn struct {
 	maxTick int
 	ticks   []int
 	opaque  interface{}
 	fnTurn  func(opaque interface{})
 }
 
-func NewBotTurn(maxTick int, maxOccur int, opaque interface{}, fnTurn func(opaque interface{})) *botTurn {
-	b := &botTurn{
+func NewBotTurn(maxTick int, maxOccur int, opaque interface{}, fnTurn func(opaque interface{})) *BotTurn {
+	b := &BotTurn{
 		maxTick: maxTick,
 		opaque:  opaque,
 		fnTurn:  fnTurn,
@@ -27,7 +27,7 @@ func NewBotTurn(maxTick int, maxOccur int, opaque interface{}, fnTurn func(opaqu
 	return b
 }
 
-func (b *botTurn) Loop() bool {
+func (b *BotTurn) Loop() bool {
 	if len(b.ticks) == 0 {
 		return false
 	}
