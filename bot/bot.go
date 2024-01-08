@@ -26,7 +26,7 @@ func IsBot(userId string) bool {
 }
 
 var _ runtime.Presence = (*BotPresence)(nil)
-var _ runtime.MatchData = (*BotMatchData)(nil)
+var _ runtime.MatchData = (*botMatchData)(nil)
 
 type BotPresence struct {
 	id   string
@@ -99,28 +99,36 @@ func (*BotPresence) GetUsername() string {
 	return "bot-player"
 }
 
-type BotMatchData struct {
+type botMatchData struct {
 	opCode pb.OpCodeRequest
 	data   []byte
 	*BotPresence
 }
 
+func NewBotMatchData(opCode pb.OpCodeRequest, data []byte, p *BotPresence) *botMatchData {
+	return &botMatchData{
+		opCode:      opCode,
+		data:        data,
+		BotPresence: p,
+	}
+}
+
 // GetData implements runtime.MatchData.
-func (b *BotMatchData) GetData() []byte {
+func (b *botMatchData) GetData() []byte {
 	return b.data
 }
 
 // GetOpCode implements runtime.MatchData.
-func (b *BotMatchData) GetOpCode() int64 {
+func (b *botMatchData) GetOpCode() int64 {
 	return int64(b.opCode)
 }
 
 // GetReceiveTime implements runtime.MatchData.
-func (*BotMatchData) GetReceiveTime() int64 {
+func (*botMatchData) GetReceiveTime() int64 {
 	return time.Now().UTC().Unix()
 }
 
 // GetReliable implements runtime.MatchData.
-func (*BotMatchData) GetReliable() bool {
+func (*botMatchData) GetReliable() bool {
 	return true
 }
