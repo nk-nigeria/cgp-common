@@ -13,7 +13,10 @@ func NewBotTurn(maxTick int, maxOccur int, fnTurn func()) *botTurn {
 		maxTick: maxTick,
 		fnTurn:  fnTurn,
 	}
-	numOccur := RandomInt(0, maxOccur)
+	if maxOccur <= 0 {
+		maxOccur = 1
+	}
+	numOccur := RandomInt(1, maxOccur)
 	for i := 0; i < numOccur; i++ {
 		b.ticks = append(b.ticks, RandomInt(1, maxTick))
 	}
