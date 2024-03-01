@@ -20,8 +20,9 @@ type LuckyBet struct {
 }
 
 type RuleLuckyBet struct {
-	rules    map[string]*LuckyBet
-	tableCfg TableConfigBetGame
+	rules         map[string]*LuckyBet
+	tableCfg      TableConfigBetGame
+	TotalChipsWin int
 }
 
 func NewLuckyCtrl() *RuleLuckyBet {
@@ -84,8 +85,8 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	userId string) {
 }
 
-func (l *RuleLuckyBet) GetBaseAction(totalWin int) BaseAction {
+func (l *RuleLuckyBet) GetBaseAction(newChipsWin int) BaseAction {
 	lucky := l.avg()
 	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, lucky.Ci, lucky.CoInDay)
-	return cfgBet.GetBaseAction(int64(totalWin))
+	return cfgBet.GetBaseAction(int64(l.TotalChipsWin) + int64(newChipsWin))
 }
