@@ -22,22 +22,22 @@ type LuckyBet struct {
 	chipSpentChange int
 }
 
-type ruleLuckyBet struct {
+type RuleLuckyBet struct {
 	rules    map[string]*LuckyBet
 	tableCfg TableConfigBetGame
 }
 
-func NewLuckyCtrl() *ruleLuckyBet {
-	return &ruleLuckyBet{
+func NewLuckyCtrl() *RuleLuckyBet {
+	return &RuleLuckyBet{
 		rules: map[string]*LuckyBet{},
 	}
 }
 
-func (l *ruleLuckyBet) addUser(userId string, rtp LuckyBet) {
+func (l *RuleLuckyBet) addUser(userId string, rtp LuckyBet) {
 	l.rules[userId] = &rtp
 }
 
-func (l *ruleLuckyBet) UpdateUser(userId string, rtp LuckyBet) {
+func (l *RuleLuckyBet) UpdateUser(userId string, rtp LuckyBet) {
 	if !l.IsUserExist(userId) {
 		return
 	}
@@ -59,16 +59,16 @@ func (l *ruleLuckyBet) UpdateUser(userId string, rtp LuckyBet) {
 
 }
 
-func (l *ruleLuckyBet) removeUser(userId string) {
+func (l *RuleLuckyBet) removeUser(userId string) {
 	delete(l.rules, userId)
 }
 
-func (l *ruleLuckyBet) IsUserExist(userId string) bool {
+func (l *RuleLuckyBet) IsUserExist(userId string) bool {
 	_, exist := l.rules[userId]
 	return exist
 }
 
-func (l *ruleLuckyBet) avg() LuckyBet {
+func (l *RuleLuckyBet) avg() LuckyBet {
 	lucky := LuckyBet{}
 	for _, v := range l.rules {
 		lucky.Ci += v.Ci
@@ -80,14 +80,14 @@ func (l *ruleLuckyBet) avg() LuckyBet {
 	return lucky
 }
 
-func (l *ruleLuckyBet) GetBaseAction() BaseAction {
+func (l *RuleLuckyBet) GetBaseAction() BaseAction {
 	lucky := l.avg()
 	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, lucky.Ci, lucky.CoInDay)
 	totalWin := lucky.ChipWin - lucky.ChipSpent
 	return cfgBet.GetBaseAction(int64(totalWin))
 }
 
-func (l *ruleLuckyBet) SaveToProfile(
+func (l *RuleLuckyBet) SaveToProfile(
 	ctx context.Context,
 	logger runtime.Logger,
 	nk runtime.NakamaModule,
