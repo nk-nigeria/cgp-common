@@ -59,7 +59,7 @@ func (l *RuleLuckyBet) UpdateUser(userId string, rtp LuckyBet) {
 
 }
 
-func (l *RuleLuckyBet) removeUser(userId string) {
+func (l *RuleLuckyBet) RemoveUser(userId string) {
 	delete(l.rules, userId)
 }
 
@@ -78,6 +78,13 @@ func (l *RuleLuckyBet) avg() LuckyBet {
 		lucky.ChipSpent += v.ChipSpent
 	}
 	return lucky
+}
+
+func (l *RuleLuckyBet) LoadUser(ctx context.Context,
+	logger runtime.Logger,
+	nk runtime.NakamaModule,
+	db *sql.DB,
+	userId string) {
 }
 
 func (l *RuleLuckyBet) GetBaseAction() BaseAction {
@@ -119,6 +126,6 @@ func (l *RuleLuckyBet) SaveToProfile(
 				WHERE	
 					id = $1;`
 	_, err = db.ExecContext(ctx, query, userId)
-	l.removeUser(userId)
+	l.RemoveUser(userId)
 	return err
 }
