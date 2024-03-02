@@ -455,3 +455,11 @@ message Response{
   string body = 1;
   string error_message = 2;
 }
+
+message UserMeta {
+  string user_id=1;
+  int32 vip = 2;
+  int64 total_chips_topup = 3;
+  int64 total_chips_cashout =4;
+  int64 total_chips_send=5;
+}

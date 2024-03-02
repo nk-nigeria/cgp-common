@@ -789,6 +789,14 @@ export interface Response {
   errorMessage: string;
 }
 
+export interface UserMeta {
+  userId: string;
+  vip: number;
+  totalChipsTopup: number;
+  totalChipsCashout: number;
+  totalChipsSend: number;
+}
+
 function createBaseGame(): Game {
   return { code: "", active: false, lobbyId: "", layout: undefined, id: 0 };
 }
@@ -6615,6 +6623,125 @@ export const Response = {
     const message = createBaseResponse();
     message.body = object.body ?? "";
     message.errorMessage = object.errorMessage ?? "";
+    return message;
+  },
+};
+
+function createBaseUserMeta(): UserMeta {
+  return { userId: "", vip: 0, totalChipsTopup: 0, totalChipsCashout: 0, totalChipsSend: 0 };
+}
+
+export const UserMeta = {
+  encode(message: UserMeta, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.vip !== 0) {
+      writer.uint32(16).int32(message.vip);
+    }
+    if (message.totalChipsTopup !== 0) {
+      writer.uint32(24).int64(message.totalChipsTopup);
+    }
+    if (message.totalChipsCashout !== 0) {
+      writer.uint32(32).int64(message.totalChipsCashout);
+    }
+    if (message.totalChipsSend !== 0) {
+      writer.uint32(40).int64(message.totalChipsSend);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UserMeta {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUserMeta();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.vip = reader.int32();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.totalChipsTopup = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.totalChipsCashout = longToNumber(reader.int64() as Long);
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.totalChipsSend = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UserMeta {
+    return {
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
+      totalChipsTopup: isSet(object.totalChipsTopup) ? globalThis.Number(object.totalChipsTopup) : 0,
+      totalChipsCashout: isSet(object.totalChipsCashout) ? globalThis.Number(object.totalChipsCashout) : 0,
+      totalChipsSend: isSet(object.totalChipsSend) ? globalThis.Number(object.totalChipsSend) : 0,
+    };
+  },
+
+  toJSON(message: UserMeta): unknown {
+    const obj: any = {};
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.vip !== 0) {
+      obj.vip = Math.round(message.vip);
+    }
+    if (message.totalChipsTopup !== 0) {
+      obj.totalChipsTopup = Math.round(message.totalChipsTopup);
+    }
+    if (message.totalChipsCashout !== 0) {
+      obj.totalChipsCashout = Math.round(message.totalChipsCashout);
+    }
+    if (message.totalChipsSend !== 0) {
+      obj.totalChipsSend = Math.round(message.totalChipsSend);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UserMeta>, I>>(base?: I): UserMeta {
+    return UserMeta.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<UserMeta>, I>>(object: I): UserMeta {
+    const message = createBaseUserMeta();
+    message.userId = object.userId ?? "";
+    message.vip = object.vip ?? 0;
+    message.totalChipsTopup = object.totalChipsTopup ?? 0;
+    message.totalChipsCashout = object.totalChipsCashout ?? 0;
+    message.totalChipsSend = object.totalChipsSend ?? 0;
     return message;
   },
 };
