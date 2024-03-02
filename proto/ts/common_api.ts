@@ -792,9 +792,18 @@ export interface Response {
 export interface UserMeta {
   userId: string;
   vip: number;
+  /** Tổng số tiền user đã nạp tính từ lúc tạo account */
   totalChipsTopup: number;
+  /** Tổng gá trị user đã rút tính từ lúc tạo account */
   totalChipsCashout: number;
+  /** Tổng gá trị user đã chuyển đi cho người khác */
   totalChipsSend: number;
+  /** Số chip user đang có trên người + Số chip đang có trong free chip mà user chưa nhận */
+  agPlay: number;
+  /** Số chip user đang có trong Bank + Số chip đã chuyển đi cho người khác */
+  agBank: number;
+  /** Tổng số tiền user đã rút trong ngày */
+  totalChipsCashoutInday: number;
 }
 
 function createBaseGame(): Game {
@@ -6628,7 +6637,16 @@ export const Response = {
 };
 
 function createBaseUserMeta(): UserMeta {
-  return { userId: "", vip: 0, totalChipsTopup: 0, totalChipsCashout: 0, totalChipsSend: 0 };
+  return {
+    userId: "",
+    vip: 0,
+    totalChipsTopup: 0,
+    totalChipsCashout: 0,
+    totalChipsSend: 0,
+    agPlay: 0,
+    agBank: 0,
+    totalChipsCashoutInday: 0,
+  };
 }
 
 export const UserMeta = {
@@ -6647,6 +6665,15 @@ export const UserMeta = {
     }
     if (message.totalChipsSend !== 0) {
       writer.uint32(40).int64(message.totalChipsSend);
+    }
+    if (message.agPlay !== 0) {
+      writer.uint32(48).int64(message.agPlay);
+    }
+    if (message.agBank !== 0) {
+      writer.uint32(56).int64(message.agBank);
+    }
+    if (message.totalChipsCashoutInday !== 0) {
+      writer.uint32(64).int64(message.totalChipsCashoutInday);
     }
     return writer;
   },
@@ -6693,6 +6720,27 @@ export const UserMeta = {
 
           message.totalChipsSend = longToNumber(reader.int64() as Long);
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.agPlay = longToNumber(reader.int64() as Long);
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.agBank = longToNumber(reader.int64() as Long);
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.totalChipsCashoutInday = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -6709,6 +6757,11 @@ export const UserMeta = {
       totalChipsTopup: isSet(object.totalChipsTopup) ? globalThis.Number(object.totalChipsTopup) : 0,
       totalChipsCashout: isSet(object.totalChipsCashout) ? globalThis.Number(object.totalChipsCashout) : 0,
       totalChipsSend: isSet(object.totalChipsSend) ? globalThis.Number(object.totalChipsSend) : 0,
+      agPlay: isSet(object.agPlay) ? globalThis.Number(object.agPlay) : 0,
+      agBank: isSet(object.agBank) ? globalThis.Number(object.agBank) : 0,
+      totalChipsCashoutInday: isSet(object.totalChipsCashoutInday)
+        ? globalThis.Number(object.totalChipsCashoutInday)
+        : 0,
     };
   },
 
@@ -6729,6 +6782,15 @@ export const UserMeta = {
     if (message.totalChipsSend !== 0) {
       obj.totalChipsSend = Math.round(message.totalChipsSend);
     }
+    if (message.agPlay !== 0) {
+      obj.agPlay = Math.round(message.agPlay);
+    }
+    if (message.agBank !== 0) {
+      obj.agBank = Math.round(message.agBank);
+    }
+    if (message.totalChipsCashoutInday !== 0) {
+      obj.totalChipsCashoutInday = Math.round(message.totalChipsCashoutInday);
+    }
     return obj;
   },
 
@@ -6742,6 +6804,9 @@ export const UserMeta = {
     message.totalChipsTopup = object.totalChipsTopup ?? 0;
     message.totalChipsCashout = object.totalChipsCashout ?? 0;
     message.totalChipsSend = object.totalChipsSend ?? 0;
+    message.agPlay = object.agPlay ?? 0;
+    message.agBank = object.agBank ?? 0;
+    message.totalChipsCashoutInday = object.totalChipsCashoutInday ?? 0;
     return message;
   },
 };

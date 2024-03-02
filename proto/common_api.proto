@@ -459,7 +459,10 @@ message Response{
 message UserMeta {
   string user_id=1;
   int32 vip = 2;
-  int64 total_chips_topup = 3;
-  int64 total_chips_cashout =4;
-  int64 total_chips_send=5;
+  int64 total_chips_topup = 3; // Tổng số tiền user đã nạp tính từ lúc tạo account 
+  int64 total_chips_cashout =4; // Tổng gá trị user đã rút tính từ lúc tạo account 
+  int64 total_chips_send=5; // Tổng gá trị user đã chuyển đi cho người khác
+  int64 agPlay = 6; // Số chip user đang có trên người + Số chip đang có trong free chip mà user chưa nhận 
+  int64 agBank = 7; //  Số chip user đang có trong Bank + Số chip đã chuyển đi cho người khác
+  int64 total_chips_cashout_inday = 8; // Tổng số tiền user đã rút trong ngày
 }

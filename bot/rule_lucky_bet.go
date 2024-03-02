@@ -3,7 +3,11 @@ package bot
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
+	"errors"
 
+	"github.com/ciaolink-game-platform/cgp-common/lib"
+	pb "github.com/ciaolink-game-platform/cgp-common/proto"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
@@ -82,7 +86,32 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	logger runtime.Logger,
 	nk runtime.NakamaModule,
 	db *sql.DB,
-	userId string) {
+	userId string) (*pb.UserMeta, error) {
+	report := lib.NewReportGame(ctx)
+	data, _, err := report.Query(ctx, "metric/op/user-meta", userId, "")
+	if err != nil {
+		return nil, err
+	}
+	userMeta := &pb.UserMeta{}
+	if len(data) > 0 {
+		err = json.Unmarshal(data, userMeta)
+	}
+	if len(userMeta.UserId) == 0 {
+		return nil, errors.New("invalid data, user not found")
+	}
+	luckyBet := LuckyBet{
+		Ci:      float64(userMeta.TotalChipsTopup),
+		CoInDay: float64(userMeta.TotalChipsCashoutInday),
+	}
+	if userMeta.TotalChipsTopup == 0 {
+		luckyBet.CoRate = 100
+	} else {
+		total := userMeta.TotalChipsCashout + userMeta.AgPlay + userMeta.AgBank
+		luckyBet.CoRate = float64(total) / float64(luckyBet.Ci) * float64(100)
+	}
+
+	return userMeta, err
+
 }
 
 func (l *RuleLuckyBet) GetBaseAction(newChipsWin int) BaseAction {
