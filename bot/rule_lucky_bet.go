@@ -15,12 +15,8 @@ type LuckyBet struct {
 	// UserId    string `json:"user_id,omitempty"`
 	// ChipWin   int `json:"chip_win,omitempty"`
 	// ChipSpent int `json:"chip_spent,omitempty"`
-	CoRate  float64
-	Ci      float64
-	CoInDay float64
-	// // internal
-	// chipWinChange   int
-	// chipSpentChange int
+	CoRate float64
+	*pb.UserMeta
 }
 
 type RuleLuckyBet struct {
@@ -39,26 +35,12 @@ func (l *RuleLuckyBet) addUser(userId string, rtp LuckyBet) {
 	l.rules[userId] = &rtp
 }
 
-func (l *RuleLuckyBet) UpdateUser(userId string, rtp LuckyBet) {
-	if !l.IsUserExist(userId) {
+func (l *RuleLuckyBet) UpdateChipsBalanceChanged(userId string, chipsChanged int) {
+	rtp, exist := l.rules[userId]
+	if !exist {
 		return
 	}
-	currentRtp := l.rules[userId]
-	// currentRtp.ChipSpent += rtp.ChipSpent
-	// currentRtp.ChipWin += rtp.ChipWin
-	// currentRtp.chipSpentChange += rtp.ChipSpent
-	// currentRtp.chipWinChange += rtp.ChipWin
-	if rtp.Ci > 0 {
-		currentRtp.Ci = rtp.Ci
-	}
-	if rtp.CoRate > 0 {
-		currentRtp.CoRate = rtp.CoRate
-	}
-	if rtp.CoInDay > 0 {
-		currentRtp.CoInDay = rtp.CoInDay
-	}
-	l.rules[userId] = currentRtp
-
+	rtp.AgPlay += int64(chipsChanged)
 }
 
 func (l *RuleLuckyBet) RemoveUser(userId string) {
@@ -73,8 +55,8 @@ func (l *RuleLuckyBet) IsUserExist(userId string) bool {
 func (l *RuleLuckyBet) avg() LuckyBet {
 	lucky := LuckyBet{}
 	for _, v := range l.rules {
-		lucky.Ci += v.Ci
-		lucky.CoInDay += v.CoInDay
+		lucky.TotalChipsTopup += v.TotalChipsTopup
+		lucky.TotalChipsCashoutInday += v.TotalChipsCashoutInday
 		lucky.CoRate += v.CoRate
 		// lucky.ChipWin += v.ChipWin
 		// lucky.ChipSpent += v.ChipSpent
@@ -86,7 +68,7 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	logger runtime.Logger,
 	nk runtime.NakamaModule,
 	db *sql.DB,
-	userId string) (*pb.UserMeta, error) {
+	userId string) (*LuckyBet, error) {
 	report := lib.NewReportGame(ctx)
 	data, _, err := report.Query(ctx, "metric/op/user-meta", userId, "")
 	if err != nil {
@@ -99,23 +81,22 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	if len(userMeta.UserId) == 0 {
 		return nil, errors.New("invalid data, user not found")
 	}
-	luckyBet := LuckyBet{
-		Ci:      float64(userMeta.TotalChipsTopup),
-		CoInDay: float64(userMeta.TotalChipsCashoutInday),
+	luckyBet := &LuckyBet{
+		UserMeta: userMeta,
 	}
-	if userMeta.TotalChipsTopup == 0 {
+	if luckyBet.TotalChipsTopup == 0 {
 		luckyBet.CoRate = 100
 	} else {
-		total := userMeta.TotalChipsCashout + userMeta.AgPlay + userMeta.AgBank
-		luckyBet.CoRate = float64(total) / float64(luckyBet.Ci) * float64(100)
+		total := luckyBet.TotalChipsCashout + luckyBet.AgPlay + luckyBet.AgBank
+		luckyBet.CoRate = float64(total) / float64(luckyBet.TotalChipsTopup) * float64(100)
 	}
-
-	return userMeta, err
+	l.rules[luckyBet.UserId] = luckyBet
+	return luckyBet, err
 
 }
 
 func (l *RuleLuckyBet) GetBaseAction(newChipsWin int) BaseAction {
 	lucky := l.avg()
-	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, lucky.Ci, lucky.CoInDay)
+	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, float64(lucky.GetTotalChipsTopup()), float64(lucky.TotalChipsCashoutInday))
 	return cfgBet.GetBaseAction(int64(l.TotalChipsWin) + int64(newChipsWin))
 }
