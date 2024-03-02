@@ -76,7 +76,13 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	}
 	userMeta := &pb.UserMeta{}
 	if len(data) > 0 {
-		err = json.Unmarshal(data, userMeta)
+		type Response struct {
+			Body         string `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
+			ErrorMessage string `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+		}
+		res := &Response{}
+		json.Unmarshal(data, res)
+		err = json.Unmarshal([]byte(res.Body), userMeta)
 	}
 	if len(userMeta.UserId) == 0 {
 		return nil, errors.New("invalid data, user not found")
