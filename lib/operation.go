@@ -124,11 +124,16 @@ func (o *reportGame) ReportEvent(ctx context.Context, event string, userId strin
 		Body:   payload,
 	}
 	reqjson, _ := json.Marshal(req)
-	return o.sendHttpReq(event, reqjson)
+	path := "metric/event/" + event
+	return o.sendHttpReq(path, reqjson)
 }
 
-func (o reportGame) sendHttpReq(event string, body []byte) ([]byte, int, error) {
-	targetUrl := fmt.Sprintf("%s/metric/event/%s", o.reportEndpoint, event)
+func (o *reportGame) Query(ctx context.Context, path, userId string, payload string) ([]byte, int, error) {
+	return o.sendHttpReq(path, []byte(payload))
+}
+
+func (o reportGame) sendHttpReq(path string, body []byte) ([]byte, int, error) {
+	targetUrl := fmt.Sprintf("%s/%s", o.reportEndpoint, path)
 	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(body))
 	if err != nil {
 		return nil, 0, err
