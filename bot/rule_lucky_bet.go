@@ -64,11 +64,16 @@ func (l *RuleLuckyBet) IsUserExist(userId string) bool {
 }
 
 func (l *RuleLuckyBet) avg() LuckyBet {
-	lucky := LuckyBet{}
+	lucky := LuckyBet{
+		UserMeta: &pb.UserMeta{},
+	}
 	for _, v := range l.rules {
 		lucky.TotalChipsTopup += v.TotalChipsTopup
+		lucky.TotalChipsCashout += v.TotalChipsCashout
 		lucky.TotalChipsCashoutInday += v.TotalChipsCashoutInday
 		lucky.CoRate += v.CoRate
+		lucky.AgPlay += v.AgPlay
+		lucky.AgBank += v.AgBank
 		// lucky.ChipWin += v.ChipWin
 		// lucky.ChipSpent += v.ChipSpent
 	}
