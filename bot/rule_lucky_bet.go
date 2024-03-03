@@ -27,7 +27,7 @@ type RuleLuckyBet struct {
 
 func NewLuckyCtrl() *RuleLuckyBet {
 	return &RuleLuckyBet{
-		rules: map[string]*LuckyBet{},
+		rules: make(map[string]*LuckyBet),
 	}
 }
 
