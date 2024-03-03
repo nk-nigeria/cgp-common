@@ -494,6 +494,7 @@ export interface LeaderBoardRecord {
   gameCode: string;
   userId: string;
   score: number;
+  cdResetUnix: number;
 }
 
 export interface ExchangeInfo {
@@ -2032,7 +2033,7 @@ export const DealInShop = {
 };
 
 function createBaseLeaderBoardRecord(): LeaderBoardRecord {
-  return { gameCode: "", userId: "", score: 0 };
+  return { gameCode: "", userId: "", score: 0, cdResetUnix: 0 };
 }
 
 export const LeaderBoardRecord = {
@@ -2045,6 +2046,9 @@ export const LeaderBoardRecord = {
     }
     if (message.score !== 0) {
       writer.uint32(24).int64(message.score);
+    }
+    if (message.cdResetUnix !== 0) {
+      writer.uint32(32).int64(message.cdResetUnix);
     }
     return writer;
   },
@@ -2077,6 +2081,13 @@ export const LeaderBoardRecord = {
 
           message.score = longToNumber(reader.int64() as Long);
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.cdResetUnix = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2091,6 +2102,7 @@ export const LeaderBoardRecord = {
       gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
       userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
       score: isSet(object.score) ? globalThis.Number(object.score) : 0,
+      cdResetUnix: isSet(object.cdResetUnix) ? globalThis.Number(object.cdResetUnix) : 0,
     };
   },
 
@@ -2105,6 +2117,9 @@ export const LeaderBoardRecord = {
     if (message.score !== 0) {
       obj.score = Math.round(message.score);
     }
+    if (message.cdResetUnix !== 0) {
+      obj.cdResetUnix = Math.round(message.cdResetUnix);
+    }
     return obj;
   },
 
@@ -2116,6 +2131,7 @@ export const LeaderBoardRecord = {
     message.gameCode = object.gameCode ?? "";
     message.userId = object.userId ?? "";
     message.score = object.score ?? 0;
+    message.cdResetUnix = object.cdResetUnix ?? 0;
     return message;
   },
 };

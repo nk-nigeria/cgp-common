@@ -118,6 +118,7 @@ message LeaderBoardRecord {
   string game_code = 1;
   string user_id = 2;
   int64 score = 3;
+  int64 cd_reset_unix = 4;
 }
 
 enum ExchangeStatus {
