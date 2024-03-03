@@ -69,6 +69,10 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	nk runtime.NakamaModule,
 	db *sql.DB,
 	userId string) (*LuckyBet, error) {
+	rule, exist := l.rules[userId]
+	if exist {
+		return rule, nil
+	}
 	report := lib.NewReportGame(ctx)
 	data, _, err := report.Query(ctx, "metric/op/user-meta", userId, "")
 	if err != nil {
