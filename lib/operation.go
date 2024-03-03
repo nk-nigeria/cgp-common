@@ -130,7 +130,12 @@ func (o *reportGame) ReportEvent(ctx context.Context, event string, userId strin
 }
 
 func (o *reportGame) Query(ctx context.Context, path, userId string, payload string) ([]byte, int, error) {
-	return o.sendHttpReq(path, []byte(payload))
+	req := &pb.Request{
+		UserId: userId,
+		Body:   payload,
+	}
+	reqjson, _ := json.Marshal(req)
+	return o.sendHttpReq(path, reqjson)
 }
 
 func (o reportGame) sendHttpReq(path string, body []byte) ([]byte, int, error) {

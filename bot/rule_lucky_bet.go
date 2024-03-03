@@ -5,11 +5,22 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"log/slog"
+	"os"
 
 	"github.com/ciaolink-game-platform/cgp-common/lib"
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
 	"github.com/heroiclabs/nakama-common/runtime"
+	"google.golang.org/protobuf/encoding/protojson"
 )
+
+var unmarshaler *protojson.UnmarshalOptions
+var logger *slog.Logger
+
+func init() {
+	unmarshaler = &protojson.UnmarshalOptions{}
+	logger = slog.New(slog.NewTextHandler(os.Stderr, nil))
+}
 
 type LuckyBet struct {
 	// UserId    string `json:"user_id,omitempty"`
@@ -70,7 +81,7 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	db *sql.DB,
 	userId string) (*LuckyBet, error) {
 	rule, exist := l.rules[userId]
-	if exist {
+	if exist && rule.UserMeta != nil {
 		return rule, nil
 	}
 	report := lib.NewReportGame(ctx)
@@ -86,7 +97,7 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 		}
 		res := &Response{}
 		json.Unmarshal(data, res)
-		err = json.Unmarshal([]byte(res.Body), userMeta)
+		err = unmarshaler.Unmarshal([]byte(res.Body), userMeta)
 	}
 	if len(userMeta.UserId) == 0 {
 		return nil, errors.New("invalid data, user not found")
@@ -107,6 +118,10 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 
 func (l *RuleLuckyBet) GetBaseAction(newChipsWin int) BaseAction {
 	lucky := l.avg()
+	if lucky.UserMeta == nil {
+		logger.Error("lucky user not found, return default base action")
+		return BaseAction_1
+	}
 	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, float64(lucky.GetTotalChipsTopup()), float64(lucky.TotalChipsCashoutInday))
 	return cfgBet.GetBaseAction(int64(l.TotalChipsWin) + int64(newChipsWin))
 }
