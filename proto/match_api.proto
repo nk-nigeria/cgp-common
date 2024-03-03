@@ -89,6 +89,7 @@ message Bets {
   int64 total = 2;
   int64 offset = 3;
   int64 limit = 4;
+  Bet best_choice = 5;
 }
 
 message BetRequest {

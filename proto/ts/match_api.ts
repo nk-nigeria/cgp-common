@@ -103,6 +103,7 @@ export interface Bets {
   total: number;
   offset: number;
   limit: number;
+  bestChoice: Bet | undefined;
 }
 
 export interface BetRequest {
@@ -883,7 +884,7 @@ export const Bet = {
 };
 
 function createBaseBets(): Bets {
-  return { bets: [], total: 0, offset: 0, limit: 0 };
+  return { bets: [], total: 0, offset: 0, limit: 0, bestChoice: undefined };
 }
 
 export const Bets = {
@@ -899,6 +900,9 @@ export const Bets = {
     }
     if (message.limit !== 0) {
       writer.uint32(32).int64(message.limit);
+    }
+    if (message.bestChoice !== undefined) {
+      Bet.encode(message.bestChoice, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -938,6 +942,13 @@ export const Bets = {
 
           message.limit = longToNumber(reader.int64() as Long);
           continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.bestChoice = Bet.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -953,6 +964,7 @@ export const Bets = {
       total: isSet(object.total) ? globalThis.Number(object.total) : 0,
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      bestChoice: isSet(object.bestChoice) ? Bet.fromJSON(object.bestChoice) : undefined,
     };
   },
 
@@ -970,6 +982,9 @@ export const Bets = {
     if (message.limit !== 0) {
       obj.limit = Math.round(message.limit);
     }
+    if (message.bestChoice !== undefined) {
+      obj.bestChoice = Bet.toJSON(message.bestChoice);
+    }
     return obj;
   },
 
@@ -982,6 +997,9 @@ export const Bets = {
     message.total = object.total ?? 0;
     message.offset = object.offset ?? 0;
     message.limit = object.limit ?? 0;
+    message.bestChoice = (object.bestChoice !== undefined && object.bestChoice !== null)
+      ? Bet.fromPartial(object.bestChoice)
+      : undefined;
     return message;
   },
 };
