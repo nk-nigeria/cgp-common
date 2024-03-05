@@ -135,7 +135,7 @@ export interface RuleLucky {
 }
 
 export interface RulesLucky {
-  rules: RuleLucky | undefined;
+  rules: RuleLucky[];
   limit: number;
   offset: number;
   total: number;
@@ -1153,13 +1153,13 @@ export const RuleLucky = {
 };
 
 function createBaseRulesLucky(): RulesLucky {
-  return { rules: undefined, limit: 0, offset: 0, total: 0 };
+  return { rules: [], limit: 0, offset: 0, total: 0 };
 }
 
 export const RulesLucky = {
   encode(message: RulesLucky, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.rules !== undefined) {
-      RuleLucky.encode(message.rules, writer.uint32(10).fork()).ldelim();
+    for (const v of message.rules) {
+      RuleLucky.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.limit !== 0) {
       writer.uint32(16).int64(message.limit);
@@ -1185,7 +1185,7 @@ export const RulesLucky = {
             break;
           }
 
-          message.rules = RuleLucky.decode(reader, reader.uint32());
+          message.rules.push(RuleLucky.decode(reader, reader.uint32()));
           continue;
         case 2:
           if (tag !== 16) {
@@ -1219,7 +1219,7 @@ export const RulesLucky = {
 
   fromJSON(object: any): RulesLucky {
     return {
-      rules: isSet(object.rules) ? RuleLucky.fromJSON(object.rules) : undefined,
+      rules: globalThis.Array.isArray(object?.rules) ? object.rules.map((e: any) => RuleLucky.fromJSON(e)) : [],
       limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
       offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
       total: isSet(object.total) ? globalThis.Number(object.total) : 0,
@@ -1228,8 +1228,8 @@ export const RulesLucky = {
 
   toJSON(message: RulesLucky): unknown {
     const obj: any = {};
-    if (message.rules !== undefined) {
-      obj.rules = RuleLucky.toJSON(message.rules);
+    if (message.rules?.length) {
+      obj.rules = message.rules.map((e) => RuleLucky.toJSON(e));
     }
     if (message.limit !== 0) {
       obj.limit = Math.round(message.limit);
@@ -1248,9 +1248,7 @@ export const RulesLucky = {
   },
   fromPartial<I extends Exact<DeepPartial<RulesLucky>, I>>(object: I): RulesLucky {
     const message = createBaseRulesLucky();
-    message.rules = (object.rules !== undefined && object.rules !== null)
-      ? RuleLucky.fromPartial(object.rules)
-      : undefined;
+    message.rules = object.rules?.map((e) => RuleLucky.fromPartial(e)) || [];
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;
     message.total = object.total ?? 0;
