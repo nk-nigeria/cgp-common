@@ -72,3 +72,18 @@ message UpdateDesk {
   bool update_history_roll = 6;
   HistoryRoll history_rolls = 7;
 }
+
+message RuleLucky {
+  int64 id = 1;
+  string game_code = 2;
+  float co_rate_min = 3;
+  float co_rate_max = 4;
+  float ci_min = 5;
+  float ci_max = 6;
+  float co_inday_min = 7;
+  float co_inday_max = 8;
+  int64 base_1 = 9;
+  int64 base_2 = 10;
+  int64 base_3 = 11;
+  int64 base_4 = 12;
+}
