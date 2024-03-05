@@ -807,6 +807,28 @@ export interface UserMeta {
   totalChipsCashoutInday: number;
 }
 
+export interface RuleLucky {
+  id: number;
+  gameCode: string;
+  coRateMin: number;
+  coRateMax: number;
+  ciMin: number;
+  ciMax: number;
+  coIndayMin: number;
+  coIndayMax: number;
+  base1: number;
+  base2: number;
+  base3: number;
+  base4: number;
+}
+
+export interface RulesLucky {
+  rules: RuleLucky[];
+  limit: number;
+  offset: number;
+  total: number;
+}
+
 function createBaseGame(): Game {
   return { code: "", active: false, lobbyId: "", layout: undefined, id: 0 };
 }
@@ -6823,6 +6845,347 @@ export const UserMeta = {
     message.agPlay = object.agPlay ?? 0;
     message.agBank = object.agBank ?? 0;
     message.totalChipsCashoutInday = object.totalChipsCashoutInday ?? 0;
+    return message;
+  },
+};
+
+function createBaseRuleLucky(): RuleLucky {
+  return {
+    id: 0,
+    gameCode: "",
+    coRateMin: 0,
+    coRateMax: 0,
+    ciMin: 0,
+    ciMax: 0,
+    coIndayMin: 0,
+    coIndayMax: 0,
+    base1: 0,
+    base2: 0,
+    base3: 0,
+    base4: 0,
+  };
+}
+
+export const RuleLucky = {
+  encode(message: RuleLucky, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int64(message.id);
+    }
+    if (message.gameCode !== "") {
+      writer.uint32(18).string(message.gameCode);
+    }
+    if (message.coRateMin !== 0) {
+      writer.uint32(29).float(message.coRateMin);
+    }
+    if (message.coRateMax !== 0) {
+      writer.uint32(37).float(message.coRateMax);
+    }
+    if (message.ciMin !== 0) {
+      writer.uint32(45).float(message.ciMin);
+    }
+    if (message.ciMax !== 0) {
+      writer.uint32(53).float(message.ciMax);
+    }
+    if (message.coIndayMin !== 0) {
+      writer.uint32(61).float(message.coIndayMin);
+    }
+    if (message.coIndayMax !== 0) {
+      writer.uint32(69).float(message.coIndayMax);
+    }
+    if (message.base1 !== 0) {
+      writer.uint32(72).int64(message.base1);
+    }
+    if (message.base2 !== 0) {
+      writer.uint32(80).int64(message.base2);
+    }
+    if (message.base3 !== 0) {
+      writer.uint32(88).int64(message.base3);
+    }
+    if (message.base4 !== 0) {
+      writer.uint32(96).int64(message.base4);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): RuleLucky {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRuleLucky();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.id = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.gameCode = reader.string();
+          continue;
+        case 3:
+          if (tag !== 29) {
+            break;
+          }
+
+          message.coRateMin = reader.float();
+          continue;
+        case 4:
+          if (tag !== 37) {
+            break;
+          }
+
+          message.coRateMax = reader.float();
+          continue;
+        case 5:
+          if (tag !== 45) {
+            break;
+          }
+
+          message.ciMin = reader.float();
+          continue;
+        case 6:
+          if (tag !== 53) {
+            break;
+          }
+
+          message.ciMax = reader.float();
+          continue;
+        case 7:
+          if (tag !== 61) {
+            break;
+          }
+
+          message.coIndayMin = reader.float();
+          continue;
+        case 8:
+          if (tag !== 69) {
+            break;
+          }
+
+          message.coIndayMax = reader.float();
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.base1 = longToNumber(reader.int64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.base2 = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.base3 = longToNumber(reader.int64() as Long);
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.base4 = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): RuleLucky {
+    return {
+      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
+      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
+      coRateMin: isSet(object.coRateMin) ? globalThis.Number(object.coRateMin) : 0,
+      coRateMax: isSet(object.coRateMax) ? globalThis.Number(object.coRateMax) : 0,
+      ciMin: isSet(object.ciMin) ? globalThis.Number(object.ciMin) : 0,
+      ciMax: isSet(object.ciMax) ? globalThis.Number(object.ciMax) : 0,
+      coIndayMin: isSet(object.coIndayMin) ? globalThis.Number(object.coIndayMin) : 0,
+      coIndayMax: isSet(object.coIndayMax) ? globalThis.Number(object.coIndayMax) : 0,
+      base1: isSet(object.base1) ? globalThis.Number(object.base1) : 0,
+      base2: isSet(object.base2) ? globalThis.Number(object.base2) : 0,
+      base3: isSet(object.base3) ? globalThis.Number(object.base3) : 0,
+      base4: isSet(object.base4) ? globalThis.Number(object.base4) : 0,
+    };
+  },
+
+  toJSON(message: RuleLucky): unknown {
+    const obj: any = {};
+    if (message.id !== 0) {
+      obj.id = Math.round(message.id);
+    }
+    if (message.gameCode !== "") {
+      obj.gameCode = message.gameCode;
+    }
+    if (message.coRateMin !== 0) {
+      obj.coRateMin = message.coRateMin;
+    }
+    if (message.coRateMax !== 0) {
+      obj.coRateMax = message.coRateMax;
+    }
+    if (message.ciMin !== 0) {
+      obj.ciMin = message.ciMin;
+    }
+    if (message.ciMax !== 0) {
+      obj.ciMax = message.ciMax;
+    }
+    if (message.coIndayMin !== 0) {
+      obj.coIndayMin = message.coIndayMin;
+    }
+    if (message.coIndayMax !== 0) {
+      obj.coIndayMax = message.coIndayMax;
+    }
+    if (message.base1 !== 0) {
+      obj.base1 = Math.round(message.base1);
+    }
+    if (message.base2 !== 0) {
+      obj.base2 = Math.round(message.base2);
+    }
+    if (message.base3 !== 0) {
+      obj.base3 = Math.round(message.base3);
+    }
+    if (message.base4 !== 0) {
+      obj.base4 = Math.round(message.base4);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<RuleLucky>, I>>(base?: I): RuleLucky {
+    return RuleLucky.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<RuleLucky>, I>>(object: I): RuleLucky {
+    const message = createBaseRuleLucky();
+    message.id = object.id ?? 0;
+    message.gameCode = object.gameCode ?? "";
+    message.coRateMin = object.coRateMin ?? 0;
+    message.coRateMax = object.coRateMax ?? 0;
+    message.ciMin = object.ciMin ?? 0;
+    message.ciMax = object.ciMax ?? 0;
+    message.coIndayMin = object.coIndayMin ?? 0;
+    message.coIndayMax = object.coIndayMax ?? 0;
+    message.base1 = object.base1 ?? 0;
+    message.base2 = object.base2 ?? 0;
+    message.base3 = object.base3 ?? 0;
+    message.base4 = object.base4 ?? 0;
+    return message;
+  },
+};
+
+function createBaseRulesLucky(): RulesLucky {
+  return { rules: [], limit: 0, offset: 0, total: 0 };
+}
+
+export const RulesLucky = {
+  encode(message: RulesLucky, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.rules) {
+      RuleLucky.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.limit !== 0) {
+      writer.uint32(16).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(24).int64(message.offset);
+    }
+    if (message.total !== 0) {
+      writer.uint32(32).int64(message.total);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): RulesLucky {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRulesLucky();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.rules.push(RuleLucky.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): RulesLucky {
+    return {
+      rules: globalThis.Array.isArray(object?.rules) ? object.rules.map((e: any) => RuleLucky.fromJSON(e)) : [],
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+    };
+  },
+
+  toJSON(message: RulesLucky): unknown {
+    const obj: any = {};
+    if (message.rules?.length) {
+      obj.rules = message.rules.map((e) => RuleLucky.toJSON(e));
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<RulesLucky>, I>>(base?: I): RulesLucky {
+    return RulesLucky.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<RulesLucky>, I>>(object: I): RulesLucky {
+    const message = createBaseRulesLucky();
+    message.rules = object.rules?.map((e) => RuleLucky.fromPartial(e)) || [];
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    message.total = object.total ?? 0;
     return message;
   },
 };

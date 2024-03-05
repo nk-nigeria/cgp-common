@@ -467,3 +467,26 @@ message UserMeta {
   int64 agBank = 7; //  Số chip user đang có trong Bank + Số chip đã chuyển đi cho người khác
   int64 total_chips_cashout_inday = 8; // Tổng số tiền user đã rút trong ngày
 }
+
+
+message RuleLucky {
+  int64 id = 1;
+  string game_code = 2;
+  float co_rate_min = 3;
+  float co_rate_max = 4;
+  float ci_min = 5;
+  float ci_max = 6;
+  float co_inday_min = 7;
+  float co_inday_max = 8;
+  int64 base_1 = 9;
+  int64 base_2 = 10;
+  int64 base_3 = 11;
+  int64 base_4 = 12;
+}
+
+message RulesLucky {
+  repeated RuleLucky rules = 1;
+  int64 limit = 2;
+  int64 offset = 3;
+  int64 total = 4;
+}
