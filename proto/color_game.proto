@@ -87,3 +87,10 @@ message RuleLucky {
   int64 base_3 = 11;
   int64 base_4 = 12;
 }
+
+message RulesLucky {
+  RuleLucky rules = 1;
+  int64 limit = 2;
+  int64 offset = 3;
+  int64 total = 4;
+}

@@ -134,6 +134,13 @@ export interface RuleLucky {
   base4: number;
 }
 
+export interface RulesLucky {
+  rules: RuleLucky | undefined;
+  limit: number;
+  offset: number;
+  total: number;
+}
+
 function createBaseBetResult(): BetResult {
   return { userId: "", bets: [], isWin: false };
 }
@@ -1141,6 +1148,112 @@ export const RuleLucky = {
     message.base2 = object.base2 ?? 0;
     message.base3 = object.base3 ?? 0;
     message.base4 = object.base4 ?? 0;
+    return message;
+  },
+};
+
+function createBaseRulesLucky(): RulesLucky {
+  return { rules: undefined, limit: 0, offset: 0, total: 0 };
+}
+
+export const RulesLucky = {
+  encode(message: RulesLucky, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.rules !== undefined) {
+      RuleLucky.encode(message.rules, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.limit !== 0) {
+      writer.uint32(16).int64(message.limit);
+    }
+    if (message.offset !== 0) {
+      writer.uint32(24).int64(message.offset);
+    }
+    if (message.total !== 0) {
+      writer.uint32(32).int64(message.total);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): RulesLucky {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseRulesLucky();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.rules = RuleLucky.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.limit = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.offset = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.total = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): RulesLucky {
+    return {
+      rules: isSet(object.rules) ? RuleLucky.fromJSON(object.rules) : undefined,
+      limit: isSet(object.limit) ? globalThis.Number(object.limit) : 0,
+      offset: isSet(object.offset) ? globalThis.Number(object.offset) : 0,
+      total: isSet(object.total) ? globalThis.Number(object.total) : 0,
+    };
+  },
+
+  toJSON(message: RulesLucky): unknown {
+    const obj: any = {};
+    if (message.rules !== undefined) {
+      obj.rules = RuleLucky.toJSON(message.rules);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<RulesLucky>, I>>(base?: I): RulesLucky {
+    return RulesLucky.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<RulesLucky>, I>>(object: I): RulesLucky {
+    const message = createBaseRulesLucky();
+    message.rules = (object.rules !== undefined && object.rules !== null)
+      ? RuleLucky.fromPartial(object.rules)
+      : undefined;
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    message.total = object.total ?? 0;
     return message;
   },
 };
