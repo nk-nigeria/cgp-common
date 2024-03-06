@@ -31,15 +31,22 @@ type LuckyBet struct {
 }
 
 type RuleLuckyBet struct {
+	gameCode      string
 	rules         map[string]*LuckyBet
-	tableCfg      TableConfigBetGame
+	tableCfg      *tableConfigBetGame
 	TotalChipsWin int
 }
 
-func NewLuckyCtrl() *RuleLuckyBet {
-	return &RuleLuckyBet{
-		rules: make(map[string]*LuckyBet),
+func NewLuckyCtrl(gameCode string, db *sql.DB) *RuleLuckyBet {
+	v := &RuleLuckyBet{
+		gameCode: gameCode,
+		rules:    make(map[string]*LuckyBet),
+		tableCfg: NewTableConfigBetGame(),
 	}
+	if db != nil {
+		v.tableCfg.LoadConfig(gameCode, db)
+	}
+	return v
 }
 
 func (l *RuleLuckyBet) addUser(userId string, rtp LuckyBet) {
@@ -128,5 +135,5 @@ func (l *RuleLuckyBet) GetBaseAction(newChipsWin int) BaseAction {
 		return BaseAction_1
 	}
 	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, float64(lucky.GetTotalChipsTopup()), float64(lucky.TotalChipsCashoutInday))
-	return cfgBet.GetBaseAction(int64(l.TotalChipsWin) + int64(newChipsWin))
+	return GetBaseAction(cfgBet, l.TotalChipsWin+newChipsWin)
 }
