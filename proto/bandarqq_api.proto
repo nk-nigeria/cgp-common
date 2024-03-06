@@ -70,13 +70,20 @@ message QQHand {
   int32 point = 3;
 }
 
+message QQPlayerEngameResult {
+  string user_id = 1;
+  int64 balance = 2;
+  int64 win_amount = 3;
+  QQPlayerBetResult bet_result = 4;
+}
+
 // message from server to client when the game end
 // red's and blue's hand
 // win_cells is list of winning cells
 message QQGameFinish {
   QQGameFinishHand hands = 1;
   repeated QQBetCell win_cells = 3;
-  QQListPlayerBetResult result = 4;
+  QQPlayerEngameResult result = 4;
 }
 
 message QQGameFinishHand {
