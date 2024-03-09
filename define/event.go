@@ -11,6 +11,6 @@ type NakEvent string
 
 const (
 	NakEventMatchJoin  NakEvent = "nakama_match_end"
-	NakEventMatchLeave NakEvent = "nakama_match_end"
-	NakEventMatchEnd   NakEvent = "nakama_match_end"
+	NakEventMatchLeave NakEvent = "nakama_match_leave"
+	NakEventMatchEnd   NakEvent = "nakama_match_join"
 )
