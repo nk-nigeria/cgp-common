@@ -10,7 +10,7 @@ import (
 func TestRuleLuckyBet_LoadUser(t *testing.T) {
 	name := "TestRuleLuckyBet_LoadUser"
 	t.Run(name, func(t *testing.T) {
-		l := NewLuckyCtrl("game_code", nil)
+		l := NewLuckyCtrl("game_code")
 		ctx := context.Background()
 		ctxVal := make(map[string]string)
 		ctxVal["report_endpoint"] = "http://103.226.250.195:8360"

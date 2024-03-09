@@ -37,18 +37,18 @@ type RuleLuckyBet struct {
 	TotalChipsWin int
 }
 
-func NewLuckyCtrl(gameCode string, db *sql.DB) *RuleLuckyBet {
+func NewLuckyCtrl(gameCode string) *RuleLuckyBet {
 	v := &RuleLuckyBet{
 		gameCode: gameCode,
 		rules:    make(map[string]*LuckyBet),
 		tableCfg: NewTableConfigBetGame(),
 	}
-	if db != nil {
-		v.tableCfg.LoadConfig(gameCode, db)
-	}
 	return v
 }
 
+func (l *RuleLuckyBet) Init(db *sql.DB) {
+	l.tableCfg.LoadConfig(l.gameCode, db)
+}
 func (l *RuleLuckyBet) addUser(userId string, rtp LuckyBet) {
 	l.rules[userId] = &rtp
 }
