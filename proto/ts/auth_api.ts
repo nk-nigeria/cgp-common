@@ -49,6 +49,9 @@ export interface Profile {
 export interface PlayingMatch {
   code: string;
   matchId: string;
+  leaveTime: number;
+  lastPlayingGame: string;
+  currentPlayingGame: string;
 }
 
 export interface ListProfile {
@@ -748,7 +751,7 @@ export const Profile = {
 };
 
 function createBasePlayingMatch(): PlayingMatch {
-  return { code: "", matchId: "" };
+  return { code: "", matchId: "", leaveTime: 0, lastPlayingGame: "", currentPlayingGame: "" };
 }
 
 export const PlayingMatch = {
@@ -758,6 +761,15 @@ export const PlayingMatch = {
     }
     if (message.matchId !== "") {
       writer.uint32(18).string(message.matchId);
+    }
+    if (message.leaveTime !== 0) {
+      writer.uint32(24).int64(message.leaveTime);
+    }
+    if (message.lastPlayingGame !== "") {
+      writer.uint32(34).string(message.lastPlayingGame);
+    }
+    if (message.currentPlayingGame !== "") {
+      writer.uint32(42).string(message.currentPlayingGame);
     }
     return writer;
   },
@@ -783,6 +795,27 @@ export const PlayingMatch = {
 
           message.matchId = reader.string();
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.leaveTime = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.lastPlayingGame = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.currentPlayingGame = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -796,6 +829,9 @@ export const PlayingMatch = {
     return {
       code: isSet(object.code) ? globalThis.String(object.code) : "",
       matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
+      leaveTime: isSet(object.leaveTime) ? globalThis.Number(object.leaveTime) : 0,
+      lastPlayingGame: isSet(object.lastPlayingGame) ? globalThis.String(object.lastPlayingGame) : "",
+      currentPlayingGame: isSet(object.currentPlayingGame) ? globalThis.String(object.currentPlayingGame) : "",
     };
   },
 
@@ -807,6 +843,15 @@ export const PlayingMatch = {
     if (message.matchId !== "") {
       obj.matchId = message.matchId;
     }
+    if (message.leaveTime !== 0) {
+      obj.leaveTime = Math.round(message.leaveTime);
+    }
+    if (message.lastPlayingGame !== "") {
+      obj.lastPlayingGame = message.lastPlayingGame;
+    }
+    if (message.currentPlayingGame !== "") {
+      obj.currentPlayingGame = message.currentPlayingGame;
+    }
     return obj;
   },
 
@@ -817,6 +862,9 @@ export const PlayingMatch = {
     const message = createBasePlayingMatch();
     message.code = object.code ?? "";
     message.matchId = object.matchId ?? "";
+    message.leaveTime = object.leaveTime ?? 0;
+    message.lastPlayingGame = object.lastPlayingGame ?? "";
+    message.currentPlayingGame = object.currentPlayingGame ?? "";
     return message;
   },
 };
