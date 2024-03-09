@@ -51,8 +51,6 @@ message PlayingMatch {
   string code = 1;
   string match_id = 2;
   int64 leave_time = 3;
-  string last_playing_game = 4;
-  string current_playing_game = 5;
 }
 
 message ListProfile {
