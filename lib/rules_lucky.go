@@ -3,26 +3,12 @@ package lib
 import (
 	"context"
 	"database/sql"
+	"errors"
+	"fmt"
 	"time"
 
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
-
-var mapDb = make(map[*sql.DB]*gorm.DB)
-
-func newGorm(db *sql.DB) (*gorm.DB, error) {
-	gormDb, found := mapDb[db]
-	if found {
-		return gormDb, nil
-	}
-	gormDB, err := gorm.Open(postgres.New(postgres.Config{
-		Conn: db,
-	}), &gorm.Config{})
-	mapDb[db] = gormDB
-	return gormDB, err
-}
 
 type rulesLucky struct {
 	Id         uint      `gorm:"primarykey" json:"id,omitempty"`
@@ -75,84 +61,131 @@ func (r *rulesLucky) Trasnfer(rule *pb.RuleLucky) {
 }
 
 func InsertRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) error {
-	r := &rulesLucky{}
-	r.Copy(rule)
-	gOrm, err := newGorm(db)
+	if rule == nil {
+		return errors.New("rule is nil")
+	}
+
+	tx, err := db.Begin()
 	if err != nil {
 		return err
 	}
-	r.CreateAt = time.Now()
-	return gOrm.Create(r).Error
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare("INSERT INTO rules_lucky (co_rate_min, co_rate_max, ci_min, ci_max, co_inday_min, co_inday_max, base_1, base_2, base_3, base_4, create_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	createAt := time.Now()
+	_, err = stmt.Exec(
+		rule.CoRateMin, rule.CoRateMax, rule.CiMin, rule.CiMax, rule.CoIndayMin, rule.CoIndayMax,
+		rule.Base_1, rule.Base_2, rule.Base_3, rule.Base_4, createAt,
+	)
+	if err != nil {
+		return err
+	}
+
+	if err := tx.Commit(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func UpdateRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) (*pb.RuleLucky, error) {
-	gOrm, err := newGorm(db)
-	if err != nil {
-		return nil, err
-	}
 	if rule == nil {
 		return &pb.RuleLucky{}, nil
 	}
-	tx := gOrm.Model(new(rulesLucky)).Where("id = ?", rule.Id).
-		Updates(map[string]interface{}{
-			"co_rate_min":  rule.CoRateMin,
-			"co_rate_max":  rule.CoRateMax,
-			"ci_min":       rule.CiMin,
-			"ci_max":       rule.CiMax,
-			"co_inday_min": rule.CoIndayMin,
-			"co_inday_max": rule.CoIndayMax,
-			"base_1":       rule.Base_1,
-			"base_2":       rule.Base_2,
-			"base_3":       rule.Base_3,
-			"base_4":       rule.Base_4,
-		})
-	return rule, tx.Error
-}
-
-func QueryRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) ([]*pb.RuleLucky, error) {
-	gOrm, err := newGorm(db)
+	tx, err := db.Begin()
 	if err != nil {
 		return nil, err
 	}
+	query := `
+		UPDATE rules_lucky
+		SET co_rate_min=?, co_rate_max=?, ci_min=?, ci_max=?, co_inday_min=?, co_inday_max=?,
+		    base_1=?, base_2=?, base_3=?, base_4=?
+		WHERE id=?
+	`
+	result, err := tx.Exec(query,
+		rule.CoRateMin, rule.CoRateMax, rule.CiMin, rule.CiMax, rule.CoIndayMin, rule.CoIndayMax,
+		rule.Base_1, rule.Base_2, rule.Base_3, rule.Base_4, rule.Id)
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+	if rowsAffected == 0 {
+		tx.Rollback()
+		return nil, fmt.Errorf("no rows were updated for rule with id %d", rule.Id)
+	}
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
+	return rule, nil
+}
+
+func QueryRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) ([]*pb.RuleLucky, error) {
 	if rule == nil {
 		rule = &pb.RuleLucky{}
 	}
-	ml := make([]rulesLucky, 0)
-	tx := gOrm.Model(new(rulesLucky)).Where("1=1")
-	condition := ""
-	args := make([]any, 0)
+
+	ml := make([]*pb.RuleLucky, 0)
+
+	query := "SELECT id, game_code, co_rate_min, co_rate_max, ci_min, ci_max, co_inday_min, co_inday_max, base_1, base_2, base_3, base_4 FROM rules_lucky WHERE 1=1"
+	args := make([]interface{}, 0)
+
 	if rule.Id > 0 {
-		condition = "and id=?"
+		query += " AND id = ?"
 		args = append(args, rule.Id)
 	}
 	if len(rule.GameCode) > 0 {
-		condition += "and game_code=?"
+		query += " AND game_code = ?"
 		args = append(args, rule.GameCode)
 	}
-	if len(args) > 0 {
-		tx = tx.Where("1 = 1"+condition, args...)
+
+	rows, err := db.Query(query, args...)
+	if err != nil {
+		return nil, err
 	}
-	tx = tx.Order("id ASC").Find(&ml)
-	if tx.Error != nil {
-		return nil, tx.Error
+	defer rows.Close()
+
+	for rows.Next() {
+		r := &pb.RuleLucky{}
+		err := rows.Scan(&r.Id, &r.GameCode,
+			&r.CoRateMin, &r.CoRateMax, &r.CiMin, &r.CiMax,
+			&r.CoIndayMin, &r.CoIndayMax,
+			&r.Base_1, &r.Base_2, &r.Base_3, &r.Base_4)
+		if err != nil {
+			return nil, err
+		}
+		ml = append(ml, r)
 	}
-	list := make([]*pb.RuleLucky, 0, len(ml))
-	for _, r := range ml {
-		v := &pb.RuleLucky{}
-		r.Trasnfer(v)
-		list = append(list, v)
+	if err := rows.Err(); err != nil {
+		return nil, err
 	}
-	return list, nil
+	return ml, nil
 }
 
 func DeleteRulesLucky(ctx context.Context, db *sql.DB, id int64) error {
-	gOrm, err := newGorm(db)
-	if err != nil {
-		return err
-	}
 	if id <= 0 {
 		return nil
 	}
-	tx := gOrm.Delete(&rulesLucky{}, id)
-	return tx.Error
+	query := "DELETE FROM rules_lucky WHERE id = ?"
+	result, err := db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("no rows were deleted for id: %d", id)
+	}
+	return nil
 }
