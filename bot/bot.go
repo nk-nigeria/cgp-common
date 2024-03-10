@@ -9,7 +9,7 @@ import (
 )
 
 // const BotUIdPrefix =
-var BotUids = []string{"1bd11ddb-a69e-415f-9953-6550aaca2692"}
+var BotUids = []string{"003e8f8a-986d-4528-83f8-c19918365324"}
 
 func RegisterBotUuids(uuids ...string) {
 	BotUids = make([]string, 0, len(uuids))
