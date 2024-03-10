@@ -21,4 +21,6 @@ message Bank {
   int64 balance_curr = 7;
   int64 percen_fee = 8;
   int64 amount_fee = 9;
+  int64 sender_sid = 10;
+  int64 recipient_sid = 11;
 }

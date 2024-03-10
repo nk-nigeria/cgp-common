@@ -49,6 +49,8 @@ export interface Profile {
 export interface PlayingMatch {
   code: string;
   matchId: string;
+  leaveTime: number;
+  mcb: number;
 }
 
 export interface ListProfile {
@@ -748,7 +750,7 @@ export const Profile = {
 };
 
 function createBasePlayingMatch(): PlayingMatch {
-  return { code: "", matchId: "" };
+  return { code: "", matchId: "", leaveTime: 0, mcb: 0 };
 }
 
 export const PlayingMatch = {
@@ -758,6 +760,12 @@ export const PlayingMatch = {
     }
     if (message.matchId !== "") {
       writer.uint32(18).string(message.matchId);
+    }
+    if (message.leaveTime !== 0) {
+      writer.uint32(24).int64(message.leaveTime);
+    }
+    if (message.mcb !== 0) {
+      writer.uint32(32).int64(message.mcb);
     }
     return writer;
   },
@@ -783,6 +791,20 @@ export const PlayingMatch = {
 
           message.matchId = reader.string();
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.leaveTime = longToNumber(reader.int64() as Long);
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.mcb = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -796,6 +818,8 @@ export const PlayingMatch = {
     return {
       code: isSet(object.code) ? globalThis.String(object.code) : "",
       matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
+      leaveTime: isSet(object.leaveTime) ? globalThis.Number(object.leaveTime) : 0,
+      mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
     };
   },
 
@@ -807,6 +831,12 @@ export const PlayingMatch = {
     if (message.matchId !== "") {
       obj.matchId = message.matchId;
     }
+    if (message.leaveTime !== 0) {
+      obj.leaveTime = Math.round(message.leaveTime);
+    }
+    if (message.mcb !== 0) {
+      obj.mcb = Math.round(message.mcb);
+    }
     return obj;
   },
 
@@ -817,6 +847,8 @@ export const PlayingMatch = {
     const message = createBasePlayingMatch();
     message.code = object.code ?? "";
     message.matchId = object.matchId ?? "";
+    message.leaveTime = object.leaveTime ?? 0;
+    message.mcb = object.mcb ?? 0;
     return message;
   },
 };
