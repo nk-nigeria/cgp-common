@@ -5,6 +5,7 @@ go 1.21
 require (
 	github.com/emirpasic/gods v1.18.1
 	github.com/heroiclabs/nakama-common v1.30.0
+	github.com/lib/pq v1.10.9
 	github.com/qmuntal/stateless v1.6.8
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.24.0

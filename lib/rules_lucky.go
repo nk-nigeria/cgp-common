@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
@@ -137,18 +138,18 @@ func QueryRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) ([]*pb
 	ml := make([]*pb.RuleLucky, 0)
 
 	query := "SELECT id, game_code, co_rate_min, co_rate_max, ci_min, ci_max, co_inday_min, co_inday_max, base_1, base_2, base_3, base_4 FROM rules_lucky WHERE 1=1"
-	args := make([]interface{}, 0)
+	// args := make([]interface{}, 0)
 
 	if rule.Id > 0 {
-		query += " AND id = ?"
-		args = append(args, rule.Id)
+		query += " AND id = " + strconv.Itoa(int(rule.Id))
+		// args = append(args, rule.Id)
 	}
 	if len(rule.GameCode) > 0 {
-		query += " AND game_code = ?"
-		args = append(args, rule.GameCode)
+		query += fmt.Sprintf(" AND game_code = '%s'", rule.GameCode)
+		// args = append(args, rule.GameCode)
 	}
 
-	rows, err := db.Query(query, args...)
+	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}
