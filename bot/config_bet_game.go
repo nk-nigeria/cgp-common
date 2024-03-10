@@ -67,6 +67,9 @@ func IsInRange(val, min, max float64) bool {
 // }
 
 func GetBaseAction(rule *pb.RuleLucky, totalWin int) BaseAction {
+	if rule == nil || rule.Id == 0 {
+		return BaseAction_1
+	}
 	if totalWin >= int(rule.Base_4) {
 		return BaseAction_5
 	}
