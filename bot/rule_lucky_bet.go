@@ -146,14 +146,14 @@ func (l *RuleLuckyBet) Dump(logger runtime.Logger) {
 	{
 		x := logger
 		for key, rule := range l.rules {
-			x.WithField("key", key).WithField("value", rule)
+			x = x.WithField("key", key).WithField("value", rule)
 		}
 		x.Debug("rule")
 	}
 	{
 		x := logger
 		for key, conf := range l.tableCfg.confs {
-			x.WithField("key", key).WithField("value", conf)
+			x = x.WithField("key", key).WithField("value", conf)
 		}
 		x.Debug("conf")
 	}
