@@ -48,6 +48,7 @@ export interface RpcFindMatchRequest {
   create: boolean;
   mockCodeCard: number;
   userData: string;
+  bet: number;
 }
 
 export interface Match {
@@ -59,7 +60,7 @@ export interface Match {
   open: boolean;
   mockCodeCard: number;
   userData: string;
-  bet: string;
+  bet: number;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -114,7 +115,7 @@ export interface BetRequest {
 }
 
 function createBaseRpcFindMatchRequest(): RpcFindMatchRequest {
-  return { markUnit: 0, gameCode: "", withNonOpen: false, create: false, mockCodeCard: 0, userData: "" };
+  return { markUnit: 0, gameCode: "", withNonOpen: false, create: false, mockCodeCard: 0, userData: "", bet: 0 };
 }
 
 export const RpcFindMatchRequest = {
@@ -136,6 +137,9 @@ export const RpcFindMatchRequest = {
     }
     if (message.userData !== "") {
       writer.uint32(50).string(message.userData);
+    }
+    if (message.bet !== 0) {
+      writer.uint32(56).int64(message.bet);
     }
     return writer;
   },
@@ -189,6 +193,13 @@ export const RpcFindMatchRequest = {
 
           message.userData = reader.string();
           continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.bet = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -206,6 +217,7 @@ export const RpcFindMatchRequest = {
       create: isSet(object.create) ? globalThis.Boolean(object.create) : false,
       mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
+      bet: isSet(object.bet) ? globalThis.Number(object.bet) : 0,
     };
   },
 
@@ -229,6 +241,9 @@ export const RpcFindMatchRequest = {
     if (message.userData !== "") {
       obj.userData = message.userData;
     }
+    if (message.bet !== 0) {
+      obj.bet = Math.round(message.bet);
+    }
     return obj;
   },
 
@@ -243,6 +258,7 @@ export const RpcFindMatchRequest = {
     message.create = object.create ?? false;
     message.mockCodeCard = object.mockCodeCard ?? 0;
     message.userData = object.userData ?? "";
+    message.bet = object.bet ?? 0;
     return message;
   },
 };
@@ -257,7 +273,7 @@ function createBaseMatch(): Match {
     open: false,
     mockCodeCard: 0,
     userData: "",
-    bet: "",
+    bet: 0,
   };
 }
 
@@ -287,8 +303,8 @@ export const Match = {
     if (message.userData !== "") {
       writer.uint32(66).string(message.userData);
     }
-    if (message.bet !== "") {
-      writer.uint32(74).string(message.bet);
+    if (message.bet !== 0) {
+      writer.uint32(72).int64(message.bet);
     }
     return writer;
   },
@@ -357,11 +373,11 @@ export const Match = {
           message.userData = reader.string();
           continue;
         case 9:
-          if (tag !== 74) {
+          if (tag !== 72) {
             break;
           }
 
-          message.bet = reader.string();
+          message.bet = longToNumber(reader.int64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -382,7 +398,7 @@ export const Match = {
       open: isSet(object.open) ? globalThis.Boolean(object.open) : false,
       mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
-      bet: isSet(object.bet) ? globalThis.String(object.bet) : "",
+      bet: isSet(object.bet) ? globalThis.Number(object.bet) : 0,
     };
   },
 
@@ -412,8 +428,8 @@ export const Match = {
     if (message.userData !== "") {
       obj.userData = message.userData;
     }
-    if (message.bet !== "") {
-      obj.bet = message.bet;
+    if (message.bet !== 0) {
+      obj.bet = Math.round(message.bet);
     }
     return obj;
   },
@@ -431,7 +447,7 @@ export const Match = {
     message.open = object.open ?? false;
     message.mockCodeCard = object.mockCodeCard ?? 0;
     message.userData = object.userData ?? "";
-    message.bet = object.bet ?? "";
+    message.bet = object.bet ?? 0;
     return message;
   },
 };
