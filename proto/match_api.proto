@@ -62,6 +62,7 @@ message RpcCreateMatchRequest {
   string game_code = 2;
   string name = 3;
   string password = 4;
+  int64 bet = 5;
 }
 
 // Payload for an RPC response containing match IDs the user can join.

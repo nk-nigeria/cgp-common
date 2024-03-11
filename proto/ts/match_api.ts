@@ -75,6 +75,7 @@ export interface RpcCreateMatchRequest {
   gameCode: string;
   name: string;
   password: string;
+  bet: number;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -512,7 +513,7 @@ export const RpcFindMatchResponse = {
 };
 
 function createBaseRpcCreateMatchRequest(): RpcCreateMatchRequest {
-  return { markUnit: 0, gameCode: "", name: "", password: "" };
+  return { markUnit: 0, gameCode: "", name: "", password: "", bet: 0 };
 }
 
 export const RpcCreateMatchRequest = {
@@ -528,6 +529,9 @@ export const RpcCreateMatchRequest = {
     }
     if (message.password !== "") {
       writer.uint32(34).string(message.password);
+    }
+    if (message.bet !== 0) {
+      writer.uint32(40).int64(message.bet);
     }
     return writer;
   },
@@ -567,6 +571,13 @@ export const RpcCreateMatchRequest = {
 
           message.password = reader.string();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.bet = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -582,6 +593,7 @@ export const RpcCreateMatchRequest = {
       gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       password: isSet(object.password) ? globalThis.String(object.password) : "",
+      bet: isSet(object.bet) ? globalThis.Number(object.bet) : 0,
     };
   },
 
@@ -599,6 +611,9 @@ export const RpcCreateMatchRequest = {
     if (message.password !== "") {
       obj.password = message.password;
     }
+    if (message.bet !== 0) {
+      obj.bet = Math.round(message.bet);
+    }
     return obj;
   },
 
@@ -611,6 +626,7 @@ export const RpcCreateMatchRequest = {
     message.gameCode = object.gameCode ?? "";
     message.name = object.name ?? "";
     message.password = object.password ?? "";
+    message.bet = object.bet ?? 0;
     return message;
   },
 };
