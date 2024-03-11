@@ -59,6 +59,7 @@ export interface Match {
   open: boolean;
   mockCodeCard: number;
   userData: string;
+  bet: string;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -247,7 +248,17 @@ export const RpcFindMatchRequest = {
 };
 
 function createBaseMatch(): Match {
-  return { matchId: "", size: 0, maxSize: 0, name: "", markUnit: 0, open: false, mockCodeCard: 0, userData: "" };
+  return {
+    matchId: "",
+    size: 0,
+    maxSize: 0,
+    name: "",
+    markUnit: 0,
+    open: false,
+    mockCodeCard: 0,
+    userData: "",
+    bet: "",
+  };
 }
 
 export const Match = {
@@ -275,6 +286,9 @@ export const Match = {
     }
     if (message.userData !== "") {
       writer.uint32(66).string(message.userData);
+    }
+    if (message.bet !== "") {
+      writer.uint32(74).string(message.bet);
     }
     return writer;
   },
@@ -342,6 +356,13 @@ export const Match = {
 
           message.userData = reader.string();
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.bet = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -361,6 +382,7 @@ export const Match = {
       open: isSet(object.open) ? globalThis.Boolean(object.open) : false,
       mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
+      bet: isSet(object.bet) ? globalThis.String(object.bet) : "",
     };
   },
 
@@ -390,6 +412,9 @@ export const Match = {
     if (message.userData !== "") {
       obj.userData = message.userData;
     }
+    if (message.bet !== "") {
+      obj.bet = message.bet;
+    }
     return obj;
   },
 
@@ -406,6 +431,7 @@ export const Match = {
     message.open = object.open ?? false;
     message.mockCodeCard = object.mockCodeCard ?? 0;
     message.userData = object.userData ?? "";
+    message.bet = object.bet ?? "";
     return message;
   },
 };
