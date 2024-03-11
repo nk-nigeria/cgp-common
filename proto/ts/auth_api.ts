@@ -51,6 +51,7 @@ export interface PlayingMatch {
   matchId: string;
   leaveTime: number;
   mcb: number;
+  bet: number;
 }
 
 export interface ListProfile {
@@ -750,7 +751,7 @@ export const Profile = {
 };
 
 function createBasePlayingMatch(): PlayingMatch {
-  return { code: "", matchId: "", leaveTime: 0, mcb: 0 };
+  return { code: "", matchId: "", leaveTime: 0, mcb: 0, bet: 0 };
 }
 
 export const PlayingMatch = {
@@ -766,6 +767,9 @@ export const PlayingMatch = {
     }
     if (message.mcb !== 0) {
       writer.uint32(32).int64(message.mcb);
+    }
+    if (message.bet !== 0) {
+      writer.uint32(40).int64(message.bet);
     }
     return writer;
   },
@@ -805,6 +809,13 @@ export const PlayingMatch = {
 
           message.mcb = longToNumber(reader.int64() as Long);
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.bet = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -820,6 +831,7 @@ export const PlayingMatch = {
       matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
       leaveTime: isSet(object.leaveTime) ? globalThis.Number(object.leaveTime) : 0,
       mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
+      bet: isSet(object.bet) ? globalThis.Number(object.bet) : 0,
     };
   },
 
@@ -837,6 +849,9 @@ export const PlayingMatch = {
     if (message.mcb !== 0) {
       obj.mcb = Math.round(message.mcb);
     }
+    if (message.bet !== 0) {
+      obj.bet = Math.round(message.bet);
+    }
     return obj;
   },
 
@@ -849,6 +864,7 @@ export const PlayingMatch = {
     message.matchId = object.matchId ?? "";
     message.leaveTime = object.leaveTime ?? 0;
     message.mcb = object.mcb ?? 0;
+    message.bet = object.bet ?? 0;
     return message;
   },
 };

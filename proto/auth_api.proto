@@ -52,6 +52,7 @@ message PlayingMatch {
   string match_id = 2;
   int64 leave_time = 3;
   int64 mcb=4;
+  int64 bet=5;
 }
 
 message ListProfile {
