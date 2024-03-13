@@ -138,5 +138,10 @@ func (t *tableConfigBetGame) GetConfig(CoRate float64, Ci float64, CoInDay float
 		}
 		return rule
 	}
-	return &pb.RuleLucky{}
+	return &pb.RuleLucky{
+		Base_1: -2,
+		Base_2: -1,
+		Base_3: 1000000,
+		Base_4: 100000000000,
+	}
 }
