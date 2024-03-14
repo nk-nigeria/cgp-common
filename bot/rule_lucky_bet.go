@@ -59,6 +59,9 @@ func (l *RuleLuckyBet) UpdateChipsBalanceChanged(userId string, chipsChanged int
 		return
 	}
 	rtp.AgPlay += int64(chipsChanged)
+	if rtp.AgPlay < 0 {
+		rtp.AgPlay = 0
+	}
 }
 
 func (l *RuleLuckyBet) RemoveUser(userId string) {

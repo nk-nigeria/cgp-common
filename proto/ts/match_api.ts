@@ -48,6 +48,7 @@ export interface RpcFindMatchRequest {
   create: boolean;
   mockCodeCard: number;
   userData: string;
+  lastBet: number;
 }
 
 export interface Match {
@@ -59,6 +60,7 @@ export interface Match {
   open: boolean;
   mockCodeCard: number;
   userData: string;
+  lastBet: number;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -73,6 +75,7 @@ export interface RpcCreateMatchRequest {
   gameCode: string;
   name: string;
   password: string;
+  lastBet: number;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -113,7 +116,7 @@ export interface BetRequest {
 }
 
 function createBaseRpcFindMatchRequest(): RpcFindMatchRequest {
-  return { markUnit: 0, gameCode: "", withNonOpen: false, create: false, mockCodeCard: 0, userData: "" };
+  return { markUnit: 0, gameCode: "", withNonOpen: false, create: false, mockCodeCard: 0, userData: "", lastBet: 0 };
 }
 
 export const RpcFindMatchRequest = {
@@ -135,6 +138,9 @@ export const RpcFindMatchRequest = {
     }
     if (message.userData !== "") {
       writer.uint32(50).string(message.userData);
+    }
+    if (message.lastBet !== 0) {
+      writer.uint32(56).int64(message.lastBet);
     }
     return writer;
   },
@@ -188,6 +194,13 @@ export const RpcFindMatchRequest = {
 
           message.userData = reader.string();
           continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.lastBet = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -205,6 +218,7 @@ export const RpcFindMatchRequest = {
       create: isSet(object.create) ? globalThis.Boolean(object.create) : false,
       mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
+      lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
     };
   },
 
@@ -228,6 +242,9 @@ export const RpcFindMatchRequest = {
     if (message.userData !== "") {
       obj.userData = message.userData;
     }
+    if (message.lastBet !== 0) {
+      obj.lastBet = Math.round(message.lastBet);
+    }
     return obj;
   },
 
@@ -242,12 +259,23 @@ export const RpcFindMatchRequest = {
     message.create = object.create ?? false;
     message.mockCodeCard = object.mockCodeCard ?? 0;
     message.userData = object.userData ?? "";
+    message.lastBet = object.lastBet ?? 0;
     return message;
   },
 };
 
 function createBaseMatch(): Match {
-  return { matchId: "", size: 0, maxSize: 0, name: "", markUnit: 0, open: false, mockCodeCard: 0, userData: "" };
+  return {
+    matchId: "",
+    size: 0,
+    maxSize: 0,
+    name: "",
+    markUnit: 0,
+    open: false,
+    mockCodeCard: 0,
+    userData: "",
+    lastBet: 0,
+  };
 }
 
 export const Match = {
@@ -275,6 +303,9 @@ export const Match = {
     }
     if (message.userData !== "") {
       writer.uint32(66).string(message.userData);
+    }
+    if (message.lastBet !== 0) {
+      writer.uint32(72).int64(message.lastBet);
     }
     return writer;
   },
@@ -342,6 +373,13 @@ export const Match = {
 
           message.userData = reader.string();
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.lastBet = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -361,6 +399,7 @@ export const Match = {
       open: isSet(object.open) ? globalThis.Boolean(object.open) : false,
       mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
+      lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
     };
   },
 
@@ -390,6 +429,9 @@ export const Match = {
     if (message.userData !== "") {
       obj.userData = message.userData;
     }
+    if (message.lastBet !== 0) {
+      obj.lastBet = Math.round(message.lastBet);
+    }
     return obj;
   },
 
@@ -406,6 +448,7 @@ export const Match = {
     message.open = object.open ?? false;
     message.mockCodeCard = object.mockCodeCard ?? 0;
     message.userData = object.userData ?? "";
+    message.lastBet = object.lastBet ?? 0;
     return message;
   },
 };
@@ -470,7 +513,7 @@ export const RpcFindMatchResponse = {
 };
 
 function createBaseRpcCreateMatchRequest(): RpcCreateMatchRequest {
-  return { markUnit: 0, gameCode: "", name: "", password: "" };
+  return { markUnit: 0, gameCode: "", name: "", password: "", lastBet: 0 };
 }
 
 export const RpcCreateMatchRequest = {
@@ -486,6 +529,9 @@ export const RpcCreateMatchRequest = {
     }
     if (message.password !== "") {
       writer.uint32(34).string(message.password);
+    }
+    if (message.lastBet !== 0) {
+      writer.uint32(40).int64(message.lastBet);
     }
     return writer;
   },
@@ -525,6 +571,13 @@ export const RpcCreateMatchRequest = {
 
           message.password = reader.string();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.lastBet = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -540,6 +593,7 @@ export const RpcCreateMatchRequest = {
       gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       password: isSet(object.password) ? globalThis.String(object.password) : "",
+      lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
     };
   },
 
@@ -557,6 +611,9 @@ export const RpcCreateMatchRequest = {
     if (message.password !== "") {
       obj.password = message.password;
     }
+    if (message.lastBet !== 0) {
+      obj.lastBet = Math.round(message.lastBet);
+    }
     return obj;
   },
 
@@ -569,6 +626,7 @@ export const RpcCreateMatchRequest = {
     message.gameCode = object.gameCode ?? "";
     message.name = object.name ?? "";
     message.password = object.password ?? "";
+    message.lastBet = object.lastBet ?? 0;
     return message;
   },
 };
