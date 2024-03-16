@@ -52,6 +52,7 @@ message Match {
   int64 last_bet = 9;
   Profile user_created = 10;
   string table_id = 11;
+  int32 num_bot = 12;
 }
 
 // Payload for an RPC response containing match IDs the user can join.

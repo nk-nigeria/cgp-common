@@ -64,6 +64,7 @@ export interface Match {
   lastBet: number;
   userCreated: Profile | undefined;
   tableId: string;
+  numBot: number;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -280,6 +281,7 @@ function createBaseMatch(): Match {
     lastBet: 0,
     userCreated: undefined,
     tableId: "",
+    numBot: 0,
   };
 }
 
@@ -317,6 +319,9 @@ export const Match = {
     }
     if (message.tableId !== "") {
       writer.uint32(90).string(message.tableId);
+    }
+    if (message.numBot !== 0) {
+      writer.uint32(96).int32(message.numBot);
     }
     return writer;
   },
@@ -405,6 +410,13 @@ export const Match = {
 
           message.tableId = reader.string();
           continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.numBot = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -427,6 +439,7 @@ export const Match = {
       lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
       userCreated: isSet(object.userCreated) ? Profile.fromJSON(object.userCreated) : undefined,
       tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
+      numBot: isSet(object.numBot) ? globalThis.Number(object.numBot) : 0,
     };
   },
 
@@ -465,6 +478,9 @@ export const Match = {
     if (message.tableId !== "") {
       obj.tableId = message.tableId;
     }
+    if (message.numBot !== 0) {
+      obj.numBot = Math.round(message.numBot);
+    }
     return obj;
   },
 
@@ -486,6 +502,7 @@ export const Match = {
       ? Profile.fromPartial(object.userCreated)
       : undefined;
     message.tableId = object.tableId ?? "";
+    message.numBot = object.numBot ?? 0;
     return message;
   },
 };
