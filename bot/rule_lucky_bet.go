@@ -31,17 +31,24 @@ type LuckyBet struct {
 }
 
 type RuleLuckyBet struct {
+	gameCode      string
 	rules         map[string]*LuckyBet
-	tableCfg      TableConfigBetGame
+	tableCfg      *tableConfigBetGame
 	TotalChipsWin int
 }
 
-func NewLuckyCtrl() *RuleLuckyBet {
-	return &RuleLuckyBet{
-		rules: make(map[string]*LuckyBet),
+func NewLuckyCtrl(gameCode string) *RuleLuckyBet {
+	v := &RuleLuckyBet{
+		gameCode: gameCode,
+		rules:    make(map[string]*LuckyBet),
+		tableCfg: NewTableConfigBetGame(),
 	}
+	return v
 }
 
+func (l *RuleLuckyBet) Init(db *sql.DB) {
+	l.tableCfg.LoadConfig(l.gameCode, db)
+}
 func (l *RuleLuckyBet) addUser(userId string, rtp LuckyBet) {
 	l.rules[userId] = &rtp
 }
@@ -52,6 +59,9 @@ func (l *RuleLuckyBet) UpdateChipsBalanceChanged(userId string, chipsChanged int
 		return
 	}
 	rtp.AgPlay += int64(chipsChanged)
+	if rtp.AgPlay < 0 {
+		rtp.AgPlay = 0
+	}
 }
 
 func (l *RuleLuckyBet) RemoveUser(userId string) {
@@ -67,16 +77,18 @@ func (l *RuleLuckyBet) avg() LuckyBet {
 	lucky := LuckyBet{
 		UserMeta: &pb.UserMeta{},
 	}
+	totalCoRate := float64(0)
 	for _, v := range l.rules {
 		lucky.TotalChipsTopup += v.TotalChipsTopup
 		lucky.TotalChipsCashout += v.TotalChipsCashout
 		lucky.TotalChipsCashoutInday += v.TotalChipsCashoutInday
-		lucky.CoRate += v.CoRate
+		totalCoRate += lucky.CoRate
 		lucky.AgPlay += v.AgPlay
 		lucky.AgBank += v.AgBank
 		// lucky.ChipWin += v.ChipWin
 		// lucky.ChipSpent += v.ChipSpent
 	}
+	lucky.CoRate = totalCoRate / float64(len(l.rules))
 	return lucky
 }
 
@@ -128,5 +140,25 @@ func (l *RuleLuckyBet) GetBaseAction(newChipsWin int) BaseAction {
 		return BaseAction_1
 	}
 	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, float64(lucky.GetTotalChipsTopup()), float64(lucky.TotalChipsCashoutInday))
-	return cfgBet.GetBaseAction(int64(l.TotalChipsWin) + int64(newChipsWin))
+	return GetBaseAction(cfgBet, l.TotalChipsWin+newChipsWin)
+}
+
+func (l *RuleLuckyBet) Dump(logger runtime.Logger) {
+	logger.Debug("######## START DUMP LUCKY BET ########")
+	logger.WithField("game ", l.gameCode).Info("")
+	{
+		x := logger
+		for key, rule := range l.rules {
+			x = x.WithField("key", key).WithField("value", rule)
+		}
+		x.Debug("rule")
+	}
+	{
+		x := logger
+		for key, conf := range l.tableCfg.confs {
+			x = x.WithField("key", key).WithField("value", conf)
+		}
+		x.Debug("conf")
+	}
+	logger.Debug("######## END DUMP LUCKY BET ########")
 }

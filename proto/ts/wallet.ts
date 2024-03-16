@@ -14,6 +14,8 @@ export interface Bank {
   balanceCurr: number;
   percenFee: number;
   amountFee: number;
+  senderSid: number;
+  recipientSid: number;
 }
 
 export enum Bank_Action {
@@ -84,6 +86,8 @@ function createBaseBank(): Bank {
     balanceCurr: 0,
     percenFee: 0,
     amountFee: 0,
+    senderSid: 0,
+    recipientSid: 0,
   };
 }
 
@@ -115,6 +119,12 @@ export const Bank = {
     }
     if (message.amountFee !== 0) {
       writer.uint32(72).int64(message.amountFee);
+    }
+    if (message.senderSid !== 0) {
+      writer.uint32(80).int64(message.senderSid);
+    }
+    if (message.recipientSid !== 0) {
+      writer.uint32(88).int64(message.recipientSid);
     }
     return writer;
   },
@@ -189,6 +199,20 @@ export const Bank = {
 
           message.amountFee = longToNumber(reader.int64() as Long);
           continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.senderSid = longToNumber(reader.int64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.recipientSid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -209,6 +233,8 @@ export const Bank = {
       balanceCurr: isSet(object.balanceCurr) ? globalThis.Number(object.balanceCurr) : 0,
       percenFee: isSet(object.percenFee) ? globalThis.Number(object.percenFee) : 0,
       amountFee: isSet(object.amountFee) ? globalThis.Number(object.amountFee) : 0,
+      senderSid: isSet(object.senderSid) ? globalThis.Number(object.senderSid) : 0,
+      recipientSid: isSet(object.recipientSid) ? globalThis.Number(object.recipientSid) : 0,
     };
   },
 
@@ -241,6 +267,12 @@ export const Bank = {
     if (message.amountFee !== 0) {
       obj.amountFee = Math.round(message.amountFee);
     }
+    if (message.senderSid !== 0) {
+      obj.senderSid = Math.round(message.senderSid);
+    }
+    if (message.recipientSid !== 0) {
+      obj.recipientSid = Math.round(message.recipientSid);
+    }
     return obj;
   },
 
@@ -258,6 +290,8 @@ export const Bank = {
     message.balanceCurr = object.balanceCurr ?? 0;
     message.percenFee = object.percenFee ?? 0;
     message.amountFee = object.amountFee ?? 0;
+    message.senderSid = object.senderSid ?? 0;
+    message.recipientSid = object.recipientSid ?? 0;
     return message;
   },
 };
