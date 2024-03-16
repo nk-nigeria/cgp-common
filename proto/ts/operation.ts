@@ -120,7 +120,7 @@ export interface MatchData {
   mcb: number;
   chipFee: number;
   matchId: string;
-  tableId: number;
+  tableId: string;
 }
 
 export interface OpReport {
@@ -1628,7 +1628,7 @@ export const PlayerData = {
 };
 
 function createBaseMatchData(): MatchData {
-  return { gameId: 0, gameCode: "", mcb: 0, chipFee: 0, matchId: "", tableId: 0 };
+  return { gameId: 0, gameCode: "", mcb: 0, chipFee: 0, matchId: "", tableId: "" };
 }
 
 export const MatchData = {
@@ -1648,8 +1648,8 @@ export const MatchData = {
     if (message.matchId !== "") {
       writer.uint32(50).string(message.matchId);
     }
-    if (message.tableId !== 0) {
-      writer.uint32(56).int64(message.tableId);
+    if (message.tableId !== "") {
+      writer.uint32(58).string(message.tableId);
     }
     return writer;
   },
@@ -1697,11 +1697,11 @@ export const MatchData = {
           message.matchId = reader.string();
           continue;
         case 7:
-          if (tag !== 56) {
+          if (tag !== 58) {
             break;
           }
 
-          message.tableId = longToNumber(reader.int64() as Long);
+          message.tableId = reader.string();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1719,7 +1719,7 @@ export const MatchData = {
       mcb: isSet(object.mcb) ? globalThis.Number(object.mcb) : 0,
       chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
       matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
-      tableId: isSet(object.tableId) ? globalThis.Number(object.tableId) : 0,
+      tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
     };
   },
 
@@ -1740,8 +1740,8 @@ export const MatchData = {
     if (message.matchId !== "") {
       obj.matchId = message.matchId;
     }
-    if (message.tableId !== 0) {
-      obj.tableId = Math.round(message.tableId);
+    if (message.tableId !== "") {
+      obj.tableId = message.tableId;
     }
     return obj;
   },
@@ -1756,7 +1756,7 @@ export const MatchData = {
     message.mcb = object.mcb ?? 0;
     message.chipFee = object.chipFee ?? 0;
     message.matchId = object.matchId ?? "";
-    message.tableId = object.tableId ?? 0;
+    message.tableId = object.tableId ?? "";
     return message;
   },
 };
