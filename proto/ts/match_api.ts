@@ -1,5 +1,6 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
+import { Profile } from "./auth_api";
 import Long = require("long");
 
 export const protobufPackage = "api";
@@ -61,6 +62,7 @@ export interface Match {
   mockCodeCard: number;
   userData: string;
   lastBet: number;
+  userCreated: Profile | undefined;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -275,6 +277,7 @@ function createBaseMatch(): Match {
     mockCodeCard: 0,
     userData: "",
     lastBet: 0,
+    userCreated: undefined,
   };
 }
 
@@ -306,6 +309,9 @@ export const Match = {
     }
     if (message.lastBet !== 0) {
       writer.uint32(72).int64(message.lastBet);
+    }
+    if (message.userCreated !== undefined) {
+      Profile.encode(message.userCreated, writer.uint32(82).fork()).ldelim();
     }
     return writer;
   },
@@ -380,6 +386,13 @@ export const Match = {
 
           message.lastBet = longToNumber(reader.int64() as Long);
           continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.userCreated = Profile.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -400,6 +413,7 @@ export const Match = {
       mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
       lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
+      userCreated: isSet(object.userCreated) ? Profile.fromJSON(object.userCreated) : undefined,
     };
   },
 
@@ -432,6 +446,9 @@ export const Match = {
     if (message.lastBet !== 0) {
       obj.lastBet = Math.round(message.lastBet);
     }
+    if (message.userCreated !== undefined) {
+      obj.userCreated = Profile.toJSON(message.userCreated);
+    }
     return obj;
   },
 
@@ -449,6 +466,9 @@ export const Match = {
     message.mockCodeCard = object.mockCodeCard ?? 0;
     message.userData = object.userData ?? "";
     message.lastBet = object.lastBet ?? 0;
+    message.userCreated = (object.userCreated !== undefined && object.userCreated !== null)
+      ? Profile.fromPartial(object.userCreated)
+      : undefined;
     return message;
   },
 };
