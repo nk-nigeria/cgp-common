@@ -50,6 +50,7 @@ export interface RpcFindMatchRequest {
   mockCodeCard: number;
   userData: string;
   lastBet: number;
+  password: string;
 }
 
 export interface Match {
@@ -81,6 +82,7 @@ export interface RpcCreateMatchRequest {
   name: string;
   password: string;
   lastBet: number;
+  maxSize: number;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -121,7 +123,16 @@ export interface BetRequest {
 }
 
 function createBaseRpcFindMatchRequest(): RpcFindMatchRequest {
-  return { markUnit: 0, gameCode: "", withNonOpen: false, create: false, mockCodeCard: 0, userData: "", lastBet: 0 };
+  return {
+    markUnit: 0,
+    gameCode: "",
+    withNonOpen: false,
+    create: false,
+    mockCodeCard: 0,
+    userData: "",
+    lastBet: 0,
+    password: "",
+  };
 }
 
 export const RpcFindMatchRequest = {
@@ -146,6 +157,9 @@ export const RpcFindMatchRequest = {
     }
     if (message.lastBet !== 0) {
       writer.uint32(56).int64(message.lastBet);
+    }
+    if (message.password !== "") {
+      writer.uint32(66).string(message.password);
     }
     return writer;
   },
@@ -206,6 +220,13 @@ export const RpcFindMatchRequest = {
 
           message.lastBet = longToNumber(reader.int64() as Long);
           continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+
+          message.password = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -224,6 +245,7 @@ export const RpcFindMatchRequest = {
       mockCodeCard: isSet(object.mockCodeCard) ? globalThis.Number(object.mockCodeCard) : 0,
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
       lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
+      password: isSet(object.password) ? globalThis.String(object.password) : "",
     };
   },
 
@@ -250,6 +272,9 @@ export const RpcFindMatchRequest = {
     if (message.lastBet !== 0) {
       obj.lastBet = Math.round(message.lastBet);
     }
+    if (message.password !== "") {
+      obj.password = message.password;
+    }
     return obj;
   },
 
@@ -265,6 +290,7 @@ export const RpcFindMatchRequest = {
     message.mockCodeCard = object.mockCodeCard ?? 0;
     message.userData = object.userData ?? "";
     message.lastBet = object.lastBet ?? 0;
+    message.password = object.password ?? "";
     return message;
   },
 };
@@ -584,7 +610,7 @@ export const RpcFindMatchResponse = {
 };
 
 function createBaseRpcCreateMatchRequest(): RpcCreateMatchRequest {
-  return { markUnit: 0, gameCode: "", name: "", password: "", lastBet: 0 };
+  return { markUnit: 0, gameCode: "", name: "", password: "", lastBet: 0, maxSize: 0 };
 }
 
 export const RpcCreateMatchRequest = {
@@ -603,6 +629,9 @@ export const RpcCreateMatchRequest = {
     }
     if (message.lastBet !== 0) {
       writer.uint32(40).int64(message.lastBet);
+    }
+    if (message.maxSize !== 0) {
+      writer.uint32(48).int64(message.maxSize);
     }
     return writer;
   },
@@ -649,6 +678,13 @@ export const RpcCreateMatchRequest = {
 
           message.lastBet = longToNumber(reader.int64() as Long);
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.maxSize = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -665,6 +701,7 @@ export const RpcCreateMatchRequest = {
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       password: isSet(object.password) ? globalThis.String(object.password) : "",
       lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
+      maxSize: isSet(object.maxSize) ? globalThis.Number(object.maxSize) : 0,
     };
   },
 
@@ -685,6 +722,9 @@ export const RpcCreateMatchRequest = {
     if (message.lastBet !== 0) {
       obj.lastBet = Math.round(message.lastBet);
     }
+    if (message.maxSize !== 0) {
+      obj.maxSize = Math.round(message.maxSize);
+    }
     return obj;
   },
 
@@ -698,6 +738,7 @@ export const RpcCreateMatchRequest = {
     message.name = object.name ?? "";
     message.password = object.password ?? "";
     message.lastBet = object.lastBet ?? 0;
+    message.maxSize = object.maxSize ?? 0;
     return message;
   },
 };
