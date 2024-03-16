@@ -53,6 +53,7 @@ message Match {
   Profile user_created = 10;
   string table_id = 11;
   int32 num_bot = 12;
+  string password = 13;
 }
 
 // Payload for an RPC response containing match IDs the user can join.

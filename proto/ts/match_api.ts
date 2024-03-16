@@ -65,6 +65,7 @@ export interface Match {
   userCreated: Profile | undefined;
   tableId: string;
   numBot: number;
+  password: string;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -282,6 +283,7 @@ function createBaseMatch(): Match {
     userCreated: undefined,
     tableId: "",
     numBot: 0,
+    password: "",
   };
 }
 
@@ -322,6 +324,9 @@ export const Match = {
     }
     if (message.numBot !== 0) {
       writer.uint32(96).int32(message.numBot);
+    }
+    if (message.password !== "") {
+      writer.uint32(106).string(message.password);
     }
     return writer;
   },
@@ -417,6 +422,13 @@ export const Match = {
 
           message.numBot = reader.int32();
           continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.password = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -440,6 +452,7 @@ export const Match = {
       userCreated: isSet(object.userCreated) ? Profile.fromJSON(object.userCreated) : undefined,
       tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
       numBot: isSet(object.numBot) ? globalThis.Number(object.numBot) : 0,
+      password: isSet(object.password) ? globalThis.String(object.password) : "",
     };
   },
 
@@ -481,6 +494,9 @@ export const Match = {
     if (message.numBot !== 0) {
       obj.numBot = Math.round(message.numBot);
     }
+    if (message.password !== "") {
+      obj.password = message.password;
+    }
     return obj;
   },
 
@@ -503,6 +519,7 @@ export const Match = {
       : undefined;
     message.tableId = object.tableId ?? "";
     message.numBot = object.numBot ?? 0;
+    message.password = object.password ?? "";
     return message;
   },
 };
