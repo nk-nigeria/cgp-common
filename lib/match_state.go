@@ -5,19 +5,21 @@ import (
 	"math"
 	"time"
 
+	pb "github.com/ciaolink-game-platform/cgp-common/proto"
+
 	"github.com/emirpasic/gods/maps/linkedhashmap"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
-type MatchLabel struct {
-	Open     int32  `json:"open,omitempty"`
-	Bet      int32  `json:"bet,omitempty"`
-	Code     string `json:"code,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Password string `json:"password,omitempty"`
-	MaxSize  int32  `json:"max_size,omitempty"`
-	TableId  int64  `json:"table_id,omitempty"`
-}
+// type MatchLabel struct {
+// 	Open     int32  `json:"open,omitempty"`
+// 	Bet      int32  `json:"bet,omitempty"`
+// 	Code     string `json:"code,omitempty"`
+// 	Name     string `json:"name,omitempty"`
+// 	Password string `json:"password,omitempty"`
+// 	MaxSize  int32  `json:"max_size,omitempty"`
+// 	TableId  int64  `json:"table_id,omitempty"`
+// }
 
 type NewPrecenseFn func(ctx context.Context, nk runtime.NakamaModule, precense runtime.Presence) runtime.Presence
 
@@ -27,7 +29,7 @@ var defaultNewPrecenseFn = func(ctx context.Context, nk runtime.NakamaModule, pr
 
 type MatchState struct {
 	NewPrecenseFn      NewPrecenseFn
-	Label              *MatchLabel
+	Label              *pb.Match
 	CountDownReachTime time.Time
 	LastCountDown      int
 	JoinsInProgress    int
@@ -39,7 +41,7 @@ type MatchState struct {
 	PresencesNoInteract map[string]int
 }
 
-func NewMathState(label *MatchLabel, fn NewPrecenseFn) MatchState {
+func NewMathState(label *pb.Match, fn NewPrecenseFn) MatchState {
 	m := MatchState{
 		Label:               label,
 		Presences:           linkedhashmap.New(),
