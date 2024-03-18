@@ -51,6 +51,7 @@ export interface RpcFindMatchRequest {
   userData: string;
   lastBet: number;
   password: string;
+  tableId: string;
 }
 
 export interface Match {
@@ -132,6 +133,7 @@ function createBaseRpcFindMatchRequest(): RpcFindMatchRequest {
     userData: "",
     lastBet: 0,
     password: "",
+    tableId: "",
   };
 }
 
@@ -160,6 +162,9 @@ export const RpcFindMatchRequest = {
     }
     if (message.password !== "") {
       writer.uint32(66).string(message.password);
+    }
+    if (message.tableId !== "") {
+      writer.uint32(74).string(message.tableId);
     }
     return writer;
   },
@@ -227,6 +232,13 @@ export const RpcFindMatchRequest = {
 
           message.password = reader.string();
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.tableId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -246,6 +258,7 @@ export const RpcFindMatchRequest = {
       userData: isSet(object.userData) ? globalThis.String(object.userData) : "",
       lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
       password: isSet(object.password) ? globalThis.String(object.password) : "",
+      tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
     };
   },
 
@@ -275,6 +288,9 @@ export const RpcFindMatchRequest = {
     if (message.password !== "") {
       obj.password = message.password;
     }
+    if (message.tableId !== "") {
+      obj.tableId = message.tableId;
+    }
     return obj;
   },
 
@@ -291,6 +307,7 @@ export const RpcFindMatchRequest = {
     message.userData = object.userData ?? "";
     message.lastBet = object.lastBet ?? 0;
     message.password = object.password ?? "";
+    message.tableId = object.tableId ?? "";
     return message;
   },
 };

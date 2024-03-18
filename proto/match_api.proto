@@ -39,6 +39,7 @@ message RpcFindMatchRequest {
   string user_data = 6;
   int64 last_bet = 7;
   string password=8;
+  string table_id = 9;
 }
 
 message Match {
