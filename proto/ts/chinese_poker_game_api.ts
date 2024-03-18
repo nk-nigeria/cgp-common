@@ -521,6 +521,7 @@ export enum CardEvent {
   COMBINE = 0,
   SHOW = 1,
   DECLARE = 2,
+  MOVE = 4,
   UNRECOGNIZED = -1,
 }
 
@@ -535,6 +536,9 @@ export function cardEventFromJSON(object: any): CardEvent {
     case 2:
     case "DECLARE":
       return CardEvent.DECLARE;
+    case 4:
+    case "MOVE":
+      return CardEvent.MOVE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -550,6 +554,8 @@ export function cardEventToJSON(object: CardEvent): string {
       return "SHOW";
     case CardEvent.DECLARE:
       return "DECLARE";
+    case CardEvent.MOVE:
+      return "MOVE";
     case CardEvent.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

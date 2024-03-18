@@ -164,6 +164,7 @@ enum CardEvent {
   COMBINE = 0;
   SHOW = 1;
   DECLARE = 2;
+  MOVE=4;
 }
 
 message ArrangeCard {
