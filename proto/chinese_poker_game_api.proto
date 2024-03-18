@@ -107,7 +107,6 @@ enum OpCodeUpdate {
   OPCODE_USER_IN_TABLE_INFO = 10;
   OPCODE_ERROR = 11;
   OPCODE_BUY_SIXIANG_GEM = 13;
-  OPCODE_UPDATE_USER_MOVE = 14;
 }
 
 enum GameState {
