@@ -821,6 +821,7 @@ export interface RuleLucky {
   base3: number;
   base4: number;
   emitEventAtUnix: number;
+  deletedAt: number;
 }
 
 export interface RulesLucky {
@@ -6865,6 +6866,7 @@ function createBaseRuleLucky(): RuleLucky {
     base3: 0,
     base4: 0,
     emitEventAtUnix: 0,
+    deletedAt: 0,
   };
 }
 
@@ -6908,6 +6910,9 @@ export const RuleLucky = {
     }
     if (message.emitEventAtUnix !== 0) {
       writer.uint32(104).int64(message.emitEventAtUnix);
+    }
+    if (message.deletedAt !== 0) {
+      writer.uint32(112).int64(message.deletedAt);
     }
     return writer;
   },
@@ -7010,6 +7015,13 @@ export const RuleLucky = {
 
           message.emitEventAtUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.deletedAt = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -7034,6 +7046,7 @@ export const RuleLucky = {
       base3: isSet(object.base3) ? globalThis.Number(object.base3) : 0,
       base4: isSet(object.base4) ? globalThis.Number(object.base4) : 0,
       emitEventAtUnix: isSet(object.emitEventAtUnix) ? globalThis.Number(object.emitEventAtUnix) : 0,
+      deletedAt: isSet(object.deletedAt) ? globalThis.Number(object.deletedAt) : 0,
     };
   },
 
@@ -7078,6 +7091,9 @@ export const RuleLucky = {
     if (message.emitEventAtUnix !== 0) {
       obj.emitEventAtUnix = Math.round(message.emitEventAtUnix);
     }
+    if (message.deletedAt !== 0) {
+      obj.deletedAt = Math.round(message.deletedAt);
+    }
     return obj;
   },
 
@@ -7099,6 +7115,7 @@ export const RuleLucky = {
     message.base3 = object.base3 ?? 0;
     message.base4 = object.base4 ?? 0;
     message.emitEventAtUnix = object.emitEventAtUnix ?? 0;
+    message.deletedAt = object.deletedAt ?? 0;
     return message;
   },
 };
