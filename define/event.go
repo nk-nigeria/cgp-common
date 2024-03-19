@@ -13,4 +13,6 @@ const (
 	NakEventMatchJoin  NakEvent = "nakama_match_end"
 	NakEventMatchLeave NakEvent = "nakama_match_leave"
 	NakEventMatchEnd   NakEvent = "nakama_match_join"
+
+	NakEventRuleLuckyChange = "nakama_rule_lucky_change"
 )
