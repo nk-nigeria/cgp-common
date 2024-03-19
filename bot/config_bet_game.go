@@ -100,6 +100,7 @@ func NewTableConfigBetGame() *tableConfigBetGame {
 func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
 	t.mt.Lock()
 	defer t.mt.Unlock()
+	t.confs = make([]*pb.RuleLucky, 0)
 	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
 	ml, err := lib.QueryRulesLucky(ctx, db, &pb.RuleLucky{
 		GameCode: gameCode,
