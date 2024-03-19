@@ -142,7 +142,7 @@ func QueryRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) ([]*pb
 
 	ml := make([]*pb.RuleLucky, 0)
 
-	query := "SELECT id, game_code, co_rate_min, co_rate_max, ci_min, ci_max, co_inday_min, co_inday_max, base_1, base_2, base_3, base_4 FROM rules_lucky WHERE deleted=0"
+	query := "SELECT id, game_code, co_rate_min, co_rate_max, ci_min, ci_max, co_inday_min, co_inday_max, base_1, base_2, base_3, base_4 FROM rules_lucky WHERE deleted_at=0"
 	// args := make([]interface{}, 0)
 
 	if rule.Id > 0 {
