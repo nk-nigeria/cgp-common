@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"sort"
+	"sync"
 	"time"
 
 	"github.com/ciaolink-game-platform/cgp-common/lib"
@@ -87,6 +88,7 @@ func GetBaseAction(rule *pb.RuleLucky, totalWin int) BaseAction {
 
 type tableConfigBetGame struct {
 	confs []*pb.RuleLucky
+	mt    sync.Mutex
 }
 
 func NewTableConfigBetGame() *tableConfigBetGame {
@@ -96,6 +98,9 @@ func NewTableConfigBetGame() *tableConfigBetGame {
 }
 
 func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
+	t.mt.Lock()
+	defer t.mt.Unlock()
+	t.confs = make([]*pb.RuleLucky, 0)
 	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
 	ml, err := lib.QueryRulesLucky(ctx, db, &pb.RuleLucky{
 		GameCode: gameCode,
@@ -126,6 +131,8 @@ func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
 }
 
 func (t *tableConfigBetGame) GetConfig(CoRate float64, Ci float64, CoInDay float64) *pb.RuleLucky {
+	t.mt.Lock()
+	defer t.mt.Unlock()
 	for _, rule := range t.confs {
 		if !IsInRange(CoRate, float64(rule.CoRateMin), float64(rule.CoRateMax)) {
 			continue

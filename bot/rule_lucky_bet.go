@@ -35,6 +35,7 @@ type RuleLuckyBet struct {
 	rules         map[string]*LuckyBet
 	tableCfg      *tableConfigBetGame
 	TotalChipsWin int
+	db            *sql.DB
 }
 
 func NewLuckyCtrl(gameCode string) *RuleLuckyBet {
@@ -47,8 +48,17 @@ func NewLuckyCtrl(gameCode string) *RuleLuckyBet {
 }
 
 func (l *RuleLuckyBet) Init(db *sql.DB) {
-	l.tableCfg.LoadConfig(l.gameCode, db)
+	l.db = db
+	l.tableCfg.LoadConfig(l.gameCode, l.db)
 }
+
+func (l *RuleLuckyBet) ReloadConfig() {
+	if l.db == nil {
+		return
+	}
+	l.Init(l.db)
+}
+
 func (l *RuleLuckyBet) addUser(userId string, rtp LuckyBet) {
 	l.rules[userId] = &rtp
 }

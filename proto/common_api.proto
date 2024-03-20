@@ -482,6 +482,8 @@ message RuleLucky {
   int64 base_2 = 10;
   int64 base_3 = 11;
   int64 base_4 = 12;
+  int64 emit_event_at_unix = 13;
+  int64 deleted_at = 14; 
 }
 
 message RulesLucky {
