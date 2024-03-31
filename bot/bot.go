@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"context"
 	"time"
 
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
@@ -11,6 +12,9 @@ import (
 // const BotUIdPrefix =
 var BotUids = []string{"003e8f8a-986d-4528-83f8-c19918365324"}
 
+func LoadBotsInfo(ctx context.Context, nk runtime.NakamaModule, uids ...string) error {
+	return nil
+}
 func RegisterBotUuids(uuids ...string) {
 	BotUids = make([]string, 0, len(uuids))
 	BotUids = append(BotUids, uuids...)
