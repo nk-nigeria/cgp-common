@@ -68,6 +68,7 @@ export interface Match {
   tableId: string;
   numBot: number;
   password: string;
+  players: string[];
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -327,6 +328,7 @@ function createBaseMatch(): Match {
     tableId: "",
     numBot: 0,
     password: "",
+    players: [],
   };
 }
 
@@ -370,6 +372,9 @@ export const Match = {
     }
     if (message.password !== "") {
       writer.uint32(106).string(message.password);
+    }
+    for (const v of message.players) {
+      writer.uint32(114).string(v!);
     }
     return writer;
   },
@@ -472,6 +477,13 @@ export const Match = {
 
           message.password = reader.string();
           continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          message.players.push(reader.string());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -496,6 +508,7 @@ export const Match = {
       tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
       numBot: isSet(object.numBot) ? globalThis.Number(object.numBot) : 0,
       password: isSet(object.password) ? globalThis.String(object.password) : "",
+      players: globalThis.Array.isArray(object?.players) ? object.players.map((e: any) => globalThis.String(e)) : [],
     };
   },
 
@@ -540,6 +553,9 @@ export const Match = {
     if (message.password !== "") {
       obj.password = message.password;
     }
+    if (message.players?.length) {
+      obj.players = message.players;
+    }
     return obj;
   },
 
@@ -563,6 +579,7 @@ export const Match = {
     message.tableId = object.tableId ?? "";
     message.numBot = object.numBot ?? 0;
     message.password = object.password ?? "";
+    message.players = object.players?.map((e) => e) || [];
     return message;
   },
 };

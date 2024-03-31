@@ -283,6 +283,7 @@ message Player {
   ListCard cards = 6;
   int64 vip_level = 7;
   string avatar_id = 13;
+  int64 sid = 14;
 }
 
 message Jackpot {

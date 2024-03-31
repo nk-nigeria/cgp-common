@@ -950,6 +950,7 @@ export interface Player {
   cards: ListCard | undefined;
   vipLevel: number;
   avatarId: string;
+  sid: number;
 }
 
 export interface Jackpot {
@@ -2672,6 +2673,7 @@ function createBasePlayer(): Player {
     cards: undefined,
     vipLevel: 0,
     avatarId: "",
+    sid: 0,
   };
 }
 
@@ -2700,6 +2702,9 @@ export const Player = {
     }
     if (message.avatarId !== "") {
       writer.uint32(106).string(message.avatarId);
+    }
+    if (message.sid !== 0) {
+      writer.uint32(112).int64(message.sid);
     }
     return writer;
   },
@@ -2767,6 +2772,13 @@ export const Player = {
 
           message.avatarId = reader.string();
           continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.sid = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2786,6 +2798,7 @@ export const Player = {
       cards: isSet(object.cards) ? ListCard.fromJSON(object.cards) : undefined,
       vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
       avatarId: isSet(object.avatarId) ? globalThis.String(object.avatarId) : "",
+      sid: isSet(object.sid) ? globalThis.Number(object.sid) : 0,
     };
   },
 
@@ -2815,6 +2828,9 @@ export const Player = {
     if (message.avatarId !== "") {
       obj.avatarId = message.avatarId;
     }
+    if (message.sid !== 0) {
+      obj.sid = Math.round(message.sid);
+    }
     return obj;
   },
 
@@ -2833,6 +2849,7 @@ export const Player = {
       : undefined;
     message.vipLevel = object.vipLevel ?? 0;
     message.avatarId = object.avatarId ?? "";
+    message.sid = object.sid ?? 0;
     return message;
   },
 };

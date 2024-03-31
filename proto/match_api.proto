@@ -56,6 +56,7 @@ message Match {
   string table_id = 11;
   int32 num_bot = 12;
   string password = 13;
+  repeated string players = 14;
 }
 
 // Payload for an RPC response containing match IDs the user can join.
