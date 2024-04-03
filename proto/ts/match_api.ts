@@ -108,6 +108,7 @@ export interface Bet {
   xFee: number;
   agFee: number;
   newFee: number;
+  countPlaying: number;
 }
 
 export interface Bets {
@@ -849,6 +850,7 @@ function createBaseBet(): Bet {
     xFee: 0,
     agFee: 0,
     newFee: 0,
+    countPlaying: 0,
   };
 }
 
@@ -892,6 +894,9 @@ export const Bet = {
     }
     if (message.newFee !== 0) {
       writer.uint32(109).float(message.newFee);
+    }
+    if (message.countPlaying !== 0) {
+      writer.uint32(112).int64(message.countPlaying);
     }
     return writer;
   },
@@ -994,6 +999,13 @@ export const Bet = {
 
           message.newFee = reader.float();
           continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.countPlaying = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1018,6 +1030,7 @@ export const Bet = {
       xFee: isSet(object.xFee) ? globalThis.Number(object.xFee) : 0,
       agFee: isSet(object.agFee) ? globalThis.Number(object.agFee) : 0,
       newFee: isSet(object.newFee) ? globalThis.Number(object.newFee) : 0,
+      countPlaying: isSet(object.countPlaying) ? globalThis.Number(object.countPlaying) : 0,
     };
   },
 
@@ -1062,6 +1075,9 @@ export const Bet = {
     if (message.newFee !== 0) {
       obj.newFee = message.newFee;
     }
+    if (message.countPlaying !== 0) {
+      obj.countPlaying = Math.round(message.countPlaying);
+    }
     return obj;
   },
 
@@ -1083,6 +1099,7 @@ export const Bet = {
     message.xFee = object.xFee ?? 0;
     message.agFee = object.agFee ?? 0;
     message.newFee = object.newFee ?? 0;
+    message.countPlaying = object.countPlaying ?? 0;
     return message;
   },
 };

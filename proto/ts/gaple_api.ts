@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { Domino } from "./bandarqq_api";
+import Long = require("long");
 
 export const protobufPackage = "api";
 
@@ -174,10 +175,22 @@ export interface GapleDominoUpdateDeal {
   hand: GapleDominoPresenceHand | undefined;
 }
 
+export interface LewatCount {
+  userId: string;
+  count: number;
+}
+
+export interface ResultChip {
+  userId: string;
+  balanceChange: number;
+}
+
 export interface GapleDoninoUpdateFinish {
   type: GapleDominoFinishGameType;
   winner: string;
   hands: GapleDominoPresenceHand[];
+  lewats: LewatCount[];
+  result: ResultChip[];
 }
 
 function createBaseGapleDominoAction(): GapleDominoAction {
@@ -973,8 +986,156 @@ export const GapleDominoUpdateDeal = {
   },
 };
 
+function createBaseLewatCount(): LewatCount {
+  return { userId: "", count: 0 };
+}
+
+export const LewatCount = {
+  encode(message: LewatCount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.count !== 0) {
+      writer.uint32(16).int32(message.count);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): LewatCount {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLewatCount();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.count = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): LewatCount {
+    return {
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      count: isSet(object.count) ? globalThis.Number(object.count) : 0,
+    };
+  },
+
+  toJSON(message: LewatCount): unknown {
+    const obj: any = {};
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.count !== 0) {
+      obj.count = Math.round(message.count);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<LewatCount>, I>>(base?: I): LewatCount {
+    return LewatCount.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<LewatCount>, I>>(object: I): LewatCount {
+    const message = createBaseLewatCount();
+    message.userId = object.userId ?? "";
+    message.count = object.count ?? 0;
+    return message;
+  },
+};
+
+function createBaseResultChip(): ResultChip {
+  return { userId: "", balanceChange: 0 };
+}
+
+export const ResultChip = {
+  encode(message: ResultChip, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.userId !== "") {
+      writer.uint32(10).string(message.userId);
+    }
+    if (message.balanceChange !== 0) {
+      writer.uint32(16).int64(message.balanceChange);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ResultChip {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseResultChip();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.balanceChange = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ResultChip {
+    return {
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      balanceChange: isSet(object.balanceChange) ? globalThis.Number(object.balanceChange) : 0,
+    };
+  },
+
+  toJSON(message: ResultChip): unknown {
+    const obj: any = {};
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.balanceChange !== 0) {
+      obj.balanceChange = Math.round(message.balanceChange);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ResultChip>, I>>(base?: I): ResultChip {
+    return ResultChip.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ResultChip>, I>>(object: I): ResultChip {
+    const message = createBaseResultChip();
+    message.userId = object.userId ?? "";
+    message.balanceChange = object.balanceChange ?? 0;
+    return message;
+  },
+};
+
 function createBaseGapleDoninoUpdateFinish(): GapleDoninoUpdateFinish {
-  return { type: 0, winner: "", hands: [] };
+  return { type: 0, winner: "", hands: [], lewats: [], result: [] };
 }
 
 export const GapleDoninoUpdateFinish = {
@@ -987,6 +1148,12 @@ export const GapleDoninoUpdateFinish = {
     }
     for (const v of message.hands) {
       GapleDominoPresenceHand.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
+    for (const v of message.lewats) {
+      LewatCount.encode(v!, writer.uint32(34).fork()).ldelim();
+    }
+    for (const v of message.result) {
+      ResultChip.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -1019,6 +1186,20 @@ export const GapleDoninoUpdateFinish = {
 
           message.hands.push(GapleDominoPresenceHand.decode(reader, reader.uint32()));
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.lewats.push(LewatCount.decode(reader, reader.uint32()));
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.result.push(ResultChip.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1035,6 +1216,8 @@ export const GapleDoninoUpdateFinish = {
       hands: globalThis.Array.isArray(object?.hands)
         ? object.hands.map((e: any) => GapleDominoPresenceHand.fromJSON(e))
         : [],
+      lewats: globalThis.Array.isArray(object?.lewats) ? object.lewats.map((e: any) => LewatCount.fromJSON(e)) : [],
+      result: globalThis.Array.isArray(object?.result) ? object.result.map((e: any) => ResultChip.fromJSON(e)) : [],
     };
   },
 
@@ -1049,6 +1232,12 @@ export const GapleDoninoUpdateFinish = {
     if (message.hands?.length) {
       obj.hands = message.hands.map((e) => GapleDominoPresenceHand.toJSON(e));
     }
+    if (message.lewats?.length) {
+      obj.lewats = message.lewats.map((e) => LewatCount.toJSON(e));
+    }
+    if (message.result?.length) {
+      obj.result = message.result.map((e) => ResultChip.toJSON(e));
+    }
     return obj;
   },
 
@@ -1060,6 +1249,8 @@ export const GapleDoninoUpdateFinish = {
     message.type = object.type ?? 0;
     message.winner = object.winner ?? "";
     message.hands = object.hands?.map((e) => GapleDominoPresenceHand.fromPartial(e)) || [];
+    message.lewats = object.lewats?.map((e) => LewatCount.fromPartial(e)) || [];
+    message.result = object.result?.map((e) => ResultChip.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1075,6 +1266,18 @@ export type DeepPartial<T> = T extends Builtin ? T
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function longToNumber(long: Long): number {
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
