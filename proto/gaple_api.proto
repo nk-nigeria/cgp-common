@@ -95,6 +95,6 @@ message GapleDoninoUpdateFinish {
   GapleDominoFinishGameType type = 1;
   string winner = 2;
   repeated GapleDominoPresenceHand hands = 3;
-  repeated LewatCount lawals = 4;
-  repeated ResultChip balance_change = 5;
+  repeated LewatCount lewats = 4;
+  repeated ResultChip result = 5;
 }
