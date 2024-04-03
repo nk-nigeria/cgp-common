@@ -28,4 +28,4 @@ package api
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative sicbo_api.proto
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative baccarat_api.proto
 //go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative blackjack_api.proto
-//go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative opration.proto
+//go:generate protoc --proto_path=. --go_out=. --go_opt=paths=source_relative operation.proto
