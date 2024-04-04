@@ -38,7 +38,7 @@ message RpcFindMatchRequest {
   int32 mock_code_card = 5;
   string user_data = 6;
   int64 last_bet = 7;
-  string password=8;
+  string password = 8;
   string table_id = 9;
 }
 
@@ -73,6 +73,7 @@ message RpcCreateMatchRequest {
   string password = 4;
   int64 last_bet = 5;
   int64 max_size = 6;
+  string custom_data = 7;
 }
 
 // Payload for an RPC response containing match IDs the user can join.
