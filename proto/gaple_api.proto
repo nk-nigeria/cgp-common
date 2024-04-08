@@ -81,8 +81,20 @@ enum GapleDominoFinishGameType {
   GAPLE_DOMINO_FINISH_GAME_TYPE_GAPLE_DOMINO_FINISHGAME_TYPE_QUINTET = 5;
 }
 
+message LewatCount {
+  string user_id = 1;
+  int32 count = 2;
+}
+
+message ResultChip {
+  string user_id = 1;
+  int64 balance_change = 2;   
+}
+
 message GapleDoninoUpdateFinish {
   GapleDominoFinishGameType type = 1;
   string winner = 2;
   repeated GapleDominoPresenceHand hands = 3;
+  repeated LewatCount lewats = 4;
+  repeated ResultChip result = 5;
 }

@@ -85,6 +85,7 @@ export interface RpcCreateMatchRequest {
   password: string;
   lastBet: number;
   maxSize: number;
+  customData: string;
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -108,6 +109,7 @@ export interface Bet {
   xFee: number;
   agFee: number;
   newFee: number;
+  countPlaying: number;
 }
 
 export interface Bets {
@@ -644,7 +646,7 @@ export const RpcFindMatchResponse = {
 };
 
 function createBaseRpcCreateMatchRequest(): RpcCreateMatchRequest {
-  return { markUnit: 0, gameCode: "", name: "", password: "", lastBet: 0, maxSize: 0 };
+  return { markUnit: 0, gameCode: "", name: "", password: "", lastBet: 0, maxSize: 0, customData: "" };
 }
 
 export const RpcCreateMatchRequest = {
@@ -666,6 +668,9 @@ export const RpcCreateMatchRequest = {
     }
     if (message.maxSize !== 0) {
       writer.uint32(48).int64(message.maxSize);
+    }
+    if (message.customData !== "") {
+      writer.uint32(58).string(message.customData);
     }
     return writer;
   },
@@ -719,6 +724,13 @@ export const RpcCreateMatchRequest = {
 
           message.maxSize = longToNumber(reader.int64() as Long);
           continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.customData = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -736,6 +748,7 @@ export const RpcCreateMatchRequest = {
       password: isSet(object.password) ? globalThis.String(object.password) : "",
       lastBet: isSet(object.lastBet) ? globalThis.Number(object.lastBet) : 0,
       maxSize: isSet(object.maxSize) ? globalThis.Number(object.maxSize) : 0,
+      customData: isSet(object.customData) ? globalThis.String(object.customData) : "",
     };
   },
 
@@ -759,6 +772,9 @@ export const RpcCreateMatchRequest = {
     if (message.maxSize !== 0) {
       obj.maxSize = Math.round(message.maxSize);
     }
+    if (message.customData !== "") {
+      obj.customData = message.customData;
+    }
     return obj;
   },
 
@@ -773,6 +789,7 @@ export const RpcCreateMatchRequest = {
     message.password = object.password ?? "";
     message.lastBet = object.lastBet ?? 0;
     message.maxSize = object.maxSize ?? 0;
+    message.customData = object.customData ?? "";
     return message;
   },
 };
@@ -849,6 +866,7 @@ function createBaseBet(): Bet {
     xFee: 0,
     agFee: 0,
     newFee: 0,
+    countPlaying: 0,
   };
 }
 
@@ -892,6 +910,9 @@ export const Bet = {
     }
     if (message.newFee !== 0) {
       writer.uint32(109).float(message.newFee);
+    }
+    if (message.countPlaying !== 0) {
+      writer.uint32(112).int64(message.countPlaying);
     }
     return writer;
   },
@@ -994,6 +1015,13 @@ export const Bet = {
 
           message.newFee = reader.float();
           continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.countPlaying = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1018,6 +1046,7 @@ export const Bet = {
       xFee: isSet(object.xFee) ? globalThis.Number(object.xFee) : 0,
       agFee: isSet(object.agFee) ? globalThis.Number(object.agFee) : 0,
       newFee: isSet(object.newFee) ? globalThis.Number(object.newFee) : 0,
+      countPlaying: isSet(object.countPlaying) ? globalThis.Number(object.countPlaying) : 0,
     };
   },
 
@@ -1062,6 +1091,9 @@ export const Bet = {
     if (message.newFee !== 0) {
       obj.newFee = message.newFee;
     }
+    if (message.countPlaying !== 0) {
+      obj.countPlaying = Math.round(message.countPlaying);
+    }
     return obj;
   },
 
@@ -1083,6 +1115,7 @@ export const Bet = {
     message.xFee = object.xFee ?? 0;
     message.agFee = object.agFee ?? 0;
     message.newFee = object.newFee ?? 0;
+    message.countPlaying = object.countPlaying ?? 0;
     return message;
   },
 };
