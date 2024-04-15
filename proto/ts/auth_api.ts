@@ -67,6 +67,7 @@ export interface SimpleProfile {
   avatarId: string;
   vipLevel: number;
   playingMatch: PlayingMatch | undefined;
+  userSid: number;
 }
 
 export interface ListSimpleProfile {
@@ -938,6 +939,7 @@ function createBaseSimpleProfile(): SimpleProfile {
     avatarId: "",
     vipLevel: 0,
     playingMatch: undefined,
+    userSid: 0,
   };
 }
 
@@ -953,19 +955,22 @@ export const SimpleProfile = {
       writer.uint32(26).string(message.displayName);
     }
     if (message.status !== "") {
-      writer.uint32(42).string(message.status);
+      writer.uint32(34).string(message.status);
     }
     if (message.accountChip !== 0) {
-      writer.uint32(48).int64(message.accountChip);
+      writer.uint32(40).int64(message.accountChip);
     }
     if (message.avatarId !== "") {
-      writer.uint32(106).string(message.avatarId);
+      writer.uint32(50).string(message.avatarId);
     }
     if (message.vipLevel !== 0) {
-      writer.uint32(120).int64(message.vipLevel);
+      writer.uint32(56).int64(message.vipLevel);
     }
     if (message.playingMatch !== undefined) {
-      PlayingMatch.encode(message.playingMatch, writer.uint32(130).fork()).ldelim();
+      PlayingMatch.encode(message.playingMatch, writer.uint32(66).fork()).ldelim();
+    }
+    if (message.userSid !== 0) {
+      writer.uint32(72).int64(message.userSid);
     }
     return writer;
   },
@@ -998,40 +1003,47 @@ export const SimpleProfile = {
 
           message.displayName = reader.string();
           continue;
-        case 5:
-          if (tag !== 42) {
+        case 4:
+          if (tag !== 34) {
             break;
           }
 
           message.status = reader.string();
           continue;
-        case 6:
-          if (tag !== 48) {
+        case 5:
+          if (tag !== 40) {
             break;
           }
 
           message.accountChip = longToNumber(reader.int64() as Long);
           continue;
-        case 13:
-          if (tag !== 106) {
+        case 6:
+          if (tag !== 50) {
             break;
           }
 
           message.avatarId = reader.string();
           continue;
-        case 15:
-          if (tag !== 120) {
+        case 7:
+          if (tag !== 56) {
             break;
           }
 
           message.vipLevel = longToNumber(reader.int64() as Long);
           continue;
-        case 16:
-          if (tag !== 130) {
+        case 8:
+          if (tag !== 66) {
             break;
           }
 
           message.playingMatch = PlayingMatch.decode(reader, reader.uint32());
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.userSid = longToNumber(reader.int64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1052,6 +1064,7 @@ export const SimpleProfile = {
       avatarId: isSet(object.avatarId) ? globalThis.String(object.avatarId) : "",
       vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
       playingMatch: isSet(object.playingMatch) ? PlayingMatch.fromJSON(object.playingMatch) : undefined,
+      userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
     };
   },
 
@@ -1081,6 +1094,9 @@ export const SimpleProfile = {
     if (message.playingMatch !== undefined) {
       obj.playingMatch = PlayingMatch.toJSON(message.playingMatch);
     }
+    if (message.userSid !== 0) {
+      obj.userSid = Math.round(message.userSid);
+    }
     return obj;
   },
 
@@ -1099,6 +1115,7 @@ export const SimpleProfile = {
     message.playingMatch = (object.playingMatch !== undefined && object.playingMatch !== null)
       ? PlayingMatch.fromPartial(object.playingMatch)
       : undefined;
+    message.userSid = object.userSid ?? 0;
     return message;
   },
 };

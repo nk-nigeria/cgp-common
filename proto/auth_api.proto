@@ -63,11 +63,12 @@ message SimpleProfile {
   string user_id = 1;
   string user_name = 2;
   string display_name = 3;
-  string status = 5;
-  int64 account_chip = 6;
-  string avatar_id = 13;
-  int64 vip_level = 15;
-  PlayingMatch playing_match = 16;
+  string status = 4;
+  int64 account_chip = 5;
+  string avatar_id = 6;
+  int64 vip_level = 7;
+  PlayingMatch playing_match = 8;
+  int64 user_sid = 9;
 }
 
 message ListSimpleProfile {
