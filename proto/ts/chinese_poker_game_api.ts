@@ -363,6 +363,7 @@ export enum OpCodeUpdate {
   OPCODE_USER_IN_TABLE_INFO = 10,
   OPCODE_ERROR = 11,
   OPCODE_BUY_SIXIANG_GEM = 13,
+  OPCODE_PLAYER_CHANGE = 14,
   UNRECOGNIZED = -1,
 }
 
@@ -407,6 +408,9 @@ export function opCodeUpdateFromJSON(object: any): OpCodeUpdate {
     case 13:
     case "OPCODE_BUY_SIXIANG_GEM":
       return OpCodeUpdate.OPCODE_BUY_SIXIANG_GEM;
+    case 14:
+    case "OPCODE_PLAYER_CHANGE":
+      return OpCodeUpdate.OPCODE_PLAYER_CHANGE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -442,6 +446,8 @@ export function opCodeUpdateToJSON(object: OpCodeUpdate): string {
       return "OPCODE_ERROR";
     case OpCodeUpdate.OPCODE_BUY_SIXIANG_GEM:
       return "OPCODE_BUY_SIXIANG_GEM";
+    case OpCodeUpdate.OPCODE_PLAYER_CHANGE:
+      return "OPCODE_PLAYER_CHANGE";
     case OpCodeUpdate.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
