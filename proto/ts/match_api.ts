@@ -68,7 +68,8 @@ export interface Match {
   tableId: string;
   numBot: number;
   password: string;
-  players: SimpleProfile[];
+  players: string[];
+  profiles: SimpleProfile[];
 }
 
 export interface MatchInfoRequest {
@@ -337,6 +338,7 @@ function createBaseMatch(): Match {
     numBot: 0,
     password: "",
     players: [],
+    profiles: [],
   };
 }
 
@@ -382,7 +384,10 @@ export const Match = {
       writer.uint32(106).string(message.password);
     }
     for (const v of message.players) {
-      SimpleProfile.encode(v!, writer.uint32(114).fork()).ldelim();
+      writer.uint32(114).string(v!);
+    }
+    for (const v of message.profiles) {
+      SimpleProfile.encode(v!, writer.uint32(122).fork()).ldelim();
     }
     return writer;
   },
@@ -490,7 +495,14 @@ export const Match = {
             break;
           }
 
-          message.players.push(SimpleProfile.decode(reader, reader.uint32()));
+          message.players.push(reader.string());
+          continue;
+        case 15:
+          if (tag !== 122) {
+            break;
+          }
+
+          message.profiles.push(SimpleProfile.decode(reader, reader.uint32()));
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -516,8 +528,9 @@ export const Match = {
       tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
       numBot: isSet(object.numBot) ? globalThis.Number(object.numBot) : 0,
       password: isSet(object.password) ? globalThis.String(object.password) : "",
-      players: globalThis.Array.isArray(object?.players)
-        ? object.players.map((e: any) => SimpleProfile.fromJSON(e))
+      players: globalThis.Array.isArray(object?.players) ? object.players.map((e: any) => globalThis.String(e)) : [],
+      profiles: globalThis.Array.isArray(object?.profiles)
+        ? object.profiles.map((e: any) => SimpleProfile.fromJSON(e))
         : [],
     };
   },
@@ -564,7 +577,10 @@ export const Match = {
       obj.password = message.password;
     }
     if (message.players?.length) {
-      obj.players = message.players.map((e) => SimpleProfile.toJSON(e));
+      obj.players = message.players;
+    }
+    if (message.profiles?.length) {
+      obj.profiles = message.profiles.map((e) => SimpleProfile.toJSON(e));
     }
     return obj;
   },
@@ -589,7 +605,8 @@ export const Match = {
     message.tableId = object.tableId ?? "";
     message.numBot = object.numBot ?? 0;
     message.password = object.password ?? "";
-    message.players = object.players?.map((e) => SimpleProfile.fromPartial(e)) || [];
+    message.players = object.players?.map((e) => e) || [];
+    message.profiles = object.profiles?.map((e) => SimpleProfile.fromPartial(e)) || [];
     return message;
   },
 };

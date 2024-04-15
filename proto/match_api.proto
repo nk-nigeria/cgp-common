@@ -56,7 +56,8 @@ message Match {
   string table_id = 11;
   int32 num_bot = 12;
   string password = 13;
-  repeated SimpleProfile players = 14;
+  repeated string players = 14;
+  repeated SimpleProfile profiles = 15;
 }
 
 message MatchInfoRequest {
