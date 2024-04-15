@@ -68,7 +68,7 @@ export interface Match {
   tableId: string;
   numBot: number;
   password: string;
-  players: string[];
+  players: Profile[];
 }
 
 /** Payload for an RPC response containing match IDs the user can join. */
@@ -376,7 +376,7 @@ export const Match = {
       writer.uint32(106).string(message.password);
     }
     for (const v of message.players) {
-      writer.uint32(114).string(v!);
+      Profile.encode(v!, writer.uint32(114).fork()).ldelim();
     }
     return writer;
   },
@@ -484,7 +484,7 @@ export const Match = {
             break;
           }
 
-          message.players.push(reader.string());
+          message.players.push(Profile.decode(reader, reader.uint32()));
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -510,7 +510,7 @@ export const Match = {
       tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
       numBot: isSet(object.numBot) ? globalThis.Number(object.numBot) : 0,
       password: isSet(object.password) ? globalThis.String(object.password) : "",
-      players: globalThis.Array.isArray(object?.players) ? object.players.map((e: any) => globalThis.String(e)) : [],
+      players: globalThis.Array.isArray(object?.players) ? object.players.map((e: any) => Profile.fromJSON(e)) : [],
     };
   },
 
@@ -556,7 +556,7 @@ export const Match = {
       obj.password = message.password;
     }
     if (message.players?.length) {
-      obj.players = message.players;
+      obj.players = message.players.map((e) => Profile.toJSON(e));
     }
     return obj;
   },
@@ -581,7 +581,7 @@ export const Match = {
     message.tableId = object.tableId ?? "";
     message.numBot = object.numBot ?? 0;
     message.password = object.password ?? "";
-    message.players = object.players?.map((e) => e) || [];
+    message.players = object.players?.map((e) => Profile.fromPartial(e)) || [];
     return message;
   },
 };
