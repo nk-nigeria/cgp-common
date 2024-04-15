@@ -68,7 +68,7 @@ export interface Match {
   tableId: string;
   numBot: number;
   password: string;
-  players: string[];
+  /** repeated string players = 14; */
   profiles: SimpleProfile[];
 }
 
@@ -337,7 +337,6 @@ function createBaseMatch(): Match {
     tableId: "",
     numBot: 0,
     password: "",
-    players: [],
     profiles: [],
   };
 }
@@ -382,9 +381,6 @@ export const Match = {
     }
     if (message.password !== "") {
       writer.uint32(106).string(message.password);
-    }
-    for (const v of message.players) {
-      writer.uint32(114).string(v!);
     }
     for (const v of message.profiles) {
       SimpleProfile.encode(v!, writer.uint32(122).fork()).ldelim();
@@ -490,13 +486,6 @@ export const Match = {
 
           message.password = reader.string();
           continue;
-        case 14:
-          if (tag !== 114) {
-            break;
-          }
-
-          message.players.push(reader.string());
-          continue;
         case 15:
           if (tag !== 122) {
             break;
@@ -528,7 +517,6 @@ export const Match = {
       tableId: isSet(object.tableId) ? globalThis.String(object.tableId) : "",
       numBot: isSet(object.numBot) ? globalThis.Number(object.numBot) : 0,
       password: isSet(object.password) ? globalThis.String(object.password) : "",
-      players: globalThis.Array.isArray(object?.players) ? object.players.map((e: any) => globalThis.String(e)) : [],
       profiles: globalThis.Array.isArray(object?.profiles)
         ? object.profiles.map((e: any) => SimpleProfile.fromJSON(e))
         : [],
@@ -576,9 +564,6 @@ export const Match = {
     if (message.password !== "") {
       obj.password = message.password;
     }
-    if (message.players?.length) {
-      obj.players = message.players;
-    }
     if (message.profiles?.length) {
       obj.profiles = message.profiles.map((e) => SimpleProfile.toJSON(e));
     }
@@ -605,7 +590,6 @@ export const Match = {
     message.tableId = object.tableId ?? "";
     message.numBot = object.numBot ?? 0;
     message.password = object.password ?? "";
-    message.players = object.players?.map((e) => e) || [];
     message.profiles = object.profiles?.map((e) => SimpleProfile.fromPartial(e)) || [];
     return message;
   },
