@@ -59,6 +59,11 @@ message Match {
   repeated Profile players = 14;
 }
 
+message MatchInfoRequest {
+  string match_id = 1;
+  bool query_user = 2;
+  bool no_cache = 3;
+}
 // Payload for an RPC response containing match IDs the user can join.
 message RpcFindMatchResponse {
   // One or more matches that fit the user's request.

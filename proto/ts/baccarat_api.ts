@@ -200,6 +200,8 @@ export interface BaccaratSimpleHistory {
   bankerWin: number;
   playerWin: number;
   tie: number;
+  bankerPair: number;
+  playerPair: number;
 }
 
 export interface BaccaratUpdateDesk {
@@ -902,7 +904,7 @@ export const BaccaratBetCellInfo = {
 };
 
 function createBaseBaccaratSimpleHistory(): BaccaratSimpleHistory {
-  return { bankerWin: 0, playerWin: 0, tie: 0 };
+  return { bankerWin: 0, playerWin: 0, tie: 0, bankerPair: 0, playerPair: 0 };
 }
 
 export const BaccaratSimpleHistory = {
@@ -915,6 +917,12 @@ export const BaccaratSimpleHistory = {
     }
     if (message.tie !== 0) {
       writer.uint32(24).int32(message.tie);
+    }
+    if (message.bankerPair !== 0) {
+      writer.uint32(32).int32(message.bankerPair);
+    }
+    if (message.playerPair !== 0) {
+      writer.uint32(40).int32(message.playerPair);
     }
     return writer;
   },
@@ -947,6 +955,20 @@ export const BaccaratSimpleHistory = {
 
           message.tie = reader.int32();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.bankerPair = reader.int32();
+          continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.playerPair = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -961,6 +983,8 @@ export const BaccaratSimpleHistory = {
       bankerWin: isSet(object.bankerWin) ? globalThis.Number(object.bankerWin) : 0,
       playerWin: isSet(object.playerWin) ? globalThis.Number(object.playerWin) : 0,
       tie: isSet(object.tie) ? globalThis.Number(object.tie) : 0,
+      bankerPair: isSet(object.bankerPair) ? globalThis.Number(object.bankerPair) : 0,
+      playerPair: isSet(object.playerPair) ? globalThis.Number(object.playerPair) : 0,
     };
   },
 
@@ -975,6 +999,12 @@ export const BaccaratSimpleHistory = {
     if (message.tie !== 0) {
       obj.tie = Math.round(message.tie);
     }
+    if (message.bankerPair !== 0) {
+      obj.bankerPair = Math.round(message.bankerPair);
+    }
+    if (message.playerPair !== 0) {
+      obj.playerPair = Math.round(message.playerPair);
+    }
     return obj;
   },
 
@@ -986,6 +1016,8 @@ export const BaccaratSimpleHistory = {
     message.bankerWin = object.bankerWin ?? 0;
     message.playerWin = object.playerWin ?? 0;
     message.tie = object.tie ?? 0;
+    message.bankerPair = object.bankerPair ?? 0;
+    message.playerPair = object.playerPair ?? 0;
     return message;
   },
 };

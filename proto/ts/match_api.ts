@@ -71,6 +71,12 @@ export interface Match {
   players: Profile[];
 }
 
+export interface MatchInfoRequest {
+  matchId: string;
+  queryUser: boolean;
+  noCache: boolean;
+}
+
 /** Payload for an RPC response containing match IDs the user can join. */
 export interface RpcFindMatchResponse {
   /** One or more matches that fit the user's request. */
@@ -582,6 +588,95 @@ export const Match = {
     message.numBot = object.numBot ?? 0;
     message.password = object.password ?? "";
     message.players = object.players?.map((e) => Profile.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseMatchInfoRequest(): MatchInfoRequest {
+  return { matchId: "", queryUser: false, noCache: false };
+}
+
+export const MatchInfoRequest = {
+  encode(message: MatchInfoRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.matchId !== "") {
+      writer.uint32(10).string(message.matchId);
+    }
+    if (message.queryUser === true) {
+      writer.uint32(16).bool(message.queryUser);
+    }
+    if (message.noCache === true) {
+      writer.uint32(24).bool(message.noCache);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MatchInfoRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMatchInfoRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.matchId = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.queryUser = reader.bool();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.noCache = reader.bool();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MatchInfoRequest {
+    return {
+      matchId: isSet(object.matchId) ? globalThis.String(object.matchId) : "",
+      queryUser: isSet(object.queryUser) ? globalThis.Boolean(object.queryUser) : false,
+      noCache: isSet(object.noCache) ? globalThis.Boolean(object.noCache) : false,
+    };
+  },
+
+  toJSON(message: MatchInfoRequest): unknown {
+    const obj: any = {};
+    if (message.matchId !== "") {
+      obj.matchId = message.matchId;
+    }
+    if (message.queryUser === true) {
+      obj.queryUser = message.queryUser;
+    }
+    if (message.noCache === true) {
+      obj.noCache = message.noCache;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MatchInfoRequest>, I>>(base?: I): MatchInfoRequest {
+    return MatchInfoRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MatchInfoRequest>, I>>(object: I): MatchInfoRequest {
+    const message = createBaseMatchInfoRequest();
+    message.matchId = object.matchId ?? "";
+    message.queryUser = object.queryUser ?? false;
+    message.noCache = object.noCache ?? false;
     return message;
   },
 };
