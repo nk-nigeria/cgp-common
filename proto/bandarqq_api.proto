@@ -83,7 +83,8 @@ message QQPlayerEngameResult {
 message QQGameFinish {
   QQGameFinishHand hands = 1;
   repeated QQBetCell win_cells = 3;
-  map<string,QQPlayerEngameResult> result = 4;
+  QQPlayerEngameResult result = 4;
+  map<string,int64> players_win_amount = 5;
 }
 
 message QQGameFinishHand {
