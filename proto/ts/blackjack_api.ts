@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { Card } from "./chinese_poker_game_api";
+import { Error } from "./common_api";
 import Long = require("long");
 
 export const protobufPackage = "api";
@@ -312,6 +313,7 @@ export interface BlackjackUpdateDesk {
   hand: BlackjackPlayerHand | undefined;
   isBankerNotBlackjack: boolean;
   playersBet: BlackjackPlayerBet[];
+  error: Error | undefined;
 }
 
 export interface BlackjackUpdateFinish {
@@ -1335,6 +1337,7 @@ function createBaseBlackjackUpdateDesk(): BlackjackUpdateDesk {
     hand: undefined,
     isBankerNotBlackjack: false,
     playersBet: [],
+    error: undefined,
   };
 }
 
@@ -1375,6 +1378,9 @@ export const BlackjackUpdateDesk = {
     }
     for (const v of message.playersBet) {
       BlackjackPlayerBet.encode(v!, writer.uint32(98).fork()).ldelim();
+    }
+    if (message.error !== undefined) {
+      Error.encode(message.error, writer.uint32(106).fork()).ldelim();
     }
     return writer;
   },
@@ -1470,6 +1476,13 @@ export const BlackjackUpdateDesk = {
 
           message.playersBet.push(BlackjackPlayerBet.decode(reader, reader.uint32()));
           continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.error = Error.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1499,6 +1512,7 @@ export const BlackjackUpdateDesk = {
       playersBet: globalThis.Array.isArray(object?.playersBet)
         ? object.playersBet.map((e: any) => BlackjackPlayerBet.fromJSON(e))
         : [],
+      error: isSet(object.error) ? Error.fromJSON(object.error) : undefined,
     };
   },
 
@@ -1540,6 +1554,9 @@ export const BlackjackUpdateDesk = {
     if (message.playersBet?.length) {
       obj.playersBet = message.playersBet.map((e) => BlackjackPlayerBet.toJSON(e));
     }
+    if (message.error !== undefined) {
+      obj.error = Error.toJSON(message.error);
+    }
     return obj;
   },
 
@@ -1566,6 +1583,7 @@ export const BlackjackUpdateDesk = {
       : undefined;
     message.isBankerNotBlackjack = object.isBankerNotBlackjack ?? false;
     message.playersBet = object.playersBet?.map((e) => BlackjackPlayerBet.fromPartial(e)) || [];
+    message.error = (object.error !== undefined && object.error !== null) ? Error.fromPartial(object.error) : undefined;
     return message;
   },
 };

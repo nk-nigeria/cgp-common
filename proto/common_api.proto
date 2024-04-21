@@ -442,9 +442,17 @@ message WalletTransRequest {
   string meta_bank_action = 4;
 }
 
+
+enum ErrorType {
+  ERROR_TYPE_UNSPECIFIED = 0;
+  ERROR_TYPE_CHIP_NOT_ENOUGH = 1;
+}
+
+
 message Error {
   int64 code = 1;
   string error = 2;
+  ErrorType error_type = 3;
 }
 
 message Request{

@@ -358,6 +358,39 @@ export function historyRewardTimeToJSON(object: HistoryRewardTime): string {
   }
 }
 
+export enum ErrorType {
+  ERROR_TYPE_UNSPECIFIED = 0,
+  ERROR_TYPE_CHIP_NOT_ENOUGH = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function errorTypeFromJSON(object: any): ErrorType {
+  switch (object) {
+    case 0:
+    case "ERROR_TYPE_UNSPECIFIED":
+      return ErrorType.ERROR_TYPE_UNSPECIFIED;
+    case 1:
+    case "ERROR_TYPE_CHIP_NOT_ENOUGH":
+      return ErrorType.ERROR_TYPE_CHIP_NOT_ENOUGH;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ErrorType.UNRECOGNIZED;
+  }
+}
+
+export function errorTypeToJSON(object: ErrorType): string {
+  switch (object) {
+    case ErrorType.ERROR_TYPE_UNSPECIFIED:
+      return "ERROR_TYPE_UNSPECIFIED";
+    case ErrorType.ERROR_TYPE_CHIP_NOT_ENOUGH:
+      return "ERROR_TYPE_CHIP_NOT_ENOUGH";
+    case ErrorType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export interface Game {
   code: string;
   active: boolean;
@@ -778,6 +811,7 @@ export interface WalletTransRequest {
 export interface Error {
   code: number;
   error: string;
+  errorType: ErrorType;
 }
 
 export interface Request {
@@ -6455,7 +6489,7 @@ export const WalletTransRequest = {
 };
 
 function createBaseError(): Error {
-  return { code: 0, error: "" };
+  return { code: 0, error: "", errorType: 0 };
 }
 
 export const Error = {
@@ -6465,6 +6499,9 @@ export const Error = {
     }
     if (message.error !== "") {
       writer.uint32(18).string(message.error);
+    }
+    if (message.errorType !== 0) {
+      writer.uint32(24).int32(message.errorType);
     }
     return writer;
   },
@@ -6490,6 +6527,13 @@ export const Error = {
 
           message.error = reader.string();
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.errorType = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -6503,6 +6547,7 @@ export const Error = {
     return {
       code: isSet(object.code) ? globalThis.Number(object.code) : 0,
       error: isSet(object.error) ? globalThis.String(object.error) : "",
+      errorType: isSet(object.errorType) ? errorTypeFromJSON(object.errorType) : 0,
     };
   },
 
@@ -6514,6 +6559,9 @@ export const Error = {
     if (message.error !== "") {
       obj.error = message.error;
     }
+    if (message.errorType !== 0) {
+      obj.errorType = errorTypeToJSON(message.errorType);
+    }
     return obj;
   },
 
@@ -6524,6 +6572,7 @@ export const Error = {
     const message = createBaseError();
     message.code = object.code ?? 0;
     message.error = object.error ?? "";
+    message.errorType = object.errorType ?? 0;
     return message;
   },
 };
