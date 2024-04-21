@@ -189,6 +189,12 @@ export interface QQGameFinish {
   hands: QQGameFinishHand | undefined;
   winCells: QQBetCell[];
   result: QQPlayerEngameResult | undefined;
+  playersWinAmount: { [key: string]: number };
+}
+
+export interface QQGameFinish_PlayersWinAmountEntry {
+  key: string;
+  value: number;
 }
 
 export interface QQGameFinishHand {
@@ -918,7 +924,7 @@ export const QQPlayerEngameResult = {
 };
 
 function createBaseQQGameFinish(): QQGameFinish {
-  return { hands: undefined, winCells: [], result: undefined };
+  return { hands: undefined, winCells: [], result: undefined, playersWinAmount: {} };
 }
 
 export const QQGameFinish = {
@@ -934,6 +940,9 @@ export const QQGameFinish = {
     if (message.result !== undefined) {
       QQPlayerEngameResult.encode(message.result, writer.uint32(34).fork()).ldelim();
     }
+    Object.entries(message.playersWinAmount).forEach(([key, value]) => {
+      QQGameFinish_PlayersWinAmountEntry.encode({ key: key as any, value }, writer.uint32(42).fork()).ldelim();
+    });
     return writer;
   },
 
@@ -975,6 +984,16 @@ export const QQGameFinish = {
 
           message.result = QQPlayerEngameResult.decode(reader, reader.uint32());
           continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          const entry5 = QQGameFinish_PlayersWinAmountEntry.decode(reader, reader.uint32());
+          if (entry5.value !== undefined) {
+            message.playersWinAmount[entry5.key] = entry5.value;
+          }
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -989,6 +1008,12 @@ export const QQGameFinish = {
       hands: isSet(object.hands) ? QQGameFinishHand.fromJSON(object.hands) : undefined,
       winCells: globalThis.Array.isArray(object?.winCells) ? object.winCells.map((e: any) => qQBetCellFromJSON(e)) : [],
       result: isSet(object.result) ? QQPlayerEngameResult.fromJSON(object.result) : undefined,
+      playersWinAmount: isObject(object.playersWinAmount)
+        ? Object.entries(object.playersWinAmount).reduce<{ [key: string]: number }>((acc, [key, value]) => {
+          acc[key] = Number(value);
+          return acc;
+        }, {})
+        : {},
     };
   },
 
@@ -1002,6 +1027,15 @@ export const QQGameFinish = {
     }
     if (message.result !== undefined) {
       obj.result = QQPlayerEngameResult.toJSON(message.result);
+    }
+    if (message.playersWinAmount) {
+      const entries = Object.entries(message.playersWinAmount);
+      if (entries.length > 0) {
+        obj.playersWinAmount = {};
+        entries.forEach(([k, v]) => {
+          obj.playersWinAmount[k] = Math.round(v);
+        });
+      }
     }
     return obj;
   },
@@ -1018,6 +1052,93 @@ export const QQGameFinish = {
     message.result = (object.result !== undefined && object.result !== null)
       ? QQPlayerEngameResult.fromPartial(object.result)
       : undefined;
+    message.playersWinAmount = Object.entries(object.playersWinAmount ?? {}).reduce<{ [key: string]: number }>(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = globalThis.Number(value);
+        }
+        return acc;
+      },
+      {},
+    );
+    return message;
+  },
+};
+
+function createBaseQQGameFinish_PlayersWinAmountEntry(): QQGameFinish_PlayersWinAmountEntry {
+  return { key: "", value: 0 };
+}
+
+export const QQGameFinish_PlayersWinAmountEntry = {
+  encode(message: QQGameFinish_PlayersWinAmountEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value !== 0) {
+      writer.uint32(16).int64(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QQGameFinish_PlayersWinAmountEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQQGameFinish_PlayersWinAmountEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.key = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.value = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QQGameFinish_PlayersWinAmountEntry {
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
+    };
+  },
+
+  toJSON(message: QQGameFinish_PlayersWinAmountEntry): unknown {
+    const obj: any = {};
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== 0) {
+      obj.value = Math.round(message.value);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QQGameFinish_PlayersWinAmountEntry>, I>>(
+    base?: I,
+  ): QQGameFinish_PlayersWinAmountEntry {
+    return QQGameFinish_PlayersWinAmountEntry.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<QQGameFinish_PlayersWinAmountEntry>, I>>(
+    object: I,
+  ): QQGameFinish_PlayersWinAmountEntry {
+    const message = createBaseQQGameFinish_PlayersWinAmountEntry();
+    message.key = object.key ?? "";
+    message.value = object.value ?? 0;
     return message;
   },
 };
@@ -1496,6 +1617,10 @@ function longToNumber(long: Long): number {
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
 }
 
 function isSet(value: any): boolean {
