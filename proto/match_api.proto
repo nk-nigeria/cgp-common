@@ -58,6 +58,7 @@ message Match {
   string password = 13;
   // repeated string players = 14;
   repeated SimpleProfile profiles = 15;
+  Bet bet = 16;
 }
 
 message MatchInfoRequest {
