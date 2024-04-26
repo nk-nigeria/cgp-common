@@ -107,5 +107,7 @@ func MatchKick(ctx context.Context,
 		dispatcher.BroadcastMessage(int64(pb.OpCodeUpdate_OPCODE_UPDATE_TABLE),
 			dataJson, presencesKick, nil, true)
 	}
+	dispatcher.BroadcastMessage(int64(pb.OpCodeUpdate_OPCODE_KICK_OFF_THE_TABLE),
+		nil, presencesKick, nil, true)
 	dispatcher.MatchKick(presencesKick)
 }
