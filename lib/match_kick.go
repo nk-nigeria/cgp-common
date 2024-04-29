@@ -3,6 +3,7 @@ package lib
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"strings"
 
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
@@ -134,4 +135,27 @@ func NotifyNotEnoughChip(
 	dataJson, _ := marshaler.Marshal(updateDesk)
 	dispatcher.BroadcastMessage(int64(pb.OpCodeUpdate_OPCODE_UPDATE_TABLE),
 		dataJson, precenses, nil, true)
+}
+
+func CheckEnougChip(
+	ctx context.Context,
+	nk runtime.NakamaModule,
+	logger runtime.Logger,
+	dispatcher runtime.MatchDispatcher,
+	chipRequire int64,
+	presence runtime.Presence) error {
+	userId := presence.GetUserId()
+	wallets, err := ReadWalletUsers(ctx, nk, logger, userId)
+	if err != nil {
+		return err
+	}
+	if len(wallets) == 0 {
+		return nil
+	}
+	wallet := wallets[0]
+	if wallet.Chips < chipRequire {
+		NotifyNotEnoughChip(ctx, nk, logger, dispatcher, presence)
+		return errors.New(pb.ErrorType_ERROR_TYPE_CHIP_NOT_ENOUGH.String())
+	}
+	return nil
 }
