@@ -61,3 +61,30 @@ func (g CurrencyName) FromId(id int) string {
 		return ""
 	}
 }
+
+// Black Jack : max 3
+// Bandar : 20
+// Baccarat : 5
+// Sicbo : 20
+// Gaple : 4
+// Binh : 4
+// Dragon Tiger : 20
+var MaxSizeMatchByGame = map[GameName]int{
+	BlackjackName:   3,
+	BandarqqName:    20,
+	SicboName:       20,
+	BaccaratName:    5,
+	ColorGameName:   4,
+	DragontigerName: 20,
+	GapleDomino:     4,
+	ChinesePoker:    4,
+}
+var kDefaultMaxSize = 1
+
+func GetMaxSizeByGame(gameName GameName) int {
+	size, exist := MaxSizeMatchByGame[gameName]
+	if !exist {
+		return kDefaultMaxSize
+	}
+	return size
+}
