@@ -24,6 +24,8 @@ const (
 	BaccaratName    GameName = "baccarat"
 	ColorGameName   GameName = "color-game"
 	DragontigerName GameName = "dragontiger"
+	GapleDomino     GameName = "gaple"
+	ChinesePoker    GameName = "chinese-poker"
 )
 
 func (g GameName) String() string {
