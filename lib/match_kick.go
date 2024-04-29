@@ -111,3 +111,27 @@ func MatchKick(ctx context.Context,
 		nil, presencesKick, nil, true)
 	dispatcher.MatchKick(presencesKick)
 }
+
+func NotifyNotEnoughChip(
+	ctx context.Context,
+	nk runtime.NakamaModule,
+	logger runtime.Logger,
+	dispatcher runtime.MatchDispatcher,
+	precenses ...runtime.Presence) {
+	updateDesk := &pb.BlackjackUpdateDesk{
+		IsInsuranceTurnEnter: false,
+		IsNewTurn:            false,
+		IsUpdateBet:          true,
+		IsUpdateLegalAction:  false,
+		IsSplitHand:          false,
+		Bet:                  nil,
+	}
+	updateDesk.Error = &pb.Error{
+		Code:      int64(pb.ErrorType_ERROR_TYPE_CHIP_NOT_ENOUGH),
+		Error:     pb.ErrorType_ERROR_TYPE_CHIP_NOT_ENOUGH.String(),
+		ErrorType: pb.ErrorType_ERROR_TYPE_CHIP_NOT_ENOUGH,
+	}
+	dataJson, _ := marshaler.Marshal(updateDesk)
+	dispatcher.BroadcastMessage(int64(pb.OpCodeUpdate_OPCODE_UPDATE_TABLE),
+		dataJson, precenses, nil, true)
+}
