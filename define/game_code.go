@@ -69,17 +69,9 @@ func (g CurrencyName) FromId(id int) string {
 // Gaple : 4
 // Binh : 4
 // Dragon Tiger : 20
-var MaxSizeMatchByGame = map[GameName]int{
-	BlackjackName:   3,
-	BandarqqName:    20,
-	SicboName:       20,
-	BaccaratName:    5,
-	ColorGameName:   4,
-	DragontigerName: 20,
-	GapleDomino:     4,
-	ChinesePoker:    4,
-}
+
 var kDefaultMaxSize = 1
+var MaxSizeMatchByGame map[GameName]int
 
 func GetMaxSizeByGame(gameName GameName) int {
 	size, exist := MaxSizeMatchByGame[gameName]
@@ -87,4 +79,16 @@ func GetMaxSizeByGame(gameName GameName) int {
 		return kDefaultMaxSize
 	}
 	return size
+}
+
+func Init() {
+	MaxSizeMatchByGame = make(map[GameName]int)
+	MaxSizeMatchByGame[BlackjackName] = 3
+	MaxSizeMatchByGame[BandarqqName] = 20
+	MaxSizeMatchByGame[SicboName] = 20
+	MaxSizeMatchByGame[BaccaratName] = 5
+	MaxSizeMatchByGame[ColorGameName] = 4
+	MaxSizeMatchByGame[DragontigerName] = 20
+	MaxSizeMatchByGame[GapleDomino] = 4
+	MaxSizeMatchByGame[ChinesePoker] = 4
 }
