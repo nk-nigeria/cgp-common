@@ -31,6 +31,18 @@ const (
 func (g GameName) String() string {
 	return string(g)
 }
+
+func IsSlotGame(gameName GameName) bool {
+	switch gameName {
+	case SixiangGameName, TarzanGameName, JuicyGardenName,
+		CryptoRush, IncaGameName, NoelGameName,
+		FruitGameName, FortuneFoundFortune, JourneyToTheWest:
+		return true
+	default:
+		return false
+	}
+}
+
 func IsAllowJoinInGameOnProgress(gameCode string) bool {
 	switch GameName(gameCode) {
 	case SixiangGameName, TarzanGameName, JuicyGardenName:
