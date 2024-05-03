@@ -8,6 +8,21 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
+var SystemUid = "00000000-0000-0000-0000-000000000000"
+
+type WalletAction string
+
+const (
+	WalletActionBankTopup   WalletAction = "bank_topup"
+	WalletActionDailyReward WalletAction = "daily_reward"
+	WalletActionFreeChip    WalletAction = "free_chip"
+	WalletActionGiftCode    WalletAction = "gift_code"
+	WalletActionIAPTopUp    WalletAction = "iap_topup"
+	WalletActionReferReward WalletAction = "refer_reward"
+	WalletActionUserGift    WalletAction = "user_gift"
+	WalletActionTipInGame   WalletAction = "tip_ingame"
+)
+
 type Wallet struct {
 	UserId string
 	Chips  int64 `json:"chips"`

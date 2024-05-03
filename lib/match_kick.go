@@ -125,3 +125,17 @@ func CheckEnougChip(
 	}
 	return nil
 }
+
+func TipInGame(
+	ctx context.Context, nk runtime.NakamaModule, logger runtime.Logger,
+	dispatcher runtime.MatchDispatcher, chipRequire int64, userId string, chipsTip int64,
+) error {
+	metadata := make(map[string]interface{})
+	metadata["action"] = WalletActionTipInGame
+	metadata["sender"] = userId
+	metadata["recv"] = SystemUid
+	changeset := map[string]int64{}
+	changeset["chips"] = chipsTip
+	_, _, err := nk.WalletUpdate(ctx, userId, changeset, metadata, true)
+	return err
+}
