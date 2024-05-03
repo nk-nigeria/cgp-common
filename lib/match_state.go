@@ -196,15 +196,21 @@ func (s *MatchState) AddPresence(ctx context.Context,
 type CountDown struct {
 	cd         time.Time
 	checkPoint int
+	timeout    bool
 }
 
 func (c *CountDown) Setup(d time.Duration) {
 	c.cd = time.Now().Add(d)
 	c.checkPoint = 1
+	c.timeout = false
 }
 
 func (c *CountDown) Remain() float64 {
-	return time.Until(c.cd).Seconds()
+	remain := time.Until(c.cd).Seconds()
+	if remain < 0 {
+		c.timeout = true
+	}
+	return remain
 }
 
 func (c *CountDown) IsCheckPointChange() bool {
@@ -213,4 +219,8 @@ func (c *CountDown) IsCheckPointChange() bool {
 
 func (c *CountDown) SetCheckPoint(checkpoint int) {
 	c.checkPoint = checkpoint
+}
+
+func (c *CountDown) Timeout() bool {
+	return c.timeout
 }
