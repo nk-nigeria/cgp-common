@@ -192,3 +192,25 @@ func (s *MatchState) AddPresence(ctx context.Context,
 		s.ResetUserNotInteract(presence.GetUserId())
 	}
 }
+
+type CountDown struct {
+	cd         time.Time
+	checkPoint int
+}
+
+func (c *CountDown) Setup(d time.Duration) {
+	c.cd = time.Now().Add(d)
+	c.checkPoint = 1
+}
+
+func (c *CountDown) Remain() float64 {
+	return time.Until(c.cd).Seconds()
+}
+
+func (c *CountDown) IsCheckPointChange() bool {
+	return c.checkPoint == -1 || c.checkPoint != int(c.Remain())
+}
+
+func (c *CountDown) SetCheckPoint(checkpoint int) {
+	c.checkPoint = checkpoint
+}
