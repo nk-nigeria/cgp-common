@@ -233,7 +233,10 @@ export function choiceCodeToJSON(object: ChoiceCode): string {
   }
 }
 
-/** The complete set of opcodes used for communication between clients and server. */
+/**
+ * The complete set of opcodes used for communication between clients and
+ * server.
+ */
 export enum OpCodeRequest {
   /** OPCODE_UNSPECIFIED - No opcode specified. Unused. */
   OPCODE_UNSPECIFIED = 0,
@@ -257,6 +260,7 @@ export enum OpCodeRequest {
   OPCODE_REQUEST_HISTORY_RESULT = 11,
   OPCODE_REQUEST_SPIN = 12,
   OPCODE_REQUEST_BUY_SIXIANG_GEM = 13,
+  OPCODE_REQUEST_TIP_INGAME = 14,
   UNRECOGNIZED = -1,
 }
 
@@ -301,6 +305,9 @@ export function opCodeRequestFromJSON(object: any): OpCodeRequest {
     case 13:
     case "OPCODE_REQUEST_BUY_SIXIANG_GEM":
       return OpCodeRequest.OPCODE_REQUEST_BUY_SIXIANG_GEM;
+    case 14:
+    case "OPCODE_REQUEST_TIP_INGAME":
+      return OpCodeRequest.OPCODE_REQUEST_TIP_INGAME;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -336,13 +343,18 @@ export function opCodeRequestToJSON(object: OpCodeRequest): string {
       return "OPCODE_REQUEST_SPIN";
     case OpCodeRequest.OPCODE_REQUEST_BUY_SIXIANG_GEM:
       return "OPCODE_REQUEST_BUY_SIXIANG_GEM";
+    case OpCodeRequest.OPCODE_REQUEST_TIP_INGAME:
+      return "OPCODE_REQUEST_TIP_INGAME";
     case OpCodeRequest.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
 }
 
-/** The complete set of opcodes used for communication between clients and server. */
+/**
+ * The complete set of opcodes used for communication between clients and
+ * server.
+ */
 export enum OpCodeUpdate {
   OPCODE_UPDATE_UNSPECIFIED = 0,
   /** OPCODE_UPDATE_TABLE - message UpdateTable */
@@ -846,7 +858,10 @@ export interface Organize {
   cards: ListCard | undefined;
 }
 
-/** Message data sent by server to clients representing the joining or leaving of presence */
+/**
+ * Message data sent by server to clients representing the joining or leaving of
+ * presence
+ */
 export interface UpdateTable {
   players: Player[];
   playingPlayers: Player[];

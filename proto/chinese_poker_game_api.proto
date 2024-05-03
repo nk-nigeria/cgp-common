@@ -56,9 +56,7 @@ message Card {
   CardStatus status = 3;
 }
 
-message ListCard {
-  repeated Card cards = 1;
-}
+message ListCard { repeated Card cards = 1; }
 
 enum ChoiceCode {
   // No choice specified. Unused.
@@ -67,34 +65,37 @@ enum ChoiceCode {
   CHOICE_HIT = 2;
 }
 
-// The complete set of opcodes used for communication between clients and server.
+// The complete set of opcodes used for communication between clients and
+// server.
 enum OpCodeRequest {
   // No opcode specified. Unused.
   OPCODE_UNSPECIFIED = 0;
   // New game round starting.
-  OPCODE_REQUEST_NEW_GAME = 1; //message NewGame
+  OPCODE_REQUEST_NEW_GAME = 1; // message NewGame
   // Request leave game
   OPCODE_REQUEST_LEAVE_GAME = 3;
   OPCODE_REQUEST_COMBINE_CARDS = 4;
-  OPCODE_REQUEST_SHOW_CARDS = 5; //message Organize
-  OPCODE_REQUEST_DECLARE_CARDS = 6; //message Organize
-  OPCODE_USER_INTERACT_CARDS = 7; //message noti user move card
+  OPCODE_REQUEST_SHOW_CARDS = 5;    // message Organize
+  OPCODE_REQUEST_DECLARE_CARDS = 6; // message Organize
+  OPCODE_USER_INTERACT_CARDS = 7;   // message noti user move card
 
   OPCODE_REQUEST_BET = 8;
-  OPCODE_REQUEST_USER_IN_TABLE = 9; // get table info
-  OPCODE_REQUEST_INFO_TABLE = 10; //
+  OPCODE_REQUEST_USER_IN_TABLE = 9;   // get table info
+  OPCODE_REQUEST_INFO_TABLE = 10;     //
   OPCODE_REQUEST_HISTORY_RESULT = 11; //
 
   OPCODE_REQUEST_SPIN = 12;
   OPCODE_REQUEST_BUY_SIXIANG_GEM = 13;
+  OPCODE_REQUEST_TIP_INGAME = 14;
 }
 
-// The complete set of opcodes used for communication between clients and server.
+// The complete set of opcodes used for communication between clients and
+// server.
 enum OpCodeUpdate {
   OPCODE_UPDATE_UNSPECIFIED = 0;
-  OPCODE_UPDATE_TABLE = 1; //message UpdateTable
-  OPCODE_UPDATE_DEAL = 2; //message UpdateDeal
-  OPCODE_UPDATE_FINISH = 3; //message UpdateFinish
+  OPCODE_UPDATE_TABLE = 1;  // message UpdateTable
+  OPCODE_UPDATE_DEAL = 2;   // message UpdateDeal
+  OPCODE_UPDATE_FINISH = 3; // message UpdateFinish
   // Request was rejected.
   OPCODE_UPDATE_REJECTED = 4;
   // Update game state
@@ -129,15 +130,16 @@ message Organize {
   ListCard cards = 1;
 }
 
-// Message data sent by server to clients representing the joining or leaving of presence
+// Message data sent by server to clients representing the joining or leaving of
+// presence
 message UpdateTable {
   repeated Player players = 1;
   repeated Player playing_players = 2;
   repeated Player join_players = 3;
   repeated Player leave_players = 4;
-  int64 bet = 5; // chip bet info
-  int64 vip = 6; // min level vip require join room
-  int64 time_play = 7; // timestamp play game
+  int64 bet = 5;         // chip bet info
+  int64 vip = 6;         // min level vip require join room
+  int64 time_play = 7;   // timestamp play game
   int64 remain_time = 8; // remain time to end game
   GameState game_state = 9;
   Jackpot jp_treasure = 10;
@@ -149,9 +151,7 @@ message PresenceCards {
 }
 
 // Complete game round with winner announcement.
-message UpdateDeal {
-  PresenceCards presence_card = 1;
-}
+message UpdateDeal { PresenceCards presence_card = 1; }
 
 message UpdateGameState {
   GameState state = 1;
@@ -164,7 +164,7 @@ enum CardEvent {
   COMBINE = 0;
   SHOW = 1;
   DECLARE = 2;
-  MOVE=4;
+  MOVE = 4;
 }
 
 message ArrangeCard {
