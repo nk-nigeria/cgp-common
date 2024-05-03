@@ -222,5 +222,9 @@ func (c *CountDown) SetCheckPoint(checkpoint int) {
 }
 
 func (c *CountDown) Timeout() bool {
+	if c.timeout {
+		return true
+	}
+	c.Remain() // update timeout
 	return c.timeout
 }
