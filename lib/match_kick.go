@@ -139,3 +139,30 @@ func TipInGame(
 	_, _, err := nk.WalletUpdate(ctx, userId, changeset, metadata, true)
 	return err
 }
+
+func HandlerTipInGameEvent(ctx context.Context, nk runtime.NakamaModule, logger runtime.Logger,
+	dispatcher runtime.MatchDispatcher, message runtime.MatchData) error {
+	if message.GetOpCode() != int64(pb.OpCodeRequest_OPCODE_REQUEST_TIP_INGAME) {
+		return nil
+	}
+	userId := message.GetUserId()
+	bet := &pb.BlackjackBet{}
+	if err := protojson.Unmarshal(message.GetData(), bet); err != nil {
+		return err
+	}
+	if bet.Chips <= 0 {
+		logger.WithField("user_id", userId).Error("chip-is-empty")
+		return errors.New("chip-is-empty")
+	}
+	wallet, err := ReadWalletUser(ctx, nk, logger, userId)
+	if err != nil {
+		logger.WithField("user_id", userId).WithField("err", err).Error("read-wallet-error")
+		return err
+	}
+	if wallet.Chips < bet.Chips {
+		NotifyNotEnoughChip(ctx, nk, logger, dispatcher, message)
+		return errors.New(pb.ErrorType_ERROR_TYPE_CHIP_NOT_ENOUGH.String())
+	}
+	TipInGame(ctx, nk, logger, dispatcher, bet.Chips, userId, bet.Chips)
+	return nil
+}
