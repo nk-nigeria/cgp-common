@@ -123,6 +123,10 @@ func CheckEnougChip(
 		NotifyNotEnoughChip(ctx, nk, logger, dispatcher, presence)
 		return errors.New(pb.ErrorType_ERROR_TYPE_CHIP_NOT_ENOUGH.String())
 	}
+	updateDesk := &pb.BlackjackUpdateDesk{}
+	dataJson, _ := marshaler.Marshal(updateDesk)
+	dispatcher.BroadcastMessage(int64(pb.OpCodeUpdate_OPCODE_RESPONSE_TIP_INGAME),
+		dataJson, []runtime.Presence{presence}, nil, true)
 	return nil
 }
 
