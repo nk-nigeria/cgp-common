@@ -87,6 +87,7 @@ enum OpCodeRequest {
   OPCODE_REQUEST_SPIN = 12;
   OPCODE_REQUEST_BUY_SIXIANG_GEM = 13;
   OPCODE_REQUEST_TIP_INGAME = 14;
+  OPCODE_REQUEST_SYNC_TABLE = 15;
 }
 
 // The complete set of opcodes used for communication between clients and
@@ -110,6 +111,7 @@ enum OpCodeUpdate {
   OPCODE_BUY_SIXIANG_GEM = 13;
   OPCODE_PLAYER_CHANGE = 14;
   OPCODE_RESPONSE_TIP_INGAME = 15;
+  OPCODE_RESPONSE_SYNC_TABLE = 16;
 }
 
 enum GameState {

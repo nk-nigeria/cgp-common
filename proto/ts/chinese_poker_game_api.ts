@@ -261,6 +261,7 @@ export enum OpCodeRequest {
   OPCODE_REQUEST_SPIN = 12,
   OPCODE_REQUEST_BUY_SIXIANG_GEM = 13,
   OPCODE_REQUEST_TIP_INGAME = 14,
+  OPCODE_REQUEST_SYNC_TABLE = 15,
   UNRECOGNIZED = -1,
 }
 
@@ -308,6 +309,9 @@ export function opCodeRequestFromJSON(object: any): OpCodeRequest {
     case 14:
     case "OPCODE_REQUEST_TIP_INGAME":
       return OpCodeRequest.OPCODE_REQUEST_TIP_INGAME;
+    case 15:
+    case "OPCODE_REQUEST_SYNC_TABLE":
+      return OpCodeRequest.OPCODE_REQUEST_SYNC_TABLE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -345,6 +349,8 @@ export function opCodeRequestToJSON(object: OpCodeRequest): string {
       return "OPCODE_REQUEST_BUY_SIXIANG_GEM";
     case OpCodeRequest.OPCODE_REQUEST_TIP_INGAME:
       return "OPCODE_REQUEST_TIP_INGAME";
+    case OpCodeRequest.OPCODE_REQUEST_SYNC_TABLE:
+      return "OPCODE_REQUEST_SYNC_TABLE";
     case OpCodeRequest.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -377,6 +383,7 @@ export enum OpCodeUpdate {
   OPCODE_BUY_SIXIANG_GEM = 13,
   OPCODE_PLAYER_CHANGE = 14,
   OPCODE_RESPONSE_TIP_INGAME = 15,
+  OPCODE_RESPONSE_SYNC_TABLE = 16,
   UNRECOGNIZED = -1,
 }
 
@@ -427,6 +434,9 @@ export function opCodeUpdateFromJSON(object: any): OpCodeUpdate {
     case 15:
     case "OPCODE_RESPONSE_TIP_INGAME":
       return OpCodeUpdate.OPCODE_RESPONSE_TIP_INGAME;
+    case 16:
+    case "OPCODE_RESPONSE_SYNC_TABLE":
+      return OpCodeUpdate.OPCODE_RESPONSE_SYNC_TABLE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -466,6 +476,8 @@ export function opCodeUpdateToJSON(object: OpCodeUpdate): string {
       return "OPCODE_PLAYER_CHANGE";
     case OpCodeUpdate.OPCODE_RESPONSE_TIP_INGAME:
       return "OPCODE_RESPONSE_TIP_INGAME";
+    case OpCodeUpdate.OPCODE_RESPONSE_SYNC_TABLE:
+      return "OPCODE_RESPONSE_SYNC_TABLE";
     case OpCodeUpdate.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
