@@ -24,8 +24,9 @@ const (
 )
 
 type Wallet struct {
-	UserId string
-	Chips  int64 `json:"chips"`
+	UserId      string
+	Chips       int64 `json:"chips"`
+	ChipsInBank int64 `json:"chipsInBank"`
 }
 
 func ParseWallet(payload string) (Wallet, error) {
