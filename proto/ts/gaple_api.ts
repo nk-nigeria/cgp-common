@@ -173,6 +173,7 @@ export interface GapleDominoPresenceHand {
  */
 export interface GapleDominoUpdateDeal {
   hand: GapleDominoPresenceHand | undefined;
+  desk: GapleDominoUpdateDesk | undefined;
 }
 
 export interface LewatCount {
@@ -928,13 +929,16 @@ export const GapleDominoPresenceHand = {
 };
 
 function createBaseGapleDominoUpdateDeal(): GapleDominoUpdateDeal {
-  return { hand: undefined };
+  return { hand: undefined, desk: undefined };
 }
 
 export const GapleDominoUpdateDeal = {
   encode(message: GapleDominoUpdateDeal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.hand !== undefined) {
       GapleDominoPresenceHand.encode(message.hand, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.desk !== undefined) {
+      GapleDominoUpdateDesk.encode(message.desk, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -953,6 +957,13 @@ export const GapleDominoUpdateDeal = {
 
           message.hand = GapleDominoPresenceHand.decode(reader, reader.uint32());
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.desk = GapleDominoUpdateDesk.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -963,13 +974,19 @@ export const GapleDominoUpdateDeal = {
   },
 
   fromJSON(object: any): GapleDominoUpdateDeal {
-    return { hand: isSet(object.hand) ? GapleDominoPresenceHand.fromJSON(object.hand) : undefined };
+    return {
+      hand: isSet(object.hand) ? GapleDominoPresenceHand.fromJSON(object.hand) : undefined,
+      desk: isSet(object.desk) ? GapleDominoUpdateDesk.fromJSON(object.desk) : undefined,
+    };
   },
 
   toJSON(message: GapleDominoUpdateDeal): unknown {
     const obj: any = {};
     if (message.hand !== undefined) {
       obj.hand = GapleDominoPresenceHand.toJSON(message.hand);
+    }
+    if (message.desk !== undefined) {
+      obj.desk = GapleDominoUpdateDesk.toJSON(message.desk);
     }
     return obj;
   },
@@ -981,6 +998,9 @@ export const GapleDominoUpdateDeal = {
     const message = createBaseGapleDominoUpdateDeal();
     message.hand = (object.hand !== undefined && object.hand !== null)
       ? GapleDominoPresenceHand.fromPartial(object.hand)
+      : undefined;
+    message.desk = (object.desk !== undefined && object.desk !== null)
+      ? GapleDominoUpdateDesk.fromPartial(object.desk)
       : undefined;
     return message;
   },
