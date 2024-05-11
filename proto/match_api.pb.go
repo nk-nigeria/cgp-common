@@ -23,7 +23,6 @@
 package api
 
 import (
-	api "github.com/ciaolink-game-platform/cgb-lobby-module/api"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -203,23 +202,23 @@ type Match struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	MatchId      string       `protobuf:"bytes,1,opt,name=match_id,json=matchId,proto3" json:"match_id,omitempty"`
-	Size         int32        `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
-	MaxSize      int32        `protobuf:"varint,3,opt,name=max_size,json=maxSize,proto3" json:"max_size,omitempty"`
-	Name         string       `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	MarkUnit     int32        `protobuf:"varint,5,opt,name=mark_unit,json=markUnit,proto3" json:"mark_unit,omitempty"`
-	Open         bool         `protobuf:"varint,6,opt,name=open,proto3" json:"open,omitempty"`
-	MockCodeCard int32        `protobuf:"varint,7,opt,name=mock_code_card,json=mockCodeCard,proto3" json:"mock_code_card,omitempty"`
-	UserData     string       `protobuf:"bytes,8,opt,name=user_data,json=userData,proto3" json:"user_data,omitempty"`
-	LastBet      int64        `protobuf:"varint,9,opt,name=last_bet,json=lastBet,proto3" json:"last_bet,omitempty"`
-	UserCreated  *api.Profile `protobuf:"bytes,10,opt,name=user_created,json=userCreated,proto3" json:"user_created,omitempty"`
-	TableId      string       `protobuf:"bytes,11,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	NumBot       int32        `protobuf:"varint,12,opt,name=num_bot,json=numBot,proto3" json:"num_bot,omitempty"`
-	Password     string       `protobuf:"bytes,13,opt,name=password,proto3" json:"password,omitempty"`
+	MatchId      string   `protobuf:"bytes,1,opt,name=match_id,json=matchId,proto3" json:"match_id,omitempty"`
+	Size         int32    `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	MaxSize      int32    `protobuf:"varint,3,opt,name=max_size,json=maxSize,proto3" json:"max_size,omitempty"`
+	Name         string   `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	MarkUnit     int32    `protobuf:"varint,5,opt,name=mark_unit,json=markUnit,proto3" json:"mark_unit,omitempty"`
+	Open         bool     `protobuf:"varint,6,opt,name=open,proto3" json:"open,omitempty"`
+	MockCodeCard int32    `protobuf:"varint,7,opt,name=mock_code_card,json=mockCodeCard,proto3" json:"mock_code_card,omitempty"`
+	UserData     string   `protobuf:"bytes,8,opt,name=user_data,json=userData,proto3" json:"user_data,omitempty"`
+	LastBet      int64    `protobuf:"varint,9,opt,name=last_bet,json=lastBet,proto3" json:"last_bet,omitempty"`
+	UserCreated  *Profile `protobuf:"bytes,10,opt,name=user_created,json=userCreated,proto3" json:"user_created,omitempty"`
+	TableId      string   `protobuf:"bytes,11,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	NumBot       int32    `protobuf:"varint,12,opt,name=num_bot,json=numBot,proto3" json:"num_bot,omitempty"`
+	Password     string   `protobuf:"bytes,13,opt,name=password,proto3" json:"password,omitempty"`
 	// repeated string players = 14;
-	Profiles  []*api.SimpleProfile `protobuf:"bytes,15,rep,name=profiles,proto3" json:"profiles,omitempty"`
-	Bet       *Bet                 `protobuf:"bytes,16,opt,name=bet,proto3" json:"bet,omitempty"`
-	GameState GameState            `protobuf:"varint,17,opt,name=game_state,json=gameState,proto3,enum=api.GameState" json:"game_state,omitempty"`
+	Profiles  []*SimpleProfile `protobuf:"bytes,15,rep,name=profiles,proto3" json:"profiles,omitempty"`
+	Bet       *Bet             `protobuf:"bytes,16,opt,name=bet,proto3" json:"bet,omitempty"`
+	GameState GameState        `protobuf:"varint,17,opt,name=game_state,json=gameState,proto3,enum=api.GameState" json:"game_state,omitempty"`
 }
 
 func (x *Match) Reset() {
@@ -317,7 +316,7 @@ func (x *Match) GetLastBet() int64 {
 	return 0
 }
 
-func (x *Match) GetUserCreated() *api.Profile {
+func (x *Match) GetUserCreated() *Profile {
 	if x != nil {
 		return x.UserCreated
 	}
@@ -345,7 +344,7 @@ func (x *Match) GetPassword() string {
 	return ""
 }
 
-func (x *Match) GetProfiles() []*api.SimpleProfile {
+func (x *Match) GetProfiles() []*SimpleProfile {
 	if x != nil {
 		return x.Profiles
 	}
@@ -1073,8 +1072,8 @@ var file_match_api_proto_goTypes = []interface{}{
 	(*Bet)(nil),                    // 7: api.Bet
 	(*Bets)(nil),                   // 8: api.Bets
 	(*BetRequest)(nil),             // 9: api.BetRequest
-	(*api.Profile)(nil),            // 10: api.Profile
-	(*api.SimpleProfile)(nil),      // 11: api.SimpleProfile
+	(*Profile)(nil),                // 10: api.Profile
+	(*SimpleProfile)(nil),          // 11: api.SimpleProfile
 	(GameState)(0),                 // 12: api.GameState
 }
 var file_match_api_proto_depIdxs = []int32{
@@ -1097,6 +1096,7 @@ func file_match_api_proto_init() {
 	if File_match_api_proto != nil {
 		return
 	}
+	file_auth_api_proto_init()
 	file_chinese_poker_game_api_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_match_api_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
