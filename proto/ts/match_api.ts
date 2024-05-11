@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { Profile, SimpleProfile } from "./auth_api";
+import { GameState, gameStateFromJSON, gameStateToJSON } from "./chinese_poker_game_api";
 import Long = require("long");
 
 export const protobufPackage = "api";
@@ -71,6 +72,7 @@ export interface Match {
   /** repeated string players = 14; */
   profiles: SimpleProfile[];
   bet: Bet | undefined;
+  gameState: GameState;
 }
 
 export interface MatchInfoRequest {
@@ -340,6 +342,7 @@ function createBaseMatch(): Match {
     password: "",
     profiles: [],
     bet: undefined,
+    gameState: 0,
   };
 }
 
@@ -389,6 +392,9 @@ export const Match = {
     }
     if (message.bet !== undefined) {
       Bet.encode(message.bet, writer.uint32(130).fork()).ldelim();
+    }
+    if (message.gameState !== 0) {
+      writer.uint32(136).int32(message.gameState);
     }
     return writer;
   },
@@ -505,6 +511,13 @@ export const Match = {
 
           message.bet = Bet.decode(reader, reader.uint32());
           continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.gameState = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -533,6 +546,7 @@ export const Match = {
         ? object.profiles.map((e: any) => SimpleProfile.fromJSON(e))
         : [],
       bet: isSet(object.bet) ? Bet.fromJSON(object.bet) : undefined,
+      gameState: isSet(object.gameState) ? gameStateFromJSON(object.gameState) : 0,
     };
   },
 
@@ -583,6 +597,9 @@ export const Match = {
     if (message.bet !== undefined) {
       obj.bet = Bet.toJSON(message.bet);
     }
+    if (message.gameState !== 0) {
+      obj.gameState = gameStateToJSON(message.gameState);
+    }
     return obj;
   },
 
@@ -608,6 +625,7 @@ export const Match = {
     message.password = object.password ?? "";
     message.profiles = object.profiles?.map((e) => SimpleProfile.fromPartial(e)) || [];
     message.bet = (object.bet !== undefined && object.bet !== null) ? Bet.fromPartial(object.bet) : undefined;
+    message.gameState = object.gameState ?? 0;
     return message;
   },
 };

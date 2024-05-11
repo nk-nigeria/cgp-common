@@ -18,6 +18,7 @@ syntax = "proto3";
 package api;
 
 import "auth_api.proto";
+import "chinese_poker_game_api.proto";
 
 option go_package = "github.com/ciaolink-game-platform/cgb-lobby-module/api";
 
@@ -59,6 +60,7 @@ message Match {
   // repeated string players = 14;
   repeated SimpleProfile profiles = 15;
   Bet bet = 16;
+  GameState game_state = 17;
 }
 
 message MatchInfoRequest {
