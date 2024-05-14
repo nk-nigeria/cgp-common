@@ -60,6 +60,7 @@ message Match {
   repeated SimpleProfile profiles = 15;
   Bet bet = 16;
   GameState game_state = 17;
+  repeated string playing_players = 18;
 }
 
 message MatchInfoRequest {

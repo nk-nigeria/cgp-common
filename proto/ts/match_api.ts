@@ -73,6 +73,7 @@ export interface Match {
   profiles: SimpleProfile[];
   bet: Bet | undefined;
   gameState: GameState;
+  playingPlayers: string[];
 }
 
 export interface MatchInfoRequest {
@@ -343,6 +344,7 @@ function createBaseMatch(): Match {
     profiles: [],
     bet: undefined,
     gameState: 0,
+    playingPlayers: [],
   };
 }
 
@@ -395,6 +397,9 @@ export const Match = {
     }
     if (message.gameState !== 0) {
       writer.uint32(136).int32(message.gameState);
+    }
+    for (const v of message.playingPlayers) {
+      writer.uint32(146).string(v!);
     }
     return writer;
   },
@@ -518,6 +523,13 @@ export const Match = {
 
           message.gameState = reader.int32() as any;
           continue;
+        case 18:
+          if (tag !== 146) {
+            break;
+          }
+
+          message.playingPlayers.push(reader.string());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -547,6 +559,9 @@ export const Match = {
         : [],
       bet: isSet(object.bet) ? Bet.fromJSON(object.bet) : undefined,
       gameState: isSet(object.gameState) ? gameStateFromJSON(object.gameState) : 0,
+      playingPlayers: globalThis.Array.isArray(object?.playingPlayers)
+        ? object.playingPlayers.map((e: any) => globalThis.String(e))
+        : [],
     };
   },
 
@@ -600,6 +615,9 @@ export const Match = {
     if (message.gameState !== 0) {
       obj.gameState = gameStateToJSON(message.gameState);
     }
+    if (message.playingPlayers?.length) {
+      obj.playingPlayers = message.playingPlayers;
+    }
     return obj;
   },
 
@@ -626,6 +644,7 @@ export const Match = {
     message.profiles = object.profiles?.map((e) => SimpleProfile.fromPartial(e)) || [];
     message.bet = (object.bet !== undefined && object.bet !== null) ? Bet.fromPartial(object.bet) : undefined;
     message.gameState = object.gameState ?? 0;
+    message.playingPlayers = object.playingPlayers?.map((e) => e) || [];
     return message;
   },
 };
