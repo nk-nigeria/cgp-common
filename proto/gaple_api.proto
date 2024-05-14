@@ -3,6 +3,7 @@ syntax = "proto3";
 package api;
 
 import "bandarqq_api.proto";
+import "chinese_poker_game_api.proto";
 
 option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
 
@@ -12,7 +13,8 @@ enum GapleDominoChainPosition {
   GAPLE_DOMINO_CHAIN_POSITION_GAPLE_DOMINO_CHAIN_UNSPECIFIED = 0;
   GAPLE_DOMINO_CHAIN_POSITION_GAPLE_DOMINO_CHAIN_HEAD = 1;
   GAPLE_DOMINO_CHAIN_POSITION_GAPLE_DOMINO_CHAIN_TAIL = 2;
-  GAPLE_DOMINO_CHAIN_POSITION_GAPLE_DOMINO_CHAIN_BOTH = 3; // server->client indicate possible action
+  GAPLE_DOMINO_CHAIN_POSITION_GAPLE_DOMINO_CHAIN_BOTH =
+      3; // server->client indicate possible action
 }
 
 message GapleDominoAction {
@@ -26,6 +28,8 @@ message GapleDominoPenalty {
   string lost_player = 2;
   int32 chips = 3;
   repeated int32 lost_player_not_have_facelets = 4;
+  BalanceUpdate gain_player_wallet = 5;
+  BalanceUpdate lost_player_wallet = 6;
 }
 
 message GapleDominoChainNode {
@@ -46,14 +50,16 @@ message GapleDominoUpdateDesk {
   bool is_penalty_occur = 5;
   bool is_update_legal_actions = 6;
   bool is_update_num_remained_card = 7;
-  repeated GapleDominoChainNode chain = 8;     // update entire chain on tables
+  repeated GapleDominoChainNode chain = 8; // update entire chain on tables
   GapleDominoAction action = 9; //  last piece of domino, adding it to the table
   //  chain in correspond chain's end
-  repeated GapleDominoAction legal_actions = 10; // for displaying playable cards
+  repeated GapleDominoAction legal_actions =
+      10; // for displaying playable cards
   GapleDominoPenalty penalty = 11;
   repeated GapleDominoPresenceNumRemained remaineds = 12;
   string in_turn = 13; // uid of player in current turn
-  repeated int32 remained_facelets_count = 14; // count facelets remained on all players hand
+  repeated int32 remained_facelets_count =
+      14; // count facelets remained on all players hand
 }
 
 message GapleDominoPresenceNumRemained {
@@ -70,7 +76,7 @@ message GapleDominoPresenceHand {
 // reenter
 message GapleDominoUpdateDeal {
   GapleDominoPresenceHand hand = 1;
-  GapleDominoUpdateDesk desk=2;
+  GapleDominoUpdateDesk desk = 2;
 }
 
 enum GapleDominoFinishGameType {
@@ -89,7 +95,7 @@ message LewatCount {
 
 message ResultChip {
   string user_id = 1;
-  int64 balance_change = 2;   
+  int64 balance_change = 2;
 }
 
 message GapleDoninoUpdateFinish {

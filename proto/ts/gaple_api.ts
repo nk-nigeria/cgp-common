@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { Domino } from "./bandarqq_api";
+import { BalanceUpdate } from "./chinese_poker_game_api";
 import Long = require("long");
 
 export const protobufPackage = "api";
@@ -119,6 +120,8 @@ export interface GapleDominoPenalty {
   lostPlayer: string;
   chips: number;
   lostPlayerNotHaveFacelets: number[];
+  gainPlayerWallet: BalanceUpdate | undefined;
+  lostPlayerWallet: BalanceUpdate | undefined;
 }
 
 export interface GapleDominoChainNode {
@@ -286,7 +289,14 @@ export const GapleDominoAction = {
 };
 
 function createBaseGapleDominoPenalty(): GapleDominoPenalty {
-  return { gainPlayer: "", lostPlayer: "", chips: 0, lostPlayerNotHaveFacelets: [] };
+  return {
+    gainPlayer: "",
+    lostPlayer: "",
+    chips: 0,
+    lostPlayerNotHaveFacelets: [],
+    gainPlayerWallet: undefined,
+    lostPlayerWallet: undefined,
+  };
 }
 
 export const GapleDominoPenalty = {
@@ -305,6 +315,12 @@ export const GapleDominoPenalty = {
       writer.int32(v);
     }
     writer.ldelim();
+    if (message.gainPlayerWallet !== undefined) {
+      BalanceUpdate.encode(message.gainPlayerWallet, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.lostPlayerWallet !== undefined) {
+      BalanceUpdate.encode(message.lostPlayerWallet, writer.uint32(50).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -353,6 +369,20 @@ export const GapleDominoPenalty = {
           }
 
           break;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.gainPlayerWallet = BalanceUpdate.decode(reader, reader.uint32());
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.lostPlayerWallet = BalanceUpdate.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -370,6 +400,8 @@ export const GapleDominoPenalty = {
       lostPlayerNotHaveFacelets: globalThis.Array.isArray(object?.lostPlayerNotHaveFacelets)
         ? object.lostPlayerNotHaveFacelets.map((e: any) => globalThis.Number(e))
         : [],
+      gainPlayerWallet: isSet(object.gainPlayerWallet) ? BalanceUpdate.fromJSON(object.gainPlayerWallet) : undefined,
+      lostPlayerWallet: isSet(object.lostPlayerWallet) ? BalanceUpdate.fromJSON(object.lostPlayerWallet) : undefined,
     };
   },
 
@@ -387,6 +419,12 @@ export const GapleDominoPenalty = {
     if (message.lostPlayerNotHaveFacelets?.length) {
       obj.lostPlayerNotHaveFacelets = message.lostPlayerNotHaveFacelets.map((e) => Math.round(e));
     }
+    if (message.gainPlayerWallet !== undefined) {
+      obj.gainPlayerWallet = BalanceUpdate.toJSON(message.gainPlayerWallet);
+    }
+    if (message.lostPlayerWallet !== undefined) {
+      obj.lostPlayerWallet = BalanceUpdate.toJSON(message.lostPlayerWallet);
+    }
     return obj;
   },
 
@@ -399,6 +437,12 @@ export const GapleDominoPenalty = {
     message.lostPlayer = object.lostPlayer ?? "";
     message.chips = object.chips ?? 0;
     message.lostPlayerNotHaveFacelets = object.lostPlayerNotHaveFacelets?.map((e) => e) || [];
+    message.gainPlayerWallet = (object.gainPlayerWallet !== undefined && object.gainPlayerWallet !== null)
+      ? BalanceUpdate.fromPartial(object.gainPlayerWallet)
+      : undefined;
+    message.lostPlayerWallet = (object.lostPlayerWallet !== undefined && object.lostPlayerWallet !== null)
+      ? BalanceUpdate.fromPartial(object.lostPlayerWallet)
+      : undefined;
     return message;
   },
 };
