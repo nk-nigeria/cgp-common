@@ -991,6 +991,7 @@ export interface Player {
   vipLevel: number;
   avatarId: string;
   sid: number;
+  order: number;
 }
 
 export interface Jackpot {
@@ -2729,6 +2730,7 @@ function createBasePlayer(): Player {
     vipLevel: 0,
     avatarId: "",
     sid: 0,
+    order: 0,
   };
 }
 
@@ -2760,6 +2762,9 @@ export const Player = {
     }
     if (message.sid !== 0) {
       writer.uint32(112).int64(message.sid);
+    }
+    if (message.order !== 0) {
+      writer.uint32(120).int32(message.order);
     }
     return writer;
   },
@@ -2834,6 +2839,13 @@ export const Player = {
 
           message.sid = longToNumber(reader.int64() as Long);
           continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.order = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2854,6 +2866,7 @@ export const Player = {
       vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
       avatarId: isSet(object.avatarId) ? globalThis.String(object.avatarId) : "",
       sid: isSet(object.sid) ? globalThis.Number(object.sid) : 0,
+      order: isSet(object.order) ? globalThis.Number(object.order) : 0,
     };
   },
 
@@ -2886,6 +2899,9 @@ export const Player = {
     if (message.sid !== 0) {
       obj.sid = Math.round(message.sid);
     }
+    if (message.order !== 0) {
+      obj.order = Math.round(message.order);
+    }
     return obj;
   },
 
@@ -2905,6 +2921,7 @@ export const Player = {
     message.vipLevel = object.vipLevel ?? 0;
     message.avatarId = object.avatarId ?? "";
     message.sid = object.sid ?? 0;
+    message.order = object.order ?? 0;
     return message;
   },
 };

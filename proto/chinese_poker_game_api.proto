@@ -289,6 +289,7 @@ message Player {
   int64 vip_level = 7;
   string avatar_id = 13;
   int64 sid = 14;
+  int32 order = 15;
 }
 
 message Jackpot {
