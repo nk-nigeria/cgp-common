@@ -107,6 +107,7 @@ message Bet {
   float new_fee = 13;
   int64 count_playing = 14;
   int64 min_vip = 15;
+  int64 max_vip = 16;
 }
 
 message Bets {
