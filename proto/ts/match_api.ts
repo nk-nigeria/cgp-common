@@ -121,6 +121,7 @@ export interface Bet {
   agFee: number;
   newFee: number;
   countPlaying: number;
+  minVip: number;
 }
 
 export interface Bets {
@@ -1019,6 +1020,7 @@ function createBaseBet(): Bet {
     agFee: 0,
     newFee: 0,
     countPlaying: 0,
+    minVip: 0,
   };
 }
 
@@ -1065,6 +1067,9 @@ export const Bet = {
     }
     if (message.countPlaying !== 0) {
       writer.uint32(112).int64(message.countPlaying);
+    }
+    if (message.minVip !== 0) {
+      writer.uint32(120).int64(message.minVip);
     }
     return writer;
   },
@@ -1174,6 +1179,13 @@ export const Bet = {
 
           message.countPlaying = longToNumber(reader.int64() as Long);
           continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.minVip = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1199,6 +1211,7 @@ export const Bet = {
       agFee: isSet(object.agFee) ? globalThis.Number(object.agFee) : 0,
       newFee: isSet(object.newFee) ? globalThis.Number(object.newFee) : 0,
       countPlaying: isSet(object.countPlaying) ? globalThis.Number(object.countPlaying) : 0,
+      minVip: isSet(object.minVip) ? globalThis.Number(object.minVip) : 0,
     };
   },
 
@@ -1246,6 +1259,9 @@ export const Bet = {
     if (message.countPlaying !== 0) {
       obj.countPlaying = Math.round(message.countPlaying);
     }
+    if (message.minVip !== 0) {
+      obj.minVip = Math.round(message.minVip);
+    }
     return obj;
   },
 
@@ -1268,6 +1284,7 @@ export const Bet = {
     message.agFee = object.agFee ?? 0;
     message.newFee = object.newFee ?? 0;
     message.countPlaying = object.countPlaying ?? 0;
+    message.minVip = object.minVip ?? 0;
     return message;
   },
 };
