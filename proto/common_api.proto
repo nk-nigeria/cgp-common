@@ -494,6 +494,7 @@ message RuleLucky {
   Range mark = 6;
   Range vip = 7;
   int64 re_deal = 8;
+  Range win_mark_ratio = 9;
 }
 
 message RulesLucky {

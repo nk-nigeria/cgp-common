@@ -861,6 +861,7 @@ export interface RuleLucky {
   mark: Range | undefined;
   vip: Range | undefined;
   reDeal: number;
+  winMarkRatio: Range | undefined;
 }
 
 export interface RulesLucky {
@@ -6989,6 +6990,7 @@ function createBaseRuleLucky(): RuleLucky {
     mark: undefined,
     vip: undefined,
     reDeal: 0,
+    winMarkRatio: undefined,
   };
 }
 
@@ -7017,6 +7019,9 @@ export const RuleLucky = {
     }
     if (message.reDeal !== 0) {
       writer.uint32(64).int64(message.reDeal);
+    }
+    if (message.winMarkRatio !== undefined) {
+      Range.encode(message.winMarkRatio, writer.uint32(74).fork()).ldelim();
     }
     return writer;
   },
@@ -7084,6 +7089,13 @@ export const RuleLucky = {
 
           message.reDeal = longToNumber(reader.int64() as Long);
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.winMarkRatio = Range.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -7103,6 +7115,7 @@ export const RuleLucky = {
       mark: isSet(object.mark) ? Range.fromJSON(object.mark) : undefined,
       vip: isSet(object.vip) ? Range.fromJSON(object.vip) : undefined,
       reDeal: isSet(object.reDeal) ? globalThis.Number(object.reDeal) : 0,
+      winMarkRatio: isSet(object.winMarkRatio) ? Range.fromJSON(object.winMarkRatio) : undefined,
     };
   },
 
@@ -7132,6 +7145,9 @@ export const RuleLucky = {
     if (message.reDeal !== 0) {
       obj.reDeal = Math.round(message.reDeal);
     }
+    if (message.winMarkRatio !== undefined) {
+      obj.winMarkRatio = Range.toJSON(message.winMarkRatio);
+    }
     return obj;
   },
 
@@ -7148,6 +7164,9 @@ export const RuleLucky = {
     message.mark = (object.mark !== undefined && object.mark !== null) ? Range.fromPartial(object.mark) : undefined;
     message.vip = (object.vip !== undefined && object.vip !== null) ? Range.fromPartial(object.vip) : undefined;
     message.reDeal = object.reDeal ?? 0;
+    message.winMarkRatio = (object.winMarkRatio !== undefined && object.winMarkRatio !== null)
+      ? Range.fromPartial(object.winMarkRatio)
+      : undefined;
     return message;
   },
 };
