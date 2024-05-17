@@ -273,7 +273,7 @@ message BalanceUpdate {
   int64 amount_chip_add = 4;
   int64 amout_chip_bet = 5;
   int64 amout_chip_fee = 6;
-  int64 amout_chip_pre_fee = 7;
+  int64 amout_chip_add_prefee = 7;
 }
 
 message BalanceResult {
