@@ -119,7 +119,7 @@ export interface PlayerData {
   chipAdd: number;
   userSid: number;
   chipFee: number;
-  chipPreFee: number;
+  chipAddPrefee: number;
 }
 
 export interface MatchData {
@@ -1532,7 +1532,7 @@ export const MatchDetailResponse = {
 };
 
 function createBasePlayerData(): PlayerData {
-  return { userId: "", chip: 0, chipAdd: 0, userSid: 0, chipFee: 0, chipPreFee: 0 };
+  return { userId: "", chip: 0, chipAdd: 0, userSid: 0, chipFee: 0, chipAddPrefee: 0 };
 }
 
 export const PlayerData = {
@@ -1552,8 +1552,8 @@ export const PlayerData = {
     if (message.chipFee !== 0) {
       writer.uint32(72).int64(message.chipFee);
     }
-    if (message.chipPreFee !== 0) {
-      writer.uint32(80).int64(message.chipPreFee);
+    if (message.chipAddPrefee !== 0) {
+      writer.uint32(80).int64(message.chipAddPrefee);
     }
     return writer;
   },
@@ -1605,7 +1605,7 @@ export const PlayerData = {
             break;
           }
 
-          message.chipPreFee = longToNumber(reader.int64() as Long);
+          message.chipAddPrefee = longToNumber(reader.int64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1623,7 +1623,7 @@ export const PlayerData = {
       chipAdd: isSet(object.chipAdd) ? globalThis.Number(object.chipAdd) : 0,
       userSid: isSet(object.userSid) ? globalThis.Number(object.userSid) : 0,
       chipFee: isSet(object.chipFee) ? globalThis.Number(object.chipFee) : 0,
-      chipPreFee: isSet(object.chipPreFee) ? globalThis.Number(object.chipPreFee) : 0,
+      chipAddPrefee: isSet(object.chipAddPrefee) ? globalThis.Number(object.chipAddPrefee) : 0,
     };
   },
 
@@ -1644,8 +1644,8 @@ export const PlayerData = {
     if (message.chipFee !== 0) {
       obj.chipFee = Math.round(message.chipFee);
     }
-    if (message.chipPreFee !== 0) {
-      obj.chipPreFee = Math.round(message.chipPreFee);
+    if (message.chipAddPrefee !== 0) {
+      obj.chipAddPrefee = Math.round(message.chipAddPrefee);
     }
     return obj;
   },
@@ -1660,7 +1660,7 @@ export const PlayerData = {
     message.chipAdd = object.chipAdd ?? 0;
     message.userSid = object.userSid ?? 0;
     message.chipFee = object.chipFee ?? 0;
-    message.chipPreFee = object.chipPreFee ?? 0;
+    message.chipAddPrefee = object.chipAddPrefee ?? 0;
     return message;
   },
 };

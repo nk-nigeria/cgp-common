@@ -81,7 +81,7 @@ message PlayerData {
   int64 chip_add = 3;
   int64 user_sid = 8;
   int64 chip_fee = 9;
-  int64 chip_pre_fee = 10;
+  int64 chip_add_prefee = 10;
 }
 
 message MatchData {
