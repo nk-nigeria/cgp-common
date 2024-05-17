@@ -130,7 +130,7 @@ func QueryRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) ([]*pb
 
 	ml := make([]*pb.RuleLucky, 0)
 
-	query := "SELECT id, game_code, rtp_min, rtp_max, mark_min, mark_max, vip_min, vip_max, re_deal FROM rules_lucky WHERE deleted_at=0 and emit_event_at_unix > 1"
+	query := "SELECT id, game_code, rtp_min, rtp_max, mark_min, mark_max, vip_min, vip_max, win_mark_ratio_min, win_mark_ratio_max, re_deal FROM rules_lucky WHERE deleted_at=0 and emit_event_at_unix > 1"
 	// args := make([]interface{}, 0)
 
 	if rule.Id > 0 {
@@ -150,14 +150,16 @@ func QueryRulesLucky(ctx context.Context, db *sql.DB, rule *pb.RuleLucky) ([]*pb
 
 	for rows.Next() {
 		r := &pb.RuleLucky{
-			Rtp:  &pb.Range{},
-			Mark: &pb.Range{},
-			Vip:  &pb.Range{},
+			Rtp:          &pb.Range{},
+			Mark:         &pb.Range{},
+			Vip:          &pb.Range{},
+			WinMarkRatio: &pb.Range{},
 		}
 		err := rows.Scan(&r.Id, &r.GameCode,
 			&r.Rtp.Min, &r.Rtp.Max,
 			&r.Mark.Min, &r.Mark.Max,
 			&r.Vip.Min, &r.Vip.Max,
+			&r.WinMarkRatio.Min, &r.WinMarkRatio.Max,
 			&r.ReDeal)
 		if err != nil {
 			return nil, err
