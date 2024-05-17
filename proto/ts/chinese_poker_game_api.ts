@@ -981,6 +981,7 @@ export interface BalanceUpdate {
   amountChipAdd: number;
   amoutChipBet: number;
   amoutChipFee: number;
+  amoutChipPreFee: number;
 }
 
 export interface BalanceResult {
@@ -2530,7 +2531,15 @@ export const UpdateFinish = {
 };
 
 function createBaseBalanceUpdate(): BalanceUpdate {
-  return { userId: "", amountChipBefore: 0, amountChipCurrent: 0, amountChipAdd: 0, amoutChipBet: 0, amoutChipFee: 0 };
+  return {
+    userId: "",
+    amountChipBefore: 0,
+    amountChipCurrent: 0,
+    amountChipAdd: 0,
+    amoutChipBet: 0,
+    amoutChipFee: 0,
+    amoutChipPreFee: 0,
+  };
 }
 
 export const BalanceUpdate = {
@@ -2552,6 +2561,9 @@ export const BalanceUpdate = {
     }
     if (message.amoutChipFee !== 0) {
       writer.uint32(48).int64(message.amoutChipFee);
+    }
+    if (message.amoutChipPreFee !== 0) {
+      writer.uint32(56).int64(message.amoutChipPreFee);
     }
     return writer;
   },
@@ -2605,6 +2617,13 @@ export const BalanceUpdate = {
 
           message.amoutChipFee = longToNumber(reader.int64() as Long);
           continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+
+          message.amoutChipPreFee = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2622,6 +2641,7 @@ export const BalanceUpdate = {
       amountChipAdd: isSet(object.amountChipAdd) ? globalThis.Number(object.amountChipAdd) : 0,
       amoutChipBet: isSet(object.amoutChipBet) ? globalThis.Number(object.amoutChipBet) : 0,
       amoutChipFee: isSet(object.amoutChipFee) ? globalThis.Number(object.amoutChipFee) : 0,
+      amoutChipPreFee: isSet(object.amoutChipPreFee) ? globalThis.Number(object.amoutChipPreFee) : 0,
     };
   },
 
@@ -2645,6 +2665,9 @@ export const BalanceUpdate = {
     if (message.amoutChipFee !== 0) {
       obj.amoutChipFee = Math.round(message.amoutChipFee);
     }
+    if (message.amoutChipPreFee !== 0) {
+      obj.amoutChipPreFee = Math.round(message.amoutChipPreFee);
+    }
     return obj;
   },
 
@@ -2659,6 +2682,7 @@ export const BalanceUpdate = {
     message.amountChipAdd = object.amountChipAdd ?? 0;
     message.amoutChipBet = object.amoutChipBet ?? 0;
     message.amoutChipFee = object.amoutChipFee ?? 0;
+    message.amoutChipPreFee = object.amoutChipPreFee ?? 0;
     return message;
   },
 };
