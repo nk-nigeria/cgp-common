@@ -192,6 +192,7 @@ export interface UserStatGameHistory {
   gameId: number;
   gameName: string;
   totalChipWin: number;
+  totalChipWinPrefee: number;
   totalChipLost: number;
   noGameWin: number;
   noGameLost: number;
@@ -2683,7 +2684,16 @@ export const UserStatisticRequest = {
 };
 
 function createBaseUserStatGameHistory(): UserStatGameHistory {
-  return { gameId: 0, gameName: "", totalChipWin: 0, totalChipLost: 0, noGameWin: 0, noGameLost: 0, userId: "" };
+  return {
+    gameId: 0,
+    gameName: "",
+    totalChipWin: 0,
+    totalChipWinPrefee: 0,
+    totalChipLost: 0,
+    noGameWin: 0,
+    noGameLost: 0,
+    userId: "",
+  };
 }
 
 export const UserStatGameHistory = {
@@ -2697,17 +2707,20 @@ export const UserStatGameHistory = {
     if (message.totalChipWin !== 0) {
       writer.uint32(24).int64(message.totalChipWin);
     }
+    if (message.totalChipWinPrefee !== 0) {
+      writer.uint32(32).int64(message.totalChipWinPrefee);
+    }
     if (message.totalChipLost !== 0) {
-      writer.uint32(32).int64(message.totalChipLost);
+      writer.uint32(40).int64(message.totalChipLost);
     }
     if (message.noGameWin !== 0) {
-      writer.uint32(40).int64(message.noGameWin);
+      writer.uint32(48).int64(message.noGameWin);
     }
     if (message.noGameLost !== 0) {
-      writer.uint32(48).int64(message.noGameLost);
+      writer.uint32(56).int64(message.noGameLost);
     }
     if (message.userId !== "") {
-      writer.uint32(58).string(message.userId);
+      writer.uint32(66).string(message.userId);
     }
     return writer;
   },
@@ -2745,24 +2758,31 @@ export const UserStatGameHistory = {
             break;
           }
 
-          message.totalChipLost = longToNumber(reader.int64() as Long);
+          message.totalChipWinPrefee = longToNumber(reader.int64() as Long);
           continue;
         case 5:
           if (tag !== 40) {
             break;
           }
 
-          message.noGameWin = longToNumber(reader.int64() as Long);
+          message.totalChipLost = longToNumber(reader.int64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
             break;
           }
 
-          message.noGameLost = longToNumber(reader.int64() as Long);
+          message.noGameWin = longToNumber(reader.int64() as Long);
           continue;
         case 7:
-          if (tag !== 58) {
+          if (tag !== 56) {
+            break;
+          }
+
+          message.noGameLost = longToNumber(reader.int64() as Long);
+          continue;
+        case 8:
+          if (tag !== 66) {
             break;
           }
 
@@ -2782,6 +2802,7 @@ export const UserStatGameHistory = {
       gameId: isSet(object.gameId) ? globalThis.Number(object.gameId) : 0,
       gameName: isSet(object.gameName) ? globalThis.String(object.gameName) : "",
       totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
+      totalChipWinPrefee: isSet(object.totalChipWinPrefee) ? globalThis.Number(object.totalChipWinPrefee) : 0,
       totalChipLost: isSet(object.totalChipLost) ? globalThis.Number(object.totalChipLost) : 0,
       noGameWin: isSet(object.noGameWin) ? globalThis.Number(object.noGameWin) : 0,
       noGameLost: isSet(object.noGameLost) ? globalThis.Number(object.noGameLost) : 0,
@@ -2799,6 +2820,9 @@ export const UserStatGameHistory = {
     }
     if (message.totalChipWin !== 0) {
       obj.totalChipWin = Math.round(message.totalChipWin);
+    }
+    if (message.totalChipWinPrefee !== 0) {
+      obj.totalChipWinPrefee = Math.round(message.totalChipWinPrefee);
     }
     if (message.totalChipLost !== 0) {
       obj.totalChipLost = Math.round(message.totalChipLost);
@@ -2823,6 +2847,7 @@ export const UserStatGameHistory = {
     message.gameId = object.gameId ?? 0;
     message.gameName = object.gameName ?? "";
     message.totalChipWin = object.totalChipWin ?? 0;
+    message.totalChipWinPrefee = object.totalChipWinPrefee ?? 0;
     message.totalChipLost = object.totalChipLost ?? 0;
     message.noGameWin = object.noGameWin ?? 0;
     message.noGameLost = object.noGameLost ?? 0;

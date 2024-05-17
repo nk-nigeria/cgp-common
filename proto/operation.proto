@@ -154,10 +154,11 @@ message UserStatGameHistory {
   int64 game_id = 1;
   string game_name = 2;
   int64 total_chip_win = 3;
-  int64 total_chip_lost = 4;
-  int64 no_game_win = 5;
-  int64 no_game_lost = 6;
-  string user_id = 7;
+  int64 total_chip_win_prefee = 4;
+  int64 total_chip_lost = 5;
+  int64 no_game_win = 6;
+  int64 no_game_lost = 7;
+  string user_id = 8;
 }
 
 message UserTransferGoldStat {
