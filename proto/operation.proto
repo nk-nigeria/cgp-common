@@ -15,13 +15,14 @@ message OpPlayer {
   int64 no_win = 6;
   int64 no_lost = 7;
   uint64 chip_win = 8;
-  uint64 chip_lost = 9;
-  int64 chip_balance = 10;
-  int64 action = 11;
-  string status = 12;
-  int64 date_unix = 13;
-  int64 mcb = 14;
-  int64 user_sid = 15;
+  uint64 chip_win_prefee = 9;
+  uint64 chip_lost = 10;
+  int64 chip_balance = 11;
+  int64 action = 12;
+  string status = 13;
+  int64 date_unix = 14;
+  int64 mcb = 15;
+  int64 user_sid = 16;
 }
 
 message OpPlayerRequest {

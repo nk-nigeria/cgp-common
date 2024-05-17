@@ -53,6 +53,7 @@ export interface OpPlayer {
   noWin: number;
   noLost: number;
   chipWin: number;
+  chipWinPrefee: number;
   chipLost: number;
   chipBalance: number;
   action: number;
@@ -480,6 +481,7 @@ function createBaseOpPlayer(): OpPlayer {
     noWin: 0,
     noLost: 0,
     chipWin: 0,
+    chipWinPrefee: 0,
     chipLost: 0,
     chipBalance: 0,
     action: 0,
@@ -516,26 +518,29 @@ export const OpPlayer = {
     if (message.chipWin !== 0) {
       writer.uint32(64).uint64(message.chipWin);
     }
+    if (message.chipWinPrefee !== 0) {
+      writer.uint32(72).uint64(message.chipWinPrefee);
+    }
     if (message.chipLost !== 0) {
-      writer.uint32(72).uint64(message.chipLost);
+      writer.uint32(80).uint64(message.chipLost);
     }
     if (message.chipBalance !== 0) {
-      writer.uint32(80).int64(message.chipBalance);
+      writer.uint32(88).int64(message.chipBalance);
     }
     if (message.action !== 0) {
-      writer.uint32(88).int64(message.action);
+      writer.uint32(96).int64(message.action);
     }
     if (message.status !== "") {
-      writer.uint32(98).string(message.status);
+      writer.uint32(106).string(message.status);
     }
     if (message.dateUnix !== 0) {
-      writer.uint32(104).int64(message.dateUnix);
+      writer.uint32(112).int64(message.dateUnix);
     }
     if (message.mcb !== 0) {
-      writer.uint32(112).int64(message.mcb);
+      writer.uint32(120).int64(message.mcb);
     }
     if (message.userSid !== 0) {
-      writer.uint32(120).int64(message.userSid);
+      writer.uint32(128).int64(message.userSid);
     }
     return writer;
   },
@@ -608,45 +613,52 @@ export const OpPlayer = {
             break;
           }
 
-          message.chipLost = longToNumber(reader.uint64() as Long);
+          message.chipWinPrefee = longToNumber(reader.uint64() as Long);
           continue;
         case 10:
           if (tag !== 80) {
             break;
           }
 
-          message.chipBalance = longToNumber(reader.int64() as Long);
+          message.chipLost = longToNumber(reader.uint64() as Long);
           continue;
         case 11:
           if (tag !== 88) {
             break;
           }
 
-          message.action = longToNumber(reader.int64() as Long);
+          message.chipBalance = longToNumber(reader.int64() as Long);
           continue;
         case 12:
-          if (tag !== 98) {
+          if (tag !== 96) {
+            break;
+          }
+
+          message.action = longToNumber(reader.int64() as Long);
+          continue;
+        case 13:
+          if (tag !== 106) {
             break;
           }
 
           message.status = reader.string();
-          continue;
-        case 13:
-          if (tag !== 104) {
-            break;
-          }
-
-          message.dateUnix = longToNumber(reader.int64() as Long);
           continue;
         case 14:
           if (tag !== 112) {
             break;
           }
 
-          message.mcb = longToNumber(reader.int64() as Long);
+          message.dateUnix = longToNumber(reader.int64() as Long);
           continue;
         case 15:
           if (tag !== 120) {
+            break;
+          }
+
+          message.mcb = longToNumber(reader.int64() as Long);
+          continue;
+        case 16:
+          if (tag !== 128) {
             break;
           }
 
@@ -671,6 +683,7 @@ export const OpPlayer = {
       noWin: isSet(object.noWin) ? globalThis.Number(object.noWin) : 0,
       noLost: isSet(object.noLost) ? globalThis.Number(object.noLost) : 0,
       chipWin: isSet(object.chipWin) ? globalThis.Number(object.chipWin) : 0,
+      chipWinPrefee: isSet(object.chipWinPrefee) ? globalThis.Number(object.chipWinPrefee) : 0,
       chipLost: isSet(object.chipLost) ? globalThis.Number(object.chipLost) : 0,
       chipBalance: isSet(object.chipBalance) ? globalThis.Number(object.chipBalance) : 0,
       action: isSet(object.action) ? globalThis.Number(object.action) : 0,
@@ -706,6 +719,9 @@ export const OpPlayer = {
     }
     if (message.chipWin !== 0) {
       obj.chipWin = Math.round(message.chipWin);
+    }
+    if (message.chipWinPrefee !== 0) {
+      obj.chipWinPrefee = Math.round(message.chipWinPrefee);
     }
     if (message.chipLost !== 0) {
       obj.chipLost = Math.round(message.chipLost);
@@ -744,6 +760,7 @@ export const OpPlayer = {
     message.noWin = object.noWin ?? 0;
     message.noLost = object.noLost ?? 0;
     message.chipWin = object.chipWin ?? 0;
+    message.chipWinPrefee = object.chipWinPrefee ?? 0;
     message.chipLost = object.chipLost ?? 0;
     message.chipBalance = object.chipBalance ?? 0;
     message.action = object.action ?? 0;
