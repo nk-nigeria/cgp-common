@@ -165,6 +165,7 @@ export interface UserStatistic {
   totalChipDeposit: number;
   totalChipWithDraw: number;
   totalChipWin: number;
+  totalChipWinPrefee: number;
   totalChipLose: number;
   totalChipPromotion: number;
   totalChipSend: number;
@@ -2260,6 +2261,7 @@ function createBaseUserStatistic(): UserStatistic {
     totalChipDeposit: 0,
     totalChipWithDraw: 0,
     totalChipWin: 0,
+    totalChipWinPrefee: 0,
     totalChipLose: 0,
     totalChipPromotion: 0,
     totalChipSend: 0,
@@ -2286,41 +2288,44 @@ export const UserStatistic = {
     if (message.totalChipWin !== 0) {
       writer.uint32(24).int64(message.totalChipWin);
     }
+    if (message.totalChipWinPrefee !== 0) {
+      writer.uint32(32).int64(message.totalChipWinPrefee);
+    }
     if (message.totalChipLose !== 0) {
-      writer.uint32(32).int64(message.totalChipLose);
+      writer.uint32(40).int64(message.totalChipLose);
     }
     if (message.totalChipPromotion !== 0) {
-      writer.uint32(40).int64(message.totalChipPromotion);
+      writer.uint32(48).int64(message.totalChipPromotion);
     }
     if (message.totalChipSend !== 0) {
-      writer.uint32(48).int64(message.totalChipSend);
+      writer.uint32(56).int64(message.totalChipSend);
     }
     if (message.totalChipRecv !== 0) {
-      writer.uint32(56).int64(message.totalChipRecv);
+      writer.uint32(64).int64(message.totalChipRecv);
     }
     if (message.coRatio !== 0) {
-      writer.uint32(64).int64(message.coRatio);
+      writer.uint32(72).int64(message.coRatio);
     }
     if (message.totalChipDeposit3d !== 0) {
-      writer.uint32(72).int64(message.totalChipDeposit3d);
+      writer.uint32(80).int64(message.totalChipDeposit3d);
     }
     if (message.totalChipWithDraw3d !== 0) {
-      writer.uint32(80).int64(message.totalChipWithDraw3d);
+      writer.uint32(88).int64(message.totalChipWithDraw3d);
     }
     if (message.luck !== 0) {
-      writer.uint32(88).int64(message.luck);
+      writer.uint32(96).int64(message.luck);
     }
     if (message.userCreateTimeUnix !== 0) {
-      writer.uint32(96).int64(message.userCreateTimeUnix);
+      writer.uint32(104).int64(message.userCreateTimeUnix);
     }
     for (const v of message.userStatGameHistories) {
-      UserStatGameHistory.encode(v!, writer.uint32(106).fork()).ldelim();
+      UserStatGameHistory.encode(v!, writer.uint32(114).fork()).ldelim();
     }
     for (const v of message.recvChipStats) {
-      UserTransferGoldStat.encode(v!, writer.uint32(114).fork()).ldelim();
+      UserTransferGoldStat.encode(v!, writer.uint32(122).fork()).ldelim();
     }
     for (const v of message.sendChipStats) {
-      UserTransferGoldStat.encode(v!, writer.uint32(122).fork()).ldelim();
+      UserTransferGoldStat.encode(v!, writer.uint32(130).fork()).ldelim();
     }
     return writer;
   },
@@ -2358,80 +2363,87 @@ export const UserStatistic = {
             break;
           }
 
-          message.totalChipLose = longToNumber(reader.int64() as Long);
+          message.totalChipWinPrefee = longToNumber(reader.int64() as Long);
           continue;
         case 5:
           if (tag !== 40) {
             break;
           }
 
-          message.totalChipPromotion = longToNumber(reader.int64() as Long);
+          message.totalChipLose = longToNumber(reader.int64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
             break;
           }
 
-          message.totalChipSend = longToNumber(reader.int64() as Long);
+          message.totalChipPromotion = longToNumber(reader.int64() as Long);
           continue;
         case 7:
           if (tag !== 56) {
             break;
           }
 
-          message.totalChipRecv = longToNumber(reader.int64() as Long);
+          message.totalChipSend = longToNumber(reader.int64() as Long);
           continue;
         case 8:
           if (tag !== 64) {
             break;
           }
 
-          message.coRatio = longToNumber(reader.int64() as Long);
+          message.totalChipRecv = longToNumber(reader.int64() as Long);
           continue;
         case 9:
           if (tag !== 72) {
             break;
           }
 
-          message.totalChipDeposit3d = longToNumber(reader.int64() as Long);
+          message.coRatio = longToNumber(reader.int64() as Long);
           continue;
         case 10:
           if (tag !== 80) {
             break;
           }
 
-          message.totalChipWithDraw3d = longToNumber(reader.int64() as Long);
+          message.totalChipDeposit3d = longToNumber(reader.int64() as Long);
           continue;
         case 11:
           if (tag !== 88) {
             break;
           }
 
-          message.luck = longToNumber(reader.int64() as Long);
+          message.totalChipWithDraw3d = longToNumber(reader.int64() as Long);
           continue;
         case 12:
           if (tag !== 96) {
             break;
           }
 
-          message.userCreateTimeUnix = longToNumber(reader.int64() as Long);
+          message.luck = longToNumber(reader.int64() as Long);
           continue;
         case 13:
-          if (tag !== 106) {
+          if (tag !== 104) {
             break;
           }
 
-          message.userStatGameHistories.push(UserStatGameHistory.decode(reader, reader.uint32()));
+          message.userCreateTimeUnix = longToNumber(reader.int64() as Long);
           continue;
         case 14:
           if (tag !== 114) {
             break;
           }
 
-          message.recvChipStats.push(UserTransferGoldStat.decode(reader, reader.uint32()));
+          message.userStatGameHistories.push(UserStatGameHistory.decode(reader, reader.uint32()));
           continue;
         case 15:
           if (tag !== 122) {
+            break;
+          }
+
+          message.recvChipStats.push(UserTransferGoldStat.decode(reader, reader.uint32()));
+          continue;
+        case 16:
+          if (tag !== 130) {
             break;
           }
 
@@ -2451,6 +2463,7 @@ export const UserStatistic = {
       totalChipDeposit: isSet(object.totalChipDeposit) ? globalThis.Number(object.totalChipDeposit) : 0,
       totalChipWithDraw: isSet(object.totalChipWithDraw) ? globalThis.Number(object.totalChipWithDraw) : 0,
       totalChipWin: isSet(object.totalChipWin) ? globalThis.Number(object.totalChipWin) : 0,
+      totalChipWinPrefee: isSet(object.totalChipWinPrefee) ? globalThis.Number(object.totalChipWinPrefee) : 0,
       totalChipLose: isSet(object.totalChipLose) ? globalThis.Number(object.totalChipLose) : 0,
       totalChipPromotion: isSet(object.totalChipPromotion) ? globalThis.Number(object.totalChipPromotion) : 0,
       totalChipSend: isSet(object.totalChipSend) ? globalThis.Number(object.totalChipSend) : 0,
@@ -2482,6 +2495,9 @@ export const UserStatistic = {
     }
     if (message.totalChipWin !== 0) {
       obj.totalChipWin = Math.round(message.totalChipWin);
+    }
+    if (message.totalChipWinPrefee !== 0) {
+      obj.totalChipWinPrefee = Math.round(message.totalChipWinPrefee);
     }
     if (message.totalChipLose !== 0) {
       obj.totalChipLose = Math.round(message.totalChipLose);
@@ -2530,6 +2546,7 @@ export const UserStatistic = {
     message.totalChipDeposit = object.totalChipDeposit ?? 0;
     message.totalChipWithDraw = object.totalChipWithDraw ?? 0;
     message.totalChipWin = object.totalChipWin ?? 0;
+    message.totalChipWinPrefee = object.totalChipWinPrefee ?? 0;
     message.totalChipLose = object.totalChipLose ?? 0;
     message.totalChipPromotion = object.totalChipPromotion ?? 0;
     message.totalChipSend = object.totalChipSend ?? 0;

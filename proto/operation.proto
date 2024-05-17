@@ -127,18 +127,19 @@ message UserStatistic {
   int64 total_chip_deposit = 1;
   int64 total_chip_with_draw = 2;
   int64 total_chip_win = 3;
-  int64 total_chip_lose = 4;
-  int64 total_chip_promotion = 5;
-  int64 total_chip_send = 6;
-  int64 total_chip_recv = 7;
-  int64 co_ratio = 8;
-  int64 total_chip_deposit_3d = 9;
-  int64 total_chip_with_draw_3d = 10;
-  int64 luck = 11;
-  int64 user_create_time_unix = 12;
-  repeated UserStatGameHistory user_stat_game_histories = 13;
-  repeated UserTransferGoldStat recv_chip_stats = 14;
-  repeated UserTransferGoldStat send_chip_stats = 15;
+  int64 total_chip_win_prefee = 4;
+  int64 total_chip_lose = 5;
+  int64 total_chip_promotion = 6;
+  int64 total_chip_send = 7;
+  int64 total_chip_recv = 8;
+  int64 co_ratio = 9;
+  int64 total_chip_deposit_3d = 10;
+  int64 total_chip_with_draw_3d = 11;
+  int64 luck = 12;
+  int64 user_create_time_unix = 13;
+  repeated UserStatGameHistory user_stat_game_histories = 14;
+  repeated UserTransferGoldStat recv_chip_stats = 15;
+  repeated UserTransferGoldStat send_chip_stats = 16;
 }
 
 message UserStatisticRequest {
