@@ -980,6 +980,7 @@ export interface BalanceUpdate {
   amountChipCurrent: number;
   amountChipAdd: number;
   amoutChipBet: number;
+  amoutChipFee: number;
 }
 
 export interface BalanceResult {
@@ -2529,7 +2530,7 @@ export const UpdateFinish = {
 };
 
 function createBaseBalanceUpdate(): BalanceUpdate {
-  return { userId: "", amountChipBefore: 0, amountChipCurrent: 0, amountChipAdd: 0, amoutChipBet: 0 };
+  return { userId: "", amountChipBefore: 0, amountChipCurrent: 0, amountChipAdd: 0, amoutChipBet: 0, amoutChipFee: 0 };
 }
 
 export const BalanceUpdate = {
@@ -2548,6 +2549,9 @@ export const BalanceUpdate = {
     }
     if (message.amoutChipBet !== 0) {
       writer.uint32(40).int64(message.amoutChipBet);
+    }
+    if (message.amoutChipFee !== 0) {
+      writer.uint32(48).int64(message.amoutChipFee);
     }
     return writer;
   },
@@ -2594,6 +2598,13 @@ export const BalanceUpdate = {
 
           message.amoutChipBet = longToNumber(reader.int64() as Long);
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.amoutChipFee = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2610,6 +2621,7 @@ export const BalanceUpdate = {
       amountChipCurrent: isSet(object.amountChipCurrent) ? globalThis.Number(object.amountChipCurrent) : 0,
       amountChipAdd: isSet(object.amountChipAdd) ? globalThis.Number(object.amountChipAdd) : 0,
       amoutChipBet: isSet(object.amoutChipBet) ? globalThis.Number(object.amoutChipBet) : 0,
+      amoutChipFee: isSet(object.amoutChipFee) ? globalThis.Number(object.amoutChipFee) : 0,
     };
   },
 
@@ -2630,6 +2642,9 @@ export const BalanceUpdate = {
     if (message.amoutChipBet !== 0) {
       obj.amoutChipBet = Math.round(message.amoutChipBet);
     }
+    if (message.amoutChipFee !== 0) {
+      obj.amoutChipFee = Math.round(message.amoutChipFee);
+    }
     return obj;
   },
 
@@ -2643,6 +2658,7 @@ export const BalanceUpdate = {
     message.amountChipCurrent = object.amountChipCurrent ?? 0;
     message.amountChipAdd = object.amountChipAdd ?? 0;
     message.amoutChipBet = object.amoutChipBet ?? 0;
+    message.amoutChipFee = object.amoutChipFee ?? 0;
     return message;
   },
 };
