@@ -22,12 +22,7 @@ const (
 	BaseAction_5 BaseAction = 5
 )
 
-// type Range struct {
-// 	Min float64
-// 	Max float64
-// }
-
-func IsInRange(val, min, max float64) bool {
+func IsInRange(val, min, max int64) bool {
 	if min > val {
 		return false
 	}
@@ -35,55 +30,6 @@ func IsInRange(val, min, max float64) bool {
 		return false
 	}
 	return true
-}
-
-// type configBetGame struct {
-// 	CoRate  Range
-// 	Ci      Range
-// 	CoInDay Range
-// 	Base    []int64
-// }
-
-// func NewConfigBetGame(CoRateMin float64,
-// 	CoRateMax float64,
-// 	CiMin float64,
-// 	CiMax float64,
-// 	CoInDayMin float64,
-// 	CoInDayMax float64,
-// 	Base []int64) configBetGame {
-// 	v := configBetGame{
-// 		CoRate:  Range{Min: CoRateMin, Max: CoRateMax},
-// 		Ci:      Range{Min: CiMin, Max: CiMax},
-// 		CoInDay: Range{Min: CoInDayMin, Max: CoInDayMax},
-// 	}
-// 	v.Base = make([]int64, 0)
-// 	// v.Base = append(v.Base, math.MinInt)
-// 	v.Base = append(v.Base, Base...)
-// 	// v.Base = append(v.Base, math.MaxInt)
-// 	// sort desc
-// 	sort.Slice(v.Base, func(i, j int) bool {
-// 		return v.Base[j] > v.Base[i]
-// 	})
-// 	return v
-// }
-
-func GetBaseAction(rule *pb.RuleLucky, totalWin int) BaseAction {
-	if rule == nil || rule.Id == 0 {
-		return BaseAction_1
-	}
-	if totalWin >= int(rule.Base_4) {
-		return BaseAction_5
-	}
-	if totalWin >= int(rule.Base_3) {
-		return BaseAction_4
-	}
-	if totalWin >= int(rule.Base_2) {
-		return BaseAction_3
-	}
-	if totalWin >= int(rule.Base_1) {
-		return BaseAction_2
-	}
-	return BaseAction_1
 }
 
 type tableConfigBetGame struct {
@@ -114,41 +60,22 @@ func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
 	sort.Slice(ml, func(i, j int) bool {
 		a := ml[i]
 		b := ml[j]
-		if a.CoRateMax < b.CoRateMax {
+		if a.Rtp.Min < b.Rtp.Min {
 			return true
 		}
-		if a.CiMax < b.CiMax {
+		if a.Mark.Min < b.Mark.Min {
 			return true
 		}
-		if a.CoIndayMax < b.CoIndayMax {
+		if a.Vip.Min < b.Vip.Min {
 			return true
 		}
-		return false
+		return a.ReDeal < b.ReDeal
 	})
 	t.confs = make([]*pb.RuleLucky, 0, len(ml))
 	t.confs = append(t.confs, ml...)
 	return nil
 }
 
-func (t *tableConfigBetGame) GetConfig(CoRate float64, Ci float64, CoInDay float64) *pb.RuleLucky {
-	t.mt.Lock()
-	defer t.mt.Unlock()
-	for _, rule := range t.confs {
-		if !IsInRange(CoRate, float64(rule.CoRateMin), float64(rule.CoRateMax)) {
-			continue
-		}
-		if !IsInRange(Ci, float64(rule.CiMin), float64(rule.CiMax)) {
-			continue
-		}
-		if !IsInRange(CoInDay, float64(rule.CoIndayMin), float64(rule.CoIndayMax)) {
-			continue
-		}
-		return rule
-	}
-	return &pb.RuleLucky{
-		Base_1: -2,
-		Base_2: -1,
-		Base_3: 1000000,
-		Base_4: 100000000000,
-	}
+func (t *tableConfigBetGame) CheckValid() bool {
+	return true
 }

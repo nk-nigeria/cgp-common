@@ -34,17 +34,11 @@ message Layout {
   int32 row_span = 4;
 }
 
-message GameListResponse {
-  repeated Game games = 1;
-}
+message GameListResponse { repeated Game games = 1; }
 
-message BetListRequest {
-  string code = 1;
-}
+message BetListRequest { string code = 1; }
 
-message BetListResponse {
-  repeated int32 bets = 1;
-}
+message BetListResponse { repeated int32 bets = 1; }
 
 enum TypeChat {
   TYPE_CHAT_UNSPECIFIED = 0;
@@ -150,9 +144,7 @@ message ExchangeInfo {
   int64 createTime = 17;
 }
 
-message ExchangeDealInShop {
-  repeated Deal gcashes = 1;
-}
+message ExchangeDealInShop { repeated Deal gcashes = 1; }
 
 message ListExchangeInfo {
   repeated ExchangeInfo exchange_infos = 1;
@@ -210,9 +202,7 @@ message LastClaimReward {
   int64 num_claim = 6;
 }
 
-message DailyRewardTemplate {
-  repeated RewardTemplate reward_templates = 1;
-}
+message DailyRewardTemplate { repeated RewardTemplate reward_templates = 1; }
 
 message UserGroup {
   int64 id = 1;
@@ -377,9 +367,7 @@ message PreSignPutRequest {
   string bucketName = 2;
 }
 
-message PreSignPutResponse {
-  string url = 1;
-}
+message PreSignPutResponse { string url = 1; }
 
 message ReferUser {
   int64 id = 1;
@@ -416,9 +404,7 @@ message RewardRefer {
   int64 remain_time_reset_sec = 15;
 }
 
-message ListRewardRefer {
-  repeated RewardRefer user_refers = 1;
-}
+message ListRewardRefer { repeated RewardRefer user_refers = 1; }
 
 enum HistoryRewardTime {
   HISTORY_REWARD_TIME_UNSPECIFIED = 0;
@@ -442,12 +428,10 @@ message WalletTransRequest {
   string meta_bank_action = 4;
 }
 
-
 enum ErrorType {
   ERROR_TYPE_UNSPECIFIED = 0;
   ERROR_TYPE_CHIP_NOT_ENOUGH = 1;
 }
-
 
 message Error {
   int64 code = 1;
@@ -455,43 +439,61 @@ message Error {
   ErrorType error_type = 3;
 }
 
-message Request{
+message Request {
   string user_id = 1;
   string body = 2;
 }
 
-message Response{
+message Response {
   string body = 1;
   string error_message = 2;
 }
 
 message UserMeta {
-  string user_id=1;
+  string user_id = 1;
   int32 vip = 2;
-  int64 total_chips_topup = 3; // Tổng số tiền user đã nạp tính từ lúc tạo account 
-  int64 total_chips_cashout =4; // Tổng gá trị user đã rút tính từ lúc tạo account 
-  int64 total_chips_send=5; // Tổng gá trị user đã chuyển đi cho người khác
-  int64 agPlay = 6; // Số chip user đang có trên người + Số chip đang có trong free chip mà user chưa nhận 
-  int64 agBank = 7; //  Số chip user đang có trong Bank + Số chip đã chuyển đi cho người khác
+  int64 total_chips_topup =
+      3; // Tổng số tiền user đã nạp tính từ lúc tạo account
+  int64 total_chips_cashout =
+      4; // Tổng gá trị user đã rút tính từ lúc tạo account
+  int64 total_chips_send = 5; // Tổng gá trị user đã chuyển đi cho người khác
+  int64 agPlay = 6; // Số chip user đang có trên người + Số chip đang có trong
+                    // free chip mà user chưa nhận
+  int64 agBank = 7; //  Số chip user đang có trong Bank + Số chip đã chuyển đi
+                    //  cho người khác
   int64 total_chips_cashout_inday = 8; // Tổng số tiền user đã rút trong ngày
 }
 
+// message RuleLucky {
+//   int64 id = 1;
+//   string game_code = 2;
+//   float co_rate_min = 3;
+//   float co_rate_max = 4;
+//   float ci_min = 5;
+//   float ci_max = 6;
+//   float co_inday_min = 7;
+//   float co_inday_max = 8;
+//   int64 base_1 = 9;
+//   int64 base_2 = 10;
+//   int64 base_3 = 11;
+//   int64 base_4 = 12;
+//   int64 emit_event_at_unix = 13;
+//   int64 deleted_at = 14;
+// }
 
+message Range {
+  int64 min = 1;
+  int64 max = 2;
+}
 message RuleLucky {
   int64 id = 1;
-  string game_code = 2;
-  float co_rate_min = 3;
-  float co_rate_max = 4;
-  float ci_min = 5;
-  float ci_max = 6;
-  float co_inday_min = 7;
-  float co_inday_max = 8;
-  int64 base_1 = 9;
-  int64 base_2 = 10;
-  int64 base_3 = 11;
-  int64 base_4 = 12;
-  int64 emit_event_at_unix = 13;
-  int64 deleted_at = 14; 
+  int64 deleted_at = 2;
+  int64 emit_event_at_unix = 3;
+  string game_code = 4;
+  Range rtp = 5;
+  Range mark = 6;
+  Range vip = 7;
+  int64 re_deal = 8;
 }
 
 message RulesLucky {

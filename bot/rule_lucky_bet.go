@@ -143,16 +143,6 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 
 }
 
-func (l *RuleLuckyBet) GetBaseAction(newChipsWin int) BaseAction {
-	lucky := l.avg()
-	if lucky.UserMeta == nil {
-		logger.Error("lucky user not found, return default base action")
-		return BaseAction_1
-	}
-	cfgBet := l.tableCfg.GetConfig(lucky.CoRate, float64(lucky.GetTotalChipsTopup()), float64(lucky.TotalChipsCashoutInday))
-	return GetBaseAction(cfgBet, l.TotalChipsWin+newChipsWin)
-}
-
 func (l *RuleLuckyBet) Dump(logger runtime.Logger) {
 	logger.Debug("######## START DUMP LUCKY BET ########")
 	logger.WithField("game ", l.gameCode).Info("")
