@@ -178,6 +178,7 @@ export interface UserStatistic {
   userStatGameHistories: UserStatGameHistory[];
   recvChipStats: UserTransferGoldStat[];
   sendChipStats: UserTransferGoldStat[];
+  userId: string;
 }
 
 export interface UserStatisticRequest {
@@ -2275,6 +2276,7 @@ function createBaseUserStatistic(): UserStatistic {
     userStatGameHistories: [],
     recvChipStats: [],
     sendChipStats: [],
+    userId: "",
   };
 }
 
@@ -2327,6 +2329,9 @@ export const UserStatistic = {
     }
     for (const v of message.sendChipStats) {
       UserTransferGoldStat.encode(v!, writer.uint32(130).fork()).ldelim();
+    }
+    if (message.userId !== "") {
+      writer.uint32(138).string(message.userId);
     }
     return writer;
   },
@@ -2450,6 +2455,13 @@ export const UserStatistic = {
 
           message.sendChipStats.push(UserTransferGoldStat.decode(reader, reader.uint32()));
           continue;
+        case 17:
+          if (tag !== 138) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2483,6 +2495,7 @@ export const UserStatistic = {
       sendChipStats: globalThis.Array.isArray(object?.sendChipStats)
         ? object.sendChipStats.map((e: any) => UserTransferGoldStat.fromJSON(e))
         : [],
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
     };
   },
 
@@ -2536,6 +2549,9 @@ export const UserStatistic = {
     if (message.sendChipStats?.length) {
       obj.sendChipStats = message.sendChipStats.map((e) => UserTransferGoldStat.toJSON(e));
     }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
     return obj;
   },
 
@@ -2560,6 +2576,7 @@ export const UserStatistic = {
     message.userStatGameHistories = object.userStatGameHistories?.map((e) => UserStatGameHistory.fromPartial(e)) || [];
     message.recvChipStats = object.recvChipStats?.map((e) => UserTransferGoldStat.fromPartial(e)) || [];
     message.sendChipStats = object.sendChipStats?.map((e) => UserTransferGoldStat.fromPartial(e)) || [];
+    message.userId = object.userId ?? "";
     return message;
   },
 };

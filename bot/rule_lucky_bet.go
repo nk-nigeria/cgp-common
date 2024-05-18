@@ -26,23 +26,27 @@ type LuckyBet struct {
 	// UserId    string `json:"user_id,omitempty"`
 	// ChipWin   int `json:"chip_win,omitempty"`
 	// ChipSpent int `json:"chip_spent,omitempty"`
-	CoRate float64
-	*pb.UserMeta
+	// CoRate float64
+	*pb.RuleLucky
+	TotalChipsWinPrefee int64
+	// *pb.UserMeta
 }
 
 type RuleLuckyBet struct {
-	gameCode      string
-	rules         map[string]*LuckyBet
-	tableCfg      *tableConfigBetGame
-	TotalChipsWin int
-	db            *sql.DB
+	gameCode string
+	usersRtp map[string]*LuckyBet
+	tableCfg *tableConfigBetGame
+
+	db       *sql.DB
+	markUnit int64
 }
 
-func NewLuckyCtrl(gameCode string) *RuleLuckyBet {
+func NewLuckyCtrl(gameCode string, markUnit int64) *RuleLuckyBet {
 	v := &RuleLuckyBet{
 		gameCode: gameCode,
-		rules:    make(map[string]*LuckyBet),
+		usersRtp: make(map[string]*LuckyBet),
 		tableCfg: NewTableConfigBetGame(),
+		markUnit: markUnit,
 	}
 	return v
 }
@@ -60,46 +64,32 @@ func (l *RuleLuckyBet) ReloadConfig() {
 }
 
 func (l *RuleLuckyBet) addUser(userId string, rtp LuckyBet) {
-	l.rules[userId] = &rtp
+	l.usersRtp[userId] = &rtp
 }
 
-func (l *RuleLuckyBet) UpdateChipsBalanceChanged(userId string, chipsChanged int) {
-	rtp, exist := l.rules[userId]
+func (l *RuleLuckyBet) UpdateChipsBalanceChanged(userId string, chipWinPrefee int64) {
+	rtp, exist := l.usersRtp[userId]
 	if !exist {
 		return
 	}
-	rtp.AgPlay += int64(chipsChanged)
-	if rtp.AgPlay < 0 {
-		rtp.AgPlay = 0
-	}
+	rtp.TotalChipsWinPrefee += chipWinPrefee
 }
 
 func (l *RuleLuckyBet) RemoveUser(userId string) {
-	delete(l.rules, userId)
+	delete(l.usersRtp, userId)
 }
 
 func (l *RuleLuckyBet) IsUserExist(userId string) bool {
-	_, exist := l.rules[userId]
+	_, exist := l.usersRtp[userId]
 	return exist
 }
 
-func (l *RuleLuckyBet) avg() LuckyBet {
-	lucky := LuckyBet{
-		UserMeta: &pb.UserMeta{},
+func (l *RuleLuckyBet) CurrentWinMarkRatio(userId string) int64 {
+	rtp, exist := l.usersRtp[userId]
+	if !exist {
+		return 0
 	}
-	totalCoRate := float64(0)
-	for _, v := range l.rules {
-		lucky.TotalChipsTopup += v.TotalChipsTopup
-		lucky.TotalChipsCashout += v.TotalChipsCashout
-		lucky.TotalChipsCashoutInday += v.TotalChipsCashoutInday
-		totalCoRate += lucky.CoRate
-		lucky.AgPlay += v.AgPlay
-		lucky.AgBank += v.AgBank
-		// lucky.ChipWin += v.ChipWin
-		// lucky.ChipSpent += v.ChipSpent
-	}
-	lucky.CoRate = totalCoRate / float64(len(l.rules))
-	return lucky
+	return rtp.TotalChipsWinPrefee / l.markUnit
 }
 
 func (l *RuleLuckyBet) LoadUser(ctx context.Context,
@@ -107,16 +97,16 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	nk runtime.NakamaModule,
 	db *sql.DB,
 	userId string) (*LuckyBet, error) {
-	rule, exist := l.rules[userId]
-	if exist && rule.UserMeta != nil {
+	rule, exist := l.usersRtp[userId]
+	if exist && rule.RuleLucky != nil {
 		return rule, nil
 	}
 	report := lib.NewReportGame(ctx)
-	data, _, err := report.Query(ctx, "metric/op/user-meta", userId, "")
+	data, _, err := report.Query(ctx, "metric/op/user-statistic", userId, "")
 	if err != nil {
 		return nil, err
 	}
-	userMeta := &pb.UserMeta{}
+	userStat := &pb.UserStatistic{}
 	if len(data) > 0 {
 		type Response struct {
 			Body         string `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
@@ -124,13 +114,13 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 		}
 		res := &Response{}
 		json.Unmarshal(data, res)
-		err = unmarshaler.Unmarshal([]byte(res.Body), userMeta)
+		err = unmarshaler.Unmarshal([]byte(res.Body), userStat)
 	}
-	if len(userMeta.UserId) == 0 {
+	if len(userStat.UserId) == 0 {
 		return nil, errors.New("invalid data, user not found")
 	}
 	luckyBet := &LuckyBet{
-		UserMeta: userMeta,
+		UserMeta: userStat,
 	}
 	if luckyBet.TotalChipsTopup == 0 {
 		luckyBet.CoRate = 100
@@ -138,7 +128,7 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 		total := luckyBet.TotalChipsCashout + luckyBet.AgPlay + luckyBet.AgBank
 		luckyBet.CoRate = float64(total) / float64(luckyBet.TotalChipsTopup) * float64(100)
 	}
-	l.rules[luckyBet.UserId] = luckyBet
+	l.usersRtp[luckyBet.UserId] = luckyBet
 	return luckyBet, err
 
 }
@@ -148,14 +138,14 @@ func (l *RuleLuckyBet) Dump(logger runtime.Logger) {
 	logger.WithField("game ", l.gameCode).Info("")
 	{
 		x := logger
-		for key, rule := range l.rules {
+		for key, rule := range l.usersRtp {
 			x = x.WithField("key", key).WithField("value", rule)
 		}
 		x.Debug("rule")
 	}
 	{
 		x := logger
-		for key, conf := range l.tableCfg.confs {
+		for key, conf := range l.tableCfg.rules {
 			x = x.WithField("key", key).WithField("value", conf)
 		}
 		x.Debug("conf")

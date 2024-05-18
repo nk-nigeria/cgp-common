@@ -33,20 +33,21 @@ func IsInRange(val, min, max int64) bool {
 }
 
 type tableConfigBetGame struct {
-	confs []*pb.RuleLucky
-	mt    sync.Mutex
+	rules  []*pb.RuleLucky
+	locker *sync.RWMutex
 }
 
 func NewTableConfigBetGame() *tableConfigBetGame {
 	return &tableConfigBetGame{
-		confs: make([]*pb.RuleLucky, 0),
+		locker: &sync.RWMutex{},
+		rules:  make([]*pb.RuleLucky, 0),
 	}
 }
 
 func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
-	t.mt.Lock()
-	defer t.mt.Unlock()
-	t.confs = make([]*pb.RuleLucky, 0)
+	t.locker.Lock()
+	defer t.locker.Unlock()
+	t.rules = make([]*pb.RuleLucky, 0)
 	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
 	ml, err := lib.QueryRulesLucky(ctx, db, &pb.RuleLucky{
 		GameCode: gameCode,
@@ -71,11 +72,13 @@ func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
 		}
 		return a.ReDeal < b.ReDeal
 	})
-	t.confs = make([]*pb.RuleLucky, 0, len(ml))
-	t.confs = append(t.confs, ml...)
+	t.rules = make([]*pb.RuleLucky, 0, len(ml))
+	t.rules = append(t.rules, ml...)
 	return nil
 }
 
 func (t *tableConfigBetGame) CheckValid() bool {
+	t.locker.Lock()
+	defer t.locker.Unlock()
 	return true
 }

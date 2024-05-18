@@ -140,6 +140,7 @@ message UserStatistic {
   repeated UserStatGameHistory user_stat_game_histories = 14;
   repeated UserTransferGoldStat recv_chip_stats = 15;
   repeated UserTransferGoldStat send_chip_stats = 16;
+  string user_id = 17;
 }
 
 message UserStatisticRequest {
