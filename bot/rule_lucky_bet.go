@@ -29,7 +29,7 @@ type UserRtp struct {
 	TotalChipsWinInDay  int64     `json:"total_chips_win_in_day,omitempty"`
 	TotalChipsWinPrefee int64     `json:"total_chips_win_prefee,omitempty"`
 	Vip                 int       `json:"-"`
-	DataChange          bool      `json:"-,omitempty"`
+	DataChange          bool      `json:"-"`
 	UpdateAt            time.Time `json:"-"`
 	UpdateAtUnix        int64     `json:"update_at_unix,omitempty"`
 }
@@ -179,11 +179,15 @@ func (l *RuleLuckyBet) Dump(logger runtime.Logger) {
 	logger.Debug("######## START DUMP LUCKY BET ########")
 	logger.WithField("game ", l.gameCode).Info("")
 	{
-		x := logger
-		for key, rule := range l.usersRtp {
-			x = x.WithField("key", key).WithField("value", rule)
+		for userId, rule := range l.usersRtp {
+			logger.WithField("user id", userId).
+				WithField("total win in day", rule.TotalChipsWinInDay).
+				WithField("total lose in day", rule.TotalChipLoseInDay).
+				WithField("rtp", rule.RtpDaily(0)).
+				WithField("vip", rule.Vip).
+				WithField("win prefee", rule.TotalChipsWinPrefee).
+				Info("")
 		}
-		x.Debug("rule")
 	}
 	{
 		x := logger
