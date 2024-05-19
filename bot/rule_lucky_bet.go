@@ -151,6 +151,7 @@ func (l *RuleLuckyBet) LoadUser(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
+	l.addUser(userId, *rtp)
 	return rtp, nil
 }
 
