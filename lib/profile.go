@@ -82,7 +82,7 @@ func GetProfileUser(ctx context.Context, db *sql.DB, userID string) (*pb.Profile
 		AvatarId:           utilities.InterfaceToString(metadata["avatar_id"]),
 		VipLevel:           utilities.ToInt64(metadata["vip_level"], 0),
 		LastOnlineTimeUnix: utilities.ToInt64(metadata["last_online_time_unix"], 0),
-		CreateTimeUnix:     user.GetCreateTime().Seconds,
+		// CreateTimeUnix:     user.GetCreateTime().Seconds,
 		// LangAvailables:     []string{"en", "phi"},
 	}
 	playingMatchJson := utilities.InterfaceToString(metadata["playing_in_match"])
