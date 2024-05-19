@@ -15,15 +15,15 @@ import (
 	"github.com/heroiclabs/nakama-common/api"
 )
 
-type Account struct {
+type MyAccount struct {
 	api.Account
 	LastOnlineTimeUnix int64
 	Sid                int64
 }
 
-func GetAccounts(ctx context.Context, db *sql.DB, userIds ...string) ([]*Account, error) {
+func GetAccounts(ctx context.Context, db *sql.DB, userIds ...string) ([]*MyAccount, error) {
 	if len(userIds) == 0 {
-		return make([]*Account, 0), nil
+		return make([]*MyAccount, 0), nil
 	}
 	query := `
 SELECT u.id, u.username, u.display_name, u.avatar_url, u.lang_tag, u.location, u.timezone, u.metadata, u.wallet,
@@ -35,7 +35,7 @@ WHERE u.id::text IN (` + "'" + strings.Join(userIds, "','") + "'" + `)`
 	if err != nil {
 		return nil, err
 	}
-	ml := make([]*Account, 0)
+	ml := make([]*MyAccount, 0)
 	for rows.Next() {
 		account, err := scanAccount(rows)
 		if err != nil {
@@ -46,7 +46,7 @@ WHERE u.id::text IN (` + "'" + strings.Join(userIds, "','") + "'" + `)`
 	return ml, nil
 }
 
-func GetAccount(ctx context.Context, db *sql.DB, userId string) (*Account, error) {
+func GetAccount(ctx context.Context, db *sql.DB, userId string) (*MyAccount, error) {
 	ml, err := GetAccounts(ctx, db, userId)
 	if err != nil {
 		return nil, err
@@ -129,7 +129,7 @@ type DBScan interface {
 	Scan(dest ...any) error
 }
 
-func scanAccount(row DBScan) (*Account, error) {
+func scanAccount(row DBScan) (*MyAccount, error) {
 	var userId sql.NullString
 	var displayName sql.NullString
 	var username sql.NullString
@@ -165,7 +165,7 @@ func scanAccount(row DBScan) (*Account, error) {
 		return nil, err
 	}
 
-	account := &Account{
+	account := &MyAccount{
 		Account: api.Account{
 			User: &api.User{
 				Id:                    userId.String,

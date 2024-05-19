@@ -15,7 +15,7 @@ import (
 
 // const BotUIdPrefix =
 var BotUids = []string{"003e8f8a-986d-4528-83f8-c19918365324"}
-var botsAccount []*lib.Account
+var botsAccount []*lib.MyAccount
 
 var nkModule runtime.NakamaModule
 
@@ -60,7 +60,7 @@ var _ runtime.Presence = (*BotPresence)(nil)
 var _ runtime.MatchData = (*botMatchData)(nil)
 
 type BotPresence struct {
-	*lib.Account
+	*lib.MyAccount
 	Tick int
 	turn *botTurn
 }
@@ -72,9 +72,9 @@ func NewBotPresences(numBots int) []*BotPresence {
 		num++
 
 		b := &BotPresence{
-			Account: botAccount,
-			Tick:    0,
-			turn:    NewBotTurn(0, 0, nil),
+			MyAccount: botAccount,
+			Tick:      0,
+			turn:      NewBotTurn(0, 0, nil),
 		}
 		ml = append(ml, b)
 		if num >= numBots {
@@ -124,16 +124,16 @@ func (*BotPresence) GetStatus() string {
 
 // GetUserId implements runtime.Presence.
 func (b *BotPresence) GetUserId() string {
-	return b.Account.User.Id
+	return b.MyAccount.User.Id
 }
 
 // GetUsername implements runtime.Presence.
 func (b *BotPresence) GetUsername() string {
-	return b.Account.User.Username
+	return b.MyAccount.User.Username
 }
 
-func (b *BotPresence) GetAccount() *lib.Account {
-	return b.Account
+func (b *BotPresence) GetAccount() *lib.MyAccount {
+	return b.MyAccount
 }
 
 type botMatchData struct {
