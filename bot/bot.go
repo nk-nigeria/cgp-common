@@ -7,23 +7,17 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ciaolink-game-platform/cgp-common/lib"
 	pb "github.com/ciaolink-game-platform/cgp-common/proto"
 
-	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
 // const BotUIdPrefix =
 var BotUids = []string{"003e8f8a-986d-4528-83f8-c19918365324"}
-var botsAccount []*account
+var botsAccount []*lib.Account
 
 var nkModule runtime.NakamaModule
-
-type account struct {
-	api.Account
-	LastOnlineTimeUnix int64
-	Sid                int64
-}
 
 func LoadBotsInfo(ctx context.Context, nk runtime.NakamaModule, db *sql.DB) error {
 	// nk.AccountGetId()
@@ -40,9 +34,9 @@ func LoadBotsInfo(ctx context.Context, nk runtime.NakamaModule, db *sql.DB) erro
 			continue
 		}
 	}
-	accounts, _ := GetAccounts(ctx, db, uuids...)
-	for _, account := range accounts {
-		botsAccount = append(botsAccount, account)
+	Accounts, _ := lib.GetAccounts(ctx, db, uuids...)
+	for _, Account := range Accounts {
+		botsAccount = append(botsAccount, Account)
 	}
 
 	return nil
@@ -66,7 +60,7 @@ var _ runtime.Presence = (*BotPresence)(nil)
 var _ runtime.MatchData = (*botMatchData)(nil)
 
 type BotPresence struct {
-	*account
+	*lib.Account
 	Tick int
 	turn *botTurn
 }
@@ -78,7 +72,7 @@ func NewBotPresences(numBots int) []*BotPresence {
 		num++
 
 		b := &BotPresence{
-			account: botAccount,
+			Account: botAccount,
 			Tick:    0,
 			turn:    NewBotTurn(0, 0, nil),
 		}
@@ -130,16 +124,16 @@ func (*BotPresence) GetStatus() string {
 
 // GetUserId implements runtime.Presence.
 func (b *BotPresence) GetUserId() string {
-	return b.account.User.Id
+	return b.Account.User.Id
 }
 
 // GetUsername implements runtime.Presence.
 func (b *BotPresence) GetUsername() string {
-	return b.account.User.Username
+	return b.Account.User.Username
 }
 
-func (b *BotPresence) GetAccount() *account {
-	return b.account
+func (b *BotPresence) GetAccount() *lib.Account {
+	return b.Account
 }
 
 type botMatchData struct {
@@ -174,97 +168,4 @@ func (*botMatchData) GetReceiveTime() int64 {
 // GetReliable implements runtime.MatchData.
 func (*botMatchData) GetReliable() bool {
 	return true
-}
-
-func GetAccounts(ctx context.Context, db *sql.DB, userIds ...string) ([]*account, error) {
-	if len(userIds) == 0 {
-		return make([]*account, 0), nil
-	}
-	query := `
-SELECT u.id, u.username, u.display_name, u.avatar_url, u.lang_tag, u.location, u.timezone, u.metadata, u.wallet,
-	u.email, u.apple_id, u.facebook_id, u.facebook_instant_game_id, u.google_id, u.gamecenter_id, u.steam_id, u.custom_id, u.edge_count,
-	u.sid
-FROM users u
-WHERE u.id::text IN (` + "'" + strings.Join(userIds, "','") + "'" + `)`
-	rows, err := db.QueryContext(ctx, query)
-	if err != nil {
-		return nil, err
-	}
-	ml := make([]*account, 0)
-	for rows.Next() {
-		account, err := scanAccount(rows)
-		if err != nil {
-			continue
-		}
-		ml = append(ml, account)
-	}
-	return ml, nil
-}
-
-type DBScan interface {
-	Scan(dest ...any) error
-}
-
-func scanAccount(row DBScan) (*account, error) {
-	var userId sql.NullString
-	var displayName sql.NullString
-	var username sql.NullString
-	var avatarURL sql.NullString
-	var langTag sql.NullString
-	var location sql.NullString
-	var timezone sql.NullString
-	var metadata sql.NullString
-	var wallet sql.NullString
-	var email sql.NullString
-	var apple sql.NullString
-	var facebook sql.NullString
-	var facebookInstantGame sql.NullString
-	var google sql.NullString
-	var gamecenter sql.NullString
-	var steam sql.NullString
-	var customID sql.NullString
-	var edgeCount int
-	// var createTime pgtype.Timestamptz
-	// var updateTime pgtype.Timestamptz
-	// var verifyTime pgtype.Timestamptz
-	// var disableTime pgtype.Timestamptz
-	// var deviceIDs pgtype.VarcharArray
-	// var lastOnlineTime pgtype.Timestamptz
-	var sID sql.NullInt64
-	err := row.Scan(&userId, &username, &displayName, &avatarURL,
-		&langTag, &location, &timezone,
-		&metadata, &wallet, &email,
-		&apple, &facebook, &facebookInstantGame,
-		&google, &gamecenter, &steam,
-		&customID, &edgeCount, &sID)
-	if err != nil {
-		return nil, err
-	}
-
-	account := &account{
-		Account: api.Account{
-			User: &api.User{
-				Id:                    userId.String,
-				Username:              username.String,
-				DisplayName:           displayName.String,
-				AvatarUrl:             avatarURL.String,
-				LangTag:               langTag.String,
-				Location:              location.String,
-				Timezone:              timezone.String,
-				Metadata:              metadata.String,
-				AppleId:               apple.String,
-				FacebookId:            facebook.String,
-				FacebookInstantGameId: facebookInstantGame.String,
-				GoogleId:              google.String,
-				GamecenterId:          gamecenter.String,
-				SteamId:               steam.String,
-				EdgeCount:             int32(edgeCount),
-			},
-			Wallet:   wallet.String,
-			Email:    email.String,
-			CustomId: customID.String,
-		},
-		Sid: sID.Int64,
-	}
-	return account, nil
 }
