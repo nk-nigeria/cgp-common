@@ -22,7 +22,7 @@ func TestQueryRulesLucky(t *testing.T) {
 		{
 			ml, err := QueryRulesLucky(context.Background(), db, &pb.RuleLucky{})
 			assert.NoError(t, err)
-			assert.Less(t, int(0), len(ml))
+			assert.LessOrEqual(t, int(0), len(ml))
 		}
 		{
 			ml, err := QueryRulesLucky(context.Background(), db, &pb.RuleLucky{

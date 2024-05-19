@@ -174,12 +174,15 @@ func (l *RuleLuckyBet) WriteMetada(db *sql.DB, rtp *UserRtp) {
 	defer cancel()
 	updateUsersSaveGame(ctx, db, rtp.UserID, l.gameCode, string(data))
 }
-
-func (l *RuleLuckyBet) Dump(logger runtime.Logger) {
+func (l *RuleLuckyBet) DumpUser(logger runtime.Logger, userIds ...string) {
 	logger.Debug("######## START DUMP LUCKY BET ########")
 	logger.WithField("game ", l.gameCode).Info("")
 	{
-		for userId, rule := range l.usersRtp {
+		for _, userId := range userIds {
+			rule, exist := l.usersRtp[userId]
+			if !exist {
+				continue
+			}
 			logger.WithField("user id", userId).
 				WithField("total win in day", rule.TotalChipsWinInDay).
 				WithField("total lose in day", rule.TotalChipLoseInDay).
