@@ -29,8 +29,8 @@ type UserRtp struct {
 	TotalChipsWinInDay  int64     `json:"total_chips_win_in_day,omitempty"`
 	TotalChipsWinPrefee int64     `json:"total_chips_win_prefee,omitempty"`
 	Vip                 int       `json:"-"`
-	DataChange          bool      `json:"data_change,omitempty"`
-	UpdateAt            time.Time `json:"-,omitempty"`
+	DataChange          bool      `json:"-,omitempty"`
+	UpdateAt            time.Time `json:"-"`
 	UpdateAtUnix        int64     `json:"update_at_unix,omitempty"`
 }
 
@@ -99,6 +99,10 @@ func (l *RuleLuckyBet) UpdateChipsBalanceChanged(userId string, chipChanged int6
 	rtp, exist := l.usersRtp[userId]
 	if !exist {
 		return
+	}
+	// clear daily data
+	if rtp.IsNewDay() {
+		rtp.ResetData()
 	}
 	rtp.DataChange = true
 	if chipChanged > 0 {
