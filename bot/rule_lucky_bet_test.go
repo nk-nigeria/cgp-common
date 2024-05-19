@@ -18,7 +18,7 @@ func TestRuleLuckyBet_LoadUser(t *testing.T) {
 	assert.NoError(t, err)
 	defer db.Close()
 	t.Run(name, func(t *testing.T) {
-		l := NewLuckyCtrl("sicbo", 1000)
+		l := NewLuckyCtrl("sicbo")
 		ctx := context.Background()
 		ctxVal := map[string]string{
 			"report_endpoint": "http://103.226.250.195:8360",
@@ -40,7 +40,7 @@ func TestRuleLuckyBet_GetBaseAction(t *testing.T) {
 	assert.NoError(t, err)
 	defer db.Close()
 	t.Run(name, func(t *testing.T) {
-		l := NewLuckyCtrl("sicbo", 1000)
+		l := NewLuckyCtrl("sicbo")
 		err := l.tableCfg.LoadConfig("sicbo", db)
 		ctx := context.Background()
 		ctxVal := map[string]string{

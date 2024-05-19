@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/ciaolink-game-platform/cgp-common/lib"
+	pb "github.com/ciaolink-game-platform/cgp-common/proto"
 	"github.com/heroiclabs/nakama-common/runtime"
 	"google.golang.org/protobuf/encoding/protojson"
 )
@@ -37,11 +38,18 @@ func (u *UserRtp) IsNewDay() bool {
 	return u.UpdateAt.Day() != time.Now().Day()
 }
 
-func (u *UserRtp) RtpDaily() int64 {
-	if u.TotalChipLoseInDay == 0 {
+func (u *UserRtp) RtpDaily(chipChanged int64) int64 {
+	totalLoseInDay := u.TotalChipLoseInDay
+	totalWinInDay := u.TotalChipsWinInDay
+	if chipChanged > 0 {
+		totalWinInDay += chipChanged
+	} else {
+		totalLoseInDay -= chipChanged
+	}
+	if totalLoseInDay == 0 {
 		return 200
 	}
-	return u.TotalChipsWinInDay * 100 / u.TotalChipLoseInDay
+	return totalWinInDay * 100 / totalLoseInDay
 }
 
 func (u *UserRtp) ResetData() {
@@ -56,16 +64,16 @@ type RuleLuckyBet struct {
 	usersRtp map[string]*UserRtp
 	tableCfg *tableConfigBetGame
 
-	db       *sql.DB
-	markUnit int64
+	db *sql.DB
+	// markUnit int64
 }
 
-func NewLuckyCtrl(gameCode string, markUnit int64) *RuleLuckyBet {
+func NewLuckyCtrl(gameCode string) *RuleLuckyBet {
 	v := &RuleLuckyBet{
 		gameCode: gameCode,
 		usersRtp: make(map[string]*UserRtp),
 		tableCfg: NewTableConfigBetGame(),
-		markUnit: markUnit,
+		// markUnit: markUnit,
 	}
 	return v
 }
@@ -115,12 +123,23 @@ func (l *RuleLuckyBet) IsUserExist(userId string) bool {
 	return exist
 }
 
-func (l *RuleLuckyBet) CurrentWinMarkRatio(userId string) int64 {
+func (l *RuleLuckyBet) CurrentWinMarkRatio(userId string, markUnit int64, chipChangedPrefee int64) int64 {
 	rtp, exist := l.usersRtp[userId]
 	if !exist {
 		return 0
 	}
-	return rtp.TotalChipsWinPrefee / l.markUnit
+	return rtp.TotalChipsWinPrefee + chipChangedPrefee/markUnit
+}
+
+func (l *RuleLuckyBet) IsValidLuckyRule(userId string, markUnit int64, chipChanged int64, chipChangedPrefee int64) ([]*pb.RuleLucky, bool) {
+	rtp, exist := l.usersRtp[userId]
+	if !exist {
+		return make([]*pb.RuleLucky, 0), true
+	}
+	rtpDaily := rtp.RtpDaily(chipChanged)
+	winMarkRatio := l.CurrentWinMarkRatio(userId, markUnit, chipChangedPrefee)
+	rules := l.tableCfg.Find(rtpDaily, markUnit, int64(rtp.Vip), winMarkRatio)
+	return rules, len(rules) > 0
 }
 
 func (l *RuleLuckyBet) LoadUser(ctx context.Context,

@@ -52,6 +52,7 @@ func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
 	ml, err := lib.QueryRulesLucky(ctx, db, &pb.RuleLucky{
 		GameCode: gameCode,
 	})
+
 	cancel()
 	if err != nil {
 		fmt.Printf("LoadConfig: %s \r\n", err.Error())
@@ -77,8 +78,25 @@ func (t *tableConfigBetGame) LoadConfig(gameCode string, db *sql.DB) error {
 	return nil
 }
 
-func (t *tableConfigBetGame) CheckValid() bool {
+func (t *tableConfigBetGame) Find(rtpDaily, markUnit, vip, winMarkRatio int64) []*pb.RuleLucky {
 	t.locker.Lock()
 	defer t.locker.Unlock()
-	return true
+	ml := make([]*pb.RuleLucky, 0)
+	for _, rule := range t.rules {
+		if !IsInRange(int64(rtpDaily), rule.Rtp.Min, rule.Rtp.Max) {
+			continue
+		}
+		if !IsInRange(int64(markUnit), rule.Mark.Min, rule.Mark.Max) {
+			continue
+		}
+		if !IsInRange(int64(vip), rule.Vip.Min, rule.Vip.Max) {
+			continue
+		}
+		if !IsInRange(int64(winMarkRatio), rule.WinMarkRatio.Min, rule.WinMarkRatio.Max) {
+			continue
+		}
+		v := rule
+		ml = append(ml, v)
+	}
+	return ml
 }
