@@ -91,6 +91,13 @@ message RpcCreateMatchResponse {
   string match_id = 1;
 }
 
+
+enum BetDisableType {
+  BET_DISABLE_TYPE_UNSPECIFIED = 0;
+  BET_DISABLE_TYPE_NOT_ENOUGH_CHIP = 1;
+  BET_DISABLE_TYPE_BELOW_MIN_VIP = 2;
+  BET_DISABLE_TYPE_ABOVE_MAX_VIP = 3;
+}
 message Bet {
   int64 id = 1;
   bool enable = 2;
@@ -108,6 +115,7 @@ message Bet {
   int64 count_playing = 14;
   int64 min_vip = 15;
   int64 max_vip = 16;
+  BetDisableType bet_disable_type = 17;
 }
 
 message Bets {

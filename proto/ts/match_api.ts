@@ -47,6 +47,51 @@ export function rPCCodeToJSON(object: RPCCode): string {
   }
 }
 
+export enum BetDisableType {
+  BET_DISABLE_TYPE_UNSPECIFIED = 0,
+  BET_DISABLE_TYPE_NOT_ENOUGH_CHIP = 1,
+  BET_DISABLE_TYPE_BELOW_MIN_VIP = 2,
+  BET_DISABLE_TYPE_ABOVE_MAX_VIP = 3,
+  UNRECOGNIZED = -1,
+}
+
+export function betDisableTypeFromJSON(object: any): BetDisableType {
+  switch (object) {
+    case 0:
+    case "BET_DISABLE_TYPE_UNSPECIFIED":
+      return BetDisableType.BET_DISABLE_TYPE_UNSPECIFIED;
+    case 1:
+    case "BET_DISABLE_TYPE_NOT_ENOUGH_CHIP":
+      return BetDisableType.BET_DISABLE_TYPE_NOT_ENOUGH_CHIP;
+    case 2:
+    case "BET_DISABLE_TYPE_BELOW_MIN_VIP":
+      return BetDisableType.BET_DISABLE_TYPE_BELOW_MIN_VIP;
+    case 3:
+    case "BET_DISABLE_TYPE_ABOVE_MAX_VIP":
+      return BetDisableType.BET_DISABLE_TYPE_ABOVE_MAX_VIP;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return BetDisableType.UNRECOGNIZED;
+  }
+}
+
+export function betDisableTypeToJSON(object: BetDisableType): string {
+  switch (object) {
+    case BetDisableType.BET_DISABLE_TYPE_UNSPECIFIED:
+      return "BET_DISABLE_TYPE_UNSPECIFIED";
+    case BetDisableType.BET_DISABLE_TYPE_NOT_ENOUGH_CHIP:
+      return "BET_DISABLE_TYPE_NOT_ENOUGH_CHIP";
+    case BetDisableType.BET_DISABLE_TYPE_BELOW_MIN_VIP:
+      return "BET_DISABLE_TYPE_BELOW_MIN_VIP";
+    case BetDisableType.BET_DISABLE_TYPE_ABOVE_MAX_VIP:
+      return "BET_DISABLE_TYPE_ABOVE_MAX_VIP";
+    case BetDisableType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 /** Payload for an RPC request to find a match. */
 export interface RpcFindMatchRequest {
   /** User can choose a fast or normal speed match. */
@@ -129,6 +174,7 @@ export interface Bet {
   countPlaying: number;
   minVip: number;
   maxVip: number;
+  betDisableType: BetDisableType;
 }
 
 export interface Bets {
@@ -1029,6 +1075,7 @@ function createBaseBet(): Bet {
     countPlaying: 0,
     minVip: 0,
     maxVip: 0,
+    betDisableType: 0,
   };
 }
 
@@ -1081,6 +1128,9 @@ export const Bet = {
     }
     if (message.maxVip !== 0) {
       writer.uint32(128).int64(message.maxVip);
+    }
+    if (message.betDisableType !== 0) {
+      writer.uint32(136).int32(message.betDisableType);
     }
     return writer;
   },
@@ -1204,6 +1254,13 @@ export const Bet = {
 
           message.maxVip = longToNumber(reader.int64() as Long);
           continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.betDisableType = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1231,6 +1288,7 @@ export const Bet = {
       countPlaying: isSet(object.countPlaying) ? globalThis.Number(object.countPlaying) : 0,
       minVip: isSet(object.minVip) ? globalThis.Number(object.minVip) : 0,
       maxVip: isSet(object.maxVip) ? globalThis.Number(object.maxVip) : 0,
+      betDisableType: isSet(object.betDisableType) ? betDisableTypeFromJSON(object.betDisableType) : 0,
     };
   },
 
@@ -1284,6 +1342,9 @@ export const Bet = {
     if (message.maxVip !== 0) {
       obj.maxVip = Math.round(message.maxVip);
     }
+    if (message.betDisableType !== 0) {
+      obj.betDisableType = betDisableTypeToJSON(message.betDisableType);
+    }
     return obj;
   },
 
@@ -1308,6 +1369,7 @@ export const Bet = {
     message.countPlaying = object.countPlaying ?? 0;
     message.minVip = object.minVip ?? 0;
     message.maxVip = object.maxVip ?? 0;
+    message.betDisableType = object.betDisableType ?? 0;
     return message;
   },
 };
