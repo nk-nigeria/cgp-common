@@ -143,3 +143,8 @@ func (l *botLoader) maintainChipBalance(userId string) error {
 	}
 	return nil
 }
+
+func (l *botLoader) IsBot(userId string) bool {
+	_, exist := l.userBot[userId]
+	return exist
+}
