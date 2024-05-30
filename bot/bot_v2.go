@@ -135,7 +135,7 @@ func (l *botLoader) maintainChipBalance(userId string) error {
 	if profile.AccountChip < l.minChipBalance {
 		ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		query := `UPDATE users AS u SET metadata = u.wallet || jsonb_build_object('chips',` + strconv.FormatInt(l.minChipBalance, 64) + `) WHERE id = $1;`
+		query := `UPDATE users AS u SET metadata = u.wallet || jsonb_build_object('chips',` + strconv.FormatInt(l.minChipBalance, 10) + `) WHERE id = $1;`
 		_, err := l.db.ExecContext(ctx, query, userId)
 		if err != nil {
 			return err
