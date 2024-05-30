@@ -16,6 +16,7 @@ type botLoader struct {
 	gameCode string
 	// usersBot    []*BotPresence
 	userBotFree    map[string]*BotPresence
+	userBot        map[string]*BotPresence
 	offset         int
 	limit          int
 	mt             sync.Mutex
@@ -33,6 +34,7 @@ func NewBotLoader(db *sql.DB, gameCode string, minChipBalance int64) *botLoader 
 		offset:         0,
 		limit:          1000,
 		userBotFree:    make(map[string]*BotPresence),
+		userBot:        make(map[string]*BotPresence),
 	}
 }
 
@@ -97,6 +99,7 @@ func (l *botLoader) GetFreeBot(num int) ([]*BotPresence, error) {
 			}
 			// l.userBotFree = append(l.userBotFree, &v)
 			l.userBotFree[newBot.User.Id] = &v
+			l.userBot[newBot.User.Id] = &v
 		}
 		l.offset += l.limit
 		if len(newUserBot) == 0 {
@@ -111,11 +114,15 @@ func (l *botLoader) GetFreeBot(num int) ([]*BotPresence, error) {
 	return ml, nil
 }
 
-func (l *botLoader) FreeBot(v *BotPresence) {
+func (l *botLoader) FreeBot(userId string) {
 	l.mt.Lock()
+	defer l.mt.Unlock()
+	v, exist := l.userBot[userId]
+	if !exist {
+		return
+	}
 	v.Reset()
 	l.userBotFree[v.User.Id] = v
-	l.mt.Unlock()
 }
 
 func (l *botLoader) maintainChipBalance(userId string) error {
