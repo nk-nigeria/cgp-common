@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strconv"
 	"sync"
 	"time"
 
@@ -14,19 +15,24 @@ type botLoader struct {
 	db       *sql.DB
 	gameCode string
 	// usersBot    []*BotPresence
-	userBotFree map[string]*BotPresence
-	offset      int
-	limit       int
-	mt          sync.Mutex
+	userBotFree    map[string]*BotPresence
+	offset         int
+	limit          int
+	mt             sync.Mutex
+	minChipBalance int64
 }
 
-func NewBotLoader(db *sql.DB, gameCode string) *botLoader {
+func NewBotLoader(db *sql.DB, gameCode string, minChipBalance int64) *botLoader {
+	if minChipBalance < 0 {
+		minChipBalance = 100000
+	}
 	return &botLoader{
-		db:          db,
-		gameCode:    gameCode,
-		offset:      0,
-		limit:       1000,
-		userBotFree: make(map[string]*BotPresence),
+		db:             db,
+		gameCode:       gameCode,
+		minChipBalance: minChipBalance,
+		offset:         0,
+		limit:          1000,
+		userBotFree:    make(map[string]*BotPresence),
 	}
 }
 
@@ -100,6 +106,7 @@ func (l *botLoader) GetFreeBot(num int) ([]*BotPresence, error) {
 	for _, userBot := range ml {
 		userBot.IsFree = false
 		delete(l.userBotFree, userBot.User.Id)
+		l.maintainChipBalance(userBot.User.Id)
 	}
 	return ml, nil
 }
@@ -109,4 +116,23 @@ func (l *botLoader) FreeBot(v *BotPresence) {
 	v.Reset()
 	l.userBotFree[v.User.Id] = v
 	l.mt.Unlock()
+}
+
+func (l *botLoader) maintainChipBalance(userId string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	profile, _, err := lib.GetProfileUser(ctx, l.db, userId)
+	if err != nil {
+		return err
+	}
+	if profile.AccountChip < l.minChipBalance {
+		ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		query := `UPDATE users AS u SET metadata = u.wallet || jsonb_build_object('chips',` + strconv.FormatInt(l.minChipBalance, 64) + `) WHERE id = $1;`
+		_, err := l.db.ExecContext(ctx, query, userId)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
