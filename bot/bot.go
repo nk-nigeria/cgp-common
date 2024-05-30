@@ -61,8 +61,9 @@ var _ runtime.MatchData = (*botMatchData)(nil)
 
 type BotPresence struct {
 	*lib.MyAccount
-	Tick int
-	turn *botTurn
+	Tick   int
+	turn   *botTurn
+	IsFree bool
 }
 
 func NewBotPresences(numBots int) []*BotPresence {
@@ -84,11 +85,20 @@ func NewBotPresences(numBots int) []*BotPresence {
 	return ml
 }
 
+func (b *BotPresence) Reset() {
+	b.IsFree = true
+	b.Tick = 0
+	b.turn = nil
+}
+
 func (b *BotPresence) InitTurn(maxTick int, maxOccur int, fnTurn func()) {
 	b.turn = NewBotTurn(maxTick, maxOccur, fnTurn)
 }
 
 func (b *BotPresence) Loop() {
+	if b.turn == nil {
+		return
+	}
 	b.turn.Loop()
 }
 
