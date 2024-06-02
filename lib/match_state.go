@@ -228,3 +228,46 @@ func (c *CountDown) Timeout() bool {
 	c.Remain() // update timeout
 	return c.timeout
 }
+
+type TickCountDown struct {
+	tick       int
+	tickRate   int
+	checkPoint int
+}
+
+func (tc *TickCountDown) Setup(duration time.Duration, tickRate int) {
+	tc.tick = int(duration.Seconds()) * tickRate
+	tc.tickRate = tickRate
+	tc.checkPoint = tc.tick
+}
+
+func (tc *TickCountDown) Loop() {
+	if tc.tick == 0 {
+		return
+	}
+	tc.tick--
+	if tc.tick < 0 {
+		tc.tick = 0
+	}
+}
+
+func (tc *TickCountDown) IsSecChanged() bool {
+	diff := tc.checkPoint - tc.tick
+	return diff%tc.tickRate > 0
+}
+
+func (tc *TickCountDown) GetSecRemain() int {
+	diff := tc.checkPoint - tc.tick
+	sec := diff / tc.tickRate
+	return sec
+}
+
+func (tc *TickCountDown) ResetCheckPoint() {
+	diff := tc.checkPoint - tc.tick
+	offset := diff - (diff/tc.tickRate)*tc.tickRate
+	tc.checkPoint = tc.tick + offset
+}
+
+func (tc *TickCountDown) Timeout() bool {
+	return tc.tick <= 0
+}
