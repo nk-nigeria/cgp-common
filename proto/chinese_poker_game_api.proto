@@ -274,7 +274,7 @@ message BalanceUpdate {
   int64 amout_chip_bet = 5;
   int64 amout_chip_fee = 6;
   int64 amout_chip_add_prefee = 7;
-  int64 toal_chip_in_match = 8;
+  int64 total_chip_in_match = 8;
 }
 
 message BalanceResult {

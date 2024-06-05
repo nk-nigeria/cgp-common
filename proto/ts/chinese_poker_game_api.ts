@@ -982,7 +982,7 @@ export interface BalanceUpdate {
   amoutChipBet: number;
   amoutChipFee: number;
   amoutChipAddPrefee: number;
-  toalChipInMatch: number;
+  totalChipInMatch: number;
 }
 
 export interface BalanceResult {
@@ -2540,7 +2540,7 @@ function createBaseBalanceUpdate(): BalanceUpdate {
     amoutChipBet: 0,
     amoutChipFee: 0,
     amoutChipAddPrefee: 0,
-    toalChipInMatch: 0,
+    totalChipInMatch: 0,
   };
 }
 
@@ -2567,8 +2567,8 @@ export const BalanceUpdate = {
     if (message.amoutChipAddPrefee !== 0) {
       writer.uint32(56).int64(message.amoutChipAddPrefee);
     }
-    if (message.toalChipInMatch !== 0) {
-      writer.uint32(64).int64(message.toalChipInMatch);
+    if (message.totalChipInMatch !== 0) {
+      writer.uint32(64).int64(message.totalChipInMatch);
     }
     return writer;
   },
@@ -2634,7 +2634,7 @@ export const BalanceUpdate = {
             break;
           }
 
-          message.toalChipInMatch = longToNumber(reader.int64() as Long);
+          message.totalChipInMatch = longToNumber(reader.int64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2654,7 +2654,7 @@ export const BalanceUpdate = {
       amoutChipBet: isSet(object.amoutChipBet) ? globalThis.Number(object.amoutChipBet) : 0,
       amoutChipFee: isSet(object.amoutChipFee) ? globalThis.Number(object.amoutChipFee) : 0,
       amoutChipAddPrefee: isSet(object.amoutChipAddPrefee) ? globalThis.Number(object.amoutChipAddPrefee) : 0,
-      toalChipInMatch: isSet(object.toalChipInMatch) ? globalThis.Number(object.toalChipInMatch) : 0,
+      totalChipInMatch: isSet(object.totalChipInMatch) ? globalThis.Number(object.totalChipInMatch) : 0,
     };
   },
 
@@ -2681,8 +2681,8 @@ export const BalanceUpdate = {
     if (message.amoutChipAddPrefee !== 0) {
       obj.amoutChipAddPrefee = Math.round(message.amoutChipAddPrefee);
     }
-    if (message.toalChipInMatch !== 0) {
-      obj.toalChipInMatch = Math.round(message.toalChipInMatch);
+    if (message.totalChipInMatch !== 0) {
+      obj.totalChipInMatch = Math.round(message.totalChipInMatch);
     }
     return obj;
   },
@@ -2699,7 +2699,7 @@ export const BalanceUpdate = {
     message.amoutChipBet = object.amoutChipBet ?? 0;
     message.amoutChipFee = object.amoutChipFee ?? 0;
     message.amoutChipAddPrefee = object.amoutChipAddPrefee ?? 0;
-    message.toalChipInMatch = object.toalChipInMatch ?? 0;
+    message.totalChipInMatch = object.totalChipInMatch ?? 0;
     return message;
   },
 };
