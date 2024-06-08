@@ -8,7 +8,7 @@ type botTurn struct {
 	fnTurn  func()
 }
 
-func NewBotTurn(maxTick int, maxOccur int, fnTurn func()) *botTurn {
+func NewBotTurn(minTick, maxTick int, maxOccur int, fnTurn func()) *botTurn {
 	b := &botTurn{
 		maxTick: maxTick,
 		fnTurn:  fnTurn,
@@ -16,9 +16,12 @@ func NewBotTurn(maxTick int, maxOccur int, fnTurn func()) *botTurn {
 	if maxOccur <= 0 {
 		maxOccur = 1
 	}
+	if minTick >= maxTick {
+		minTick = maxTick - 1
+	}
 	numOccur := RandomInt(1, maxOccur)
 	for i := 0; i < numOccur; i++ {
-		b.ticks = append(b.ticks, RandomInt(1, maxTick))
+		b.ticks = append(b.ticks, RandomInt(minTick, maxTick))
 	}
 	sort.Slice(b.ticks, func(i, j int) bool {
 		a := b.ticks[i]

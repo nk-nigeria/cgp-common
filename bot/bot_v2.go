@@ -94,7 +94,7 @@ func (l *botLoader) GetFreeBot(num int) ([]*BotPresence, error) {
 			v := BotPresence{
 				MyAccount: newBot,
 				Tick:      0,
-				turn:      NewBotTurn(0, 0, nil),
+				turn:      NewBotTurn(0, 0, 0, nil),
 				IsFree:    true,
 			}
 			// l.userBotFree = append(l.userBotFree, &v)

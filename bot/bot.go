@@ -75,7 +75,7 @@ func NewBotPresences(numBots int) []*BotPresence {
 		b := &BotPresence{
 			MyAccount: botAccount,
 			Tick:      0,
-			turn:      NewBotTurn(0, 0, nil),
+			turn:      NewBotTurn(0, 0, 0, nil),
 		}
 		ml = append(ml, b)
 		if num >= numBots {
@@ -92,7 +92,17 @@ func (b *BotPresence) Reset() {
 }
 
 func (b *BotPresence) InitTurn(maxTick int, maxOccur int, fnTurn func()) {
-	b.turn = NewBotTurn(maxTick, maxOccur, fnTurn)
+	b.turn = NewBotTurn(0, maxTick, maxOccur, fnTurn)
+}
+
+type TurnOpt struct {
+	MinTick  int
+	MaxTick  int
+	MaxOccur int
+}
+
+func (b *BotPresence) InitTurnWithOption(opt TurnOpt, fnTurn func()) {
+	b.turn = NewBotTurn(opt.MinTick, opt.MaxTick, opt.MaxOccur, fnTurn)
 }
 
 func (b *BotPresence) Loop() {
