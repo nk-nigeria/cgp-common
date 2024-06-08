@@ -11,19 +11,23 @@ func TestNewBotTurn(t *testing.T) {
 	maxTick := 10
 	minTick := 4
 	maxOccur := 3
-	numOccur := 0
-	fnTurn := func() {
-		numOccur++
-	}
-	t.Run(name, func(t *testing.T) {
-		botTurn := NewBotTurn(minTick, maxTick, maxOccur, fnTurn)
-		assert.NotNil(t, botTurn)
-		for {
-			if !botTurn.Loop() {
-				break
+
+	for i := 0; i < 10000; i++ {
+		t.Run(name, func(t *testing.T) {
+			numOccur := 0
+			fnTurn := func() {
+				numOccur++
 			}
-		}
-		assert.Less(t, 0, numOccur)
-		assert.LessOrEqual(t, numOccur, maxOccur)
-	})
+			botTurn := NewBotTurn(minTick, maxTick, maxOccur, fnTurn)
+			assert.NotNil(t, botTurn)
+			assert.LessOrEqual(t, 1, len(botTurn.ticks))
+			for {
+				if !botTurn.Loop() {
+					break
+				}
+			}
+			assert.Less(t, 0, numOccur)
+			assert.LessOrEqual(t, numOccur, maxOccur)
+		})
+	}
 }

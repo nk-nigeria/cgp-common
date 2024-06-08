@@ -19,9 +19,16 @@ func NewBotTurn(minTick, maxTick int, maxOccur int, fnTurn func()) *botTurn {
 	if minTick >= maxTick {
 		minTick = maxTick - 1
 	}
-	numOccur := RandomInt(1, maxOccur)
-	for i := 0; i < numOccur; i++ {
-		b.ticks = append(b.ticks, RandomInt(minTick, maxTick))
+	numOccur := RandomInt(1, maxOccur+1)
+OuterLoop:
+	for len(b.ticks) < numOccur {
+		tick := RandomInt(minTick, maxTick)
+		for _, v := range b.ticks {
+			if v == tick {
+				continue OuterLoop
+			}
+		}
+		b.ticks = append(b.ticks, tick)
 	}
 	sort.Slice(b.ticks, func(i, j int) bool {
 		a := b.ticks[i]
