@@ -36,7 +36,7 @@ func TestShuffleSlice(t *testing.T) {
 					numEqual++
 				}
 			}
-			assert.Equal(t, len(s), numEqual)
+			assert.Less(t, numEqual, len(s))
 
 		})
 	}

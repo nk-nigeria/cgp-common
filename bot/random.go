@@ -59,8 +59,8 @@ func ShuffleSlice[T any](slice []T) []T {
 	// mrand.NewSource(time.Now().UTC().UnixNano())
 	// mrand.Shuffle(len(ml), func(i, j int) { ml[i], ml[j] = ml[j], ml[i] })
 	perm := mrand.Perm(len(ml))
-	for _, id := range perm {
-		ml[id] = slice[id]
+	for idx, v := range perm {
+		ml[v] = slice[idx]
 	}
 	return ml
 }
