@@ -82,9 +82,9 @@ func GetGameStateDurationByGameCode(gameCode define.GameName) GameStateDuration 
 func NewGameStateDuration(idle, prepare, matching, play, reward time.Duration) GameStateDuration {
 	m := make(GameStateDuration)
 	m[pb.GameState_GameStateIdle] = idle
-	m[pb.GameState_GameStateIdle] = prepare
-	m[pb.GameState_GameStateIdle] = matching
-	m[pb.GameState_GameStateIdle] = play
-	m[pb.GameState_GameStateIdle] = reward
+	m[pb.GameState_GameStatePreparing] = prepare
+	m[pb.GameState_GameStateMatching] = matching
+	m[pb.GameState_GameStatePlay] = play
+	m[pb.GameState_GameStateReward] = reward
 	return m
 }
