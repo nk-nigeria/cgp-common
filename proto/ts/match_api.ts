@@ -125,6 +125,12 @@ export interface Match {
   bet: Bet | undefined;
   gameState: GameState;
   playingPlayers: string[];
+  gameStateDuration: { [key: number]: number };
+}
+
+export interface Match_GameStateDurationEntry {
+  key: number;
+  value: number;
 }
 
 export interface MatchInfoRequest {
@@ -399,6 +405,7 @@ function createBaseMatch(): Match {
     bet: undefined,
     gameState: 0,
     playingPlayers: [],
+    gameStateDuration: {},
   };
 }
 
@@ -455,6 +462,9 @@ export const Match = {
     for (const v of message.playingPlayers) {
       writer.uint32(146).string(v!);
     }
+    Object.entries(message.gameStateDuration).forEach(([key, value]) => {
+      Match_GameStateDurationEntry.encode({ key: key as any, value }, writer.uint32(154).fork()).ldelim();
+    });
     return writer;
   },
 
@@ -584,6 +594,16 @@ export const Match = {
 
           message.playingPlayers.push(reader.string());
           continue;
+        case 19:
+          if (tag !== 154) {
+            break;
+          }
+
+          const entry19 = Match_GameStateDurationEntry.decode(reader, reader.uint32());
+          if (entry19.value !== undefined) {
+            message.gameStateDuration[entry19.key] = entry19.value;
+          }
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -616,6 +636,12 @@ export const Match = {
       playingPlayers: globalThis.Array.isArray(object?.playingPlayers)
         ? object.playingPlayers.map((e: any) => globalThis.String(e))
         : [],
+      gameStateDuration: isObject(object.gameStateDuration)
+        ? Object.entries(object.gameStateDuration).reduce<{ [key: number]: number }>((acc, [key, value]) => {
+          acc[globalThis.Number(key)] = Number(value);
+          return acc;
+        }, {})
+        : {},
     };
   },
 
@@ -672,6 +698,15 @@ export const Match = {
     if (message.playingPlayers?.length) {
       obj.playingPlayers = message.playingPlayers;
     }
+    if (message.gameStateDuration) {
+      const entries = Object.entries(message.gameStateDuration);
+      if (entries.length > 0) {
+        obj.gameStateDuration = {};
+        entries.forEach(([k, v]) => {
+          obj.gameStateDuration[k] = Math.round(v);
+        });
+      }
+    }
     return obj;
   },
 
@@ -699,6 +734,89 @@ export const Match = {
     message.bet = (object.bet !== undefined && object.bet !== null) ? Bet.fromPartial(object.bet) : undefined;
     message.gameState = object.gameState ?? 0;
     message.playingPlayers = object.playingPlayers?.map((e) => e) || [];
+    message.gameStateDuration = Object.entries(object.gameStateDuration ?? {}).reduce<{ [key: number]: number }>(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[globalThis.Number(key)] = globalThis.Number(value);
+        }
+        return acc;
+      },
+      {},
+    );
+    return message;
+  },
+};
+
+function createBaseMatch_GameStateDurationEntry(): Match_GameStateDurationEntry {
+  return { key: 0, value: 0 };
+}
+
+export const Match_GameStateDurationEntry = {
+  encode(message: Match_GameStateDurationEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== 0) {
+      writer.uint32(8).int32(message.key);
+    }
+    if (message.value !== 0) {
+      writer.uint32(16).int32(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Match_GameStateDurationEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMatch_GameStateDurationEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.key = reader.int32();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.value = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Match_GameStateDurationEntry {
+    return {
+      key: isSet(object.key) ? globalThis.Number(object.key) : 0,
+      value: isSet(object.value) ? globalThis.Number(object.value) : 0,
+    };
+  },
+
+  toJSON(message: Match_GameStateDurationEntry): unknown {
+    const obj: any = {};
+    if (message.key !== 0) {
+      obj.key = Math.round(message.key);
+    }
+    if (message.value !== 0) {
+      obj.value = Math.round(message.value);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Match_GameStateDurationEntry>, I>>(base?: I): Match_GameStateDurationEntry {
+    return Match_GameStateDurationEntry.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Match_GameStateDurationEntry>, I>>(object: I): Match_GameStateDurationEntry {
+    const message = createBaseMatch_GameStateDurationEntry();
+    message.key = object.key ?? 0;
+    message.value = object.value ?? 0;
     return message;
   },
 };
@@ -1606,6 +1724,10 @@ function longToNumber(long: Long): number {
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
 }
 
 function isSet(value: any): boolean {

@@ -61,6 +61,7 @@ message Match {
   Bet bet = 16;
   GameState game_state = 17;
   repeated string playing_players = 18;
+  map<int32,int32> game_state_duration = 19;
 }
 
 message MatchInfoRequest {
