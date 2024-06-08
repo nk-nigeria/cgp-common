@@ -54,13 +54,14 @@ func RandomFloat64(min, max float64) float64 {
 
 func ShuffleSlice[T any](slice []T) []T {
 	// mrand.Seed(time.Now().UTC().UnixNano())
-	ml := make([]T, len(slice))
-	// copy(ml, slice)
+	sliceDeepCopy := make([]T, len(slice))
+	copy(sliceDeepCopy, slice)
 	// mrand.NewSource(time.Now().UTC().UnixNano())
 	// mrand.Shuffle(len(ml), func(i, j int) { ml[i], ml[j] = ml[j], ml[i] })
+	ml := make([]T, len(sliceDeepCopy))
 	perm := mrand.Perm(len(ml))
 	for idx, v := range perm {
-		ml[v] = slice[idx]
+		ml[v] = sliceDeepCopy[idx]
 	}
 	return ml
 }
