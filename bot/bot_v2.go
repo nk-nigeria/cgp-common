@@ -76,11 +76,14 @@ func (l *botLoader) GetFreeBot(num int) ([]*BotPresence, error) {
 	for {
 		for _, userBot := range l.userBotFree {
 			ml = append(ml, userBot)
-			if len(ml) >= num {
+			if len(ml) >= num*10 {
 				break
 			}
 		}
 		if len(ml) >= num {
+			// add ramdom bot =))
+			ml = ShuffleSlice(ml)
+			ml = ml[:num]
 			break
 		}
 
@@ -89,6 +92,7 @@ func (l *botLoader) GetFreeBot(num int) ([]*BotPresence, error) {
 			fmt.Printf("\r\n [ERR] load more user bot, offset = %d, limit = %d err = %v", l.offset, l.limit, err.Error())
 			return nil, err
 		}
+		newUserBot = ShuffleSlice(newUserBot)
 		fmt.Printf("\r\n [DONE] load more %d user bot, offset = %d, limit = %d", len(newUserBot), l.offset, l.limit)
 		for _, newBot := range newUserBot {
 			v := BotPresence{
