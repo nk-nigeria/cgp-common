@@ -21,11 +21,12 @@ func NewBotTurn(minTick, maxTick int, maxOccur int, fnTurn func()) *botTurn {
 	}
 	numOccur := RandomInt(1, maxOccur+1)
 
+outer:
 	for i := 0; i < numOccur*3; i++ {
 		tick := RandomInt(minTick, maxTick)
 		for _, v := range b.ticks {
 			if v == tick {
-				continue
+				continue outer
 			}
 		}
 		b.ticks = append(b.ticks, tick)
