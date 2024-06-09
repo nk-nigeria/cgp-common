@@ -35,7 +35,7 @@ func GetGameStateDurationByGameCode(gameCode define.GameName) GameStateDuration 
 			preparingTimeout = time.Second * 5
 			matchingTimeout  = time.Second * 1
 			playTimeout      = time.Second * 10
-			rewardTimeout    = time.Second * 10
+			rewardTimeout    = time.Second * 12
 		)
 		return NewGameStateDuration(idleTimeout, preparingTimeout, matchingTimeout, playTimeout, rewardTimeout)
 	case define.GapleDomino:
