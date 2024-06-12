@@ -74,7 +74,15 @@ func GetGameStateDurationByGameCode(gameCode define.GameName) GameStateDuration 
 			rewardTimeout    = time.Second * 10
 		)
 		return NewGameStateDuration(idleTimeout, preparingTimeout, matchingTimeout, playTimeout, rewardTimeout)
-
+	case define.ChinesePoker:
+		const (
+			idleTimeout      = time.Second * 15
+			preparingTimeout = time.Second * 10
+			playTimeout      = time.Second * 40
+			matchingTimeout  = time.Second * 1
+			rewardTimeout    = time.Second * 30
+		)
+		return NewGameStateDuration(idleTimeout, preparingTimeout, matchingTimeout, playTimeout, rewardTimeout)
 	}
 	return nil
 }
