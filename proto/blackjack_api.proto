@@ -65,6 +65,7 @@ message BlackjackPlayerBet {
   int64 insurance = 2;
   int64 first = 3;
   int64 second = 4;
+  BalanceUpdate balance  = 14;
 }
 
 message BlackjackPLayerBetResult {
@@ -124,7 +125,6 @@ message BlackjackUpdateDesk {
   bool is_banker_not_blackjack = 11;
   repeated BlackjackPlayerBet players_bet = 12;
   Error error = 13;
-  BalanceUpdate balance  = 14;
 }
 
 message BlackjackUpdateFinish {

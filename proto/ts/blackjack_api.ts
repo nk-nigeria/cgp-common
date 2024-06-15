@@ -256,6 +256,7 @@ export interface BlackjackPlayerBet {
   insurance: number;
   first: number;
   second: number;
+  balance: BalanceUpdate | undefined;
 }
 
 export interface BlackjackPLayerBetResult {
@@ -320,7 +321,6 @@ export interface BlackjackUpdateDesk {
   isBankerNotBlackjack: boolean;
   playersBet: BlackjackPlayerBet[];
   error: Error | undefined;
-  balance: BalanceUpdate | undefined;
 }
 
 export interface BlackjackUpdateFinish {
@@ -595,7 +595,7 @@ export const BlackjackBetResult = {
 };
 
 function createBaseBlackjackPlayerBet(): BlackjackPlayerBet {
-  return { userId: "", insurance: 0, first: 0, second: 0 };
+  return { userId: "", insurance: 0, first: 0, second: 0, balance: undefined };
 }
 
 export const BlackjackPlayerBet = {
@@ -611,6 +611,9 @@ export const BlackjackPlayerBet = {
     }
     if (message.second !== 0) {
       writer.uint32(32).int64(message.second);
+    }
+    if (message.balance !== undefined) {
+      BalanceUpdate.encode(message.balance, writer.uint32(114).fork()).ldelim();
     }
     return writer;
   },
@@ -650,6 +653,13 @@ export const BlackjackPlayerBet = {
 
           message.second = longToNumber(reader.int64() as Long);
           continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          message.balance = BalanceUpdate.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -665,6 +675,7 @@ export const BlackjackPlayerBet = {
       insurance: isSet(object.insurance) ? globalThis.Number(object.insurance) : 0,
       first: isSet(object.first) ? globalThis.Number(object.first) : 0,
       second: isSet(object.second) ? globalThis.Number(object.second) : 0,
+      balance: isSet(object.balance) ? BalanceUpdate.fromJSON(object.balance) : undefined,
     };
   },
 
@@ -682,6 +693,9 @@ export const BlackjackPlayerBet = {
     if (message.second !== 0) {
       obj.second = Math.round(message.second);
     }
+    if (message.balance !== undefined) {
+      obj.balance = BalanceUpdate.toJSON(message.balance);
+    }
     return obj;
   },
 
@@ -694,6 +708,9 @@ export const BlackjackPlayerBet = {
     message.insurance = object.insurance ?? 0;
     message.first = object.first ?? 0;
     message.second = object.second ?? 0;
+    message.balance = (object.balance !== undefined && object.balance !== null)
+      ? BalanceUpdate.fromPartial(object.balance)
+      : undefined;
     return message;
   },
 };
@@ -1345,7 +1362,6 @@ function createBaseBlackjackUpdateDesk(): BlackjackUpdateDesk {
     isBankerNotBlackjack: false,
     playersBet: [],
     error: undefined,
-    balance: undefined,
   };
 }
 
@@ -1389,9 +1405,6 @@ export const BlackjackUpdateDesk = {
     }
     if (message.error !== undefined) {
       Error.encode(message.error, writer.uint32(106).fork()).ldelim();
-    }
-    if (message.balance !== undefined) {
-      BalanceUpdate.encode(message.balance, writer.uint32(114).fork()).ldelim();
     }
     return writer;
   },
@@ -1494,13 +1507,6 @@ export const BlackjackUpdateDesk = {
 
           message.error = Error.decode(reader, reader.uint32());
           continue;
-        case 14:
-          if (tag !== 114) {
-            break;
-          }
-
-          message.balance = BalanceUpdate.decode(reader, reader.uint32());
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1531,7 +1537,6 @@ export const BlackjackUpdateDesk = {
         ? object.playersBet.map((e: any) => BlackjackPlayerBet.fromJSON(e))
         : [],
       error: isSet(object.error) ? Error.fromJSON(object.error) : undefined,
-      balance: isSet(object.balance) ? BalanceUpdate.fromJSON(object.balance) : undefined,
     };
   },
 
@@ -1576,9 +1581,6 @@ export const BlackjackUpdateDesk = {
     if (message.error !== undefined) {
       obj.error = Error.toJSON(message.error);
     }
-    if (message.balance !== undefined) {
-      obj.balance = BalanceUpdate.toJSON(message.balance);
-    }
     return obj;
   },
 
@@ -1606,9 +1608,6 @@ export const BlackjackUpdateDesk = {
     message.isBankerNotBlackjack = object.isBankerNotBlackjack ?? false;
     message.playersBet = object.playersBet?.map((e) => BlackjackPlayerBet.fromPartial(e)) || [];
     message.error = (object.error !== undefined && object.error !== null) ? Error.fromPartial(object.error) : undefined;
-    message.balance = (object.balance !== undefined && object.balance !== null)
-      ? BalanceUpdate.fromPartial(object.balance)
-      : undefined;
     return message;
   },
 };
