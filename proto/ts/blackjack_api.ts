@@ -281,7 +281,6 @@ export interface BlackjackUpdateDeal {
     | undefined;
   /** only send when user rejoin table, use it to restore the game state, one with userId = "" is banker */
   allPlayerHand: BlackjackPlayerHand[];
-  pointCardA: string;
 }
 
 export interface BlackjackLegalActions {
@@ -293,6 +292,7 @@ export interface BlackjackHand {
   cards: Card[];
   type: BlackjackHandType;
   point: number;
+  pointCardA: string;
 }
 
 export interface BlackjackPlayerHand {
@@ -835,7 +835,6 @@ function createBaseBlackjackUpdateDeal(): BlackjackUpdateDeal {
     newCards: [],
     hand: undefined,
     allPlayerHand: [],
-    pointCardA: "",
   };
 }
 
@@ -861,9 +860,6 @@ export const BlackjackUpdateDeal = {
     }
     for (const v of message.allPlayerHand) {
       BlackjackPlayerHand.encode(v!, writer.uint32(58).fork()).ldelim();
-    }
-    if (message.pointCardA !== "") {
-      writer.uint32(66).string(message.pointCardA);
     }
     return writer;
   },
@@ -924,13 +920,6 @@ export const BlackjackUpdateDeal = {
 
           message.allPlayerHand.push(BlackjackPlayerHand.decode(reader, reader.uint32()));
           continue;
-        case 8:
-          if (tag !== 66) {
-            break;
-          }
-
-          message.pointCardA = reader.string();
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -953,7 +942,6 @@ export const BlackjackUpdateDeal = {
       allPlayerHand: globalThis.Array.isArray(object?.allPlayerHand)
         ? object.allPlayerHand.map((e: any) => BlackjackPlayerHand.fromJSON(e))
         : [],
-      pointCardA: isSet(object.pointCardA) ? globalThis.String(object.pointCardA) : "",
     };
   },
 
@@ -980,9 +968,6 @@ export const BlackjackUpdateDeal = {
     if (message.allPlayerHand?.length) {
       obj.allPlayerHand = message.allPlayerHand.map((e) => BlackjackPlayerHand.toJSON(e));
     }
-    if (message.pointCardA !== "") {
-      obj.pointCardA = message.pointCardA;
-    }
     return obj;
   },
 
@@ -1000,7 +985,6 @@ export const BlackjackUpdateDeal = {
       ? BlackjackPlayerHand.fromPartial(object.hand)
       : undefined;
     message.allPlayerHand = object.allPlayerHand?.map((e) => BlackjackPlayerHand.fromPartial(e)) || [];
-    message.pointCardA = object.pointCardA ?? "";
     return message;
   },
 };
@@ -1094,7 +1078,7 @@ export const BlackjackLegalActions = {
 };
 
 function createBaseBlackjackHand(): BlackjackHand {
-  return { cards: [], type: 0, point: 0 };
+  return { cards: [], type: 0, point: 0, pointCardA: "" };
 }
 
 export const BlackjackHand = {
@@ -1107,6 +1091,9 @@ export const BlackjackHand = {
     }
     if (message.point !== 0) {
       writer.uint32(24).int32(message.point);
+    }
+    if (message.pointCardA !== "") {
+      writer.uint32(34).string(message.pointCardA);
     }
     return writer;
   },
@@ -1139,6 +1126,13 @@ export const BlackjackHand = {
 
           message.point = reader.int32();
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.pointCardA = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1153,6 +1147,7 @@ export const BlackjackHand = {
       cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
       type: isSet(object.type) ? blackjackHandTypeFromJSON(object.type) : 0,
       point: isSet(object.point) ? globalThis.Number(object.point) : 0,
+      pointCardA: isSet(object.pointCardA) ? globalThis.String(object.pointCardA) : "",
     };
   },
 
@@ -1167,6 +1162,9 @@ export const BlackjackHand = {
     if (message.point !== 0) {
       obj.point = Math.round(message.point);
     }
+    if (message.pointCardA !== "") {
+      obj.pointCardA = message.pointCardA;
+    }
     return obj;
   },
 
@@ -1178,6 +1176,7 @@ export const BlackjackHand = {
     message.cards = object.cards?.map((e) => Card.fromPartial(e)) || [];
     message.type = object.type ?? 0;
     message.point = object.point ?? 0;
+    message.pointCardA = object.pointCardA ?? "";
     return message;
   },
 };
