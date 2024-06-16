@@ -96,6 +96,7 @@ message BlackjackHand {
   repeated Card cards = 1;
   BlackjackHandType type = 2;
   int32 point = 3;
+  string point_card_a = 4;
 }
 
 message BlackjackPlayerHand {

@@ -292,6 +292,7 @@ export interface BlackjackHand {
   cards: Card[];
   type: BlackjackHandType;
   point: number;
+  pointCardA: string;
 }
 
 export interface BlackjackPlayerHand {
@@ -1077,7 +1078,7 @@ export const BlackjackLegalActions = {
 };
 
 function createBaseBlackjackHand(): BlackjackHand {
-  return { cards: [], type: 0, point: 0 };
+  return { cards: [], type: 0, point: 0, pointCardA: "" };
 }
 
 export const BlackjackHand = {
@@ -1090,6 +1091,9 @@ export const BlackjackHand = {
     }
     if (message.point !== 0) {
       writer.uint32(24).int32(message.point);
+    }
+    if (message.pointCardA !== "") {
+      writer.uint32(34).string(message.pointCardA);
     }
     return writer;
   },
@@ -1122,6 +1126,13 @@ export const BlackjackHand = {
 
           message.point = reader.int32();
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.pointCardA = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1136,6 +1147,7 @@ export const BlackjackHand = {
       cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
       type: isSet(object.type) ? blackjackHandTypeFromJSON(object.type) : 0,
       point: isSet(object.point) ? globalThis.Number(object.point) : 0,
+      pointCardA: isSet(object.pointCardA) ? globalThis.String(object.pointCardA) : "",
     };
   },
 
@@ -1150,6 +1162,9 @@ export const BlackjackHand = {
     if (message.point !== 0) {
       obj.point = Math.round(message.point);
     }
+    if (message.pointCardA !== "") {
+      obj.pointCardA = message.pointCardA;
+    }
     return obj;
   },
 
@@ -1161,6 +1176,7 @@ export const BlackjackHand = {
     message.cards = object.cards?.map((e) => Card.fromPartial(e)) || [];
     message.type = object.type ?? 0;
     message.point = object.point ?? 0;
+    message.pointCardA = object.pointCardA ?? "";
     return message;
   },
 };
