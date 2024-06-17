@@ -911,6 +911,12 @@ export interface PresenceCards {
 /** Complete game round with winner announcement. */
 export interface UpdateDeal {
   presenceCard: PresenceCards | undefined;
+  cardEvent: { [key: string]: CardEvent };
+}
+
+export interface UpdateDeal_CardEventEntry {
+  key: string;
+  value: CardEvent;
 }
 
 export interface UpdateGameState {
@@ -1547,7 +1553,7 @@ export const PresenceCards = {
 };
 
 function createBaseUpdateDeal(): UpdateDeal {
-  return { presenceCard: undefined };
+  return { presenceCard: undefined, cardEvent: {} };
 }
 
 export const UpdateDeal = {
@@ -1555,6 +1561,9 @@ export const UpdateDeal = {
     if (message.presenceCard !== undefined) {
       PresenceCards.encode(message.presenceCard, writer.uint32(10).fork()).ldelim();
     }
+    Object.entries(message.cardEvent).forEach(([key, value]) => {
+      UpdateDeal_CardEventEntry.encode({ key: key as any, value }, writer.uint32(18).fork()).ldelim();
+    });
     return writer;
   },
 
@@ -1572,6 +1581,16 @@ export const UpdateDeal = {
 
           message.presenceCard = PresenceCards.decode(reader, reader.uint32());
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          const entry2 = UpdateDeal_CardEventEntry.decode(reader, reader.uint32());
+          if (entry2.value !== undefined) {
+            message.cardEvent[entry2.key] = entry2.value;
+          }
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1582,13 +1601,30 @@ export const UpdateDeal = {
   },
 
   fromJSON(object: any): UpdateDeal {
-    return { presenceCard: isSet(object.presenceCard) ? PresenceCards.fromJSON(object.presenceCard) : undefined };
+    return {
+      presenceCard: isSet(object.presenceCard) ? PresenceCards.fromJSON(object.presenceCard) : undefined,
+      cardEvent: isObject(object.cardEvent)
+        ? Object.entries(object.cardEvent).reduce<{ [key: string]: CardEvent }>((acc, [key, value]) => {
+          acc[key] = cardEventFromJSON(value);
+          return acc;
+        }, {})
+        : {},
+    };
   },
 
   toJSON(message: UpdateDeal): unknown {
     const obj: any = {};
     if (message.presenceCard !== undefined) {
       obj.presenceCard = PresenceCards.toJSON(message.presenceCard);
+    }
+    if (message.cardEvent) {
+      const entries = Object.entries(message.cardEvent);
+      if (entries.length > 0) {
+        obj.cardEvent = {};
+        entries.forEach(([k, v]) => {
+          obj.cardEvent[k] = cardEventToJSON(v);
+        });
+      }
     }
     return obj;
   },
@@ -1601,6 +1637,89 @@ export const UpdateDeal = {
     message.presenceCard = (object.presenceCard !== undefined && object.presenceCard !== null)
       ? PresenceCards.fromPartial(object.presenceCard)
       : undefined;
+    message.cardEvent = Object.entries(object.cardEvent ?? {}).reduce<{ [key: string]: CardEvent }>(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = value as CardEvent;
+        }
+        return acc;
+      },
+      {},
+    );
+    return message;
+  },
+};
+
+function createBaseUpdateDeal_CardEventEntry(): UpdateDeal_CardEventEntry {
+  return { key: "", value: 0 };
+}
+
+export const UpdateDeal_CardEventEntry = {
+  encode(message: UpdateDeal_CardEventEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value !== 0) {
+      writer.uint32(16).int32(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateDeal_CardEventEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateDeal_CardEventEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.key = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.value = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateDeal_CardEventEntry {
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? cardEventFromJSON(object.value) : 0,
+    };
+  },
+
+  toJSON(message: UpdateDeal_CardEventEntry): unknown {
+    const obj: any = {};
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== 0) {
+      obj.value = cardEventToJSON(message.value);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateDeal_CardEventEntry>, I>>(base?: I): UpdateDeal_CardEventEntry {
+    return UpdateDeal_CardEventEntry.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<UpdateDeal_CardEventEntry>, I>>(object: I): UpdateDeal_CardEventEntry {
+    const message = createBaseUpdateDeal_CardEventEntry();
+    message.key = object.key ?? "";
+    message.value = object.value ?? 0;
     return message;
   },
 };
@@ -3133,6 +3252,10 @@ function longToNumber(long: Long): number {
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
 }
 
 function isSet(value: any): boolean {

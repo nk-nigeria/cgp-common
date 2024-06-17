@@ -154,7 +154,10 @@ message PresenceCards {
 }
 
 // Complete game round with winner announcement.
-message UpdateDeal { PresenceCards presence_card = 1; }
+message UpdateDeal { 
+  PresenceCards presence_card = 1;
+  map<string,CardEvent> card_event = 2;
+}
 
 message UpdateGameState {
   GameState state = 1;
