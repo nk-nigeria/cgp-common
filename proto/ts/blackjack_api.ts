@@ -293,6 +293,8 @@ export interface BlackjackHand {
   type: BlackjackHandType;
   point: number;
   pointCardA: string;
+  minPoint: number;
+  maxPoint: number;
 }
 
 export interface BlackjackPlayerHand {
@@ -1078,7 +1080,7 @@ export const BlackjackLegalActions = {
 };
 
 function createBaseBlackjackHand(): BlackjackHand {
-  return { cards: [], type: 0, point: 0, pointCardA: "" };
+  return { cards: [], type: 0, point: 0, pointCardA: "", minPoint: 0, maxPoint: 0 };
 }
 
 export const BlackjackHand = {
@@ -1094,6 +1096,12 @@ export const BlackjackHand = {
     }
     if (message.pointCardA !== "") {
       writer.uint32(34).string(message.pointCardA);
+    }
+    if (message.minPoint !== 0) {
+      writer.uint32(40).int32(message.minPoint);
+    }
+    if (message.maxPoint !== 0) {
+      writer.uint32(48).int32(message.maxPoint);
     }
     return writer;
   },
@@ -1133,6 +1141,20 @@ export const BlackjackHand = {
 
           message.pointCardA = reader.string();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.minPoint = reader.int32();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.maxPoint = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1148,6 +1170,8 @@ export const BlackjackHand = {
       type: isSet(object.type) ? blackjackHandTypeFromJSON(object.type) : 0,
       point: isSet(object.point) ? globalThis.Number(object.point) : 0,
       pointCardA: isSet(object.pointCardA) ? globalThis.String(object.pointCardA) : "",
+      minPoint: isSet(object.minPoint) ? globalThis.Number(object.minPoint) : 0,
+      maxPoint: isSet(object.maxPoint) ? globalThis.Number(object.maxPoint) : 0,
     };
   },
 
@@ -1165,6 +1189,12 @@ export const BlackjackHand = {
     if (message.pointCardA !== "") {
       obj.pointCardA = message.pointCardA;
     }
+    if (message.minPoint !== 0) {
+      obj.minPoint = Math.round(message.minPoint);
+    }
+    if (message.maxPoint !== 0) {
+      obj.maxPoint = Math.round(message.maxPoint);
+    }
     return obj;
   },
 
@@ -1177,6 +1207,8 @@ export const BlackjackHand = {
     message.type = object.type ?? 0;
     message.point = object.point ?? 0;
     message.pointCardA = object.pointCardA ?? "";
+    message.minPoint = object.minPoint ?? 0;
+    message.maxPoint = object.maxPoint ?? 0;
     return message;
   },
 };

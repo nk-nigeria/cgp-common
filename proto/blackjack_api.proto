@@ -97,6 +97,8 @@ message BlackjackHand {
   BlackjackHandType type = 2;
   int32 point = 3;
   string point_card_a = 4;
+  int32 min_point = 5;
+  int32 max_point = 6;
 }
 
 message BlackjackPlayerHand {
