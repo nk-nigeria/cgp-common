@@ -104,3 +104,7 @@ func Init() {
 	MaxSizeMatchByGame[GapleDomino] = 4
 	MaxSizeMatchByGame[ChinesePoker] = 4
 }
+
+const (
+	MinJpTreasure = 250 * 1000 * 1000
+)
