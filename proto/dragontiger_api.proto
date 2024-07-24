@@ -4,7 +4,7 @@ package api;
 
 import "chinese_poker_game_api.proto";
 
-option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
+option go_package = "github.com/nakamaFramework/cgp-bing-module/api";
 
 enum DragonTigerBetCell {
   CELL_UNSPECIFIED = 0; // unuse

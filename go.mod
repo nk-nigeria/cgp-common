@@ -1,4 +1,4 @@
-module github.com/ciaolink-game-platform/cgp-common
+module github.com/nakamaFramework/cgp-common
 
 go 1.21
 

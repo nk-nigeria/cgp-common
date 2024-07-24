@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	pb "github.com/ciaolink-game-platform/cgp-common/proto"
-	"github.com/ciaolink-game-platform/cgp-common/utilities"
+	pb "github.com/nakamaFramework/cgp-common/proto"
+	"github.com/nakamaFramework/cgp-common/utilities"
 	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/heroiclabs/nakama-common/api"

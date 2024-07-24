@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	pb "github.com/ciaolink-game-platform/cgp-common/proto"
 	"github.com/heroiclabs/nakama-common/runtime"
+	pb "github.com/nakamaFramework/cgp-common/proto"
 )
 
 var httpClient *http.Client

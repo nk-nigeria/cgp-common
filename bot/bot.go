@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ciaolink-game-platform/cgp-common/lib"
-	pb "github.com/ciaolink-game-platform/cgp-common/proto"
+	"github.com/nakamaFramework/cgp-common/lib"
+	pb "github.com/nakamaFramework/cgp-common/proto"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )

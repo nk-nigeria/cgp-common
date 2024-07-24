@@ -20,7 +20,7 @@ package api;
 import "auth_api.proto";
 import "chinese_poker_game_api.proto";
 
-option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
+option go_package = "github.com/nakamaFramework/cgp-bing-module/api";
 // The complete set of rpc used for communication between clients and server.
 enum RPCCode {
   // No opcode specified. Unused.

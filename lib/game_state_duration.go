@@ -3,8 +3,8 @@ package lib
 import (
 	"time"
 
-	"github.com/ciaolink-game-platform/cgp-common/define"
-	pb "github.com/ciaolink-game-platform/cgp-common/proto"
+	"github.com/nakamaFramework/cgp-common/define"
+	pb "github.com/nakamaFramework/cgp-common/proto"
 )
 
 type GameStateDuration map[pb.GameState]time.Duration

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/ciaolink-game-platform/cgp-bing-module/api";
+option go_package = "github.com/nakamaFramework/cgp-bing-module/api";
 
 enum Dice {
   DICE_UNSPECTIFIED = 0;

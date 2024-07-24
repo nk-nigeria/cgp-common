@@ -6,7 +6,7 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 	"github.com/qmuntal/stateless"
 
-	pb "github.com/ciaolink-game-platform/cgp-common/proto"
+	pb "github.com/nakamaFramework/cgp-common/proto"
 )
 
 const (

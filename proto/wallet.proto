@@ -1,7 +1,7 @@
 syntax = "proto3";
 package api;
 
-option go_package = "github.com/ciaolink-game-platform/cgp-common-module/api";
+option go_package = "github.com/nakamaFramework/cgp-common-module/api";
 
 message Bank {
   string sender_id = 1;

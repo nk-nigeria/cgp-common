@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"testing"
 
-	pb "github.com/ciaolink-game-platform/cgp-common/proto"
 	_ "github.com/lib/pq"
+	pb "github.com/nakamaFramework/cgp-common/proto"
 	"github.com/stretchr/testify/assert"
 )
 
