@@ -26,6 +26,7 @@ const (
 	DragontigerName GameName = "dragontiger"
 	GapleDomino     GameName = "gaple"
 	ChinesePoker    GameName = "chinese-poker"
+	Tongits         GameName = "Tongits"
 )
 
 func (g GameName) String() string {
@@ -103,6 +104,7 @@ func Init() {
 	MaxSizeMatchByGame[DragontigerName] = 20
 	MaxSizeMatchByGame[GapleDomino] = 4
 	MaxSizeMatchByGame[ChinesePoker] = 4
+	MaxSizeMatchByGame[Tongits] = 4
 }
 
 const (
