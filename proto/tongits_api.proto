@@ -107,7 +107,8 @@ message PlayerDeclare{
 }
 
 enum Tongits_OpCodeUpdate {
-  UPDATE_TABLE = 0; //message UpdateTable
+  UNDEFINE= 0; //message UpdateTable
+  UPDATE_TABLE = 1; //message UpdateTable
   DEAL = 2; //message chia bai
   FINISH = 3; //message UpdateFinish
   TONGITS = 4; // khi user duoc tongits
