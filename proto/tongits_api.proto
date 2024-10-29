@@ -58,8 +58,13 @@ message TongitsUpdateDeal {
 message Pot{
   int64 ag = 1;
   string uidWinLastMatch = 2;
+  repeated ChipUpdate ChipUpdates = 3;
 }
 
+message ChipUpdate{
+  int64 chip = 1;
+  string userid = 2;
+}
 
 message Tongits_ListCard {
   repeated Tongits_Card cards = 1;
