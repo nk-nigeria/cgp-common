@@ -305,3 +305,9 @@ message Jackpot {
   int64 chips = 4;
   int64 create_time_unix = 5;
 }
+
+message HitJackpotHistory{
+  string user_name = 1;
+  int64 chips = 2;
+  int64 create_time_unix = 3;
+}
