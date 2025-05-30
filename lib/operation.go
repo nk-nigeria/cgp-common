@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/heroiclabs/nakama-common/runtime"
-	pb "github.com/nakamaFramework/cgp-common/proto"
+	pb "github.com/nakama-nigeria/cgp-common/proto"
 )
 
 var httpClient *http.Client

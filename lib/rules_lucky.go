@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	pb "github.com/nakamaFramework/cgp-common/proto"
+	pb "github.com/nakama-nigeria/cgp-common/proto"
 )
 
 type rulesLucky struct {

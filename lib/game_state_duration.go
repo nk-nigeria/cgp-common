@@ -3,8 +3,8 @@ package lib
 import (
 	"time"
 
-	"github.com/nakamaFramework/cgp-common/define"
-	pb "github.com/nakamaFramework/cgp-common/proto"
+	"github.com/nakama-nigeria/cgp-common/define"
+	pb "github.com/nakama-nigeria/cgp-common/proto"
 )
 
 type GameStateDuration map[pb.GameState]time.Duration
