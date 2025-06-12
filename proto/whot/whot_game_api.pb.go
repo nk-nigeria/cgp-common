@@ -369,10 +369,11 @@ func (GameState) EnumDescriptor() ([]byte, []int) {
 type CardEvent int32
 
 const (
-	CardEvent_NONE CardEvent = 0
-	CardEvent_PLAY CardEvent = 1
-	CardEvent_DRAW CardEvent = 2
-	CardEvent_PASS CardEvent = 3
+	CardEvent_NONE      CardEvent = 0
+	CardEvent_PLAY      CardEvent = 1
+	CardEvent_DRAW      CardEvent = 2
+	CardEvent_PASS      CardEvent = 3
+	CardEvent_AUTO_PLAY CardEvent = 4
 )
 
 // Enum value maps for CardEvent.
@@ -382,12 +383,14 @@ var (
 		1: "PLAY",
 		2: "DRAW",
 		3: "PASS",
+		4: "AUTO_PLAY",
 	}
 	CardEvent_value = map[string]int32{
-		"NONE": 0,
-		"PLAY": 1,
-		"DRAW": 2,
-		"PASS": 3,
+		"NONE":      0,
+		"PLAY":      1,
+		"DRAW":      2,
+		"PASS":      3,
+		"AUTO_PLAY": 4,
 	}
 )
 
@@ -887,6 +890,7 @@ type UpdateDeal struct {
 	PresenceCard  *PresenceCards         `protobuf:"bytes,1,opt,name=presence_card,json=presenceCard,proto3" json:"presence_card,omitempty"`
 	CardEvent     map[string]CardEvent   `protobuf:"bytes,2,rep,name=card_event,json=cardEvent,proto3" json:"card_event,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value,enum=whot.CardEvent"`
 	TopCard       *Card                  `protobuf:"bytes,3,opt,name=top_card,json=topCard,proto3" json:"top_card,omitempty"` // card on top of deck
+	IdDealer      string                 `protobuf:"bytes,4,opt,name=id_dealer,json=idDealer,proto3" json:"id_dealer,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -940,6 +944,13 @@ func (x *UpdateDeal) GetTopCard() *Card {
 		return x.TopCard
 	}
 	return nil
+}
+
+func (x *UpdateDeal) GetIdDealer() string {
+	if x != nil {
+		return x.IdDealer
+	}
+	return ""
 }
 
 type UpdateGameState struct {
@@ -1012,6 +1023,7 @@ type UpdateCardState struct {
 	Effect        CardEffect             `protobuf:"varint,6,opt,name=effect,proto3,enum=whot.CardEffect" json:"effect,omitempty"`
 	PickPenalty   int32                  `protobuf:"varint,7,opt,name=pick_penalty,json=pickPenalty,proto3" json:"pick_penalty,omitempty"`
 	TargetUserId  string                 `protobuf:"bytes,8,opt,name=target_user_id,json=targetUserId,proto3" json:"target_user_id,omitempty"`
+	IsAutoPlay    bool                   `protobuf:"varint,9,opt,name=is_auto_play,json=isAutoPlay,proto3" json:"is_auto_play,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1100,6 +1112,13 @@ func (x *UpdateCardState) GetTargetUserId() string {
 		return x.TargetUserId
 	}
 	return ""
+}
+
+func (x *UpdateCardState) GetIsAutoPlay() bool {
+	if x != nil {
+		return x.IsAutoPlay
+	}
+	return false
 }
 
 type WhotScoreResult struct {
@@ -1736,14 +1755,15 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\rPresenceCards\x12\x1a\n" +
 	"\bpresence\x18\x01 \x01(\tR\bpresence\x12 \n" +
 	"\x05cards\x18\x02 \x03(\v2\n" +
-	".whot.CardR\x05cards\"\xfc\x01\n" +
+	".whot.CardR\x05cards\"\x99\x02\n" +
 	"\n" +
 	"UpdateDeal\x128\n" +
 	"\rpresence_card\x18\x01 \x01(\v2\x13.whot.PresenceCardsR\fpresenceCard\x12>\n" +
 	"\n" +
 	"card_event\x18\x02 \x03(\v2\x1f.whot.UpdateDeal.CardEventEntryR\tcardEvent\x12%\n" +
 	"\btop_card\x18\x03 \x01(\v2\n" +
-	".whot.CardR\atopCard\x1aM\n" +
+	".whot.CardR\atopCard\x12\x1b\n" +
+	"\tid_dealer\x18\x04 \x01(\tR\bidDealer\x1aM\n" +
 	"\x0eCardEventEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12%\n" +
 	"\x05value\x18\x02 \x01(\x0e2\x0f.whot.CardEventR\x05value:\x028\x01\"\x92\x01\n" +
@@ -1751,7 +1771,7 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\x05state\x18\x01 \x01(\x0e2\x0f.whot.GameStateR\x05state\x12\x1d\n" +
 	"\n" +
 	"count_down\x18\x02 \x01(\x03R\tcountDown\x129\n" +
-	"\rpresenceCards\x18\x03 \x03(\v2\x13.whot.PresenceCardsR\rpresenceCards\"\xc5\x02\n" +
+	"\rpresenceCards\x18\x03 \x03(\v2\x13.whot.PresenceCardsR\rpresenceCards\"\xe7\x02\n" +
 	"\x0fUpdateCardState\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12%\n" +
 	"\x05event\x18\x02 \x01(\x0e2\x0f.whot.CardEventR\x05event\x12+\n" +
@@ -1765,7 +1785,9 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"cardsAfter\x12(\n" +
 	"\x06effect\x18\x06 \x01(\x0e2\x10.whot.CardEffectR\x06effect\x12!\n" +
 	"\fpick_penalty\x18\a \x01(\x05R\vpickPenalty\x12$\n" +
-	"\x0etarget_user_id\x18\b \x01(\tR\ftargetUserId\"\x99\x01\n" +
+	"\x0etarget_user_id\x18\b \x01(\tR\ftargetUserId\x12 \n" +
+	"\fis_auto_play\x18\t \x01(\bR\n" +
+	"isAutoPlay\"\x99\x01\n" +
 	"\x0fWhotScoreResult\x12!\n" +
 	"\ftotal_points\x18\x01 \x01(\x03R\vtotalPoints\x12'\n" +
 	"\x0fremaining_cards\x18\x02 \x01(\x05R\x0eremainingCards\x12\x1b\n" +
@@ -1880,12 +1902,13 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\x12GameStatePreparing\x10\x03\x12\x11\n" +
 	"\rGameStatePlay\x10\x04\x12\x13\n" +
 	"\x0fGameStateReward\x10\x05\x12\x13\n" +
-	"\x0fGameStateFinish\x10\x06*3\n" +
+	"\x0fGameStateFinish\x10\x06*B\n" +
 	"\tCardEvent\x12\b\n" +
 	"\x04NONE\x10\x00\x12\b\n" +
 	"\x04PLAY\x10\x01\x12\b\n" +
 	"\x04DRAW\x10\x02\x12\b\n" +
-	"\x04PASS\x10\x03*\x8e\x01\n" +
+	"\x04PASS\x10\x03\x12\r\n" +
+	"\tAUTO_PLAY\x10\x04*\x8e\x01\n" +
 	"\n" +
 	"CardEffect\x12\x0f\n" +
 	"\vEFFECT_NONE\x10\x00\x12\v\n" +
