@@ -3,7 +3,7 @@ package lib
 import (
 	"context"
 
-	pb "github.com/nakama-nigeria/cgp-common/proto"
+	pb "github.com/nk-nigeria/cgp-common/proto"
 
 	"github.com/qmuntal/stateless"
 )

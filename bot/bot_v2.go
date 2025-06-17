@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nakama-nigeria/cgp-common/lib"
+	"github.com/nk-nigeria/cgp-common/lib"
 )
 
 type botLoader struct {
