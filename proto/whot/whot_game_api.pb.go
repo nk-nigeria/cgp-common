@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v3.21.12
-// source: whot_game_api.proto
+// source: whot/whot_game_api.proto
 
 package whot
 
@@ -63,11 +63,11 @@ func (x CardSuit) String() string {
 }
 
 func (CardSuit) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[0].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[0].Descriptor()
 }
 
 func (CardSuit) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[0]
+	return &file_whot_whot_game_api_proto_enumTypes[0]
 }
 
 func (x CardSuit) Number() protoreflect.EnumNumber {
@@ -76,7 +76,7 @@ func (x CardSuit) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardSuit.Descriptor instead.
 func (CardSuit) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{0}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{0}
 }
 
 type CardRank int32
@@ -145,11 +145,11 @@ func (x CardRank) String() string {
 }
 
 func (CardRank) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[1].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[1].Descriptor()
 }
 
 func (CardRank) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[1]
+	return &file_whot_whot_game_api_proto_enumTypes[1]
 }
 
 func (x CardRank) Number() protoreflect.EnumNumber {
@@ -158,7 +158,7 @@ func (x CardRank) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardRank.Descriptor instead.
 func (CardRank) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{1}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{1}
 }
 
 type OpCodeRequest int32
@@ -207,11 +207,11 @@ func (x OpCodeRequest) String() string {
 }
 
 func (OpCodeRequest) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[2].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[2].Descriptor()
 }
 
 func (OpCodeRequest) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[2]
+	return &file_whot_whot_game_api_proto_enumTypes[2]
 }
 
 func (x OpCodeRequest) Number() protoreflect.EnumNumber {
@@ -220,7 +220,7 @@ func (x OpCodeRequest) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OpCodeRequest.Descriptor instead.
 func (OpCodeRequest) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{2}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{2}
 }
 
 type OpCodeUpdate int32
@@ -289,11 +289,11 @@ func (x OpCodeUpdate) String() string {
 }
 
 func (OpCodeUpdate) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[3].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[3].Descriptor()
 }
 
 func (OpCodeUpdate) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[3]
+	return &file_whot_whot_game_api_proto_enumTypes[3]
 }
 
 func (x OpCodeUpdate) Number() protoreflect.EnumNumber {
@@ -302,7 +302,7 @@ func (x OpCodeUpdate) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OpCodeUpdate.Descriptor instead.
 func (OpCodeUpdate) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{3}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{3}
 }
 
 type GameState int32
@@ -350,11 +350,11 @@ func (x GameState) String() string {
 }
 
 func (GameState) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[4].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[4].Descriptor()
 }
 
 func (GameState) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[4]
+	return &file_whot_whot_game_api_proto_enumTypes[4]
 }
 
 func (x GameState) Number() protoreflect.EnumNumber {
@@ -363,7 +363,7 @@ func (x GameState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use GameState.Descriptor instead.
 func (GameState) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{4}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{4}
 }
 
 type CardEvent int32
@@ -405,11 +405,11 @@ func (x CardEvent) String() string {
 }
 
 func (CardEvent) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[5].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[5].Descriptor()
 }
 
 func (CardEvent) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[5]
+	return &file_whot_whot_game_api_proto_enumTypes[5]
 }
 
 func (x CardEvent) Number() protoreflect.EnumNumber {
@@ -418,7 +418,7 @@ func (x CardEvent) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardEvent.Descriptor instead.
 func (CardEvent) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{5}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{5}
 }
 
 type CardEffect int32
@@ -469,11 +469,11 @@ func (x CardEffect) String() string {
 }
 
 func (CardEffect) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[6].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[6].Descriptor()
 }
 
 func (CardEffect) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[6]
+	return &file_whot_whot_game_api_proto_enumTypes[6]
 }
 
 func (x CardEffect) Number() protoreflect.EnumNumber {
@@ -482,7 +482,7 @@ func (x CardEffect) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardEffect.Descriptor instead.
 func (CardEffect) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{6}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{6}
 }
 
 type WhotEndGameReason int32
@@ -515,11 +515,11 @@ func (x WhotEndGameReason) String() string {
 }
 
 func (WhotEndGameReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_whot_game_api_proto_enumTypes[7].Descriptor()
+	return file_whot_whot_game_api_proto_enumTypes[7].Descriptor()
 }
 
 func (WhotEndGameReason) Type() protoreflect.EnumType {
-	return &file_whot_game_api_proto_enumTypes[7]
+	return &file_whot_whot_game_api_proto_enumTypes[7]
 }
 
 func (x WhotEndGameReason) Number() protoreflect.EnumNumber {
@@ -528,7 +528,7 @@ func (x WhotEndGameReason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use WhotEndGameReason.Descriptor instead.
 func (WhotEndGameReason) EnumDescriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{7}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{7}
 }
 
 type Card struct {
@@ -541,7 +541,7 @@ type Card struct {
 
 func (x *Card) Reset() {
 	*x = Card{}
-	mi := &file_whot_game_api_proto_msgTypes[0]
+	mi := &file_whot_whot_game_api_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -553,7 +553,7 @@ func (x *Card) String() string {
 func (*Card) ProtoMessage() {}
 
 func (x *Card) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[0]
+	mi := &file_whot_whot_game_api_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -566,7 +566,7 @@ func (x *Card) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Card.ProtoReflect.Descriptor instead.
 func (*Card) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{0}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Card) GetRank() CardRank {
@@ -592,7 +592,7 @@ type ListCard struct {
 
 func (x *ListCard) Reset() {
 	*x = ListCard{}
-	mi := &file_whot_game_api_proto_msgTypes[1]
+	mi := &file_whot_whot_game_api_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -604,7 +604,7 @@ func (x *ListCard) String() string {
 func (*ListCard) ProtoMessage() {}
 
 func (x *ListCard) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[1]
+	mi := &file_whot_whot_game_api_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -617,7 +617,7 @@ func (x *ListCard) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCard.ProtoReflect.Descriptor instead.
 func (*ListCard) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{1}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ListCard) GetCards() []*Card {
@@ -637,7 +637,7 @@ type UpdateTurn struct {
 
 func (x *UpdateTurn) Reset() {
 	*x = UpdateTurn{}
-	mi := &file_whot_game_api_proto_msgTypes[2]
+	mi := &file_whot_whot_game_api_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -649,7 +649,7 @@ func (x *UpdateTurn) String() string {
 func (*UpdateTurn) ProtoMessage() {}
 
 func (x *UpdateTurn) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[2]
+	mi := &file_whot_whot_game_api_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -662,7 +662,7 @@ func (x *UpdateTurn) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTurn.ProtoReflect.Descriptor instead.
 func (*UpdateTurn) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{2}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *UpdateTurn) GetUserId() string {
@@ -688,7 +688,7 @@ type NewGame struct {
 
 func (x *NewGame) Reset() {
 	*x = NewGame{}
-	mi := &file_whot_game_api_proto_msgTypes[3]
+	mi := &file_whot_whot_game_api_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -700,7 +700,7 @@ func (x *NewGame) String() string {
 func (*NewGame) ProtoMessage() {}
 
 func (x *NewGame) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[3]
+	mi := &file_whot_whot_game_api_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -713,7 +713,7 @@ func (x *NewGame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewGame.ProtoReflect.Descriptor instead.
 func (*NewGame) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{3}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{3}
 }
 
 type UpdateTable struct {
@@ -734,7 +734,7 @@ type UpdateTable struct {
 
 func (x *UpdateTable) Reset() {
 	*x = UpdateTable{}
-	mi := &file_whot_game_api_proto_msgTypes[4]
+	mi := &file_whot_whot_game_api_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -746,7 +746,7 @@ func (x *UpdateTable) String() string {
 func (*UpdateTable) ProtoMessage() {}
 
 func (x *UpdateTable) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[4]
+	mi := &file_whot_whot_game_api_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -759,7 +759,7 @@ func (x *UpdateTable) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTable.ProtoReflect.Descriptor instead.
 func (*UpdateTable) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{4}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UpdateTable) GetPlayers() []*Player {
@@ -842,7 +842,7 @@ type PresenceCards struct {
 
 func (x *PresenceCards) Reset() {
 	*x = PresenceCards{}
-	mi := &file_whot_game_api_proto_msgTypes[5]
+	mi := &file_whot_whot_game_api_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -854,7 +854,7 @@ func (x *PresenceCards) String() string {
 func (*PresenceCards) ProtoMessage() {}
 
 func (x *PresenceCards) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[5]
+	mi := &file_whot_whot_game_api_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -867,7 +867,7 @@ func (x *PresenceCards) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PresenceCards.ProtoReflect.Descriptor instead.
 func (*PresenceCards) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{5}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *PresenceCards) GetPresence() string {
@@ -897,7 +897,7 @@ type UpdateDeal struct {
 
 func (x *UpdateDeal) Reset() {
 	*x = UpdateDeal{}
-	mi := &file_whot_game_api_proto_msgTypes[6]
+	mi := &file_whot_whot_game_api_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -909,7 +909,7 @@ func (x *UpdateDeal) String() string {
 func (*UpdateDeal) ProtoMessage() {}
 
 func (x *UpdateDeal) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[6]
+	mi := &file_whot_whot_game_api_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -922,7 +922,7 @@ func (x *UpdateDeal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDeal.ProtoReflect.Descriptor instead.
 func (*UpdateDeal) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{6}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateDeal) GetPresenceCard() *PresenceCards {
@@ -964,7 +964,7 @@ type UpdateGameState struct {
 
 func (x *UpdateGameState) Reset() {
 	*x = UpdateGameState{}
-	mi := &file_whot_game_api_proto_msgTypes[7]
+	mi := &file_whot_whot_game_api_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -976,7 +976,7 @@ func (x *UpdateGameState) String() string {
 func (*UpdateGameState) ProtoMessage() {}
 
 func (x *UpdateGameState) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[7]
+	mi := &file_whot_whot_game_api_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -989,7 +989,7 @@ func (x *UpdateGameState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGameState.ProtoReflect.Descriptor instead.
 func (*UpdateGameState) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{7}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UpdateGameState) GetState() GameState {
@@ -1030,7 +1030,7 @@ type UpdateCardState struct {
 
 func (x *UpdateCardState) Reset() {
 	*x = UpdateCardState{}
-	mi := &file_whot_game_api_proto_msgTypes[8]
+	mi := &file_whot_whot_game_api_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1042,7 +1042,7 @@ func (x *UpdateCardState) String() string {
 func (*UpdateCardState) ProtoMessage() {}
 
 func (x *UpdateCardState) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[8]
+	mi := &file_whot_whot_game_api_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1055,7 +1055,7 @@ func (x *UpdateCardState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCardState.ProtoReflect.Descriptor instead.
 func (*UpdateCardState) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{8}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UpdateCardState) GetUserId() string {
@@ -1133,7 +1133,7 @@ type WhotScoreResult struct {
 
 func (x *WhotScoreResult) Reset() {
 	*x = WhotScoreResult{}
-	mi := &file_whot_game_api_proto_msgTypes[9]
+	mi := &file_whot_whot_game_api_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1145,7 +1145,7 @@ func (x *WhotScoreResult) String() string {
 func (*WhotScoreResult) ProtoMessage() {}
 
 func (x *WhotScoreResult) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[9]
+	mi := &file_whot_whot_game_api_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1158,7 +1158,7 @@ func (x *WhotScoreResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WhotScoreResult.ProtoReflect.Descriptor instead.
 func (*WhotScoreResult) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{9}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *WhotScoreResult) GetTotalPoints() int64 {
@@ -1200,7 +1200,7 @@ type WhotPlayerResult struct {
 
 func (x *WhotPlayerResult) Reset() {
 	*x = WhotPlayerResult{}
-	mi := &file_whot_game_api_proto_msgTypes[10]
+	mi := &file_whot_whot_game_api_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1212,7 +1212,7 @@ func (x *WhotPlayerResult) String() string {
 func (*WhotPlayerResult) ProtoMessage() {}
 
 func (x *WhotPlayerResult) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[10]
+	mi := &file_whot_whot_game_api_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1225,7 +1225,7 @@ func (x *WhotPlayerResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WhotPlayerResult.ProtoReflect.Descriptor instead.
 func (*WhotPlayerResult) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{10}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *WhotPlayerResult) GetUserId() string {
@@ -1262,7 +1262,7 @@ type UpdateFinish struct {
 
 func (x *UpdateFinish) Reset() {
 	*x = UpdateFinish{}
-	mi := &file_whot_game_api_proto_msgTypes[11]
+	mi := &file_whot_whot_game_api_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1274,7 +1274,7 @@ func (x *UpdateFinish) String() string {
 func (*UpdateFinish) ProtoMessage() {}
 
 func (x *UpdateFinish) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[11]
+	mi := &file_whot_whot_game_api_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1287,7 +1287,7 @@ func (x *UpdateFinish) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFinish.ProtoReflect.Descriptor instead.
 func (*UpdateFinish) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{11}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *UpdateFinish) GetResults() []*WhotPlayerResult {
@@ -1341,7 +1341,7 @@ type BalanceUpdate struct {
 
 func (x *BalanceUpdate) Reset() {
 	*x = BalanceUpdate{}
-	mi := &file_whot_game_api_proto_msgTypes[12]
+	mi := &file_whot_whot_game_api_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1353,7 +1353,7 @@ func (x *BalanceUpdate) String() string {
 func (*BalanceUpdate) ProtoMessage() {}
 
 func (x *BalanceUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[12]
+	mi := &file_whot_whot_game_api_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1366,7 +1366,7 @@ func (x *BalanceUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BalanceUpdate.ProtoReflect.Descriptor instead.
 func (*BalanceUpdate) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{12}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *BalanceUpdate) GetUserId() string {
@@ -1435,7 +1435,7 @@ type BalanceResult struct {
 
 func (x *BalanceResult) Reset() {
 	*x = BalanceResult{}
-	mi := &file_whot_game_api_proto_msgTypes[13]
+	mi := &file_whot_whot_game_api_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1447,7 +1447,7 @@ func (x *BalanceResult) String() string {
 func (*BalanceResult) ProtoMessage() {}
 
 func (x *BalanceResult) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[13]
+	mi := &file_whot_whot_game_api_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1460,7 +1460,7 @@ func (x *BalanceResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BalanceResult.ProtoReflect.Descriptor instead.
 func (*BalanceResult) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{13}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *BalanceResult) GetUpdates() []*BalanceUpdate {
@@ -1494,7 +1494,7 @@ type Player struct {
 
 func (x *Player) Reset() {
 	*x = Player{}
-	mi := &file_whot_game_api_proto_msgTypes[14]
+	mi := &file_whot_whot_game_api_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1506,7 +1506,7 @@ func (x *Player) String() string {
 func (*Player) ProtoMessage() {}
 
 func (x *Player) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[14]
+	mi := &file_whot_whot_game_api_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1519,7 +1519,7 @@ func (x *Player) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Player.ProtoReflect.Descriptor instead.
 func (*Player) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{14}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Player) GetId() string {
@@ -1598,7 +1598,7 @@ type Jackpot struct {
 
 func (x *Jackpot) Reset() {
 	*x = Jackpot{}
-	mi := &file_whot_game_api_proto_msgTypes[15]
+	mi := &file_whot_whot_game_api_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1610,7 +1610,7 @@ func (x *Jackpot) String() string {
 func (*Jackpot) ProtoMessage() {}
 
 func (x *Jackpot) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[15]
+	mi := &file_whot_whot_game_api_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1623,7 +1623,7 @@ func (x *Jackpot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Jackpot.ProtoReflect.Descriptor instead.
 func (*Jackpot) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{15}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Jackpot) GetId() int64 {
@@ -1672,7 +1672,7 @@ type HitJackpotHistory struct {
 
 func (x *HitJackpotHistory) Reset() {
 	*x = HitJackpotHistory{}
-	mi := &file_whot_game_api_proto_msgTypes[16]
+	mi := &file_whot_whot_game_api_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1684,7 +1684,7 @@ func (x *HitJackpotHistory) String() string {
 func (*HitJackpotHistory) ProtoMessage() {}
 
 func (x *HitJackpotHistory) ProtoReflect() protoreflect.Message {
-	mi := &file_whot_game_api_proto_msgTypes[16]
+	mi := &file_whot_whot_game_api_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1697,7 +1697,7 @@ func (x *HitJackpotHistory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HitJackpotHistory.ProtoReflect.Descriptor instead.
 func (*HitJackpotHistory) Descriptor() ([]byte, []int) {
-	return file_whot_game_api_proto_rawDescGZIP(), []int{16}
+	return file_whot_whot_game_api_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *HitJackpotHistory) GetUserName() string {
@@ -1721,11 +1721,11 @@ func (x *HitJackpotHistory) GetCreateTimeUnix() int64 {
 	return 0
 }
 
-var File_whot_game_api_proto protoreflect.FileDescriptor
+var File_whot_whot_game_api_proto protoreflect.FileDescriptor
 
-const file_whot_game_api_proto_rawDesc = "" +
+const file_whot_whot_game_api_proto_rawDesc = "" +
 	"\n" +
-	"\x13whot_game_api.proto\x12\x04whot\"N\n" +
+	"\x18whot/whot_game_api.proto\x12\x04whot\"N\n" +
 	"\x04Card\x12\"\n" +
 	"\x04rank\x18\x01 \x01(\x0e2\x0e.whot.CardRankR\x04rank\x12\"\n" +
 	"\x04suit\x18\x02 \x01(\x0e2\x0e.whot.CardSuitR\x04suit\",\n" +
@@ -1926,20 +1926,20 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\x11REASON_DECK_EMPTY\x10\x01B>Z<github.com/nakamaFramework/whot-module/cgp-common/proto/whotb\x06proto3"
 
 var (
-	file_whot_game_api_proto_rawDescOnce sync.Once
-	file_whot_game_api_proto_rawDescData []byte
+	file_whot_whot_game_api_proto_rawDescOnce sync.Once
+	file_whot_whot_game_api_proto_rawDescData []byte
 )
 
-func file_whot_game_api_proto_rawDescGZIP() []byte {
-	file_whot_game_api_proto_rawDescOnce.Do(func() {
-		file_whot_game_api_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_whot_game_api_proto_rawDesc), len(file_whot_game_api_proto_rawDesc)))
+func file_whot_whot_game_api_proto_rawDescGZIP() []byte {
+	file_whot_whot_game_api_proto_rawDescOnce.Do(func() {
+		file_whot_whot_game_api_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_whot_whot_game_api_proto_rawDesc), len(file_whot_whot_game_api_proto_rawDesc)))
 	})
-	return file_whot_game_api_proto_rawDescData
+	return file_whot_whot_game_api_proto_rawDescData
 }
 
-var file_whot_game_api_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
-var file_whot_game_api_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
-var file_whot_game_api_proto_goTypes = []any{
+var file_whot_whot_game_api_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
+var file_whot_whot_game_api_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_whot_whot_game_api_proto_goTypes = []any{
 	(CardSuit)(0),             // 0: whot.CardSuit
 	(CardRank)(0),             // 1: whot.CardRank
 	(OpCodeRequest)(0),        // 2: whot.OpCodeRequest
@@ -1967,7 +1967,7 @@ var file_whot_game_api_proto_goTypes = []any{
 	(*HitJackpotHistory)(nil), // 24: whot.HitJackpotHistory
 	nil,                       // 25: whot.UpdateDeal.CardEventEntry
 }
-var file_whot_game_api_proto_depIdxs = []int32{
+var file_whot_whot_game_api_proto_depIdxs = []int32{
 	1,  // 0: whot.Card.rank:type_name -> whot.CardRank
 	0,  // 1: whot.Card.suit:type_name -> whot.CardSuit
 	8,  // 2: whot.ListCard.cards:type_name -> whot.Card
@@ -2005,27 +2005,27 @@ var file_whot_game_api_proto_depIdxs = []int32{
 	0,  // [0:30] is the sub-list for field type_name
 }
 
-func init() { file_whot_game_api_proto_init() }
-func file_whot_game_api_proto_init() {
-	if File_whot_game_api_proto != nil {
+func init() { file_whot_whot_game_api_proto_init() }
+func file_whot_whot_game_api_proto_init() {
+	if File_whot_whot_game_api_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_whot_game_api_proto_rawDesc), len(file_whot_game_api_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_whot_whot_game_api_proto_rawDesc), len(file_whot_whot_game_api_proto_rawDesc)),
 			NumEnums:      8,
 			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_whot_game_api_proto_goTypes,
-		DependencyIndexes: file_whot_game_api_proto_depIdxs,
-		EnumInfos:         file_whot_game_api_proto_enumTypes,
-		MessageInfos:      file_whot_game_api_proto_msgTypes,
+		GoTypes:           file_whot_whot_game_api_proto_goTypes,
+		DependencyIndexes: file_whot_whot_game_api_proto_depIdxs,
+		EnumInfos:         file_whot_whot_game_api_proto_enumTypes,
+		MessageInfos:      file_whot_whot_game_api_proto_msgTypes,
 	}.Build()
-	File_whot_game_api_proto = out.File
-	file_whot_game_api_proto_goTypes = nil
-	file_whot_game_api_proto_depIdxs = nil
+	File_whot_whot_game_api_proto = out.File
+	file_whot_whot_game_api_proto_goTypes = nil
+	file_whot_whot_game_api_proto_depIdxs = nil
 }
