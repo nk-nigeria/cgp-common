@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	_ "github.com/lib/pq"
-	pb "github.com/nakama-nigeria/cgp-common/proto"
+	pb "github.com/nk-nigeria/cgp-common/proto"
 	"github.com/stretchr/testify/assert"
 )
 

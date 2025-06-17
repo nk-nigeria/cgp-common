@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nakama-nigeria/cgp-common/lib"
-	pb "github.com/nakama-nigeria/cgp-common/proto"
+	"github.com/nk-nigeria/cgp-common/lib"
+	pb "github.com/nk-nigeria/cgp-common/proto"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )

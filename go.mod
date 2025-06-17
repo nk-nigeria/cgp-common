@@ -1,4 +1,4 @@
-module github.com/nakama-nigeria/cgp-common
+module github.com/nk-nigeria/cgp-common
 
 go 1.24.3
 
