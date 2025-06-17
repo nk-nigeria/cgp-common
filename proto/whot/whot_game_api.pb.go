@@ -88,13 +88,13 @@ const (
 	CardRank_RANK_3           CardRank = 3
 	CardRank_RANK_4           CardRank = 4
 	CardRank_RANK_5           CardRank = 5
-	CardRank_RANK_7           CardRank = 6
-	CardRank_RANK_8           CardRank = 7
-	CardRank_RANK_10          CardRank = 8
-	CardRank_RANK_11          CardRank = 9
-	CardRank_RANK_12          CardRank = 10
-	CardRank_RANK_13          CardRank = 11
-	CardRank_RANK_14          CardRank = 12
+	CardRank_RANK_7           CardRank = 7
+	CardRank_RANK_8           CardRank = 8
+	CardRank_RANK_10          CardRank = 10
+	CardRank_RANK_11          CardRank = 11
+	CardRank_RANK_12          CardRank = 12
+	CardRank_RANK_13          CardRank = 13
+	CardRank_RANK_14          CardRank = 14
 	CardRank_RANK_20          CardRank = 20
 )
 
@@ -107,13 +107,13 @@ var (
 		3:  "RANK_3",
 		4:  "RANK_4",
 		5:  "RANK_5",
-		6:  "RANK_7",
-		7:  "RANK_8",
-		8:  "RANK_10",
-		9:  "RANK_11",
-		10: "RANK_12",
-		11: "RANK_13",
-		12: "RANK_14",
+		7:  "RANK_7",
+		8:  "RANK_8",
+		10: "RANK_10",
+		11: "RANK_11",
+		12: "RANK_12",
+		13: "RANK_13",
+		14: "RANK_14",
 		20: "RANK_20",
 	}
 	CardRank_value = map[string]int32{
@@ -123,13 +123,13 @@ var (
 		"RANK_3":           3,
 		"RANK_4":           4,
 		"RANK_5":           5,
-		"RANK_7":           6,
-		"RANK_8":           7,
-		"RANK_10":          8,
-		"RANK_11":          9,
-		"RANK_12":          10,
-		"RANK_13":          11,
-		"RANK_14":          12,
+		"RANK_7":           7,
+		"RANK_8":           8,
+		"RANK_10":          10,
+		"RANK_11":          11,
+		"RANK_12":          12,
+		"RANK_13":          13,
+		"RANK_14":          14,
 		"RANK_20":          20,
 	}
 )
@@ -1861,15 +1861,15 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\n" +
 	"\x06RANK_5\x10\x05\x12\n" +
 	"\n" +
-	"\x06RANK_7\x10\x06\x12\n" +
+	"\x06RANK_7\x10\a\x12\n" +
 	"\n" +
-	"\x06RANK_8\x10\a\x12\v\n" +
-	"\aRANK_10\x10\b\x12\v\n" +
-	"\aRANK_11\x10\t\x12\v\n" +
-	"\aRANK_12\x10\n" +
+	"\x06RANK_8\x10\b\x12\v\n" +
+	"\aRANK_10\x10\n" +
 	"\x12\v\n" +
-	"\aRANK_13\x10\v\x12\v\n" +
-	"\aRANK_14\x10\f\x12\v\n" +
+	"\aRANK_11\x10\v\x12\v\n" +
+	"\aRANK_12\x10\f\x12\v\n" +
+	"\aRANK_13\x10\r\x12\v\n" +
+	"\aRANK_14\x10\x0e\x12\v\n" +
 	"\aRANK_20\x10\x14*\xdd\x01\n" +
 	"\rOpCodeRequest\x12\x16\n" +
 	"\x12OPCODE_UNSPECIFIED\x10\x00\x12\x1b\n" +
