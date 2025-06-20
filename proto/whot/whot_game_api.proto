@@ -121,7 +121,6 @@ message UpdateDeal {
 message UpdateGameState {
   GameState state = 1;
   int64 count_down = 2;
-  repeated PresenceCards presenceCards = 3;
 }
 
 message UpdateCardState {
@@ -134,6 +133,8 @@ message UpdateCardState {
   int32 pick_penalty = 7;
   string target_user_id = 8;
   bool is_auto_play = 9;
+  int32 deck_count = 10;
+  map<string, int32> player_card_counts = 11;
 }
 
 enum CardEvent {
@@ -160,23 +161,17 @@ enum WhotEndGameReason {
   REASON_DECK_EMPTY = 1;         
 }
 
-message WhotScoreResult {
-  int64 total_points = 1;       
-  int32 remaining_cards = 2;     
-  bool is_winner = 3;            
-  double win_factor = 4;         
-}
-
 message WhotPlayerResult {
   string user_id = 1;
-  WhotScoreResult score = 2;     
-  repeated Card remaining_cards = 3;
+  int64 total_points = 2;
+  double win_factor = 3;     
+  bool is_winner = 4; 
+  repeated Card remaining_cards = 5;
 }
 
 message UpdateFinish {
   repeated WhotPlayerResult results = 1;
   WhotEndGameReason end_reason = 2;
-  string winner_id = 3; 
   Jackpot jackpot = 4;
   Jackpot jp_treasure = 5;
 }
