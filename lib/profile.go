@@ -28,7 +28,7 @@ func GetAccounts(ctx context.Context, db *sql.DB, userIds ...string) ([]*MyAccou
 	query := `
 SELECT u.id, u.username, u.display_name, u.avatar_url, u.lang_tag, u.location, u.timezone, u.metadata, u.wallet,
 	u.email, u.apple_id, u.facebook_id, u.facebook_instant_game_id, u.google_id, u.gamecenter_id, u.steam_id, u.custom_id, u.edge_count,
-	u.sid
+	ue.sid
 FROM users u
 JOIN users_ext ue ON u.id = ue.id
 WHERE u.id::text IN (` + "'" + strings.Join(userIds, "','") + "'" + `)`
