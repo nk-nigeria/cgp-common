@@ -113,7 +113,10 @@ func (l *botLoader) GetFreeBot(num int) ([]*BotPresence, error) {
 	for _, userBot := range ml {
 		userBot.IsFree = false
 		delete(l.userBotFree, userBot.User.Id)
-		l.maintainChipBalance(userBot.User.Id)
+		err := l.maintainChipBalance(userBot.User.Id)
+		if err != nil {
+			logger.Error("maintainChipBalance error for user %s: %v", userBot.User.Id, err)
+		}
 	}
 	return ml, nil
 }
@@ -136,7 +139,9 @@ func (l *botLoader) maintainChipBalance(userId string) error {
 	if err != nil {
 		return err
 	}
+	logger.Debug("maintainChipBalance for user %s, current chip balance: %d", userId, profile.AccountChip)
 	if profile.AccountChip < l.minChipBalance {
+		logger.Debug("User %s has chip balance %d, which is less than minimum required %d. Adding chips.", userId, profile.AccountChip, l.minChipBalance)
 		ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 		query := `UPDATE users AS u SET wallet = u.wallet || jsonb_build_object('chips',` + strconv.FormatInt(l.minChipBalance, 10) + `) WHERE id = $1;`
