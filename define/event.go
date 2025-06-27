@@ -10,9 +10,9 @@ const (
 type NakEvent string
 
 const (
-	NakEventMatchJoin  NakEvent = "nakama_match_end"
+	NakEventMatchJoin  NakEvent = "nakama_match_join"
 	NakEventMatchLeave NakEvent = "nakama_match_leave"
-	NakEventMatchEnd   NakEvent = "nakama_match_join"
+	NakEventMatchEnd   NakEvent = "nakama_match_end"
 
 	NakEventRuleLuckyChange = "nakama_rule_lucky_change"
 )
