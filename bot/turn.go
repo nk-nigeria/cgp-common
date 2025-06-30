@@ -2,14 +2,14 @@ package bot
 
 import "sort"
 
-type botTurn struct {
+type BotTurn struct {
 	maxTick int
 	ticks   []int
 	fnTurn  func()
 }
 
-func NewBotTurn(minTick, maxTick int, maxOccur int, fnTurn func()) *botTurn {
-	b := &botTurn{
+func NewBotTurn(minTick, maxTick int, maxOccur int, fnTurn func()) *BotTurn {
+	b := &BotTurn{
 		maxTick: maxTick,
 		fnTurn:  fnTurn,
 	}
@@ -42,7 +42,7 @@ outer:
 	return b
 }
 
-func (b *botTurn) Loop() bool {
+func (b *BotTurn) Loop() bool {
 	if len(b.ticks) == 0 {
 		return false
 	}

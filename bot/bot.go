@@ -62,7 +62,7 @@ var _ runtime.MatchData = (*botMatchData)(nil)
 type BotPresence struct {
 	*lib.MyAccount
 	Tick   int
-	turn   *botTurn
+	turn   *BotTurn
 	IsFree bool
 }
 
