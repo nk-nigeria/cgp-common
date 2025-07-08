@@ -172,6 +172,7 @@ const (
 	OpCodeRequest_OPCODE_REQUEST_DRAW_CARD   OpCodeRequest = 4 // client yêu cầu rút bài
 	OpCodeRequest_OPCODE_REQUEST_CALL_WHOT   OpCodeRequest = 5 // nếu client đánh WHOT, call lựa chọn suit
 	OpCodeRequest_OPCODE_USER_INTERACT_CARDS OpCodeRequest = 6 // client tương tác với cards
+	OpCodeRequest_OPCODE_REQUEST_SPIN        OpCodeRequest = 7 // game slots
 )
 
 // Enum value maps for OpCodeRequest.
@@ -184,6 +185,7 @@ var (
 		4: "OPCODE_REQUEST_DRAW_CARD",
 		5: "OPCODE_REQUEST_CALL_WHOT",
 		6: "OPCODE_USER_INTERACT_CARDS",
+		7: "OPCODE_REQUEST_SPIN",
 	}
 	OpCodeRequest_value = map[string]int32{
 		"OPCODE_UNSPECIFIED":         0,
@@ -193,6 +195,7 @@ var (
 		"OPCODE_REQUEST_DRAW_CARD":   4,
 		"OPCODE_REQUEST_CALL_WHOT":   5,
 		"OPCODE_USER_INTERACT_CARDS": 6,
+		"OPCODE_REQUEST_SPIN":        7,
 	}
 )
 
@@ -1820,7 +1823,7 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\aRANK_12\x10\f\x12\v\n" +
 	"\aRANK_13\x10\r\x12\v\n" +
 	"\aRANK_14\x10\x0e\x12\v\n" +
-	"\aRANK_20\x10\x14*\xdd\x01\n" +
+	"\aRANK_20\x10\x14*\xf6\x01\n" +
 	"\rOpCodeRequest\x12\x16\n" +
 	"\x12OPCODE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17OPCODE_REQUEST_NEW_GAME\x10\x01\x12\x1d\n" +
@@ -1828,7 +1831,8 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\x18OPCODE_REQUEST_PLAY_CARD\x10\x03\x12\x1c\n" +
 	"\x18OPCODE_REQUEST_DRAW_CARD\x10\x04\x12\x1c\n" +
 	"\x18OPCODE_REQUEST_CALL_WHOT\x10\x05\x12\x1e\n" +
-	"\x1aOPCODE_USER_INTERACT_CARDS\x10\x06*\xa0\x03\n" +
+	"\x1aOPCODE_USER_INTERACT_CARDS\x10\x06\x12\x17\n" +
+	"\x13OPCODE_REQUEST_SPIN\x10\a*\xa0\x03\n" +
 	"\fOpCodeUpdate\x12\x1d\n" +
 	"\x19OPCODE_UPDATE_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13OPCODE_UPDATE_TABLE\x10\x01\x12\x16\n" +
