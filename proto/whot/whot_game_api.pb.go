@@ -166,36 +166,57 @@ type OpCodeRequest int32
 const (
 	OpCodeRequest_OPCODE_UNSPECIFIED OpCodeRequest = 0
 	// New game round starting.
-	OpCodeRequest_OPCODE_REQUEST_NEW_GAME    OpCodeRequest = 1
-	OpCodeRequest_OPCODE_REQUEST_LEAVE_GAME  OpCodeRequest = 2
-	OpCodeRequest_OPCODE_REQUEST_PLAY_CARD   OpCodeRequest = 3 // client chơi 1 lá
-	OpCodeRequest_OPCODE_REQUEST_DRAW_CARD   OpCodeRequest = 4 // client yêu cầu rút bài
-	OpCodeRequest_OPCODE_REQUEST_CALL_WHOT   OpCodeRequest = 5 // nếu client đánh WHOT, call lựa chọn suit
-	OpCodeRequest_OPCODE_USER_INTERACT_CARDS OpCodeRequest = 6 // client tương tác với cards
-	OpCodeRequest_OPCODE_REQUEST_SPIN        OpCodeRequest = 7 // game slots
+	OpCodeRequest_OPCODE_REQUEST_NEW_GAME        OpCodeRequest = 1
+	OpCodeRequest_OPCODE_REQUEST_LEAVE_GAME      OpCodeRequest = 2
+	OpCodeRequest_OPCODE_REQUEST_PLAY_CARD       OpCodeRequest = 3 // client chơi 1 lá
+	OpCodeRequest_OPCODE_REQUEST_DRAW_CARD       OpCodeRequest = 4 // client yêu cầu rút bài
+	OpCodeRequest_OPCODE_REQUEST_CALL_WHOT       OpCodeRequest = 5 // nếu client đánh WHOT, call lựa chọn suit
+	OpCodeRequest_OPCODE_USER_INTERACT_CARDS     OpCodeRequest = 6 // client tương tác với cards
+	OpCodeRequest_OPCODE_REQUEST_SPIN            OpCodeRequest = 7 // game slots
+	OpCodeRequest_OPCODE_REQUEST_BET             OpCodeRequest = 8
+	OpCodeRequest_OPCODE_REQUEST_USER_IN_TABLE   OpCodeRequest = 9  // get table info
+	OpCodeRequest_OPCODE_REQUEST_INFO_TABLE      OpCodeRequest = 10 //
+	OpCodeRequest_OPCODE_REQUEST_HISTORY_RESULT  OpCodeRequest = 11 //
+	OpCodeRequest_OPCODE_REQUEST_BUY_SIXIANG_GEM OpCodeRequest = 12
+	OpCodeRequest_OPCODE_REQUEST_TIP_INGAME      OpCodeRequest = 13
+	OpCodeRequest_OPCODE_REQUEST_SYNC_TABLE      OpCodeRequest = 14
 )
 
 // Enum value maps for OpCodeRequest.
 var (
 	OpCodeRequest_name = map[int32]string{
-		0: "OPCODE_UNSPECIFIED",
-		1: "OPCODE_REQUEST_NEW_GAME",
-		2: "OPCODE_REQUEST_LEAVE_GAME",
-		3: "OPCODE_REQUEST_PLAY_CARD",
-		4: "OPCODE_REQUEST_DRAW_CARD",
-		5: "OPCODE_REQUEST_CALL_WHOT",
-		6: "OPCODE_USER_INTERACT_CARDS",
-		7: "OPCODE_REQUEST_SPIN",
+		0:  "OPCODE_UNSPECIFIED",
+		1:  "OPCODE_REQUEST_NEW_GAME",
+		2:  "OPCODE_REQUEST_LEAVE_GAME",
+		3:  "OPCODE_REQUEST_PLAY_CARD",
+		4:  "OPCODE_REQUEST_DRAW_CARD",
+		5:  "OPCODE_REQUEST_CALL_WHOT",
+		6:  "OPCODE_USER_INTERACT_CARDS",
+		7:  "OPCODE_REQUEST_SPIN",
+		8:  "OPCODE_REQUEST_BET",
+		9:  "OPCODE_REQUEST_USER_IN_TABLE",
+		10: "OPCODE_REQUEST_INFO_TABLE",
+		11: "OPCODE_REQUEST_HISTORY_RESULT",
+		12: "OPCODE_REQUEST_BUY_SIXIANG_GEM",
+		13: "OPCODE_REQUEST_TIP_INGAME",
+		14: "OPCODE_REQUEST_SYNC_TABLE",
 	}
 	OpCodeRequest_value = map[string]int32{
-		"OPCODE_UNSPECIFIED":         0,
-		"OPCODE_REQUEST_NEW_GAME":    1,
-		"OPCODE_REQUEST_LEAVE_GAME":  2,
-		"OPCODE_REQUEST_PLAY_CARD":   3,
-		"OPCODE_REQUEST_DRAW_CARD":   4,
-		"OPCODE_REQUEST_CALL_WHOT":   5,
-		"OPCODE_USER_INTERACT_CARDS": 6,
-		"OPCODE_REQUEST_SPIN":        7,
+		"OPCODE_UNSPECIFIED":             0,
+		"OPCODE_REQUEST_NEW_GAME":        1,
+		"OPCODE_REQUEST_LEAVE_GAME":      2,
+		"OPCODE_REQUEST_PLAY_CARD":       3,
+		"OPCODE_REQUEST_DRAW_CARD":       4,
+		"OPCODE_REQUEST_CALL_WHOT":       5,
+		"OPCODE_USER_INTERACT_CARDS":     6,
+		"OPCODE_REQUEST_SPIN":            7,
+		"OPCODE_REQUEST_BET":             8,
+		"OPCODE_REQUEST_USER_IN_TABLE":   9,
+		"OPCODE_REQUEST_INFO_TABLE":      10,
+		"OPCODE_REQUEST_HISTORY_RESULT":  11,
+		"OPCODE_REQUEST_BUY_SIXIANG_GEM": 12,
+		"OPCODE_REQUEST_TIP_INGAME":      13,
+		"OPCODE_REQUEST_SYNC_TABLE":      14,
 	}
 )
 
@@ -243,6 +264,12 @@ const (
 	OpCodeUpdate_OPCODE_UPDATE_WALLET           OpCodeUpdate = 11
 	OpCodeUpdate_OPCODE_KICK_OFF_THE_TABLE      OpCodeUpdate = 12
 	OpCodeUpdate_OPCODE_UPDATE_USER_INFO        OpCodeUpdate = 13
+	OpCodeUpdate_OPCODE_USER_IN_TABLE_INFO      OpCodeUpdate = 14
+	OpCodeUpdate_OPCODE_ERROR                   OpCodeUpdate = 15
+	OpCodeUpdate_OPCODE_BUY_SIXIANG_GEM         OpCodeUpdate = 16
+	OpCodeUpdate_OPCODE_PLAYER_CHANGE           OpCodeUpdate = 17
+	OpCodeUpdate_OPCODE_RESPONSE_TIP_INGAME     OpCodeUpdate = 18
+	OpCodeUpdate_OPCODE_RESPONSE_SYNC_TABLE     OpCodeUpdate = 19
 )
 
 // Enum value maps for OpCodeUpdate.
@@ -262,6 +289,12 @@ var (
 		11: "OPCODE_UPDATE_WALLET",
 		12: "OPCODE_KICK_OFF_THE_TABLE",
 		13: "OPCODE_UPDATE_USER_INFO",
+		14: "OPCODE_USER_IN_TABLE_INFO",
+		15: "OPCODE_ERROR",
+		16: "OPCODE_BUY_SIXIANG_GEM",
+		17: "OPCODE_PLAYER_CHANGE",
+		18: "OPCODE_RESPONSE_TIP_INGAME",
+		19: "OPCODE_RESPONSE_SYNC_TABLE",
 	}
 	OpCodeUpdate_value = map[string]int32{
 		"OPCODE_UPDATE_UNSPECIFIED":      0,
@@ -278,6 +311,12 @@ var (
 		"OPCODE_UPDATE_WALLET":           11,
 		"OPCODE_KICK_OFF_THE_TABLE":      12,
 		"OPCODE_UPDATE_USER_INFO":        13,
+		"OPCODE_USER_IN_TABLE_INFO":      14,
+		"OPCODE_ERROR":                   15,
+		"OPCODE_BUY_SIXIANG_GEM":         16,
+		"OPCODE_PLAYER_CHANGE":           17,
+		"OPCODE_RESPONSE_TIP_INGAME":     18,
+		"OPCODE_RESPONSE_SYNC_TABLE":     19,
 	}
 )
 
@@ -1823,7 +1862,7 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\aRANK_12\x10\f\x12\v\n" +
 	"\aRANK_13\x10\r\x12\v\n" +
 	"\aRANK_14\x10\x0e\x12\v\n" +
-	"\aRANK_20\x10\x14*\xf6\x01\n" +
+	"\aRANK_20\x10\x14*\xd4\x03\n" +
 	"\rOpCodeRequest\x12\x16\n" +
 	"\x12OPCODE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17OPCODE_REQUEST_NEW_GAME\x10\x01\x12\x1d\n" +
@@ -1832,7 +1871,15 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\x18OPCODE_REQUEST_DRAW_CARD\x10\x04\x12\x1c\n" +
 	"\x18OPCODE_REQUEST_CALL_WHOT\x10\x05\x12\x1e\n" +
 	"\x1aOPCODE_USER_INTERACT_CARDS\x10\x06\x12\x17\n" +
-	"\x13OPCODE_REQUEST_SPIN\x10\a*\xa0\x03\n" +
+	"\x13OPCODE_REQUEST_SPIN\x10\a\x12\x16\n" +
+	"\x12OPCODE_REQUEST_BET\x10\b\x12 \n" +
+	"\x1cOPCODE_REQUEST_USER_IN_TABLE\x10\t\x12\x1d\n" +
+	"\x19OPCODE_REQUEST_INFO_TABLE\x10\n" +
+	"\x12!\n" +
+	"\x1dOPCODE_REQUEST_HISTORY_RESULT\x10\v\x12\"\n" +
+	"\x1eOPCODE_REQUEST_BUY_SIXIANG_GEM\x10\f\x12\x1d\n" +
+	"\x19OPCODE_REQUEST_TIP_INGAME\x10\r\x12\x1d\n" +
+	"\x19OPCODE_REQUEST_SYNC_TABLE\x10\x0e*\xc7\x04\n" +
 	"\fOpCodeUpdate\x12\x1d\n" +
 	"\x19OPCODE_UPDATE_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13OPCODE_UPDATE_TABLE\x10\x01\x12\x16\n" +
@@ -1848,7 +1895,13 @@ const file_whot_game_api_proto_rawDesc = "" +
 	"\x12\x18\n" +
 	"\x14OPCODE_UPDATE_WALLET\x10\v\x12\x1d\n" +
 	"\x19OPCODE_KICK_OFF_THE_TABLE\x10\f\x12\x1b\n" +
-	"\x17OPCODE_UPDATE_USER_INFO\x10\r*\xa0\x01\n" +
+	"\x17OPCODE_UPDATE_USER_INFO\x10\r\x12\x1d\n" +
+	"\x19OPCODE_USER_IN_TABLE_INFO\x10\x0e\x12\x10\n" +
+	"\fOPCODE_ERROR\x10\x0f\x12\x1a\n" +
+	"\x16OPCODE_BUY_SIXIANG_GEM\x10\x10\x12\x18\n" +
+	"\x14OPCODE_PLAYER_CHANGE\x10\x11\x12\x1e\n" +
+	"\x1aOPCODE_RESPONSE_TIP_INGAME\x10\x12\x12\x1e\n" +
+	"\x1aOPCODE_RESPONSE_SYNC_TABLE\x10\x13*\xa0\x01\n" +
 	"\tGameState\x12\x14\n" +
 	"\x10GameStateUnknown\x10\x00\x12\x11\n" +
 	"\rGameStateIdle\x10\x01\x12\x15\n" +
