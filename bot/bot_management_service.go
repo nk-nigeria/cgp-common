@@ -99,19 +99,7 @@ func newBotManagementService(db *sql.DB, gameCode string, minChipBalance int64) 
 	}
 
 	// Load default config
-	service.config = &BotConfig{
-		BotJoinRules: []BotJoinRule{
-			{
-				MinBet:        0,
-				MaxBet:        999999999,
-				MinUsers:      1,
-				MaxUsers:      3,
-				JoinPercent:   50,
-				RandomTimeMin: 1,
-				RandomTimeMax: 5,
-			},
-		},
-	}
+	service.config = &BotConfig{}
 
 	// Start cleanup goroutine
 	service.startCleanupRoutine()
