@@ -389,7 +389,7 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 
 	// Calculate random delay (using join rule timing as reference)
 	// You can add specific leave timing rules if needed
-	delay := rand.Intn(9) + 1 // 1-9 seconds default
+	delay := rand.Intn(3) + 1 // 1-3 seconds default
 	expireTime := time.Now().Add(time.Duration(delay) * time.Second)
 
 	fmt.Printf("[DEBUG] Creating delayed bot leave request: matchID=%s, botUserID=%s, delay=%ds, expires=%v\n",
