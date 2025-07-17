@@ -19,6 +19,9 @@ type BotIntegration interface {
 	// AddBotToMatch adds bots to the current match
 	AddBotToMatch(ctx context.Context, numBots int) error
 
+	// RemoveBotFromMatch removes bots from the current match
+	RemoveBotFromMatch(ctx context.Context, botUserID string) error
+
 	// GetMaxPlayers returns the maximum number of players allowed in a match
 	GetMaxPlayers() int
 
@@ -60,8 +63,8 @@ type BotIntegrationHelper struct {
 }
 
 // NewBotIntegrationHelper creates a new bot integration helper
-func NewBotIntegrationHelper(db *sql.DB, integration BotIntegration) *BotIntegrationHelper {
-	botService := GetBotManagementService(db, integration.GetGameCode(), integration.GetMinChipBalance())
+func NewBotIntegrationHelper(db *sql.DB, integration BotIntegration, botLoader *botLoader) *BotIntegrationHelper {
+	botService := GetBotManagementService(db, botLoader)
 
 	return &BotIntegrationHelper{
 		botService:  botService,
@@ -172,7 +175,7 @@ func (h *BotIntegrationHelper) DebugPendingRequests() {
 }
 
 // ProcessBotLogic processes all bot-related logic for the current match
-func (h *BotIntegrationHelper) ProcessBotLogic(ctx context.Context) error {
+func (h *BotIntegrationHelper) ProcessJoinBotLogic(ctx context.Context) error {
 	// Skip if match is full
 	if h.integration.IsMatchFull() {
 		return nil

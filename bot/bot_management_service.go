@@ -95,20 +95,20 @@ var (
 )
 
 // GetBotManagementService returns the singleton instance of BotManagementService
-func GetBotManagementService(db *sql.DB, gameCode string, minChipBalance int64) *BotManagementService {
+func GetBotManagementService(db *sql.DB, botLoader *botLoader) *BotManagementService {
 	botServiceOnce.Do(func() {
-		botServiceInstance = newBotManagementService(db, gameCode, minChipBalance)
+		botServiceInstance = newBotManagementService(db, botLoader)
 	})
 	return botServiceInstance
 }
 
-func newBotManagementService(db *sql.DB, gameCode string, minChipBalance int64) *BotManagementService {
+func newBotManagementService(db *sql.DB, botLoader *botLoader) *BotManagementService {
 	service := &BotManagementService{
 		db:            db,
 		joinRequests:  make(map[string]*BotJoinRequest),
 		leaveRequests: make(map[string]*BotLeaveRequest),
 		stopCleanup:   make(chan bool),
-		botLoader:     NewBotLoader(db, gameCode, minChipBalance),
+		botLoader:     botLoader,
 	}
 
 	// Load default config
