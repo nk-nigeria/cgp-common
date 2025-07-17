@@ -95,6 +95,12 @@ func (h *BotIntegrationHelper) GetPendingBotJoin(ctx context.Context) *BotJoinRe
 	return h.botService.GetPendingBotJoin(matchInfo.MatchID)
 }
 
+// GetPendingBotLeave checks if there's a pending bot leave request
+func (h *BotIntegrationHelper) GetPendingBotLeave(ctx context.Context) *BotLeaveRequest {
+	matchInfo := h.integration.GetMatchInfo(ctx)
+	return h.botService.GetPendingBotLeave(matchInfo.MatchID)
+}
+
 // ExecutePendingBotJoin executes a pending bot join request
 func (h *BotIntegrationHelper) ExecutePendingBotJoin(ctx context.Context, pendingRequest *BotJoinRequest) error {
 	if pendingRequest != nil {
@@ -111,10 +117,27 @@ func (h *BotIntegrationHelper) ExecutePendingBotJoin(ctx context.Context, pendin
 	return nil
 }
 
+// ExecutePendingBotLeave executes a pending bot leave request
+func (h *BotIntegrationHelper) ExecutePendingBotLeave(ctx context.Context, pendingRequest *BotLeaveRequest) error {
+	if pendingRequest != nil {
+		// Free the bot back to the pool
+		h.botService.FreeBot(pendingRequest.BotUserID)
+
+		// Remove the executed request
+		matchInfo := h.integration.GetMatchInfo(ctx)
+		h.botService.RemovePendingLeaveRequest(matchInfo.MatchID)
+	}
+	return nil
+}
+
 // ShouldBotLeave checks if bot should leave the current match
 func (h *BotIntegrationHelper) ShouldBotLeave(ctx context.Context) bool {
 	matchInfo := h.integration.GetMatchInfo(ctx)
-	return h.botService.ShouldBotLeave(ctx, matchInfo.BetAmount, matchInfo.LastGameResult)
+
+	// Add match_id to context
+	ctxWithMatchID := context.WithValue(ctx, "match_id", matchInfo.MatchID)
+
+	return h.botService.ShouldBotLeave(ctxWithMatchID, matchInfo.BetAmount, matchInfo.LastGameResult)
 }
 
 // ShouldBotCreateTable checks if bot should create a new table
@@ -163,6 +186,26 @@ func (h *BotIntegrationHelper) ProcessBotLogic(ctx context.Context) error {
 	// Check for pending bot joins
 	if pendingRequest := h.GetPendingBotJoin(ctx); pendingRequest != nil {
 		return h.ExecutePendingBotJoin(ctx, pendingRequest)
+	}
+
+	return nil
+}
+
+// ProcessBotLeaveLogic processes bot leave logic for the current match
+func (h *BotIntegrationHelper) ProcessBotLeaveLogic(ctx context.Context, botUserID string) error {
+	// Add bot_user_id to context for leave logic
+	ctxWithBotID := context.WithValue(ctx, "bot_user_id", botUserID)
+
+	// Check for immediate bot leave
+	if h.ShouldBotLeave(ctxWithBotID) {
+		// Free the bot back to the pool
+		h.botService.FreeBot(botUserID)
+		return nil
+	}
+
+	// Check for pending bot leaves
+	if pendingRequest := h.GetPendingBotLeave(ctx); pendingRequest != nil {
+		return h.ExecutePendingBotLeave(ctx, pendingRequest)
 	}
 
 	return nil

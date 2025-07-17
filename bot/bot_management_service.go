@@ -18,6 +18,16 @@ type BotJoinRequest struct {
 	Rule       *BotJoinRule
 }
 
+// BotLeaveRequest represents a pending bot leave request with timer
+type BotLeaveRequest struct {
+	MatchID    string
+	BetAmount  int64
+	LastResult int
+	BotUserID  string
+	ExpireTime time.Time
+	Rule       *BotLeaveRule
+}
+
 // BotJoinRule represents bot join configuration
 type BotJoinRule struct {
 	MinBet        int64 `json:"min_bet"`
@@ -67,13 +77,15 @@ type BotConfig struct {
 
 // BotManagementService manages bot behavior with optimized timing
 type BotManagementService struct {
-	db              *sql.DB
-	config          *BotConfig
-	joinRequests    map[string]*BotJoinRequest // key: matchID
-	joinRequestsMux sync.RWMutex
-	cleanupTicker   *time.Ticker
-	stopCleanup     chan bool
-	botLoader       *botLoader
+	db               *sql.DB
+	config           *BotConfig
+	joinRequests     map[string]*BotJoinRequest  // key: matchID
+	leaveRequests    map[string]*BotLeaveRequest // key: matchID
+	joinRequestsMux  sync.RWMutex
+	leaveRequestsMux sync.RWMutex
+	cleanupTicker    *time.Ticker
+	stopCleanup      chan bool
+	botLoader        *botLoader
 }
 
 // Singleton instance
@@ -92,10 +104,11 @@ func GetBotManagementService(db *sql.DB, gameCode string, minChipBalance int64) 
 
 func newBotManagementService(db *sql.DB, gameCode string, minChipBalance int64) *BotManagementService {
 	service := &BotManagementService{
-		db:           db,
-		joinRequests: make(map[string]*BotJoinRequest),
-		stopCleanup:  make(chan bool),
-		botLoader:    NewBotLoader(db, gameCode, minChipBalance),
+		db:            db,
+		joinRequests:  make(map[string]*BotJoinRequest),
+		leaveRequests: make(map[string]*BotLeaveRequest),
+		stopCleanup:   make(chan bool),
+		botLoader:     NewBotLoader(db, gameCode, minChipBalance),
 	}
 
 	// Load default config
@@ -269,6 +282,38 @@ func (s *BotManagementService) GetPendingBotJoin(matchID string) *BotJoinRequest
 	return nil
 }
 
+// GetPendingBotLeave checks if there's a pending bot leave request that should be executed
+func (s *BotManagementService) GetPendingBotLeave(matchID string) *BotLeaveRequest {
+	s.leaveRequestsMux.RLock()
+	defer s.leaveRequestsMux.RUnlock()
+
+	fmt.Printf("[DEBUG] GetPendingBotLeave called for matchID=%s\n", matchID)
+	fmt.Printf("[DEBUG] Current pending leave requests count: %d\n", len(s.leaveRequests))
+
+	if request, exists := s.leaveRequests[matchID]; exists {
+		now := time.Now()
+		fmt.Printf("[DEBUG] Found pending leave request for matchID=%s, expires=%v, now=%v\n",
+			matchID, request.ExpireTime, now)
+
+		timeUntilExpire := request.ExpireTime.Sub(now)
+		fmt.Printf("[DEBUG] Time until expire: %v\n", timeUntilExpire)
+
+		if now.After(request.ExpireTime) {
+			fmt.Printf("[DEBUG] Leave request has expired, returning it for execution\n")
+			// Request has expired, return it for execution
+			// Note: We don't remove it immediately to avoid race condition
+			// It will be removed after successful execution
+			return request
+		} else {
+			fmt.Printf("[DEBUG] Leave request not yet expired, still waiting\n")
+		}
+	} else {
+		fmt.Printf("[DEBUG] No pending leave request found for matchID=%s\n", matchID)
+	}
+
+	return nil
+}
+
 // RemovePendingRequest removes a pending request for the given matchID
 func (s *BotManagementService) RemovePendingRequest(matchID string) {
 	s.joinRequestsMux.Lock()
@@ -280,13 +325,95 @@ func (s *BotManagementService) RemovePendingRequest(matchID string) {
 	}
 }
 
+// RemovePendingLeaveRequest removes a pending leave request for the given matchID
+func (s *BotManagementService) RemovePendingLeaveRequest(matchID string) {
+	s.leaveRequestsMux.Lock()
+	defer s.leaveRequestsMux.Unlock()
+
+	if _, exists := s.leaveRequests[matchID]; exists {
+		delete(s.leaveRequests, matchID)
+		fmt.Printf("[DEBUG] Removed pending leave request for matchID=%s\n", matchID)
+	}
+}
+
 // ShouldBotLeave determines if bot should leave match
 func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int64, lastResult int) bool {
 	rule := s.FindBotLeaveRule(betAmount, lastResult)
 	if rule == nil {
+		fmt.Printf("[DEBUG] No bot leave rule found for betAmount=%d, lastResult=%d\n", betAmount, lastResult)
 		return false
 	}
-	return rand.Intn(100) < rule.LeavePercent
+
+	fmt.Printf("[DEBUG] Found bot leave rule: betRange=[%d,%d), lastResult=%d, leavePercent=%d\n",
+		rule.MinBet, rule.MaxBet, rule.LastResult, rule.LeavePercent)
+
+	// Check leave probability
+	randomValue := rand.Intn(100)
+	if randomValue >= rule.LeavePercent {
+		fmt.Printf("[DEBUG] Bot leave failed probability check: random=%d >= leavePercent=%d\n", randomValue, rule.LeavePercent)
+		return false
+	}
+
+	fmt.Printf("[DEBUG] Bot leave passed probability check: random=%d < leavePercent=%d\n", randomValue, rule.LeavePercent)
+
+	// Get match ID from context
+	matchID, ok := ctx.Value("match_id").(string)
+	if !ok {
+		// If no match ID, use immediate leave (fallback)
+		fmt.Printf("[DEBUG] No match ID in context, using immediate leave\n")
+		return true
+	}
+
+	// Check if there's already a pending leave request for this match
+	s.leaveRequestsMux.RLock()
+	if existing, exists := s.leaveRequests[matchID]; exists {
+		s.leaveRequestsMux.RUnlock()
+		// Check if the existing request has expired
+		if time.Now().Before(existing.ExpireTime) {
+			fmt.Printf("[DEBUG] Bot leave request already pending for match %s, expires at %v\n", matchID, existing.ExpireTime)
+			return false // Still waiting
+		}
+		// Expired but not yet executed, don't create new request
+		fmt.Printf("[DEBUG] Bot leave request expired but not yet executed for match %s, skipping new request creation\n", matchID)
+		return false // Don't create new request, let the expired one be executed
+	} else {
+		s.leaveRequestsMux.RUnlock()
+	}
+
+	// For leave requests, we need to get a bot user ID from context
+	botUserID, ok := ctx.Value("bot_user_id").(string)
+	if !ok {
+		fmt.Printf("[DEBUG] No bot user ID in context, using immediate leave\n")
+		return true // Immediate leave if no bot user ID
+	}
+
+	// Calculate random delay (using join rule timing as reference)
+	// You can add specific leave timing rules if needed
+	delay := rand.Intn(9) + 1 // 1-9 seconds default
+	expireTime := time.Now().Add(time.Duration(delay) * time.Second)
+
+	fmt.Printf("[DEBUG] Creating delayed bot leave request: matchID=%s, botUserID=%s, delay=%ds, expires=%v\n",
+		matchID, botUserID, delay, expireTime)
+
+	// Create pending leave request
+	request := &BotLeaveRequest{
+		MatchID:    matchID,
+		BetAmount:  betAmount,
+		LastResult: lastResult,
+		BotUserID:  botUserID,
+		ExpireTime: expireTime,
+		Rule:       rule,
+	}
+
+	// Store the request
+	s.leaveRequestsMux.Lock()
+	s.leaveRequests[matchID] = request
+	s.leaveRequestsMux.Unlock()
+
+	fmt.Printf("[DEBUG] Stored pending leave request for matchID=%s, total pending leave requests: %d\n",
+		matchID, len(s.leaveRequests))
+
+	return false // Don't leave immediately
 }
 
 // ShouldBotCreateTable determines if bot should create table
@@ -347,14 +474,23 @@ func (s *BotManagementService) startCleanupRoutine() {
 func (s *BotManagementService) cleanupExpiredRequests() {
 	now := time.Now()
 
+	// Clean up expired join requests
 	s.joinRequestsMux.Lock()
-	defer s.joinRequestsMux.Unlock()
-
 	for matchID, request := range s.joinRequests {
 		if now.After(request.ExpireTime) {
 			delete(s.joinRequests, matchID)
 		}
 	}
+	s.joinRequestsMux.Unlock()
+
+	// Clean up expired leave requests
+	s.leaveRequestsMux.Lock()
+	for matchID, request := range s.leaveRequests {
+		if now.After(request.ExpireTime) {
+			delete(s.leaveRequests, matchID)
+		}
+	}
+	s.leaveRequestsMux.Unlock()
 }
 
 // Stop stops the cleanup routine
@@ -381,6 +517,24 @@ func (s *BotManagementService) DebugPendingRequests() {
 		}
 		fmt.Printf("[DEBUG] MatchID: %s, Status: %s, Expires: %v, BetAmount: %d, UserCount: %d\n",
 			matchID, status, request.ExpireTime, request.BetAmount, request.UserCount)
+	}
+	fmt.Printf("[DEBUG] =================================\n")
+
+	// Also show pending leave requests
+	s.leaveRequestsMux.RLock()
+	defer s.leaveRequestsMux.RUnlock()
+
+	fmt.Printf("[DEBUG] === Pending Bot Leave Requests ===\n")
+	fmt.Printf("[DEBUG] Total pending leave requests: %d\n", len(s.leaveRequests))
+
+	for matchID, request := range s.leaveRequests {
+		expired := now.After(request.ExpireTime)
+		status := "ACTIVE"
+		if expired {
+			status = "EXPIRED"
+		}
+		fmt.Printf("[DEBUG] MatchID: %s, Status: %s, Expires: %v, BotUserID: %s, BetAmount: %d, LastResult: %d\n",
+			matchID, status, request.ExpireTime, request.BotUserID, request.BetAmount, request.LastResult)
 	}
 	fmt.Printf("[DEBUG] =================================\n")
 }
