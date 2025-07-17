@@ -201,9 +201,7 @@ func (h *BotIntegrationHelper) ProcessBotLeaveLogic(ctx context.Context, botUser
 
 	// Check for immediate bot leave
 	if h.ShouldBotLeave(ctxWithBotID) {
-		// Free the bot back to the pool
-		h.botService.FreeBot(botUserID)
-		return nil
+		return h.integration.RemoveBotFromMatch(ctx, botUserID)
 	}
 
 	// Check for pending bot leaves
