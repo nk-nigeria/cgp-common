@@ -82,6 +82,7 @@ type BotManagementService struct {
 	joinRequests      map[string]*BotJoinRequest  // key: matchID
 	leaveRequests     map[string]*BotLeaveRequest // key: matchID
 	botLeaveDecisions map[string]bool             // key: matchID_botUserID, tracks if bot has been decided to leave
+	botJoinDecisions  map[string]bool             // key: matchID, tracks if join decision has been made for this match
 	joinRequestsMux   sync.RWMutex
 	leaveRequestsMux  sync.RWMutex
 	decisionsMux      sync.RWMutex
@@ -110,6 +111,7 @@ func newBotManagementService(db *sql.DB, botLoader *botLoader) *BotManagementSer
 		joinRequests:      make(map[string]*BotJoinRequest),
 		leaveRequests:     make(map[string]*BotLeaveRequest),
 		botLeaveDecisions: make(map[string]bool),
+		botJoinDecisions:  make(map[string]bool),
 		stopCleanup:       make(chan bool),
 		botLoader:         botLoader,
 	}
@@ -177,7 +179,7 @@ func (s *BotManagementService) FindBotGroupRule(vip int, mcb int64) *BotGroupRul
 	return nil
 }
 
-// ShouldBotJoin determines if bot should join match
+// ShouldBotJoin determines if bot should join match (only random once per match)
 func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int64, userCount int) bool {
 	rule := s.FindBotJoinRule(betAmount, userCount)
 	if rule == nil {
@@ -188,6 +190,24 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 	fmt.Printf("[DEBUG] Found bot join rule: betRange=[%d,%d), userRange=[%d,%d], joinPercent=%d\n",
 		rule.MinBet, rule.MaxBet, rule.MinUsers, rule.MaxUsers, rule.JoinPercent)
 
+	// Get match ID from context
+	matchID, ok := ctx.Value("match_id").(string)
+	if !ok {
+		// If no match ID, use immediate join (fallback)
+		fmt.Printf("[DEBUG] No match ID in context, using immediate join\n")
+		return true
+	}
+
+	// Check if a join decision has already been made for this match
+	s.decisionsMux.RLock()
+	alreadyDecided := s.botJoinDecisions[matchID]
+	s.decisionsMux.RUnlock()
+
+	if alreadyDecided {
+		fmt.Printf("[DEBUG] Bot join decision already made for match %s, skipping new decision\n", matchID)
+		return false // Don't create new request, let the existing one be processed
+	}
+
 	// Check join probability
 	randomValue := rand.Intn(100)
 	if randomValue >= rule.JoinPercent {
@@ -196,14 +216,6 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 	}
 
 	fmt.Printf("[DEBUG] Bot join passed probability check: random=%d < joinPercent=%d\n", randomValue, rule.JoinPercent)
-
-	// Get match ID from context
-	matchID, ok := ctx.Value("match_id").(string)
-	if !ok {
-		// If no match ID, use immediate join (fallback)
-		fmt.Printf("[DEBUG] No match ID in context, using immediate join\n")
-		return true
-	}
 
 	// Check if there's already a pending request for this match
 	s.joinRequestsMux.RLock()
@@ -221,7 +233,7 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 		s.joinRequestsMux.RUnlock()
 	}
 
-	// Calculate random delay
+	// Calculate random delay (considering total game time: matching 10s + preparing 10s = 20s max)
 	fmt.Printf("[DEBUG] RandomTimeMin=%d, RandomTimeMax=%d\n", rule.RandomTimeMin, rule.RandomTimeMax)
 	if rule.RandomTimeMax > rule.RandomTimeMin {
 		delay := rand.Intn(rule.RandomTimeMax-rule.RandomTimeMin+1) + rule.RandomTimeMin
@@ -243,6 +255,11 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 		s.joinRequests[matchID] = request
 		s.joinRequestsMux.Unlock()
 
+		// Mark that a decision has been made for this match
+		s.decisionsMux.Lock()
+		s.botJoinDecisions[matchID] = true
+		s.decisionsMux.Unlock()
+
 		fmt.Printf("[DEBUG] Stored pending request for matchID=%s, total pending requests: %d\n",
 			matchID, len(s.joinRequests))
 
@@ -251,6 +268,31 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 
 	fmt.Printf("[DEBUG] Bot join approved immediately\n")
 	return true // Join immediately if no random delay
+}
+
+// ShouldBotJoinNow checks if bot should join based on time (without random)
+func (s *BotManagementService) ShouldBotJoinNow(ctx context.Context) bool {
+	matchID, ok := ctx.Value("match_id").(string)
+	if !ok {
+		return false
+	}
+
+	// Check if there's a pending join request for this match
+	s.joinRequestsMux.RLock()
+	request, exists := s.joinRequests[matchID]
+	s.joinRequestsMux.RUnlock()
+
+	if !exists {
+		return false
+	}
+
+	// Check if the request has expired
+	if time.Now().After(request.ExpireTime) {
+		fmt.Printf("[DEBUG] Bot join request expired for match %s, should join now\n", matchID)
+		return true
+	}
+
+	return false
 }
 
 // GetPendingBotJoin checks if there's a pending bot join request that should be executed
@@ -566,6 +608,38 @@ func (s *BotManagementService) GetBotLeaveRemainingTime(ctx context.Context, bot
 
 	// Check if this request is for the specific bot
 	if request.BotUserID != botUserID {
+		return 0, false
+	}
+
+	remaining := time.Until(request.ExpireTime)
+	if remaining <= 0 {
+		return 0, true // Expired
+	}
+
+	return remaining, true // Has pending request
+}
+
+// ClearBotJoinDecision clears the join decision for a specific match
+func (s *BotManagementService) ClearBotJoinDecision(matchID string) {
+	s.decisionsMux.Lock()
+	delete(s.botJoinDecisions, matchID)
+	s.decisionsMux.Unlock()
+	fmt.Printf("[DEBUG] Cleared bot join decision for match %s\n", matchID)
+}
+
+// GetBotJoinRemainingTime returns the remaining time for a bot join request
+func (s *BotManagementService) GetBotJoinRemainingTime(ctx context.Context) (time.Duration, bool) {
+	matchID, ok := ctx.Value("match_id").(string)
+	if !ok {
+		return 0, false
+	}
+
+	// Check if there's a pending join request for this match
+	s.joinRequestsMux.RLock()
+	request, exists := s.joinRequests[matchID]
+	s.joinRequestsMux.RUnlock()
+
+	if !exists {
 		return 0, false
 	}
 

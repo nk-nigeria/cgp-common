@@ -250,3 +250,43 @@ func (h *BotIntegrationHelper) ProcessBotLeaveLogic(ctx context.Context, botUser
 
 	return nil
 }
+
+// ShouldBotJoinNow checks if bot should join based on time (without random)
+func (h *BotIntegrationHelper) ShouldBotJoinNow(ctx context.Context) bool {
+	matchInfo := h.integration.GetMatchInfo(ctx)
+	ctxWithMatchID := context.WithValue(ctx, "match_id", matchInfo.MatchID)
+	return h.botService.ShouldBotJoinNow(ctxWithMatchID)
+}
+
+// CheckAndJoinExpiredBots checks if any bots should join based on their join time
+func (h *BotIntegrationHelper) CheckAndJoinExpiredBots(ctx context.Context) (bool, error) {
+	// Check if bot should join based on time (without random)
+	if h.ShouldBotJoinNow(ctx) {
+		fmt.Printf("[DEBUG] Bot should join now based on time\n")
+		// Add bot to match immediately
+		err := h.integration.AddBotToMatch(ctx, 1)
+		if err != nil {
+			return false, err
+		}
+		// Clear the decision for this match
+		matchInfo := h.integration.GetMatchInfo(ctx)
+		h.botService.ClearBotJoinDecision(matchInfo.MatchID)
+		return true, nil
+	}
+	return false, nil
+}
+
+// GetBotJoinRemainingTime returns the remaining time for a bot join request
+func (h *BotIntegrationHelper) GetBotJoinRemainingTime(ctx context.Context) (time.Duration, bool) {
+	matchInfo := h.integration.GetMatchInfo(ctx)
+	ctxWithMatchID := context.WithValue(ctx, "match_id", matchInfo.MatchID)
+	return h.botService.GetBotJoinRemainingTime(ctxWithMatchID)
+}
+
+// ClearBotJoinDecision clears the join decision for the current match
+func (h *BotIntegrationHelper) ClearBotJoinDecision(ctx context.Context) {
+	matchInfo := h.integration.GetMatchInfo(ctx)
+	h.botService.ClearBotJoinDecision(matchInfo.MatchID)
+}
+
+// GetPendingRequestsCount returns the number of active pending requests for the current match
