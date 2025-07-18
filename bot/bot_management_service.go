@@ -360,7 +360,7 @@ func (s *BotManagementService) GetPendingBotLeave(matchID string) *BotLeaveReque
 }
 
 // RemovePendingRequest removes a pending request for the given matchID
-func (s *BotManagementService) RemovePendingRequest(matchID string) {
+func (s *BotManagementService) RemovePendingJoinRequest(matchID string) {
 	s.joinRequestsMux.Lock()
 	defer s.joinRequestsMux.Unlock()
 

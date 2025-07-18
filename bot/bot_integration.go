@@ -117,7 +117,7 @@ func (h *BotIntegrationHelper) ExecutePendingBotJoin(ctx context.Context, pendin
 
 		// Remove the executed request
 		matchInfo := h.integration.GetMatchInfo(ctx)
-		h.botService.RemovePendingRequest(matchInfo.MatchID)
+		h.botService.RemovePendingJoinRequest(matchInfo.MatchID)
 	}
 	return nil
 }
@@ -206,8 +206,10 @@ func (h *BotIntegrationHelper) CheckAndKickExpiredBots(ctx context.Context, botU
 		if err != nil {
 			return false, err
 		}
+		matchInfo := h.integration.GetMatchInfo(ctx)
 		// Clear the decision for this bot
 		h.ClearBotLeaveDecision(ctx, botUserID)
+		h.botService.RemovePendingLeaveRequest(matchInfo.MatchID)
 		return true, nil
 	}
 	return false, nil
@@ -268,9 +270,13 @@ func (h *BotIntegrationHelper) CheckAndJoinExpiredBots(ctx context.Context) (boo
 		if err != nil {
 			return false, err
 		}
-		// Clear the decision for this match
+
+		// Clear both the decision and the pending request
 		matchInfo := h.integration.GetMatchInfo(ctx)
 		h.botService.ClearBotJoinDecision(matchInfo.MatchID)
+		h.botService.RemovePendingJoinRequest(matchInfo.MatchID)
+
+		fmt.Printf("[DEBUG] Bot joined and cleared pending request for match %s\n", matchInfo.MatchID)
 		return true, nil
 	}
 	return false, nil
