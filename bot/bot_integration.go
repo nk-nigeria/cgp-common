@@ -3,6 +3,8 @@ package bot
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"time"
 )
 
 // BotIntegration defines the interface that games must implement to integrate with the bot system
@@ -174,7 +176,44 @@ func (h *BotIntegrationHelper) DebugPendingRequests() {
 	h.botService.DebugPendingRequests()
 }
 
-// ProcessBotLogic processes all bot-related logic for the current match
+// ShouldBotBeKicked checks if a bot should be kicked based on time (without random)
+func (h *BotIntegrationHelper) ShouldBotBeKicked(ctx context.Context, botUserID string) bool {
+	matchInfo := h.integration.GetMatchInfo(ctx)
+	ctxWithMatchID := context.WithValue(ctx, "match_id", matchInfo.MatchID)
+	return h.botService.ShouldBotBeKicked(ctxWithMatchID, botUserID)
+}
+
+// ClearBotLeaveDecision clears the leave decision for a specific bot in a match
+func (h *BotIntegrationHelper) ClearBotLeaveDecision(ctx context.Context, botUserID string) {
+	matchInfo := h.integration.GetMatchInfo(ctx)
+	h.botService.ClearBotLeaveDecision(matchInfo.MatchID, botUserID)
+}
+
+// GetBotLeaveRemainingTime returns the remaining time for a bot leave request
+func (h *BotIntegrationHelper) GetBotLeaveRemainingTime(ctx context.Context, botUserID string) (time.Duration, bool) {
+	matchInfo := h.integration.GetMatchInfo(ctx)
+	ctxWithMatchID := context.WithValue(ctx, "match_id", matchInfo.MatchID)
+	return h.botService.GetBotLeaveRemainingTime(ctxWithMatchID, botUserID)
+}
+
+// CheckAndKickExpiredBots checks if any bots should be kicked based on their leave time
+func (h *BotIntegrationHelper) CheckAndKickExpiredBots(ctx context.Context, botUserID string) (bool, error) {
+	// Check if bot should be kicked based on time (without random)
+	if h.ShouldBotBeKicked(ctx, botUserID) {
+		fmt.Printf("[DEBUG] Bot %s should be kicked based on time\n", botUserID)
+		// Remove bot from match immediately
+		err := h.integration.RemoveBotFromMatch(ctx, botUserID)
+		if err != nil {
+			return false, err
+		}
+		// Clear the decision for this bot
+		h.ClearBotLeaveDecision(ctx, botUserID)
+		return true, nil
+	}
+	return false, nil
+}
+
+// ProcessJoinBotLogic processes all bot-related logic for the current match
 func (h *BotIntegrationHelper) ProcessJoinBotLogic(ctx context.Context) error {
 	// Skip if match is full
 	if h.integration.IsMatchFull() {

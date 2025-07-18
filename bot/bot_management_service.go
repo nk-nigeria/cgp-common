@@ -77,15 +77,17 @@ type BotConfig struct {
 
 // BotManagementService manages bot behavior with optimized timing
 type BotManagementService struct {
-	db               *sql.DB
-	config           *BotConfig
-	joinRequests     map[string]*BotJoinRequest  // key: matchID
-	leaveRequests    map[string]*BotLeaveRequest // key: matchID
-	joinRequestsMux  sync.RWMutex
-	leaveRequestsMux sync.RWMutex
-	cleanupTicker    *time.Ticker
-	stopCleanup      chan bool
-	botLoader        *botLoader
+	db                *sql.DB
+	config            *BotConfig
+	joinRequests      map[string]*BotJoinRequest  // key: matchID
+	leaveRequests     map[string]*BotLeaveRequest // key: matchID
+	botLeaveDecisions map[string]bool             // key: matchID_botUserID, tracks if bot has been decided to leave
+	joinRequestsMux   sync.RWMutex
+	leaveRequestsMux  sync.RWMutex
+	decisionsMux      sync.RWMutex
+	cleanupTicker     *time.Ticker
+	stopCleanup       chan bool
+	botLoader         *botLoader
 }
 
 // Singleton instance
@@ -104,11 +106,12 @@ func GetBotManagementService(db *sql.DB, botLoader *botLoader) *BotManagementSer
 
 func newBotManagementService(db *sql.DB, botLoader *botLoader) *BotManagementService {
 	service := &BotManagementService{
-		db:            db,
-		joinRequests:  make(map[string]*BotJoinRequest),
-		leaveRequests: make(map[string]*BotLeaveRequest),
-		stopCleanup:   make(chan bool),
-		botLoader:     botLoader,
+		db:                db,
+		joinRequests:      make(map[string]*BotJoinRequest),
+		leaveRequests:     make(map[string]*BotLeaveRequest),
+		botLeaveDecisions: make(map[string]bool),
+		stopCleanup:       make(chan bool),
+		botLoader:         botLoader,
 	}
 
 	// Load default config
@@ -364,22 +367,6 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 		return true
 	}
 
-	// Check if there's already a pending leave request for this match
-	s.leaveRequestsMux.RLock()
-	if existing, exists := s.leaveRequests[matchID]; exists {
-		s.leaveRequestsMux.RUnlock()
-		// Check if the existing request has expired
-		if time.Now().Before(existing.ExpireTime) {
-			fmt.Printf("[DEBUG] Bot leave request already pending for match %s, expires at %v\n", matchID, existing.ExpireTime)
-			return false // Still waiting
-		}
-		// Expired but not yet executed, don't create new request
-		fmt.Printf("[DEBUG] Bot leave request expired but not yet executed for match %s, skipping new request creation\n", matchID)
-		return false // Don't create new request, let the expired one be executed
-	} else {
-		s.leaveRequestsMux.RUnlock()
-	}
-
 	// For leave requests, we need to get a bot user ID from context
 	botUserID, ok := ctx.Value("bot_user_id").(string)
 	if !ok {
@@ -387,9 +374,20 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 		return true // Immediate leave if no bot user ID
 	}
 
+	// Check if a decision has already been made for this bot in this match
+	s.decisionsMux.RLock()
+	decisionKey := fmt.Sprintf("%s_%s", matchID, botUserID)
+	alreadyDecided := s.botLeaveDecisions[decisionKey]
+	s.decisionsMux.RUnlock()
+
+	if alreadyDecided {
+		fmt.Printf("[DEBUG] Bot leave decision already made for match %s, bot user %s, skipping new decision\n", matchID, botUserID)
+		return false // Don't create new request, let the previous one be executed
+	}
+
 	// Calculate random delay (using join rule timing as reference)
 	// You can add specific leave timing rules if needed
-	delay := rand.Intn(3) + 1 // 1-3 seconds default
+	delay := rand.Intn(9) + 1 // 1-9 seconds default
 	expireTime := time.Now().Add(time.Duration(delay) * time.Second)
 
 	fmt.Printf("[DEBUG] Creating delayed bot leave request: matchID=%s, botUserID=%s, delay=%ds, expires=%v\n",
@@ -409,6 +407,11 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 	s.leaveRequestsMux.Lock()
 	s.leaveRequests[matchID] = request
 	s.leaveRequestsMux.Unlock()
+
+	// Mark that a decision has been made for this bot in this match
+	s.decisionsMux.Lock()
+	s.botLeaveDecisions[decisionKey] = true
+	s.decisionsMux.Unlock()
 
 	fmt.Printf("[DEBUG] Stored pending leave request for matchID=%s, total pending leave requests: %d\n",
 		matchID, len(s.leaveRequests))
@@ -491,6 +494,12 @@ func (s *BotManagementService) cleanupExpiredRequests() {
 		}
 	}
 	s.leaveRequestsMux.Unlock()
+
+	// Clean up expired decisions - for now, we'll keep decisions until match ends
+	// This can be enhanced later if needed
+	s.decisionsMux.Lock()
+	// TODO: Add logic to clean up decisions when matches end
+	s.decisionsMux.Unlock()
 }
 
 // Stop stops the cleanup routine
@@ -537,4 +546,77 @@ func (s *BotManagementService) DebugPendingRequests() {
 			matchID, status, request.ExpireTime, request.BotUserID, request.BetAmount, request.LastResult)
 	}
 	fmt.Printf("[DEBUG] =================================\n")
+}
+
+// GetBotLeaveRemainingTime returns the remaining time for a bot leave request
+func (s *BotManagementService) GetBotLeaveRemainingTime(ctx context.Context, botUserID string) (time.Duration, bool) {
+	matchID, ok := ctx.Value("match_id").(string)
+	if !ok {
+		return 0, false
+	}
+
+	// Check if there's a pending leave request for this match
+	s.leaveRequestsMux.RLock()
+	request, exists := s.leaveRequests[matchID]
+	s.leaveRequestsMux.RUnlock()
+
+	if !exists {
+		return 0, false
+	}
+
+	// Check if this request is for the specific bot
+	if request.BotUserID != botUserID {
+		return 0, false
+	}
+
+	remaining := time.Until(request.ExpireTime)
+	if remaining <= 0 {
+		return 0, true // Expired
+	}
+
+	return remaining, true // Has pending request
+}
+
+// ShouldBotBeKicked checks if a bot should be kicked based on time (without random)
+func (s *BotManagementService) ShouldBotBeKicked(ctx context.Context, botUserID string) bool {
+	matchID, ok := ctx.Value("match_id").(string)
+	if !ok {
+		return false
+	}
+
+	// Check if there's a pending leave request for this match
+	s.leaveRequestsMux.RLock()
+	request, exists := s.leaveRequests[matchID]
+	s.leaveRequestsMux.RUnlock()
+
+	if !exists {
+		return false
+	}
+
+	// Check if this request is for the specific bot
+	if request.BotUserID != botUserID {
+		return false
+	}
+
+	// Check if the request has expired
+	if time.Now().After(request.ExpireTime) {
+		fmt.Printf("[DEBUG] Bot leave request expired for match %s, bot %s, should be kicked\n", matchID, botUserID)
+		return true
+	}
+
+	return false
+}
+
+// GetBotLeaveDecisionKey generates the key for tracking bot leave decisions
+func (s *BotManagementService) GetBotLeaveDecisionKey(matchID, botUserID string) string {
+	return fmt.Sprintf("%s_%s", matchID, botUserID)
+}
+
+// ClearBotLeaveDecision clears the leave decision for a specific bot in a match
+func (s *BotManagementService) ClearBotLeaveDecision(matchID, botUserID string) {
+	s.decisionsMux.Lock()
+	decisionKey := s.GetBotLeaveDecisionKey(matchID, botUserID)
+	delete(s.botLeaveDecisions, decisionKey)
+	s.decisionsMux.Unlock()
+	fmt.Printf("[DEBUG] Cleared bot leave decision for match %s, bot %s\n", matchID, botUserID)
 }
