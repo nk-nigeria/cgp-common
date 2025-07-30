@@ -9,6 +9,7 @@
 package proto
 
 import (
+	proto "github.com/nk-nigeria/cgp-common/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -251,7 +252,7 @@ type Match struct {
 	// repeated string players = 14;
 	Profiles          []*SimpleProfile `protobuf:"bytes,15,rep,name=profiles,proto3" json:"profiles,omitempty"`
 	Bet               *Bet             `protobuf:"bytes,16,opt,name=bet,proto3" json:"bet,omitempty"`
-	GameState         GameState        `protobuf:"varint,17,opt,name=game_state,json=gameState,proto3,enum=proto.GameState" json:"game_state,omitempty"`
+	GameState         proto.GameState  `protobuf:"varint,17,opt,name=game_state,json=gameState,proto3,enum=proto.GameState" json:"game_state,omitempty"`
 	PlayingPlayers    []string         `protobuf:"bytes,18,rep,name=playing_players,json=playingPlayers,proto3" json:"playing_players,omitempty"`
 	GameStateDuration map[int32]int32  `protobuf:"bytes,19,rep,name=game_state_duration,json=gameStateDuration,proto3" json:"game_state_duration,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	Pot               int64            `protobuf:"varint,20,opt,name=pot,proto3" json:"pot,omitempty"`
@@ -394,11 +395,11 @@ func (x *Match) GetBet() *Bet {
 	return nil
 }
 
-func (x *Match) GetGameState() GameState {
+func (x *Match) GetGameState() proto.GameState {
 	if x != nil {
 		return x.GameState
 	}
-	return GameState_GAME_STATE_UNKNOWN
+	return proto.GameState(0)
 }
 
 func (x *Match) GetPlayingPlayers() []string {
@@ -1107,7 +1108,7 @@ var file_match_proto_goTypes = []any{
 	nil,                            // 11: proto.Match.GameStateDurationEntry
 	(*Profile)(nil),                // 12: proto.Profile
 	(*SimpleProfile)(nil),          // 13: proto.SimpleProfile
-	(GameState)(0),                 // 14: proto.GameState
+	(proto.GameState)(0),           // 14: proto.GameState
 }
 var file_match_proto_depIdxs = []int32{
 	12, // 0: proto.Match.user_created:type_name -> proto.Profile
@@ -1132,7 +1133,6 @@ func file_match_proto_init() {
 		return
 	}
 	file_auth_proto_init()
-	file_game_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

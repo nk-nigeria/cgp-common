@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = "github.com/nk-nigeria/whot-module/cgp-common/proto";
+option go_package = "github.com/nk-nigeria/cgp-common/proto";
 
 
 

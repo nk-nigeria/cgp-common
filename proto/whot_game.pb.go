@@ -662,7 +662,7 @@ const file_whot_game_proto_rawDesc = "" +
 	"SUSPENSION\x10\x04\x12\x12\n" +
 	"\x0eGENERAL_MARKET\x10\x05\x12\b\n" +
 	"\x04WHOT\x10\x06\x12\x16\n" +
-	"\x12CHOICE_SHAPE_GHOST\x10\aB4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x12CHOICE_SHAPE_GHOST\x10\aB(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_whot_game_proto_rawDescOnce sync.Once

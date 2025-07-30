@@ -7,6 +7,7 @@
 package proto
 
 import (
+	proto "github.com/nk-nigeria/cgp-common/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -458,8 +459,8 @@ func (x *DragonTigerListDeskCell) GetList() []*DragonTigerDeskCell {
 
 type DragonTigerHand struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Dragon        *Card                  `protobuf:"bytes,1,opt,name=dragon,proto3" json:"dragon,omitempty"`
-	Tiger         *Card                  `protobuf:"bytes,2,opt,name=tiger,proto3" json:"tiger,omitempty"`
+	Dragon        *proto.Card            `protobuf:"bytes,1,opt,name=dragon,proto3" json:"dragon,omitempty"`
+	Tiger         *proto.Card            `protobuf:"bytes,2,opt,name=tiger,proto3" json:"tiger,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -494,14 +495,14 @@ func (*DragonTigerHand) Descriptor() ([]byte, []int) {
 	return file_dragontiger_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *DragonTigerHand) GetDragon() *Card {
+func (x *DragonTigerHand) GetDragon() *proto.Card {
 	if x != nil {
 		return x.Dragon
 	}
 	return nil
 }
 
-func (x *DragonTigerHand) GetTiger() *Card {
+func (x *DragonTigerHand) GetTiger() *proto.Card {
 	if x != nil {
 		return x.Tiger
 	}
@@ -688,7 +689,7 @@ func (x *DragonTigerPlayer) GetChips() int64 {
 // server->client when game state changed
 type DragonTigerUpdateTable struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	GameState      GameState              `protobuf:"varint,1,opt,name=game_state,json=gameState,proto3,enum=proto.GameState" json:"game_state,omitempty"`
+	GameState      proto.GameState        `protobuf:"varint,1,opt,name=game_state,json=gameState,proto3,enum=proto.GameState" json:"game_state,omitempty"`
 	CountDown      int64                  `protobuf:"varint,2,opt,name=count_down,json=countDown,proto3" json:"count_down,omitempty"`
 	NPlayer        int32                  `protobuf:"varint,3,opt,name=n_player,json=nPlayer,proto3" json:"n_player,omitempty"`                     // unused
 	NotablePlayers []*DragonTigerPlayer   `protobuf:"bytes,4,rep,name=notable_players,json=notablePlayers,proto3" json:"notable_players,omitempty"` // unused
@@ -726,11 +727,11 @@ func (*DragonTigerUpdateTable) Descriptor() ([]byte, []int) {
 	return file_dragontiger_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *DragonTigerUpdateTable) GetGameState() GameState {
+func (x *DragonTigerUpdateTable) GetGameState() proto.GameState {
 	if x != nil {
 		return x.GameState
 	}
-	return GameState_GAME_STATE_UNKNOWN
+	return proto.GameState(0)
 }
 
 func (x *DragonTigerUpdateTable) GetCountDown() int64 {
@@ -998,8 +999,8 @@ var file_dragontiger_proto_goTypes = []any{
 	(*DragonTigerUpdateTable)(nil),     // 12: proto.DragonTigerUpdateTable
 	(*DragonTigerUpdateDesk)(nil),      // 13: proto.DragonTigerUpdateDesk
 	(*DragonTigerActionReject)(nil),    // 14: proto.DragonTigerActionReject
-	(*Card)(nil),                       // 15: proto.Card
-	(GameState)(0),                     // 16: proto.GameState
+	(*proto.Card)(nil),                 // 15: proto.Card
+	(proto.GameState)(0),               // 16: proto.GameState
 }
 var file_dragontiger_proto_depIdxs = []int32{
 	0,  // 0: proto.DragonTigerBet.cell:type_name -> proto.DragonTigerBetCell
@@ -1032,8 +1033,6 @@ func file_dragontiger_proto_init() {
 	if File_dragontiger_proto != nil {
 		return
 	}
-	file_game_common_proto_init()
-	file_chinese_poker_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

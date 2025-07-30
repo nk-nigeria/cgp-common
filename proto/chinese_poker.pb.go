@@ -1584,7 +1584,7 @@ const file_chinese_poker_proto_rawDesc = "" +
 	"\tPointType\x12\x10\n" +
 	"\fPoint_Normal\x10\x00\x12\x1a\n" +
 	"\rPoint_Mis_Set\x10\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x12\x11\n" +
-	"\rPoint_Natural\x10\x01B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\rPoint_Natural\x10\x01B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_chinese_poker_proto_rawDescOnce sync.Once

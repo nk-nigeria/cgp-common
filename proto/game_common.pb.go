@@ -882,7 +882,7 @@ const file_game_common_proto_rawDesc = "" +
 	"\x16OPCODE_BUY_SIXIANG_GEM\x10\x10\x12\x18\n" +
 	"\x14OPCODE_PLAYER_CHANGE\x10\x11\x12\x1e\n" +
 	"\x1aOPCODE_RESPONSE_TIP_INGAME\x10\x12\x12\x1e\n" +
-	"\x1aOPCODE_RESPONSE_SYNC_TABLE\x10\x13B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x1aOPCODE_RESPONSE_SYNC_TABLE\x10\x13B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_game_common_proto_rawDescOnce sync.Once
