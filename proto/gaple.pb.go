@@ -7,7 +7,6 @@
 package proto
 
 import (
-	proto "github.com/nk-nigeria/cgp-common/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -198,8 +197,8 @@ type GapleDominoPenalty struct {
 	LostPlayer                string                 `protobuf:"bytes,2,opt,name=lost_player,json=lostPlayer,proto3" json:"lost_player,omitempty"`
 	Chips                     int32                  `protobuf:"varint,3,opt,name=chips,proto3" json:"chips,omitempty"`
 	LostPlayerNotHaveFacelets []int32                `protobuf:"varint,4,rep,packed,name=lost_player_not_have_facelets,json=lostPlayerNotHaveFacelets,proto3" json:"lost_player_not_have_facelets,omitempty"`
-	GainPlayerWallet          *proto.BalanceUpdate   `protobuf:"bytes,5,opt,name=gain_player_wallet,json=gainPlayerWallet,proto3" json:"gain_player_wallet,omitempty"`
-	LostPlayerWallet          *proto.BalanceUpdate   `protobuf:"bytes,6,opt,name=lost_player_wallet,json=lostPlayerWallet,proto3" json:"lost_player_wallet,omitempty"`
+	GainPlayerWallet          *BalanceUpdate         `protobuf:"bytes,5,opt,name=gain_player_wallet,json=gainPlayerWallet,proto3" json:"gain_player_wallet,omitempty"`
+	LostPlayerWallet          *BalanceUpdate         `protobuf:"bytes,6,opt,name=lost_player_wallet,json=lostPlayerWallet,proto3" json:"lost_player_wallet,omitempty"`
 	unknownFields             protoimpl.UnknownFields
 	sizeCache                 protoimpl.SizeCache
 }
@@ -262,14 +261,14 @@ func (x *GapleDominoPenalty) GetLostPlayerNotHaveFacelets() []int32 {
 	return nil
 }
 
-func (x *GapleDominoPenalty) GetGainPlayerWallet() *proto.BalanceUpdate {
+func (x *GapleDominoPenalty) GetGainPlayerWallet() *BalanceUpdate {
 	if x != nil {
 		return x.GainPlayerWallet
 	}
 	return nil
 }
 
-func (x *GapleDominoPenalty) GetLostPlayerWallet() *proto.BalanceUpdate {
+func (x *GapleDominoPenalty) GetLostPlayerWallet() *BalanceUpdate {
 	if x != nil {
 		return x.LostPlayerWallet
 	}
@@ -892,7 +891,7 @@ const file_gaple_proto_rawDesc = "" +
 	"AGAPLE_DOMINO_FINISH_GAME_TYPE_GAPLE_DOMINO_FINISHGAME_TYPE_DOUBLE\x10\x02\x12E\n" +
 	"AGAPLE_DOMINO_FINISH_GAME_TYPE_GAPLE_DOMINO_FINISHGAME_TYPE_TRIPLE\x10\x03\x12F\n" +
 	"BGAPLE_DOMINO_FINISH_GAME_TYPE_GAPLE_DOMINO_FINISHGAME_TYPE_QUARTET\x10\x04\x12F\n" +
-	"BGAPLE_DOMINO_FINISH_GAME_TYPE_GAPLE_DOMINO_FINISHGAME_TYPE_QUINTET\x10\x05B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"BGAPLE_DOMINO_FINISH_GAME_TYPE_GAPLE_DOMINO_FINISHGAME_TYPE_QUINTET\x10\x05B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_gaple_proto_rawDescOnce sync.Once
@@ -922,7 +921,7 @@ var file_gaple_proto_goTypes = []any{
 	(*ResultChip)(nil),                     // 10: proto.ResultChip
 	(*GapleDoninoUpdateFinish)(nil),        // 11: proto.GapleDoninoUpdateFinish
 	(*Domino)(nil),                         // 12: proto.Domino
-	(*proto.BalanceUpdate)(nil),            // 13: proto.BalanceUpdate
+	(*BalanceUpdate)(nil),                  // 13: proto.BalanceUpdate
 }
 var file_gaple_proto_depIdxs = []int32{
 	12, // 0: proto.GapleDominoAction.domino:type_name -> proto.Domino
@@ -955,6 +954,7 @@ func file_gaple_proto_init() {
 		return
 	}
 	file_bandarqq_proto_init()
+	file_game_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

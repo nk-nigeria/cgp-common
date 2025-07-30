@@ -10,13 +10,13 @@ import (
 )
 
 const (
-	StateInit      = pb.GameState_GameStateUnknown // Only for initialize
-	StateIdle      = pb.GameState_GameStateIdle
-	StateMatching  = pb.GameState_GameStateMatching
-	StatePreparing = pb.GameState_GameStatePreparing
-	StatePlay      = pb.GameState_GameStatePlay
-	StateReward    = pb.GameState_GameStateReward
-	StateFinish    = pb.GameState_GameStateFinish
+	StateInit      = pb.GameState_GAME_STATE_UNKNOWN // Only for initialize
+	StateIdle      = pb.GameState_GAME_STATE_IDLE
+	StateMatching  = pb.GameState_GAME_STATE_MATCHING
+	StatePreparing = pb.GameState_GAME_STATE_PREPARING
+	StatePlay      = pb.GameState_GAME_STATE_PLAY
+	StateReward    = pb.GameState_GAME_STATE_REWARD
+	StateFinish    = pb.GameState_GAME_STATE_FINISH
 )
 
 const (
@@ -88,17 +88,17 @@ type Machine struct {
 func (m *Machine) GetPbState() pb.GameState {
 	switch m.state.MustState() {
 	case StateIdle:
-		return pb.GameState_GameStateIdle
+		return pb.GameState_GAME_STATE_IDLE
 	case StateMatching:
-		return pb.GameState_GameStateMatching
+		return pb.GameState_GAME_STATE_MATCHING
 	case StatePreparing:
-		return pb.GameState_GameStatePreparing
+		return pb.GameState_GAME_STATE_PREPARING
 	case StatePlay:
-		return pb.GameState_GameStatePlay
+		return pb.GameState_GAME_STATE_PLAY
 	case StateReward:
-		return pb.GameState_GameStateReward
+		return pb.GameState_GAME_STATE_REWARD
 	default:
-		return pb.GameState_GameStateUnknown
+		return pb.GameState_GAME_STATE_UNKNOWN
 	}
 }
 
@@ -119,11 +119,11 @@ func (m *Machine) TriggerIdle(ctx context.Context, args ...interface{}) error {
 }
 
 func (m *Machine) IsPlayingState() bool {
-	return m.GetPbState() == pb.GameState_GameStatePlay
+	return m.GetPbState() == pb.GameState_GAME_STATE_PLAY
 }
 
 func (m *Machine) IsReward() bool {
-	return m.GetPbState() == pb.GameState_GameStateReward
+	return m.GetPbState() == pb.GameState_GAME_STATE_REWARD
 }
 
 func configure(m *Machine, stateMachineState StateMachineState) {

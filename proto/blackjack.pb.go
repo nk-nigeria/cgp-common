@@ -7,7 +7,6 @@
 package proto
 
 import (
-	proto "github.com/nk-nigeria/cgp-common/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -467,7 +466,7 @@ type BlackjackPlayerBet struct {
 	Insurance     int64                  `protobuf:"varint,2,opt,name=insurance,proto3" json:"insurance,omitempty"`
 	First         int64                  `protobuf:"varint,3,opt,name=first,proto3" json:"first,omitempty"`
 	Second        int64                  `protobuf:"varint,4,opt,name=second,proto3" json:"second,omitempty"`
-	Balance       *proto.BalanceUpdate   `protobuf:"bytes,14,opt,name=balance,proto3" json:"balance,omitempty"`
+	Balance       *BalanceUpdate         `protobuf:"bytes,14,opt,name=balance,proto3" json:"balance,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -530,7 +529,7 @@ func (x *BlackjackPlayerBet) GetSecond() int64 {
 	return 0
 }
 
-func (x *BlackjackPlayerBet) GetBalance() *proto.BalanceUpdate {
+func (x *BlackjackPlayerBet) GetBalance() *BalanceUpdate {
 	if x != nil {
 		return x.Balance
 	}
@@ -613,7 +612,7 @@ type BlackjackUpdateDeal struct {
 	IsRevealBankerHiddenCard bool                   `protobuf:"varint,2,opt,name=is_reveal_banker_hidden_card,json=isRevealBankerHiddenCard,proto3" json:"is_reveal_banker_hidden_card,omitempty"`
 	UserId                   string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	HandN0                   BlackjackHandN0        `protobuf:"varint,4,opt,name=hand_n0,json=handN0,proto3,enum=proto.BlackjackHandN0" json:"hand_n0,omitempty"`
-	NewCards                 []*proto.Card          `protobuf:"bytes,5,rep,name=new_cards,json=newCards,proto3" json:"new_cards,omitempty"`
+	NewCards                 []*Card                `protobuf:"bytes,5,rep,name=new_cards,json=newCards,proto3" json:"new_cards,omitempty"`
 	Hand                     *BlackjackPlayerHand   `protobuf:"bytes,6,opt,name=hand,proto3" json:"hand,omitempty"`
 	AllPlayerHand            []*BlackjackPlayerHand `protobuf:"bytes,7,rep,name=all_player_hand,json=allPlayerHand,proto3" json:"all_player_hand,omitempty"` // only send when user rejoin table, use it to restore the game state, one with userId = "" is banker
 	unknownFields            protoimpl.UnknownFields
@@ -678,7 +677,7 @@ func (x *BlackjackUpdateDeal) GetHandN0() BlackjackHandN0 {
 	return BlackjackHandN0_BLACKJACK_HAND_UNSPECIFIED
 }
 
-func (x *BlackjackUpdateDeal) GetNewCards() []*proto.Card {
+func (x *BlackjackUpdateDeal) GetNewCards() []*Card {
 	if x != nil {
 		return x.NewCards
 	}
@@ -753,7 +752,7 @@ func (x *BlackjackLegalActions) GetActions() []BlackjackActionCode {
 
 type BlackjackHand struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Cards         []*proto.Card          `protobuf:"bytes,1,rep,name=cards,proto3" json:"cards,omitempty"`
+	Cards         []*Card                `protobuf:"bytes,1,rep,name=cards,proto3" json:"cards,omitempty"`
 	Type          BlackjackHandType      `protobuf:"varint,2,opt,name=type,proto3,enum=proto.BlackjackHandType" json:"type,omitempty"`
 	Point         int32                  `protobuf:"varint,3,opt,name=point,proto3" json:"point,omitempty"`
 	PointCardA    string                 `protobuf:"bytes,4,opt,name=point_card_a,json=pointCardA,proto3" json:"point_card_a,omitempty"`
@@ -793,7 +792,7 @@ func (*BlackjackHand) Descriptor() ([]byte, []int) {
 	return file_blackjack_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *BlackjackHand) GetCards() []*proto.Card {
+func (x *BlackjackHand) GetCards() []*Card {
 	if x != nil {
 		return x.Cards
 	}
@@ -1239,7 +1238,7 @@ const file_blackjack_proto_rawDesc = "" +
 	"\x0fBlackjackHandN0\x12\x1e\n" +
 	"\x1aBLACKJACK_HAND_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12BLACKJACK_HAND_1ST\x10\x01\x12\x16\n" +
-	"\x12BLACKJACK_HAND_2ND\x10\x02B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x12BLACKJACK_HAND_2ND\x10\x02B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_blackjack_proto_rawDescOnce sync.Once
@@ -1273,8 +1272,8 @@ var file_blackjack_proto_goTypes = []any{
 	(*BlackjackPlayerTurn)(nil),      // 14: proto.BlackjackPlayerTurn
 	(*BlackjackUpdateDesk)(nil),      // 15: proto.BlackjackUpdateDesk
 	(*BlackjackUpdateFinish)(nil),    // 16: proto.BlackjackUpdateFinish
-	(*proto.BalanceUpdate)(nil),      // 17: proto.BalanceUpdate
-	(*proto.Card)(nil),               // 18: proto.Card
+	(*BalanceUpdate)(nil),            // 17: proto.BalanceUpdate
+	(*Card)(nil),                     // 18: proto.Card
 	(*Error)(nil),                    // 19: proto.Error
 }
 var file_blackjack_proto_depIdxs = []int32{
@@ -1313,6 +1312,8 @@ func file_blackjack_proto_init() {
 	if File_blackjack_proto != nil {
 		return
 	}
+	file_game_common_proto_init()
+	file_chinese_poker_proto_init()
 	file_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{

@@ -5000,7 +5000,7 @@ const file_common_proto_rawDesc = "" +
 	"\x1eHISTORY_REWARD_TIME_LAST_MONTH\x10\x04*G\n" +
 	"\tErrorType\x12\x1a\n" +
 	"\x16ERROR_TYPE_UNSPECIFIED\x10\x00\x12\x1e\n" +
-	"\x1aERROR_TYPE_CHIP_NOT_ENOUGH\x10\x01B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x1aERROR_TYPE_CHIP_NOT_ENOUGH\x10\x01B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_common_proto_rawDescOnce sync.Once

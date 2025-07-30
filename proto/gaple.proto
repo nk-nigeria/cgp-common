@@ -5,7 +5,7 @@ package proto;
 import "bandarqq.proto";
 import "game_common.proto";
 
-option go_package = "github.com/nk-nigeria/whot-module/cgp-common/proto";
+option go_package = "github.com/nk-nigeria/cgp-common/proto";
 
 enum GapleDominoChainPosition {
   GAPLE_DOMINO_CHAIN_POSITION_GAPLE_DOMINO_CHAIN_UNSPECIFIED = 0;

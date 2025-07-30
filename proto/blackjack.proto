@@ -7,7 +7,7 @@ import "chinese_poker.proto";
 import "common.proto";
 
 
-option go_package = "github.com/nk-nigeria/whot-module/cgp-common/proto";
+option go_package = "github.com/nk-nigeria/cgp-common/proto";
 
 // status for each hand, user can have maximum 2 hand ( by spliting )
 enum BlackjackHandType {

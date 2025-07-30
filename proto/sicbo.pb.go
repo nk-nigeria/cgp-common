@@ -921,7 +921,7 @@ const file_sicbo_proto_rawDesc = "" +
 	"\vUNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12BALANCE_NOT_ENOUGH\x10\x01\x12\x1a\n" +
 	"\x16PREVIOUS_BET_NOT_EXIST\x10\x02\x12\x0f\n" +
-	"\vALREADY_BET\x10\x03B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\vALREADY_BET\x10\x03B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_sicbo_proto_rawDescOnce sync.Once

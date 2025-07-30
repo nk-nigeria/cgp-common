@@ -891,7 +891,7 @@ const file_auth_proto_rawDesc = "" +
 	"\biso_code\x18\x01 \x01(\tR\aisoCode\x12!\n" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12\x1d\n" +
 	"\n" +
-	"source_url\x18\x03 \x01(\tR\tsourceUrlB4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"source_url\x18\x03 \x01(\tR\tsourceUrlB(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_auth_proto_rawDescOnce sync.Once

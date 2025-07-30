@@ -1076,7 +1076,7 @@ const file_bandarqq_proto_rawDesc = "" +
 	"\x06NORMAL\x10\x00\x12\a\n" +
 	"\x03QIU\x10\x01\x12\a\n" +
 	"\x03SIX\x10\x02\x12\b\n" +
-	"\x04TWIN\x10\x03B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x04TWIN\x10\x03B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_bandarqq_proto_rawDescOnce sync.Once

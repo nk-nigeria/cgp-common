@@ -1941,7 +1941,7 @@ const file_slots_game_proto_rawDesc = "" +
 	"\x11WIN_JACKPOT_MAJOR\x10\x14\x12\x14\n" +
 	"\x10WIN_JACKPOT_MEGA\x10\x1e\x12\x16\n" +
 	"\x11WIN_JACKPOT_GRAND\x10\x96\x01\x12\x14\n" +
-	"\x10WIN_JACKPOT_MINI\x10\x01B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x10WIN_JACKPOT_MINI\x10\x01B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_slots_game_proto_rawDescOnce sync.Once

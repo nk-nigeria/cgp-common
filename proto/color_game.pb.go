@@ -636,7 +636,7 @@ const file_color_game_proto_rawDesc = "" +
 	"\n" +
 	"COLOR_BLUE\x10\b\x12\r\n" +
 	"\tCOLOR_RED\x10\x10\x12\x0f\n" +
-	"\vCOLOR_GREEN\x10 B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\vCOLOR_GREEN\x10 B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_color_game_proto_rawDescOnce sync.Once

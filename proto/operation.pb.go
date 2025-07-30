@@ -4313,7 +4313,7 @@ const file_operation_proto_rawDesc = "" +
 	"\x06offset\x18\x05 \x01(\x03R\x06offset*K\n" +
 	"\x0eCurrencyUnitId\x12 \n" +
 	"\x1cCURRENCY_UNIT_ID_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13CURRENCY_UNIT_ID_VN\x10\x01B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x13CURRENCY_UNIT_ID_VN\x10\x01B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_operation_proto_rawDescOnce sync.Once

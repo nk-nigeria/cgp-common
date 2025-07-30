@@ -230,7 +230,7 @@ const file_wallet_proto_rawDesc = "" +
 	"\x10ACTION_RECV_GIFT\x10\x02\x12\x1a\n" +
 	"\x16ACTION_REVERT_SEND_GIF\x10\x03\x12\x17\n" +
 	"\x13ACTION_PUSH_TO_SAFE\x10\x04\x12\x13\n" +
-	"\x0fACTION_WITHDRAW\x10\x05B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"\x0fACTION_WITHDRAW\x10\x05B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_wallet_proto_rawDescOnce sync.Once

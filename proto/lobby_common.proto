@@ -4,7 +4,7 @@ syntax = "proto3";
 // The realtime protocol for the template match engine.
 package proto;
 
-option go_package = "github.com/nk-nigeria/whot-module/cgp-common/proto";
+option go_package = "github.com/nk-nigeria/cgp-common/proto";
 
 message CommonApiLeaderBoardRecord {
   string game_code = 1;

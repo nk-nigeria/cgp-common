@@ -7,7 +7,6 @@
 package proto
 
 import (
-	proto "github.com/nk-nigeria/cgp-common/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -402,7 +401,7 @@ func (x *BaccaratPlayerBetResult) GetLists() []*BaccaratBetResult {
 
 type BaccaratHand struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Cards         []*proto.Card          `protobuf:"bytes,1,rep,name=cards,proto3" json:"cards,omitempty"`
+	Cards         []*Card                `protobuf:"bytes,1,rep,name=cards,proto3" json:"cards,omitempty"`
 	Point         int32                  `protobuf:"varint,2,opt,name=point,proto3" json:"point,omitempty"`
 	IsPair        bool                   `protobuf:"varint,3,opt,name=is_pair,json=isPair,proto3" json:"is_pair,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -439,7 +438,7 @@ func (*BaccaratHand) Descriptor() ([]byte, []int) {
 	return file_baccarat_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *BaccaratHand) GetCards() []*proto.Card {
+func (x *BaccaratHand) GetCards() []*Card {
 	if x != nil {
 		return x.Cards
 	}
@@ -850,7 +849,7 @@ func (x *BaccaratBetActionReject) GetReason() BaccaratBetRejectedReason {
 type BaccaratUpdateDeal struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	IsPlayer      bool                   `protobuf:"varint,1,opt,name=is_player,json=isPlayer,proto3" json:"is_player,omitempty"`
-	Cards         []*proto.Card          `protobuf:"bytes,2,rep,name=cards,proto3" json:"cards,omitempty"`
+	Cards         []*Card                `protobuf:"bytes,2,rep,name=cards,proto3" json:"cards,omitempty"`
 	Hands         *BaccaratHands         `protobuf:"bytes,3,opt,name=hands,proto3" json:"hands,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -893,7 +892,7 @@ func (x *BaccaratUpdateDeal) GetIsPlayer() bool {
 	return false
 }
 
-func (x *BaccaratUpdateDeal) GetCards() []*proto.Card {
+func (x *BaccaratUpdateDeal) GetCards() []*Card {
 	if x != nil {
 		return x.Cards
 	}
@@ -983,7 +982,7 @@ const file_baccarat_proto_rawDesc = "" +
 	"EBACCARAT_BET_REJECTED_REASON_BACCARAT_BET_REJECTED_BALANCE_NOT_ENOUGH\x10\x01\x12M\n" +
 	"IBACCARAT_BET_REJECTED_REASON_BACCARAT_BET_REJECTED_PREVIOUS_BET_NOT_EXIST\x10\x02\x12B\n" +
 	">BACCARAT_BET_REJECTED_REASON_BACCARAT_BET_REJECTED_ALREADY_BET\x10\x03\x12M\n" +
-	"IBACCARAT_BET_REJECTED_REASON_BACCARAT_BET_REJECTED_EXCEED_MAX_BET_ALLOWED\x10\x04B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
+	"IBACCARAT_BET_REJECTED_REASON_BACCARAT_BET_REJECTED_EXCEED_MAX_BET_ALLOWED\x10\x04B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_baccarat_proto_rawDescOnce sync.Once
@@ -1015,7 +1014,7 @@ var file_baccarat_proto_goTypes = []any{
 	(*BaccaratUpdateDesk)(nil),      // 12: proto.BaccaratUpdateDesk
 	(*BaccaratBetActionReject)(nil), // 13: proto.BaccaratBetActionReject
 	(*BaccaratUpdateDeal)(nil),      // 14: proto.BaccaratUpdateDeal
-	(*proto.Card)(nil),              // 15: proto.Card
+	(*Card)(nil),                    // 15: proto.Card
 }
 var file_baccarat_proto_depIdxs = []int32{
 	0,  // 0: proto.BaccaratBet.cell:type_name -> proto.BaccaratBetCell
@@ -1048,6 +1047,7 @@ func file_baccarat_proto_init() {
 	if File_baccarat_proto != nil {
 		return
 	}
+	file_chinese_poker_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

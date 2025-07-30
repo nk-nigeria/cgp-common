@@ -4,7 +4,7 @@ package proto;
 
 import "color_game.proto";
 
-option go_package = "github.com/nk-nigeria/whot-module/cgp-common/proto";
+option go_package = "github.com/nk-nigeria/cgp-common/proto";
 
 message SlotDesk {
   // ma trận rowxcol ở dạng array 1 chiều,

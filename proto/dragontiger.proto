@@ -6,7 +6,7 @@ import "game_common.proto";
 import "chinese_poker.proto";
 
 
-option go_package = "github.com/nk-nigeria/whot-module/cgp-common/proto";
+option go_package = "github.com/nk-nigeria/cgp-common/proto";
 
 enum DragonTigerBetCell {
   CELL_UNSPECIFIED = 0; // unuse
