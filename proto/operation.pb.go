@@ -4,7 +4,7 @@
 // 	protoc        v3.21.12
 // source: operation.proto
 
-package api
+package proto
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -3150,7 +3150,7 @@ type CashInfoRequest struct {
 	Limit         int64                  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
 	Offset        int64                  `protobuf:"varint,4,opt,name=offset,proto3" json:"offset,omitempty"`
 	Publisher     int64                  `protobuf:"varint,5,opt,name=publisher,proto3" json:"publisher,omitempty"`
-	CurrencyId    CurrencyUnitId         `protobuf:"varint,6,opt,name=currency_id,json=currencyId,proto3,enum=api.CurrencyUnitId" json:"currency_id,omitempty"`
+	CurrencyId    CurrencyUnitId         `protobuf:"varint,6,opt,name=currency_id,json=currencyId,proto3,enum=proto.CurrencyUnitId" json:"currency_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3931,7 +3931,8 @@ var File_operation_proto protoreflect.FileDescriptor
 
 const file_operation_proto_rawDesc = "" +
 	"\n" +
-	"\x0foperation.proto\x12\x03api\x1a\x0eauth_api.proto\"\xba\x03\n" +
+	"\x0foperation.proto\x12\x05proto\x1a\n" +
+	"auth.proto\"\xba\x03\n" +
 	"\bOpPlayer\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1b\n" +
 	"\tuser_name\x18\x02 \x01(\tR\buserName\x12\x17\n" +
@@ -3958,10 +3959,10 @@ const file_operation_proto_rawDesc = "" +
 	"\x06action\x18\x05 \x01(\x03R\x06action\x12\x16\n" +
 	"\x06offset\x18\x06 \x01(\x03R\x06offset\x12\x14\n" +
 	"\x05limit\x18\a \x01(\x03R\x05limit\x12\x19\n" +
-	"\buser_sid\x18\b \x01(\x03R\auserSid\"\xd2\x01\n" +
-	"\x10OpPlayerResponse\x12,\n" +
+	"\buser_sid\x18\b \x01(\x03R\auserSid\"\xd4\x01\n" +
+	"\x10OpPlayerResponse\x12.\n" +
 	"\n" +
-	"op_players\x18\x01 \x03(\v2\r.api.OpPlayerR\topPlayers\x12\x14\n" +
+	"op_players\x18\x01 \x03(\v2\x0f.proto.OpPlayerR\topPlayers\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x16\n" +
 	"\x06offset\x18\x03 \x01(\x03R\x06offset\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x03R\x05limit\x12$\n" +
@@ -3987,9 +3988,9 @@ const file_operation_proto_rawDesc = "" +
 	"\buser_sid\x18\x04 \x01(\x03R\auserSid\x12\"\n" +
 	"\ruser_pair_sid\x18\x05 \x01(\x03R\vuserPairSid\x12\x14\n" +
 	"\x05limit\x18\x06 \x01(\x03R\x05limit\x12\x16\n" +
-	"\x06offset\x18\a \x01(\x03R\x06offset\"\x90\x01\n" +
-	"\x13MatchDetailResponse\x125\n" +
-	"\rmatch_details\x18\x01 \x03(\v2\x10.api.MatchDetailR\fmatchDetails\x12\x14\n" +
+	"\x06offset\x18\a \x01(\x03R\x06offset\"\x92\x01\n" +
+	"\x13MatchDetailResponse\x127\n" +
+	"\rmatch_details\x18\x01 \x03(\v2\x12.proto.MatchDetailR\fmatchDetails\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x14\n" +
 	"\x05limit\x18\x06 \x01(\x03R\x05limit\x12\x16\n" +
 	"\x06offset\x18\a \x01(\x03R\x06offset\"\xb2\x01\n" +
@@ -4008,18 +4009,18 @@ const file_operation_proto_rawDesc = "" +
 	"\x03mcb\x18\x04 \x01(\x03R\x03mcb\x12\x19\n" +
 	"\bchip_fee\x18\x05 \x01(\x03R\achipFee\x12\x19\n" +
 	"\bmatch_id\x18\x06 \x01(\tR\amatchId\x12\x19\n" +
-	"\btable_id\x18\a \x01(\tR\atableId\"k\n" +
-	"\bOpReport\x120\n" +
-	"\vplayer_data\x18\x01 \x03(\v2\x0f.api.PlayerDataR\n" +
-	"playerData\x12-\n" +
+	"\btable_id\x18\a \x01(\tR\atableId\"o\n" +
+	"\bOpReport\x122\n" +
+	"\vplayer_data\x18\x01 \x03(\v2\x11.proto.PlayerDataR\n" +
+	"playerData\x12/\n" +
 	"\n" +
-	"match_data\x18\x02 \x01(\v2\x0e.api.MatchDataR\tmatchData\"\xe6\x01\n" +
+	"match_data\x18\x02 \x01(\v2\x10.proto.MatchDataR\tmatchData\"\xe8\x01\n" +
 	"\rGoldStatistic\x12(\n" +
 	"\x10time_update_unix\x18\x01 \x01(\x03R\x0etimeUpdateUnix\x12\x10\n" +
 	"\x03pay\x18\x02 \x01(\x03R\x03pay\x12\x1c\n" +
-	"\tpromotion\x18\x03 \x01(\x03R\tpromotion\x12-\n" +
+	"\tpromotion\x18\x03 \x01(\x03R\tpromotion\x12/\n" +
 	"\n" +
-	"match_data\x18\x04 \x03(\v2\x0e.api.MatchDataR\tmatchData\x12\x1d\n" +
+	"match_data\x18\x04 \x03(\v2\x10.proto.MatchDataR\tmatchData\x12\x1d\n" +
 	"\n" +
 	"ag_cashout\x18\x05 \x01(\x03R\tagCashout\x12\x17\n" +
 	"\aag_bank\x18\x06 \x01(\x03R\x06agBank\x12\x14\n" +
@@ -4028,12 +4029,12 @@ const file_operation_proto_rawDesc = "" +
 	"\tfrom_unix\x18\x01 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x02 \x01(\x03R\x06toUnix\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x03R\x05limit\x12\x16\n" +
-	"\x06offset\x18\x04 \x01(\x03R\x06offset\"\x98\x01\n" +
-	"\x15GoldStatisticResponse\x12;\n" +
-	"\x0fgold_statistics\x18\x01 \x03(\v2\x12.api.GoldStatisticR\x0egoldStatistics\x12\x14\n" +
+	"\x06offset\x18\x04 \x01(\x03R\x06offset\"\x9a\x01\n" +
+	"\x15GoldStatisticResponse\x12=\n" +
+	"\x0fgold_statistics\x18\x01 \x03(\v2\x14.proto.GoldStatisticR\x0egoldStatistics\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x03R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x03 \x01(\x03R\x06offset\x12\x14\n" +
-	"\x05total\x18\x04 \x01(\x03R\x05total\"\xae\x06\n" +
+	"\x05total\x18\x04 \x01(\x03R\x05total\"\xb4\x06\n" +
 	"\rUserStatistic\x12,\n" +
 	"\x12total_chip_deposit\x18\x01 \x01(\x03R\x10totalChipDeposit\x12/\n" +
 	"\x14total_chip_with_draw\x18\x02 \x01(\x03R\x11totalChipWithDraw\x12$\n" +
@@ -4048,10 +4049,10 @@ const file_operation_proto_rawDesc = "" +
 	" \x01(\x03R\x12totalChipDeposit3d\x124\n" +
 	"\x17total_chip_with_draw_3d\x18\v \x01(\x03R\x13totalChipWithDraw3d\x12\x12\n" +
 	"\x04luck\x18\f \x01(\x03R\x04luck\x121\n" +
-	"\x15user_create_time_unix\x18\r \x01(\x03R\x12userCreateTimeUnix\x12Q\n" +
-	"\x18user_stat_game_histories\x18\x0e \x03(\v2\x18.api.UserStatGameHistoryR\x15userStatGameHistories\x12A\n" +
-	"\x0frecv_chip_stats\x18\x0f \x03(\v2\x19.api.UserTransferGoldStatR\rrecvChipStats\x12A\n" +
-	"\x0fsend_chip_stats\x18\x10 \x03(\v2\x19.api.UserTransferGoldStatR\rsendChipStats\x12\x17\n" +
+	"\x15user_create_time_unix\x18\r \x01(\x03R\x12userCreateTimeUnix\x12S\n" +
+	"\x18user_stat_game_histories\x18\x0e \x03(\v2\x1a.proto.UserStatGameHistoryR\x15userStatGameHistories\x12C\n" +
+	"\x0frecv_chip_stats\x18\x0f \x03(\v2\x1b.proto.UserTransferGoldStatR\rrecvChipStats\x12C\n" +
+	"\x0fsend_chip_stats\x18\x10 \x03(\v2\x1b.proto.UserTransferGoldStatR\rsendChipStats\x12\x17\n" +
 	"\auser_id\x18\x11 \x01(\tR\x06userId\"\x9d\x01\n" +
 	"\x14UserStatisticRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1b\n" +
@@ -4076,14 +4077,14 @@ const file_operation_proto_rawDesc = "" +
 	"\fuser_recv_id\x18\x03 \x01(\tR\n" +
 	"userRecvId\x12$\n" +
 	"\x0euser_recv_name\x18\x04 \x01(\tR\fuserRecvName\x12\x12\n" +
-	"\x04chip\x18\x05 \x01(\x03R\x04chip\"j\n" +
-	"\bUserInfo\x12&\n" +
-	"\aprofile\x18\x01 \x01(\v2\f.api.ProfileR\aprofile\x12\x19\n" +
+	"\x04chip\x18\x05 \x01(\x03R\x04chip\"l\n" +
+	"\bUserInfo\x12(\n" +
+	"\aprofile\x18\x01 \x01(\v2\x0e.proto.ProfileR\aprofile\x12\x19\n" +
 	"\btotal_in\x18\x02 \x01(\x03R\atotalIn\x12\x1b\n" +
-	"\ttotal_out\x18\x03 \x01(\x03R\btotalOut\"\xca\x01\n" +
-	"\x10UserInfoResponse\x12,\n" +
+	"\ttotal_out\x18\x03 \x01(\x03R\btotalOut\"\xcc\x01\n" +
+	"\x10UserInfoResponse\x12.\n" +
 	"\n" +
-	"user_infos\x18\x01 \x03(\v2\r.api.UserInfoR\tuserInfos\x12\x14\n" +
+	"user_infos\x18\x01 \x03(\v2\x0f.proto.UserInfoR\tuserInfos\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x1b\n" +
 	"\tdevice_id\x18\x03 \x01(\tR\bdeviceId\x12\x19\n" +
 	"\btotal_in\x18\x04 \x01(\x03R\atotalIn\x12\x1b\n" +
@@ -4098,10 +4099,10 @@ const file_operation_proto_rawDesc = "" +
 	"\x02co\x18\x05 \x01(\x03R\x02co\x12\x10\n" +
 	"\x03coo\x18\x06 \x01(\x03R\x03coo\x12#\n" +
 	"\rlucky_percent\x18\a \x01(\x03R\fluckyPercent\x12\x19\n" +
-	"\buser_sid\x18\b \x01(\x03R\auserSid\"\xb0\x01\n" +
+	"\buser_sid\x18\b \x01(\x03R\auserSid\"\xb2\x01\n" +
 	"\n" +
-	"TopCashOut\x12(\n" +
-	"\bcashouts\x18\x01 \x03(\v2\f.api.CashOutR\bcashouts\x12\x1b\n" +
+	"TopCashOut\x12*\n" +
+	"\bcashouts\x18\x01 \x03(\v2\x0e.proto.CashOutR\bcashouts\x12\x1b\n" +
 	"\tfrom_unix\x18\x02 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x03 \x01(\x03R\x06toUnix\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x03R\x05limit\x12\x16\n" +
@@ -4126,9 +4127,10 @@ const file_operation_proto_rawDesc = "" +
 	"\tis_online\x18\x0e \x01(\bR\bisOnline\x12\x19\n" +
 	"\btotal_in\x18\x0f \x01(\x03R\atotalIn\x12\x1b\n" +
 	"\ttotal_out\x18\x10 \x01(\x03R\btotalOut\x12\x19\n" +
-	"\buser_sid\x18\x11 \x01(\x03R\auserSid\"\xbb\x01\n" +
-	"\x06TopVip\x12\x1c\n" +
-	"\x04vips\x18\x01 \x03(\v2\b.api.VipR\x04vips\x12\x1b\n" +
+	"\buser_sid\x18\x11 \x01(\x03R\auserSid\"\xbd\x01\n" +
+	"\x06TopVip\x12\x1e\n" +
+	"\x04vips\x18\x01 \x03(\v2\n" +
+	".proto.VipR\x04vips\x12\x1b\n" +
 	"\tfrom_unix\x18\x02 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x03 \x01(\x03R\x06toUnix\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x03R\x05limit\x12\x16\n" +
@@ -4147,9 +4149,10 @@ const file_operation_proto_rawDesc = "" +
 	"\aco_rate\x18\t \x01(\x03R\x06coRate\x12#\n" +
 	"\rlucky_percent\x18\n" +
 	" \x01(\x03R\fluckyPercent\x12\x19\n" +
-	"\buser_sid\x18\v \x01(\x03R\auserSid\"\xd4\x01\n" +
-	"\x06TopWin\x12\x1c\n" +
-	"\x04wins\x18\x01 \x03(\v2\b.api.WinR\x04wins\x12\x1b\n" +
+	"\buser_sid\x18\v \x01(\x03R\auserSid\"\xd6\x01\n" +
+	"\x06TopWin\x12\x1e\n" +
+	"\x04wins\x18\x01 \x03(\v2\n" +
+	".proto.WinR\x04wins\x12\x1b\n" +
 	"\tfrom_unix\x18\x02 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x03 \x01(\x03R\x06toUnix\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x03R\x05limit\x12\x16\n" +
@@ -4169,9 +4172,9 @@ const file_operation_proto_rawDesc = "" +
 	"\aco_rate\x18\t \x01(\x03R\x06coRate\x12#\n" +
 	"\rlucky_percent\x18\n" +
 	" \x01(\x03R\fluckyPercent\x12\x19\n" +
-	"\buser_sid\x18\v \x01(\x03R\auserSid\"\xd8\x01\n" +
-	"\aTopLost\x12\x1f\n" +
-	"\x05losts\x18\x01 \x03(\v2\t.api.LostR\x05losts\x12\x1b\n" +
+	"\buser_sid\x18\v \x01(\x03R\auserSid\"\xda\x01\n" +
+	"\aTopLost\x12!\n" +
+	"\x05losts\x18\x01 \x03(\v2\v.proto.LostR\x05losts\x12\x1b\n" +
 	"\tfrom_unix\x18\x02 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x03 \x01(\x03R\x06toUnix\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x03R\x05limit\x12\x16\n" +
@@ -4196,9 +4199,9 @@ const file_operation_proto_rawDesc = "" +
 	"type_topup\x18\a \x01(\tR\ttypeTopup\x12\x1f\n" +
 	"\vchips_topup\x18\b \x01(\x03R\n" +
 	"chipsTopup\x12!\n" +
-	"\fcreated_unix\x18\t \x01(\x03R\vcreatedUnix\"\xb1\x01\n" +
-	"\x13TransactionResponse\x12;\n" +
-	"\rtrans_details\x18\x01 \x03(\v2\x16.api.TransactionDetailR\ftransDetails\x12\x19\n" +
+	"\fcreated_unix\x18\t \x01(\x03R\vcreatedUnix\"\xb3\x01\n" +
+	"\x13TransactionResponse\x12=\n" +
+	"\rtrans_details\x18\x01 \x03(\v2\x18.proto.TransactionDetailR\ftransDetails\x12\x19\n" +
 	"\btotal_rp\x18\x02 \x01(\x03R\atotalRp\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x03R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x04 \x01(\x03R\x06offset\x12\x14\n" +
@@ -4214,7 +4217,7 @@ const file_operation_proto_rawDesc = "" +
 	"\rtotal_cashout\x18\x06 \x01(\x03R\ftotalCashout\x12\x10\n" +
 	"\x03vip\x18\a \x01(\x03R\x03vip\x12%\n" +
 	"\x0ecurrency_topup\x18\b \x01(\x03R\rcurrencyTopup\x12)\n" +
-	"\x10currency_cashout\x18\t \x01(\x03R\x0fcurrencyCashout\"\xa3\x05\n" +
+	"\x10currency_cashout\x18\t \x01(\x03R\x0fcurrencyCashout\"\xa5\x05\n" +
 	"\bCashInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12$\n" +
@@ -4229,23 +4232,23 @@ const file_operation_proto_rawDesc = "" +
 	" \x01(\x03R\bdateUnix\x12'\n" +
 	"\x0fnum_transaction\x18\v \x01(\x03R\x0enumTransaction\x12%\n" +
 	"\x0ecurrency_value\x18\f \x01(\x03R\rcurrencyValue\x12,\n" +
-	"\x12currency_unit_name\x18\r \x01(\tR\x10currencyUnitName\x12h\n" +
-	"\x1bnum_trans_by_currency_value\x18\x0e \x03(\v2*.api.CashInfo.NumTransByCurrencyValueEntryR\x17numTransByCurrencyValue\x12,\n" +
+	"\x12currency_unit_name\x18\r \x01(\tR\x10currencyUnitName\x12j\n" +
+	"\x1bnum_trans_by_currency_value\x18\x0e \x03(\v2,.proto.CashInfo.NumTransByCurrencyValueEntryR\x17numTransByCurrencyValue\x12,\n" +
 	"\x12num_account_unique\x18\x0f \x01(\x03R\x10numAccountUnique\x12\x17\n" +
 	"\anet_rev\x18\x10 \x01(\x03R\x06netRev\x1aJ\n" +
 	"\x1cNumTransByCurrencyValueEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x03R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"\xc9\x01\n" +
+	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"\xcb\x01\n" +
 	"\x0fCashInfoRequest\x12\x1b\n" +
 	"\tfrom_unix\x18\x01 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x02 \x01(\x03R\x06toUnix\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x03R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x04 \x01(\x03R\x06offset\x12\x1c\n" +
-	"\tpublisher\x18\x05 \x01(\x03R\tpublisher\x124\n" +
-	"\vcurrency_id\x18\x06 \x01(\x0e2\x13.api.CurrencyUnitIdR\n" +
-	"currencyId\"\xdb\x01\n" +
-	"\x10CashInfoResponse\x122\n" +
-	"\rcashout_infos\x18\x01 \x03(\v2\r.api.CashInfoR\fcashoutInfos\x12\x1d\n" +
+	"\tpublisher\x18\x05 \x01(\x03R\tpublisher\x126\n" +
+	"\vcurrency_id\x18\x06 \x01(\x0e2\x15.proto.CurrencyUnitIdR\n" +
+	"currencyId\"\xdd\x01\n" +
+	"\x10CashInfoResponse\x124\n" +
+	"\rcashout_infos\x18\x01 \x03(\v2\x0f.proto.CashInfoR\fcashoutInfos\x12\x1d\n" +
 	"\n" +
 	"total_cash\x18\x02 \x01(\x03R\ttotalCash\x12#\n" +
 	"\rtotal_account\x18\x03 \x01(\x03R\ftotalAccount\x12\x19\n" +
@@ -4255,20 +4258,20 @@ const file_operation_proto_rawDesc = "" +
 	"\rUserGameCount\x12\x1b\n" +
 	"\tdate_unix\x18\x01 \x01(\x03R\bdateUnix\x12\x1d\n" +
 	"\n" +
-	"count_game\x18\x02 \x01(\x03R\tcountGame\"\x7f\n" +
+	"count_game\x18\x02 \x01(\x03R\tcountGame\"\x81\x01\n" +
 	"\rUserGameStats\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x17\n" +
-	"\agame_no\x18\x02 \x01(\x03R\x06gameNo\x12<\n" +
-	"\x10user_game_counts\x18\x03 \x03(\v2\x12.api.UserGameCountR\x0euserGameCounts\"\x84\x01\n" +
+	"\agame_no\x18\x02 \x01(\x03R\x06gameNo\x12>\n" +
+	"\x10user_game_counts\x18\x03 \x03(\v2\x14.proto.UserGameCountR\x0euserGameCounts\"\x84\x01\n" +
 	"\fPaymentByVip\x12\x10\n" +
 	"\x03vip\x18\x01 \x01(\x03R\x03vip\x12\x0e\n" +
 	"\x02ci\x18\x02 \x01(\x03R\x02ci\x12\x14\n" +
 	"\x05chips\x18\x03 \x01(\x03R\x05chips\x12\x1b\n" +
 	"\tnum_trans\x18\x04 \x01(\x03R\bnumTrans\x12\x1f\n" +
 	"\vnum_account\x18\x05 \x01(\x03R\n" +
-	"numAccount\"t\n" +
-	"\rPaymentsByVip\x12-\n" +
-	"\bpayments\x18\x01 \x03(\v2\x11.api.PaymentByVipR\bpayments\x12\x1b\n" +
+	"numAccount\"v\n" +
+	"\rPaymentsByVip\x12/\n" +
+	"\bpayments\x18\x01 \x03(\v2\x13.proto.PaymentByVipR\bpayments\x12\x1b\n" +
 	"\tfrom_unix\x18\x02 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x03 \x01(\x03R\x06toUnix\"\x84\x01\n" +
 	"\fCashoutByVip\x12\x10\n" +
@@ -4277,9 +4280,9 @@ const file_operation_proto_rawDesc = "" +
 	"\x05chips\x18\x03 \x01(\x03R\x05chips\x12\x1b\n" +
 	"\tnum_trans\x18\x04 \x01(\x03R\bnumTrans\x12\x1f\n" +
 	"\vnum_account\x18\x05 \x01(\x03R\n" +
-	"numAccount\"t\n" +
-	"\rCashoutsByVip\x12-\n" +
-	"\bcashouts\x18\x01 \x03(\v2\x11.api.CashoutByVipR\bcashouts\x12\x1b\n" +
+	"numAccount\"v\n" +
+	"\rCashoutsByVip\x12/\n" +
+	"\bcashouts\x18\x01 \x03(\v2\x13.proto.CashoutByVipR\bcashouts\x12\x1b\n" +
 	"\tfrom_unix\x18\x02 \x01(\x03R\bfromUnix\x12\x17\n" +
 	"\ato_unix\x18\x03 \x01(\x03R\x06toUnix\"\xab\x03\n" +
 	"\bVipStats\x12(\n" +
@@ -4300,17 +4303,17 @@ const file_operation_proto_rawDesc = "" +
 	"\tcash_out5\x18\r \x01(\x03R\bcashOut5\x12\x1d\n" +
 	"\n" +
 	"cash_out10\x18\x0e \x01(\x03R\tcashOut10\x12\x10\n" +
-	"\x03vip\x18\x0f \x01(\x03R\x03vip\"\xa0\x01\n" +
-	"\x0fVipStatsReponse\x12,\n" +
+	"\x03vip\x18\x0f \x01(\x03R\x03vip\"\xa2\x01\n" +
+	"\x0fVipStatsReponse\x12.\n" +
 	"\n" +
-	"vips_stats\x18\x01 \x03(\v2\r.api.VipStatsR\tvipsStats\x12\x14\n" +
+	"vips_stats\x18\x01 \x03(\v2\x0f.proto.VipStatsR\tvipsStats\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x1b\n" +
 	"\tfrom_unix\x18\x03 \x01(\x03R\bfromUnix\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x03R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x05 \x01(\x03R\x06offset*K\n" +
 	"\x0eCurrencyUnitId\x12 \n" +
 	"\x1cCURRENCY_UNIT_ID_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13CURRENCY_UNIT_ID_VN\x10\x01B0Z.github.com/nakamaFramework/cgp-bing-module/apib\x06proto3"
+	"\x13CURRENCY_UNIT_ID_VN\x10\x01B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
 
 var (
 	file_operation_proto_rawDescOnce sync.Once
@@ -4327,75 +4330,75 @@ func file_operation_proto_rawDescGZIP() []byte {
 var file_operation_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_operation_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
 var file_operation_proto_goTypes = []any{
-	(CurrencyUnitId)(0),           // 0: api.CurrencyUnitId
-	(*OpPlayer)(nil),              // 1: api.OpPlayer
-	(*OpPlayerRequest)(nil),       // 2: api.OpPlayerRequest
-	(*OpPlayerResponse)(nil),      // 3: api.OpPlayerResponse
-	(*MatchDetail)(nil),           // 4: api.MatchDetail
-	(*MatchDetailRequest)(nil),    // 5: api.MatchDetailRequest
-	(*MatchDetailResponse)(nil),   // 6: api.MatchDetailResponse
-	(*PlayerData)(nil),            // 7: api.PlayerData
-	(*MatchData)(nil),             // 8: api.MatchData
-	(*OpReport)(nil),              // 9: api.OpReport
-	(*GoldStatistic)(nil),         // 10: api.GoldStatistic
-	(*GoldStatisticRequest)(nil),  // 11: api.GoldStatisticRequest
-	(*GoldStatisticResponse)(nil), // 12: api.GoldStatisticResponse
-	(*UserStatistic)(nil),         // 13: api.UserStatistic
-	(*UserStatisticRequest)(nil),  // 14: api.UserStatisticRequest
-	(*UserStatGameHistory)(nil),   // 15: api.UserStatGameHistory
-	(*UserTransferGoldStat)(nil),  // 16: api.UserTransferGoldStat
-	(*UserInfo)(nil),              // 17: api.UserInfo
-	(*UserInfoResponse)(nil),      // 18: api.UserInfoResponse
-	(*CashOut)(nil),               // 19: api.CashOut
-	(*TopCashOut)(nil),            // 20: api.TopCashOut
-	(*Vip)(nil),                   // 21: api.Vip
-	(*TopVip)(nil),                // 22: api.TopVip
-	(*Win)(nil),                   // 23: api.Win
-	(*TopWin)(nil),                // 24: api.TopWin
-	(*Lost)(nil),                  // 25: api.Lost
-	(*TopLost)(nil),               // 26: api.TopLost
-	(*TransactionRequest)(nil),    // 27: api.TransactionRequest
-	(*TransactionDetail)(nil),     // 28: api.TransactionDetail
-	(*TransactionResponse)(nil),   // 29: api.TransactionResponse
-	(*IAPSummary)(nil),            // 30: api.IAPSummary
-	(*CashInfo)(nil),              // 31: api.CashInfo
-	(*CashInfoRequest)(nil),       // 32: api.CashInfoRequest
-	(*CashInfoResponse)(nil),      // 33: api.CashInfoResponse
-	(*UserGameCount)(nil),         // 34: api.UserGameCount
-	(*UserGameStats)(nil),         // 35: api.UserGameStats
-	(*PaymentByVip)(nil),          // 36: api.PaymentByVip
-	(*PaymentsByVip)(nil),         // 37: api.PaymentsByVip
-	(*CashoutByVip)(nil),          // 38: api.CashoutByVip
-	(*CashoutsByVip)(nil),         // 39: api.CashoutsByVip
-	(*VipStats)(nil),              // 40: api.VipStats
-	(*VipStatsReponse)(nil),       // 41: api.VipStatsReponse
-	nil,                           // 42: api.CashInfo.NumTransByCurrencyValueEntry
-	(*Profile)(nil),               // 43: api.Profile
+	(CurrencyUnitId)(0),           // 0: proto.CurrencyUnitId
+	(*OpPlayer)(nil),              // 1: proto.OpPlayer
+	(*OpPlayerRequest)(nil),       // 2: proto.OpPlayerRequest
+	(*OpPlayerResponse)(nil),      // 3: proto.OpPlayerResponse
+	(*MatchDetail)(nil),           // 4: proto.MatchDetail
+	(*MatchDetailRequest)(nil),    // 5: proto.MatchDetailRequest
+	(*MatchDetailResponse)(nil),   // 6: proto.MatchDetailResponse
+	(*PlayerData)(nil),            // 7: proto.PlayerData
+	(*MatchData)(nil),             // 8: proto.MatchData
+	(*OpReport)(nil),              // 9: proto.OpReport
+	(*GoldStatistic)(nil),         // 10: proto.GoldStatistic
+	(*GoldStatisticRequest)(nil),  // 11: proto.GoldStatisticRequest
+	(*GoldStatisticResponse)(nil), // 12: proto.GoldStatisticResponse
+	(*UserStatistic)(nil),         // 13: proto.UserStatistic
+	(*UserStatisticRequest)(nil),  // 14: proto.UserStatisticRequest
+	(*UserStatGameHistory)(nil),   // 15: proto.UserStatGameHistory
+	(*UserTransferGoldStat)(nil),  // 16: proto.UserTransferGoldStat
+	(*UserInfo)(nil),              // 17: proto.UserInfo
+	(*UserInfoResponse)(nil),      // 18: proto.UserInfoResponse
+	(*CashOut)(nil),               // 19: proto.CashOut
+	(*TopCashOut)(nil),            // 20: proto.TopCashOut
+	(*Vip)(nil),                   // 21: proto.Vip
+	(*TopVip)(nil),                // 22: proto.TopVip
+	(*Win)(nil),                   // 23: proto.Win
+	(*TopWin)(nil),                // 24: proto.TopWin
+	(*Lost)(nil),                  // 25: proto.Lost
+	(*TopLost)(nil),               // 26: proto.TopLost
+	(*TransactionRequest)(nil),    // 27: proto.TransactionRequest
+	(*TransactionDetail)(nil),     // 28: proto.TransactionDetail
+	(*TransactionResponse)(nil),   // 29: proto.TransactionResponse
+	(*IAPSummary)(nil),            // 30: proto.IAPSummary
+	(*CashInfo)(nil),              // 31: proto.CashInfo
+	(*CashInfoRequest)(nil),       // 32: proto.CashInfoRequest
+	(*CashInfoResponse)(nil),      // 33: proto.CashInfoResponse
+	(*UserGameCount)(nil),         // 34: proto.UserGameCount
+	(*UserGameStats)(nil),         // 35: proto.UserGameStats
+	(*PaymentByVip)(nil),          // 36: proto.PaymentByVip
+	(*PaymentsByVip)(nil),         // 37: proto.PaymentsByVip
+	(*CashoutByVip)(nil),          // 38: proto.CashoutByVip
+	(*CashoutsByVip)(nil),         // 39: proto.CashoutsByVip
+	(*VipStats)(nil),              // 40: proto.VipStats
+	(*VipStatsReponse)(nil),       // 41: proto.VipStatsReponse
+	nil,                           // 42: proto.CashInfo.NumTransByCurrencyValueEntry
+	(*Profile)(nil),               // 43: proto.Profile
 }
 var file_operation_proto_depIdxs = []int32{
-	1,  // 0: api.OpPlayerResponse.op_players:type_name -> api.OpPlayer
-	4,  // 1: api.MatchDetailResponse.match_details:type_name -> api.MatchDetail
-	7,  // 2: api.OpReport.player_data:type_name -> api.PlayerData
-	8,  // 3: api.OpReport.match_data:type_name -> api.MatchData
-	8,  // 4: api.GoldStatistic.match_data:type_name -> api.MatchData
-	10, // 5: api.GoldStatisticResponse.gold_statistics:type_name -> api.GoldStatistic
-	15, // 6: api.UserStatistic.user_stat_game_histories:type_name -> api.UserStatGameHistory
-	16, // 7: api.UserStatistic.recv_chip_stats:type_name -> api.UserTransferGoldStat
-	16, // 8: api.UserStatistic.send_chip_stats:type_name -> api.UserTransferGoldStat
-	43, // 9: api.UserInfo.profile:type_name -> api.Profile
-	17, // 10: api.UserInfoResponse.user_infos:type_name -> api.UserInfo
-	19, // 11: api.TopCashOut.cashouts:type_name -> api.CashOut
-	21, // 12: api.TopVip.vips:type_name -> api.Vip
-	23, // 13: api.TopWin.wins:type_name -> api.Win
-	25, // 14: api.TopLost.losts:type_name -> api.Lost
-	28, // 15: api.TransactionResponse.trans_details:type_name -> api.TransactionDetail
-	42, // 16: api.CashInfo.num_trans_by_currency_value:type_name -> api.CashInfo.NumTransByCurrencyValueEntry
-	0,  // 17: api.CashInfoRequest.currency_id:type_name -> api.CurrencyUnitId
-	31, // 18: api.CashInfoResponse.cashout_infos:type_name -> api.CashInfo
-	34, // 19: api.UserGameStats.user_game_counts:type_name -> api.UserGameCount
-	36, // 20: api.PaymentsByVip.payments:type_name -> api.PaymentByVip
-	38, // 21: api.CashoutsByVip.cashouts:type_name -> api.CashoutByVip
-	40, // 22: api.VipStatsReponse.vips_stats:type_name -> api.VipStats
+	1,  // 0: proto.OpPlayerResponse.op_players:type_name -> proto.OpPlayer
+	4,  // 1: proto.MatchDetailResponse.match_details:type_name -> proto.MatchDetail
+	7,  // 2: proto.OpReport.player_data:type_name -> proto.PlayerData
+	8,  // 3: proto.OpReport.match_data:type_name -> proto.MatchData
+	8,  // 4: proto.GoldStatistic.match_data:type_name -> proto.MatchData
+	10, // 5: proto.GoldStatisticResponse.gold_statistics:type_name -> proto.GoldStatistic
+	15, // 6: proto.UserStatistic.user_stat_game_histories:type_name -> proto.UserStatGameHistory
+	16, // 7: proto.UserStatistic.recv_chip_stats:type_name -> proto.UserTransferGoldStat
+	16, // 8: proto.UserStatistic.send_chip_stats:type_name -> proto.UserTransferGoldStat
+	43, // 9: proto.UserInfo.profile:type_name -> proto.Profile
+	17, // 10: proto.UserInfoResponse.user_infos:type_name -> proto.UserInfo
+	19, // 11: proto.TopCashOut.cashouts:type_name -> proto.CashOut
+	21, // 12: proto.TopVip.vips:type_name -> proto.Vip
+	23, // 13: proto.TopWin.wins:type_name -> proto.Win
+	25, // 14: proto.TopLost.losts:type_name -> proto.Lost
+	28, // 15: proto.TransactionResponse.trans_details:type_name -> proto.TransactionDetail
+	42, // 16: proto.CashInfo.num_trans_by_currency_value:type_name -> proto.CashInfo.NumTransByCurrencyValueEntry
+	0,  // 17: proto.CashInfoRequest.currency_id:type_name -> proto.CurrencyUnitId
+	31, // 18: proto.CashInfoResponse.cashout_infos:type_name -> proto.CashInfo
+	34, // 19: proto.UserGameStats.user_game_counts:type_name -> proto.UserGameCount
+	36, // 20: proto.PaymentsByVip.payments:type_name -> proto.PaymentByVip
+	38, // 21: proto.CashoutsByVip.cashouts:type_name -> proto.CashoutByVip
+	40, // 22: proto.VipStatsReponse.vips_stats:type_name -> proto.VipStats
 	23, // [23:23] is the sub-list for method output_type
 	23, // [23:23] is the sub-list for method input_type
 	23, // [23:23] is the sub-list for extension type_name
@@ -4408,7 +4411,7 @@ func file_operation_proto_init() {
 	if File_operation_proto != nil {
 		return
 	}
-	file_auth_api_proto_init()
+	file_auth_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

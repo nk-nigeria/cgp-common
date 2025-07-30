@@ -6,7 +6,7 @@
 
 // The realtime protocol for the template match engine.
 
-package api
+package proto
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -586,26 +586,26 @@ var File_color_game_proto protoreflect.FileDescriptor
 
 const file_color_game_proto_rawDesc = "" +
 	"\n" +
-	"\x10color_game.proto\x12\x03api\"]\n" +
+	"\x10color_game.proto\x12\x05proto\"_\n" +
 	"\tBetResult\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x12 \n" +
-	"\x04bets\x18\x02 \x03(\v2\f.api.InfoBetR\x04bets\x12\x15\n" +
-	"\x06is_win\x18\x03 \x01(\bR\x05isWin\"\xa8\x01\n" +
-	"\x0fColorGameFinish\x12-\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\"\n" +
+	"\x04bets\x18\x02 \x03(\v2\x0e.proto.InfoBetR\x04bets\x12\x15\n" +
+	"\x06is_win\x18\x03 \x01(\bR\x05isWin\"\xae\x01\n" +
+	"\x0fColorGameFinish\x12/\n" +
 	"\n" +
-	"roll_color\x18\x01 \x01(\v2\x0e.api.ListColorR\trollColor\x12/\n" +
-	"\vbet_results\x18\x02 \x03(\v2\x0e.api.BetResultR\n" +
-	"betResults\x125\n" +
-	"\rhistory_rolls\x18\x03 \x01(\v2\x10.api.HistoryRollR\fhistoryRolls\"#\n" +
+	"roll_color\x18\x01 \x01(\v2\x10.proto.ListColorR\trollColor\x121\n" +
+	"\vbet_results\x18\x02 \x03(\v2\x10.proto.BetResultR\n" +
+	"betResults\x127\n" +
+	"\rhistory_rolls\x18\x03 \x01(\v2\x12.proto.HistoryRollR\fhistoryRolls\"#\n" +
 	"\tListColor\x12\x16\n" +
 	"\x06colors\x18\x01 \x03(\x05R\x06colors\"5\n" +
 	"\tRateColor\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x18\n" +
-	"\apercent\x18\x02 \x01(\x05R\apercent\"o\n" +
-	"\vHistoryRoll\x12/\n" +
-	"\vlist_colors\x18\x01 \x03(\v2\x0e.api.ListColorR\n" +
-	"listColors\x12/\n" +
-	"\vrate_colors\x18\x02 \x03(\v2\x0e.api.RateColorR\n" +
+	"\apercent\x18\x02 \x01(\x05R\apercent\"s\n" +
+	"\vHistoryRoll\x121\n" +
+	"\vlist_colors\x18\x01 \x03(\v2\x10.proto.ListColorR\n" +
+	"listColors\x121\n" +
+	"\vrate_colors\x18\x02 \x03(\v2\x10.proto.RateColorR\n" +
 	"rateColors\"\xdf\x01\n" +
 	"\aInfoBet\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x14\n" +
@@ -615,18 +615,18 @@ const file_color_game_proto_rawDesc = "" +
 	"\x04desp\x18\x04 \x01(\tR\x04desp\x12\"\n" +
 	"\rreq_spec_game\x18\x05 \x01(\x05R\vreqSpecGame\x12,\n" +
 	"\x12emit_newgame_event\x18\x06 \x01(\bR\x10emitNewgameEvent\x12*\n" +
-	"\x11delay_emit_result\x18\a \x01(\tR\x0fdelayEmitResult\"8\n" +
-	"\vListInfoBet\x12)\n" +
-	"\tlist_bets\x18\x01 \x03(\v2\f.api.InfoBetR\blistBets\"\xb8\x02\n" +
+	"\x11delay_emit_result\x18\a \x01(\tR\x0fdelayEmitResult\":\n" +
+	"\vListInfoBet\x12+\n" +
+	"\tlist_bets\x18\x01 \x03(\v2\x0e.proto.InfoBetR\blistBets\"\xbe\x02\n" +
 	"\n" +
 	"UpdateDesk\x12\x19\n" +
 	"\bn_player\x18\x01 \x01(\x05R\anPlayer\x12(\n" +
 	"\x10update_user_bets\x18\x02 \x01(\bR\x0eupdateUserBets\x12(\n" +
-	"\x10update_cell_bets\x18\x03 \x01(\bR\x0eupdateCellBets\x12)\n" +
-	"\tuser_bets\x18\x04 \x03(\v2\f.api.InfoBetR\buserBets\x12)\n" +
-	"\tcell_bets\x18\x05 \x03(\v2\f.api.InfoBetR\bcellBets\x12.\n" +
-	"\x13update_history_roll\x18\x06 \x01(\bR\x11updateHistoryRoll\x125\n" +
-	"\rhistory_rolls\x18\a \x01(\v2\x10.api.HistoryRollR\fhistoryRolls*\x81\x01\n" +
+	"\x10update_cell_bets\x18\x03 \x01(\bR\x0eupdateCellBets\x12+\n" +
+	"\tuser_bets\x18\x04 \x03(\v2\x0e.proto.InfoBetR\buserBets\x12+\n" +
+	"\tcell_bets\x18\x05 \x03(\v2\x0e.proto.InfoBetR\bcellBets\x12.\n" +
+	"\x13update_history_roll\x18\x06 \x01(\bR\x11updateHistoryRoll\x127\n" +
+	"\rhistory_rolls\x18\a \x01(\v2\x12.proto.HistoryRollR\fhistoryRolls*\x81\x01\n" +
 	"\x05Color\x12\x15\n" +
 	"\x11COLOR_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fCOLOR_YELLOW\x10\x01\x12\x0f\n" +
@@ -636,7 +636,7 @@ const file_color_game_proto_rawDesc = "" +
 	"\n" +
 	"COLOR_BLUE\x10\b\x12\r\n" +
 	"\tCOLOR_RED\x10\x10\x12\x0f\n" +
-	"\vCOLOR_GREEN\x10 B0Z.github.com/nakamaFramework/cgp-bing-module/apib\x06proto3"
+	"\vCOLOR_GREEN\x10 B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
 
 var (
 	file_color_game_proto_rawDescOnce sync.Once
@@ -653,27 +653,27 @@ func file_color_game_proto_rawDescGZIP() []byte {
 var file_color_game_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_color_game_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_color_game_proto_goTypes = []any{
-	(Color)(0),              // 0: api.Color
-	(*BetResult)(nil),       // 1: api.BetResult
-	(*ColorGameFinish)(nil), // 2: api.ColorGameFinish
-	(*ListColor)(nil),       // 3: api.ListColor
-	(*RateColor)(nil),       // 4: api.RateColor
-	(*HistoryRoll)(nil),     // 5: api.HistoryRoll
-	(*InfoBet)(nil),         // 6: api.InfoBet
-	(*ListInfoBet)(nil),     // 7: api.ListInfoBet
-	(*UpdateDesk)(nil),      // 8: api.UpdateDesk
+	(Color)(0),              // 0: proto.Color
+	(*BetResult)(nil),       // 1: proto.BetResult
+	(*ColorGameFinish)(nil), // 2: proto.ColorGameFinish
+	(*ListColor)(nil),       // 3: proto.ListColor
+	(*RateColor)(nil),       // 4: proto.RateColor
+	(*HistoryRoll)(nil),     // 5: proto.HistoryRoll
+	(*InfoBet)(nil),         // 6: proto.InfoBet
+	(*ListInfoBet)(nil),     // 7: proto.ListInfoBet
+	(*UpdateDesk)(nil),      // 8: proto.UpdateDesk
 }
 var file_color_game_proto_depIdxs = []int32{
-	6,  // 0: api.BetResult.bets:type_name -> api.InfoBet
-	3,  // 1: api.ColorGameFinish.roll_color:type_name -> api.ListColor
-	1,  // 2: api.ColorGameFinish.bet_results:type_name -> api.BetResult
-	5,  // 3: api.ColorGameFinish.history_rolls:type_name -> api.HistoryRoll
-	3,  // 4: api.HistoryRoll.list_colors:type_name -> api.ListColor
-	4,  // 5: api.HistoryRoll.rate_colors:type_name -> api.RateColor
-	6,  // 6: api.ListInfoBet.list_bets:type_name -> api.InfoBet
-	6,  // 7: api.UpdateDesk.user_bets:type_name -> api.InfoBet
-	6,  // 8: api.UpdateDesk.cell_bets:type_name -> api.InfoBet
-	5,  // 9: api.UpdateDesk.history_rolls:type_name -> api.HistoryRoll
+	6,  // 0: proto.BetResult.bets:type_name -> proto.InfoBet
+	3,  // 1: proto.ColorGameFinish.roll_color:type_name -> proto.ListColor
+	1,  // 2: proto.ColorGameFinish.bet_results:type_name -> proto.BetResult
+	5,  // 3: proto.ColorGameFinish.history_rolls:type_name -> proto.HistoryRoll
+	3,  // 4: proto.HistoryRoll.list_colors:type_name -> proto.ListColor
+	4,  // 5: proto.HistoryRoll.rate_colors:type_name -> proto.RateColor
+	6,  // 6: proto.ListInfoBet.list_bets:type_name -> proto.InfoBet
+	6,  // 7: proto.UpdateDesk.user_bets:type_name -> proto.InfoBet
+	6,  // 8: proto.UpdateDesk.cell_bets:type_name -> proto.InfoBet
+	5,  // 9: proto.UpdateDesk.history_rolls:type_name -> proto.HistoryRoll
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name

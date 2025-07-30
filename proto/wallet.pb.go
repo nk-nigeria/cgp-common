@@ -4,7 +4,7 @@
 // 	protoc        v3.21.12
 // source: wallet.proto
 
-package api
+package proto
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -85,7 +85,7 @@ type Bank struct {
 	RecipientId   string                 `protobuf:"bytes,2,opt,name=recipient_id,json=recipientId,proto3" json:"recipient_id,omitempty"`
 	Chips         int64                  `protobuf:"varint,3,opt,name=chips,proto3" json:"chips,omitempty"`
 	ChipsInBank   int64                  `protobuf:"varint,4,opt,name=chips_in_bank,json=chipsInBank,proto3" json:"chips_in_bank,omitempty"`
-	Action        Bank_Action            `protobuf:"varint,5,opt,name=action,proto3,enum=api.Bank_Action" json:"action,omitempty"`
+	Action        Bank_Action            `protobuf:"varint,5,opt,name=action,proto3,enum=proto.Bank_Action" json:"action,omitempty"`
 	BalancePrev   int64                  `protobuf:"varint,6,opt,name=balance_prev,json=balancePrev,proto3" json:"balance_prev,omitempty"`
 	BalanceCurr   int64                  `protobuf:"varint,7,opt,name=balance_curr,json=balanceCurr,proto3" json:"balance_curr,omitempty"`
 	PercenFee     int64                  `protobuf:"varint,8,opt,name=percen_fee,json=percenFee,proto3" json:"percen_fee,omitempty"`
@@ -207,13 +207,13 @@ var File_wallet_proto protoreflect.FileDescriptor
 
 const file_wallet_proto_rawDesc = "" +
 	"\n" +
-	"\fwallet.proto\x12\x03api\"\x8b\x04\n" +
+	"\fwallet.proto\x12\x05proto\"\x8d\x04\n" +
 	"\x04Bank\x12\x1b\n" +
 	"\tsender_id\x18\x01 \x01(\tR\bsenderId\x12!\n" +
 	"\frecipient_id\x18\x02 \x01(\tR\vrecipientId\x12\x14\n" +
 	"\x05chips\x18\x03 \x01(\x03R\x05chips\x12\"\n" +
-	"\rchips_in_bank\x18\x04 \x01(\x03R\vchipsInBank\x12(\n" +
-	"\x06action\x18\x05 \x01(\x0e2\x10.api.Bank.ActionR\x06action\x12!\n" +
+	"\rchips_in_bank\x18\x04 \x01(\x03R\vchipsInBank\x12*\n" +
+	"\x06action\x18\x05 \x01(\x0e2\x12.proto.Bank.ActionR\x06action\x12!\n" +
 	"\fbalance_prev\x18\x06 \x01(\x03R\vbalancePrev\x12!\n" +
 	"\fbalance_curr\x18\a \x01(\x03R\vbalanceCurr\x12\x1d\n" +
 	"\n" +
@@ -230,7 +230,7 @@ const file_wallet_proto_rawDesc = "" +
 	"\x10ACTION_RECV_GIFT\x10\x02\x12\x1a\n" +
 	"\x16ACTION_REVERT_SEND_GIF\x10\x03\x12\x17\n" +
 	"\x13ACTION_PUSH_TO_SAFE\x10\x04\x12\x13\n" +
-	"\x0fACTION_WITHDRAW\x10\x05B2Z0github.com/nakamaFramework/cgp-common-module/apib\x06proto3"
+	"\x0fACTION_WITHDRAW\x10\x05B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
 
 var (
 	file_wallet_proto_rawDescOnce sync.Once
@@ -247,11 +247,11 @@ func file_wallet_proto_rawDescGZIP() []byte {
 var file_wallet_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_wallet_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_wallet_proto_goTypes = []any{
-	(Bank_Action)(0), // 0: api.Bank.Action
-	(*Bank)(nil),     // 1: api.Bank
+	(Bank_Action)(0), // 0: proto.Bank.Action
+	(*Bank)(nil),     // 1: proto.Bank
 }
 var file_wallet_proto_depIdxs = []int32{
-	0, // 0: api.Bank.action:type_name -> api.Bank.Action
+	0, // 0: proto.Bank.action:type_name -> proto.Bank.Action
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

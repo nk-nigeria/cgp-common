@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package api;
+package proto;
 
-import "auth_api.proto";
+import "auth.proto";
 
-option go_package = "github.com/nakamaFramework/cgp-bing-module/api";
+option go_package = "github.com/nk-nigeria/whot-module/cgp-common/proto";
 
 message OpPlayer {
   string user_id = 1;

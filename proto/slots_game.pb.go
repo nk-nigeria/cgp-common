@@ -4,7 +4,7 @@
 // 	protoc        v3.21.12
 // source: slots_game.proto
 
-package api
+package proto
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -648,9 +648,9 @@ type SlotDesk struct {
 	// mức cược hiện tại của lần spin
 	ChipsMcb int64 `protobuf:"varint,6,opt,name=chips_mcb,json=chipsMcb,proto3" json:"chips_mcb,omitempty"`
 	// loại game kế tiếp user sẽ chơi
-	NextSixiangGame SiXiangGame `protobuf:"varint,7,opt,name=next_sixiang_game,json=nextSixiangGame,proto3,enum=api.SiXiangGame" json:"next_sixiang_game,omitempty"`
+	NextSixiangGame SiXiangGame `protobuf:"varint,7,opt,name=next_sixiang_game,json=nextSixiangGame,proto3,enum=proto.SiXiangGame" json:"next_sixiang_game,omitempty"`
 	// loại game hiện tại user đang chơi
-	CurrentSixiangGame SiXiangGame `protobuf:"varint,100,opt,name=current_sixiang_game,json=currentSixiangGame,proto3,enum=api.SiXiangGame" json:"current_sixiang_game,omitempty"`
+	CurrentSixiangGame SiXiangGame `protobuf:"varint,100,opt,name=current_sixiang_game,json=currentSixiangGame,proto3,enum=proto.SiXiangGame" json:"current_sixiang_game,omitempty"`
 	// true khi kết thúc game, và có hành động cập nhật số dư ví của user
 	// ví dụ game bình thường mỗi lần spin thì sẽ kết thúc game và + tiền
 	// nhưng các game đặc biệt như bonus, lucky draw ...
@@ -662,9 +662,9 @@ type SlotDesk struct {
 	// các mảng symbol quay được ở các game đặc biệt.
 	SpinSymbols []*SpinSymbol `protobuf:"bytes,8,rep,name=spin_symbols,json=spinSymbols,proto3" json:"spin_symbols,omitempty"`
 	// loại jackot đã win
-	WinJp WinJackpot `protobuf:"varint,9,opt,name=win_jp,json=winJp,proto3,enum=api.WinJackpot" json:"win_jp,omitempty"`
+	WinJp WinJackpot `protobuf:"varint,9,opt,name=win_jp,json=winJp,proto3,enum=proto.WinJackpot" json:"win_jp,omitempty"`
 	// loại big win (mega, huge, big...)
-	BigWin BigWin `protobuf:"varint,11,opt,name=big_win,json=bigWin,proto3,enum=api.BigWin" json:"big_win,omitempty"`
+	BigWin BigWin `protobuf:"varint,11,opt,name=big_win,json=bigWin,proto3,enum=proto.BigWin" json:"big_win,omitempty"`
 	// tổng số chip thắng trong game
 	// int64 chips_win = 13;
 	// cap nhat bien dong so du trong wallet
@@ -692,8 +692,8 @@ type SlotDesk struct {
 	// SI_XIANG_GAME_LUCKDRAW
 	// SI_XIANG_GAME_GOLDPICK
 	// SI_XIANG_GAME_RAPIDPAY
-	SixiangGems   []SiXiangGame   `protobuf:"varint,27,rep,packed,name=sixiang_gems,json=sixiangGems,proto3,enum=api.SiXiangGame" json:"sixiang_gems,omitempty"`
-	LetterSymbols []SiXiangSymbol `protobuf:"varint,28,rep,packed,name=letter_symbols,json=letterSymbols,proto3,enum=api.SiXiangSymbol" json:"letter_symbols,omitempty"`
+	SixiangGems   []SiXiangGame   `protobuf:"varint,27,rep,packed,name=sixiang_gems,json=sixiangGems,proto3,enum=proto.SiXiangGame" json:"sixiang_gems,omitempty"`
+	LetterSymbols []SiXiangSymbol `protobuf:"varint,28,rep,packed,name=letter_symbols,json=letterSymbols,proto3,enum=proto.SiXiangSymbol" json:"letter_symbols,omitempty"`
 	WinJpHistory  *JackpotHistory `protobuf:"bytes,29,opt,name=win_jp_history,json=winJpHistory,proto3" json:"win_jp_history,omitempty"`
 	GameConfig    *GameConfig     `protobuf:"bytes,30,opt,name=game_config,json=gameConfig,proto3" json:"game_config,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -971,7 +971,7 @@ func (x *GameConfig) GetRatioBasket() float32 {
 type SlotMatrix struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Mảng 2 chiều ở dạng list, rowxcol
-	Lists []SiXiangSymbol `protobuf:"varint,1,rep,packed,name=lists,proto3,enum=api.SiXiangSymbol" json:"lists,omitempty"`
+	Lists []SiXiangSymbol `protobuf:"varint,1,rep,packed,name=lists,proto3,enum=proto.SiXiangSymbol" json:"lists,omitempty"`
 	// số hàng tối đa
 	Rows int32 `protobuf:"varint,2,opt,name=rows,proto3" json:"rows,omitempty"`
 	// số cột tối đa
@@ -1044,12 +1044,12 @@ func (x *SlotMatrix) GetSpinLists() []*SpinSymbol {
 // với ô đầu tính ở (0,0)
 type SpinSymbol struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Symbol        SiXiangSymbol          `protobuf:"varint,1,opt,name=symbol,proto3,enum=api.SiXiangSymbol" json:"symbol,omitempty"`
+	Symbol        SiXiangSymbol          `protobuf:"varint,1,opt,name=symbol,proto3,enum=proto.SiXiangSymbol" json:"symbol,omitempty"`
 	Col           int32                  `protobuf:"varint,2,opt,name=col,proto3" json:"col,omitempty"`
 	Row           int32                  `protobuf:"varint,3,opt,name=row,proto3" json:"row,omitempty"`
 	Ratio         float32                `protobuf:"fixed32,4,opt,name=ratio,proto3" json:"ratio,omitempty"`
 	Index         int32                  `protobuf:"varint,5,opt,name=index,proto3" json:"index,omitempty"`
-	WinJp         WinJackpot             `protobuf:"varint,6,opt,name=win_jp,json=winJp,proto3,enum=api.WinJackpot" json:"win_jp,omitempty"`
+	WinJp         WinJackpot             `protobuf:"varint,6,opt,name=win_jp,json=winJp,proto3,enum=proto.WinJackpot" json:"win_jp,omitempty"`
 	WinAmount     int64                  `protobuf:"varint,7,opt,name=win_amount,json=winAmount,proto3" json:"win_amount,omitempty"`
 	RatioBonus    float32                `protobuf:"fixed32,8,opt,name=ratio_bonus,json=ratioBonus,proto3" json:"ratio_bonus,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1144,7 +1144,7 @@ func (x *SpinSymbol) GetRatioBonus() float32 {
 
 type CollectSymbol struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Symbol        SiXiangSymbol          `protobuf:"varint,1,opt,name=symbol,proto3,enum=api.SiXiangSymbol" json:"symbol,omitempty"`
+	Symbol        SiXiangSymbol          `protobuf:"varint,1,opt,name=symbol,proto3,enum=proto.SiXiangSymbol" json:"symbol,omitempty"`
 	Qty           int64                  `protobuf:"varint,2,opt,name=qty,proto3" json:"qty,omitempty"` // so luong
 	Ratio         float32                `protobuf:"fixed32,3,opt,name=ratio,proto3" json:"ratio,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1204,7 +1204,7 @@ func (x *CollectSymbol) GetRatio() float32 {
 
 type JackpotReward struct {
 	state      protoimpl.MessageState `protogen:"open.v1"`
-	WinJackpot WinJackpot             `protobuf:"varint,1,opt,name=win_jackpot,json=winJackpot,proto3,enum=api.WinJackpot" json:"win_jackpot,omitempty"`
+	WinJackpot WinJackpot             `protobuf:"varint,1,opt,name=win_jackpot,json=winJackpot,proto3,enum=proto.WinJackpot" json:"win_jackpot,omitempty"`
 	Ratio      int64                  `protobuf:"varint,2,opt,name=ratio,proto3" json:"ratio,omitempty"`
 	Count      int64                  `protobuf:"varint,3,opt,name=count,proto3" json:"count,omitempty"`
 	Chips      int64                  `protobuf:"varint,4,opt,name=chips,proto3" json:"chips,omitempty"`
@@ -1358,7 +1358,7 @@ func (x *JackpotHistory) GetMini() *JackpotReward {
 type Payline struct {
 	state    protoimpl.MessageState `protogen:"open.v1"`
 	Id       int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Symbol   SiXiangSymbol          `protobuf:"varint,2,opt,name=symbol,proto3,enum=api.SiXiangSymbol" json:"symbol,omitempty"`
+	Symbol   SiXiangSymbol          `protobuf:"varint,2,opt,name=symbol,proto3,enum=proto.SiXiangSymbol" json:"symbol,omitempty"`
 	NumOccur int32                  `protobuf:"varint,3,opt,name=num_occur,json=numOccur,proto3" json:"num_occur,omitempty"`
 	Rate     float64                `protobuf:"fixed64,4,opt,name=rate,proto3" json:"rate,omitempty"`
 	Chips    int64                  `protobuf:"varint,5,opt,name=chips,proto3" json:"chips,omitempty"`
@@ -1670,33 +1670,33 @@ var File_slots_game_proto protoreflect.FileDescriptor
 
 const file_slots_game_proto_rawDesc = "" +
 	"\n" +
-	"\x10slots_game.proto\x12\x03api\x1a\x10color_game.proto\"\xb2\b\n" +
-	"\bSlotDesk\x12'\n" +
-	"\x06matrix\x18\x01 \x01(\v2\x0f.api.SlotMatrixR\x06matrix\x124\n" +
-	"\rspread_matrix\x18\x04 \x01(\v2\x0f.api.SlotMatrixR\fspreadMatrix\x12(\n" +
-	"\bpaylines\x18\x05 \x03(\v2\f.api.PaylineR\bpaylines\x12\x1b\n" +
-	"\tchips_mcb\x18\x06 \x01(\x03R\bchipsMcb\x12<\n" +
-	"\x11next_sixiang_game\x18\a \x01(\x0e2\x10.api.SiXiangGameR\x0fnextSixiangGame\x12B\n" +
-	"\x14current_sixiang_game\x18d \x01(\x0e2\x10.api.SiXiangGameR\x12currentSixiangGame\x12$\n" +
+	"\x10slots_game.proto\x12\x05proto\x1a\x10color_game.proto\"\xd0\b\n" +
+	"\bSlotDesk\x12)\n" +
+	"\x06matrix\x18\x01 \x01(\v2\x11.proto.SlotMatrixR\x06matrix\x126\n" +
+	"\rspread_matrix\x18\x04 \x01(\v2\x11.proto.SlotMatrixR\fspreadMatrix\x12*\n" +
+	"\bpaylines\x18\x05 \x03(\v2\x0e.proto.PaylineR\bpaylines\x12\x1b\n" +
+	"\tchips_mcb\x18\x06 \x01(\x03R\bchipsMcb\x12>\n" +
+	"\x11next_sixiang_game\x18\a \x01(\x0e2\x12.proto.SiXiangGameR\x0fnextSixiangGame\x12D\n" +
+	"\x14current_sixiang_game\x18d \x01(\x0e2\x12.proto.SiXiangGameR\x12currentSixiangGame\x12$\n" +
 	"\x0eis_finish_game\x18e \x01(\bR\fisFinishGame\x12-\n" +
-	"\x13is_in_sixiang_bonus\x18n \x01(\bR\x10isInSixiangBonus\x122\n" +
-	"\fspin_symbols\x18\b \x03(\v2\x0f.api.SpinSymbolR\vspinSymbols\x12&\n" +
-	"\x06win_jp\x18\t \x01(\x0e2\x0f.api.WinJackpotR\x05winJp\x12$\n" +
-	"\abig_win\x18\v \x01(\x0e2\v.api.BigWinR\x06bigWin\x120\n" +
-	"\vgame_reward\x18\x0e \x01(\v2\x0f.api.GameRewardR\n" +
-	"gameReward\x12A\n" +
-	"\x12collection_symbols\x18\x10 \x03(\v2\x12.api.CollectSymbolR\x11collectionSymbols\x12\x17\n" +
+	"\x13is_in_sixiang_bonus\x18n \x01(\bR\x10isInSixiangBonus\x124\n" +
+	"\fspin_symbols\x18\b \x03(\v2\x11.proto.SpinSymbolR\vspinSymbols\x12(\n" +
+	"\x06win_jp\x18\t \x01(\x0e2\x11.proto.WinJackpotR\x05winJp\x12&\n" +
+	"\abig_win\x18\v \x01(\x0e2\r.proto.BigWinR\x06bigWin\x122\n" +
+	"\vgame_reward\x18\x0e \x01(\v2\x11.proto.GameRewardR\n" +
+	"gameReward\x12C\n" +
+	"\x12collection_symbols\x18\x10 \x03(\v2\x14.proto.CollectSymbolR\x11collectionSymbols\x12\x17\n" +
 	"\ats_unix\x18\x15 \x01(\x03R\x06tsUnix\x12,\n" +
 	"\x12ratio_fruit_basket\x18\x16 \x01(\x03R\x10ratioFruitBasket\x12\"\n" +
 	"\rnum_spin_left\x18\x17 \x01(\x03R\vnumSpinLeft\x12\x1d\n" +
 	"\n" +
-	"bet_levels\x18\x18 \x03(\x03R\tbetLevels\x12'\n" +
-	"\binfo_bet\x18\x19 \x01(\v2\f.api.InfoBetR\ainfoBet\x12\"\n" +
-	"\rchips_buy_gem\x18\x1a \x01(\x03R\vchipsBuyGem\x123\n" +
-	"\fsixiang_gems\x18\x1b \x03(\x0e2\x10.api.SiXiangGameR\vsixiangGems\x129\n" +
-	"\x0eletter_symbols\x18\x1c \x03(\x0e2\x12.api.SiXiangSymbolR\rletterSymbols\x129\n" +
-	"\x0ewin_jp_history\x18\x1d \x01(\v2\x13.api.JackpotHistoryR\fwinJpHistory\x120\n" +
-	"\vgame_config\x18\x1e \x01(\v2\x0f.api.GameConfigR\n" +
+	"bet_levels\x18\x18 \x03(\x03R\tbetLevels\x12)\n" +
+	"\binfo_bet\x18\x19 \x01(\v2\x0e.proto.InfoBetR\ainfoBet\x12\"\n" +
+	"\rchips_buy_gem\x18\x1a \x01(\x03R\vchipsBuyGem\x125\n" +
+	"\fsixiang_gems\x18\x1b \x03(\x0e2\x12.proto.SiXiangGameR\vsixiangGems\x12;\n" +
+	"\x0eletter_symbols\x18\x1c \x03(\x0e2\x14.proto.SiXiangSymbolR\rletterSymbols\x12;\n" +
+	"\x0ewin_jp_history\x18\x1d \x01(\v2\x15.proto.JackpotHistoryR\fwinJpHistory\x122\n" +
+	"\vgame_config\x18\x1e \x01(\v2\x11.proto.GameConfigR\n" +
 	"gameConfig\"\xb5\x01\n" +
 	"\n" +
 	"GameConfig\x12&\n" +
@@ -1705,47 +1705,47 @@ const file_slots_game_proto_rawDesc = "" +
 	"\bnum_wild\x18\x03 \x01(\x03R\anumWild\x12\x1d\n" +
 	"\n" +
 	"ratio_wild\x18\x04 \x01(\x02R\tratioWild\x12!\n" +
-	"\fratio_basket\x18\x05 \x01(\x02R\vratioBasket\"\x8e\x01\n" +
+	"\fratio_basket\x18\x05 \x01(\x02R\vratioBasket\"\x92\x01\n" +
 	"\n" +
-	"SlotMatrix\x12(\n" +
-	"\x05lists\x18\x01 \x03(\x0e2\x12.api.SiXiangSymbolR\x05lists\x12\x12\n" +
+	"SlotMatrix\x12*\n" +
+	"\x05lists\x18\x01 \x03(\x0e2\x14.proto.SiXiangSymbolR\x05lists\x12\x12\n" +
 	"\x04rows\x18\x02 \x01(\x05R\x04rows\x12\x12\n" +
-	"\x04cols\x18\x03 \x01(\x05R\x04cols\x12.\n" +
+	"\x04cols\x18\x03 \x01(\x05R\x04cols\x120\n" +
 	"\n" +
-	"spin_lists\x18\x04 \x03(\v2\x0f.api.SpinSymbolR\tspinLists\"\xf0\x01\n" +
+	"spin_lists\x18\x04 \x03(\v2\x11.proto.SpinSymbolR\tspinLists\"\xf4\x01\n" +
 	"\n" +
-	"SpinSymbol\x12*\n" +
-	"\x06symbol\x18\x01 \x01(\x0e2\x12.api.SiXiangSymbolR\x06symbol\x12\x10\n" +
+	"SpinSymbol\x12,\n" +
+	"\x06symbol\x18\x01 \x01(\x0e2\x14.proto.SiXiangSymbolR\x06symbol\x12\x10\n" +
 	"\x03col\x18\x02 \x01(\x05R\x03col\x12\x10\n" +
 	"\x03row\x18\x03 \x01(\x05R\x03row\x12\x14\n" +
 	"\x05ratio\x18\x04 \x01(\x02R\x05ratio\x12\x14\n" +
-	"\x05index\x18\x05 \x01(\x05R\x05index\x12&\n" +
-	"\x06win_jp\x18\x06 \x01(\x0e2\x0f.api.WinJackpotR\x05winJp\x12\x1d\n" +
+	"\x05index\x18\x05 \x01(\x05R\x05index\x12(\n" +
+	"\x06win_jp\x18\x06 \x01(\x0e2\x11.proto.WinJackpotR\x05winJp\x12\x1d\n" +
 	"\n" +
 	"win_amount\x18\a \x01(\x03R\twinAmount\x12\x1f\n" +
 	"\vratio_bonus\x18\b \x01(\x02R\n" +
-	"ratioBonus\"c\n" +
-	"\rCollectSymbol\x12*\n" +
-	"\x06symbol\x18\x01 \x01(\x0e2\x12.api.SiXiangSymbolR\x06symbol\x12\x10\n" +
+	"ratioBonus\"e\n" +
+	"\rCollectSymbol\x12,\n" +
+	"\x06symbol\x18\x01 \x01(\x0e2\x14.proto.SiXiangSymbolR\x06symbol\x12\x10\n" +
 	"\x03qty\x18\x02 \x01(\x03R\x03qty\x12\x14\n" +
-	"\x05ratio\x18\x03 \x01(\x02R\x05ratio\"\xa4\x01\n" +
-	"\rJackpotReward\x120\n" +
-	"\vwin_jackpot\x18\x01 \x01(\x0e2\x0f.api.WinJackpotR\n" +
+	"\x05ratio\x18\x03 \x01(\x02R\x05ratio\"\xa6\x01\n" +
+	"\rJackpotReward\x122\n" +
+	"\vwin_jackpot\x18\x01 \x01(\x0e2\x11.proto.WinJackpotR\n" +
 	"winJackpot\x12\x14\n" +
 	"\x05ratio\x18\x02 \x01(\x03R\x05ratio\x12\x14\n" +
 	"\x05count\x18\x03 \x01(\x03R\x05count\x12\x14\n" +
 	"\x05chips\x18\x04 \x01(\x03R\x05chips\x12\x1f\n" +
 	"\vchips_accum\x18\x05 \x01(\x03R\n" +
-	"chipsAccum\"\xde\x01\n" +
-	"\x0eJackpotHistory\x12(\n" +
-	"\x05minor\x18\x01 \x01(\v2\x12.api.JackpotRewardR\x05minor\x12(\n" +
-	"\x05major\x18\x02 \x01(\v2\x12.api.JackpotRewardR\x05major\x12&\n" +
-	"\x04mega\x18\x03 \x01(\v2\x12.api.JackpotRewardR\x04mega\x12(\n" +
-	"\x05grand\x18\x04 \x01(\v2\x12.api.JackpotRewardR\x05grand\x12&\n" +
-	"\x04mini\x18\x05 \x01(\v2\x12.api.JackpotRewardR\x04mini\"\xa6\x01\n" +
+	"chipsAccum\"\xe8\x01\n" +
+	"\x0eJackpotHistory\x12*\n" +
+	"\x05minor\x18\x01 \x01(\v2\x14.proto.JackpotRewardR\x05minor\x12*\n" +
+	"\x05major\x18\x02 \x01(\v2\x14.proto.JackpotRewardR\x05major\x12(\n" +
+	"\x04mega\x18\x03 \x01(\v2\x14.proto.JackpotRewardR\x04mega\x12*\n" +
+	"\x05grand\x18\x04 \x01(\v2\x14.proto.JackpotRewardR\x05grand\x12(\n" +
+	"\x04mini\x18\x05 \x01(\v2\x14.proto.JackpotRewardR\x04mini\"\xa8\x01\n" +
 	"\aPayline\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\x12*\n" +
-	"\x06symbol\x18\x02 \x01(\x0e2\x12.api.SiXiangSymbolR\x06symbol\x12\x1b\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12,\n" +
+	"\x06symbol\x18\x02 \x01(\x0e2\x14.proto.SiXiangSymbolR\x06symbol\x12\x1b\n" +
 	"\tnum_occur\x18\x03 \x01(\x05R\bnumOccur\x12\x12\n" +
 	"\x04rate\x18\x04 \x01(\x01R\x04rate\x12\x14\n" +
 	"\x05chips\x18\x05 \x01(\x03R\x05chips\x12\x18\n" +
@@ -1941,7 +1941,7 @@ const file_slots_game_proto_rawDesc = "" +
 	"\x11WIN_JACKPOT_MAJOR\x10\x14\x12\x14\n" +
 	"\x10WIN_JACKPOT_MEGA\x10\x1e\x12\x16\n" +
 	"\x11WIN_JACKPOT_GRAND\x10\x96\x01\x12\x14\n" +
-	"\x10WIN_JACKPOT_MINI\x10\x01B0Z.github.com/nakamaFramework/cgp-bing-module/apib\x06proto3"
+	"\x10WIN_JACKPOT_MINI\x10\x01B4Z2github.com/nk-nigeria/whot-module/cgp-common/protob\x06proto3"
 
 var (
 	file_slots_game_proto_rawDescOnce sync.Once
@@ -1958,50 +1958,50 @@ func file_slots_game_proto_rawDescGZIP() []byte {
 var file_slots_game_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
 var file_slots_game_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_slots_game_proto_goTypes = []any{
-	(SiXiangSymbol)(0),     // 0: api.SiXiangSymbol
-	(SiXiangGame)(0),       // 1: api.SiXiangGame
-	(BigWin)(0),            // 2: api.BigWin
-	(WinJackpot)(0),        // 3: api.WinJackpot
-	(*SlotDesk)(nil),       // 4: api.SlotDesk
-	(*GameConfig)(nil),     // 5: api.GameConfig
-	(*SlotMatrix)(nil),     // 6: api.SlotMatrix
-	(*SpinSymbol)(nil),     // 7: api.SpinSymbol
-	(*CollectSymbol)(nil),  // 8: api.CollectSymbol
-	(*JackpotReward)(nil),  // 9: api.JackpotReward
-	(*JackpotHistory)(nil), // 10: api.JackpotHistory
-	(*Payline)(nil),        // 11: api.Payline
-	(*GameReward)(nil),     // 12: api.GameReward
-	(*SaveGame)(nil),       // 13: api.SaveGame
-	(*InfoBet)(nil),        // 14: api.InfoBet
+	(SiXiangSymbol)(0),     // 0: proto.SiXiangSymbol
+	(SiXiangGame)(0),       // 1: proto.SiXiangGame
+	(BigWin)(0),            // 2: proto.BigWin
+	(WinJackpot)(0),        // 3: proto.WinJackpot
+	(*SlotDesk)(nil),       // 4: proto.SlotDesk
+	(*GameConfig)(nil),     // 5: proto.GameConfig
+	(*SlotMatrix)(nil),     // 6: proto.SlotMatrix
+	(*SpinSymbol)(nil),     // 7: proto.SpinSymbol
+	(*CollectSymbol)(nil),  // 8: proto.CollectSymbol
+	(*JackpotReward)(nil),  // 9: proto.JackpotReward
+	(*JackpotHistory)(nil), // 10: proto.JackpotHistory
+	(*Payline)(nil),        // 11: proto.Payline
+	(*GameReward)(nil),     // 12: proto.GameReward
+	(*SaveGame)(nil),       // 13: proto.SaveGame
+	(*InfoBet)(nil),        // 14: proto.InfoBet
 }
 var file_slots_game_proto_depIdxs = []int32{
-	6,  // 0: api.SlotDesk.matrix:type_name -> api.SlotMatrix
-	6,  // 1: api.SlotDesk.spread_matrix:type_name -> api.SlotMatrix
-	11, // 2: api.SlotDesk.paylines:type_name -> api.Payline
-	1,  // 3: api.SlotDesk.next_sixiang_game:type_name -> api.SiXiangGame
-	1,  // 4: api.SlotDesk.current_sixiang_game:type_name -> api.SiXiangGame
-	7,  // 5: api.SlotDesk.spin_symbols:type_name -> api.SpinSymbol
-	3,  // 6: api.SlotDesk.win_jp:type_name -> api.WinJackpot
-	2,  // 7: api.SlotDesk.big_win:type_name -> api.BigWin
-	12, // 8: api.SlotDesk.game_reward:type_name -> api.GameReward
-	8,  // 9: api.SlotDesk.collection_symbols:type_name -> api.CollectSymbol
-	14, // 10: api.SlotDesk.info_bet:type_name -> api.InfoBet
-	1,  // 11: api.SlotDesk.sixiang_gems:type_name -> api.SiXiangGame
-	0,  // 12: api.SlotDesk.letter_symbols:type_name -> api.SiXiangSymbol
-	10, // 13: api.SlotDesk.win_jp_history:type_name -> api.JackpotHistory
-	5,  // 14: api.SlotDesk.game_config:type_name -> api.GameConfig
-	0,  // 15: api.SlotMatrix.lists:type_name -> api.SiXiangSymbol
-	7,  // 16: api.SlotMatrix.spin_lists:type_name -> api.SpinSymbol
-	0,  // 17: api.SpinSymbol.symbol:type_name -> api.SiXiangSymbol
-	3,  // 18: api.SpinSymbol.win_jp:type_name -> api.WinJackpot
-	0,  // 19: api.CollectSymbol.symbol:type_name -> api.SiXiangSymbol
-	3,  // 20: api.JackpotReward.win_jackpot:type_name -> api.WinJackpot
-	9,  // 21: api.JackpotHistory.minor:type_name -> api.JackpotReward
-	9,  // 22: api.JackpotHistory.major:type_name -> api.JackpotReward
-	9,  // 23: api.JackpotHistory.mega:type_name -> api.JackpotReward
-	9,  // 24: api.JackpotHistory.grand:type_name -> api.JackpotReward
-	9,  // 25: api.JackpotHistory.mini:type_name -> api.JackpotReward
-	0,  // 26: api.Payline.symbol:type_name -> api.SiXiangSymbol
+	6,  // 0: proto.SlotDesk.matrix:type_name -> proto.SlotMatrix
+	6,  // 1: proto.SlotDesk.spread_matrix:type_name -> proto.SlotMatrix
+	11, // 2: proto.SlotDesk.paylines:type_name -> proto.Payline
+	1,  // 3: proto.SlotDesk.next_sixiang_game:type_name -> proto.SiXiangGame
+	1,  // 4: proto.SlotDesk.current_sixiang_game:type_name -> proto.SiXiangGame
+	7,  // 5: proto.SlotDesk.spin_symbols:type_name -> proto.SpinSymbol
+	3,  // 6: proto.SlotDesk.win_jp:type_name -> proto.WinJackpot
+	2,  // 7: proto.SlotDesk.big_win:type_name -> proto.BigWin
+	12, // 8: proto.SlotDesk.game_reward:type_name -> proto.GameReward
+	8,  // 9: proto.SlotDesk.collection_symbols:type_name -> proto.CollectSymbol
+	14, // 10: proto.SlotDesk.info_bet:type_name -> proto.InfoBet
+	1,  // 11: proto.SlotDesk.sixiang_gems:type_name -> proto.SiXiangGame
+	0,  // 12: proto.SlotDesk.letter_symbols:type_name -> proto.SiXiangSymbol
+	10, // 13: proto.SlotDesk.win_jp_history:type_name -> proto.JackpotHistory
+	5,  // 14: proto.SlotDesk.game_config:type_name -> proto.GameConfig
+	0,  // 15: proto.SlotMatrix.lists:type_name -> proto.SiXiangSymbol
+	7,  // 16: proto.SlotMatrix.spin_lists:type_name -> proto.SpinSymbol
+	0,  // 17: proto.SpinSymbol.symbol:type_name -> proto.SiXiangSymbol
+	3,  // 18: proto.SpinSymbol.win_jp:type_name -> proto.WinJackpot
+	0,  // 19: proto.CollectSymbol.symbol:type_name -> proto.SiXiangSymbol
+	3,  // 20: proto.JackpotReward.win_jackpot:type_name -> proto.WinJackpot
+	9,  // 21: proto.JackpotHistory.minor:type_name -> proto.JackpotReward
+	9,  // 22: proto.JackpotHistory.major:type_name -> proto.JackpotReward
+	9,  // 23: proto.JackpotHistory.mega:type_name -> proto.JackpotReward
+	9,  // 24: proto.JackpotHistory.grand:type_name -> proto.JackpotReward
+	9,  // 25: proto.JackpotHistory.mini:type_name -> proto.JackpotReward
+	0,  // 26: proto.Payline.symbol:type_name -> proto.SiXiangSymbol
 	27, // [27:27] is the sub-list for method output_type
 	27, // [27:27] is the sub-list for method input_type
 	27, // [27:27] is the sub-list for extension type_name
