@@ -185,8 +185,9 @@ message ComparisonResult {
 message UpdateFinish {
   repeated ComparisonResult results = 1;
   repeated HandBonus bonuses = 2;
-  proto.Jackpot jackpot = 3;
-  proto.Jackpot jp_treasure = 4;
+  repeated WhotPlayerResult resultWhots = 3;
+  proto.Jackpot jackpot = 4;
+  proto.Jackpot jp_treasure = 5;
 }
 
 

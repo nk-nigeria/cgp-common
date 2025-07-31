@@ -1362,8 +1362,9 @@ type UpdateFinish struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Results       []*ComparisonResult    `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
 	Bonuses       []*HandBonus           `protobuf:"bytes,2,rep,name=bonuses,proto3" json:"bonuses,omitempty"`
-	Jackpot       *Jackpot               `protobuf:"bytes,3,opt,name=jackpot,proto3" json:"jackpot,omitempty"`
-	JpTreasure    *Jackpot               `protobuf:"bytes,4,opt,name=jp_treasure,json=jpTreasure,proto3" json:"jp_treasure,omitempty"`
+	ResultWhots   []*WhotPlayerResult    `protobuf:"bytes,3,rep,name=resultWhots,proto3" json:"resultWhots,omitempty"`
+	Jackpot       *Jackpot               `protobuf:"bytes,4,opt,name=jackpot,proto3" json:"jackpot,omitempty"`
+	JpTreasure    *Jackpot               `protobuf:"bytes,5,opt,name=jp_treasure,json=jpTreasure,proto3" json:"jp_treasure,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1408,6 +1409,13 @@ func (x *UpdateFinish) GetResults() []*ComparisonResult {
 func (x *UpdateFinish) GetBonuses() []*HandBonus {
 	if x != nil {
 		return x.Bonuses
+	}
+	return nil
+}
+
+func (x *UpdateFinish) GetResultWhots() []*WhotPlayerResult {
+	if x != nil {
+		return x.ResultWhots
 	}
 	return nil
 }
@@ -1499,12 +1507,13 @@ const file_chinese_poker_proto_rawDesc = "" +
 	"\x10ComparisonResult\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x125\n" +
 	"\fscore_result\x18\x02 \x01(\v2\x12.proto.ScoreResultR\vscoreResult\x125\n" +
-	"\fpoint_result\x18\x03 \x01(\v2\x12.proto.PointResultR\vpointResult\"\xc8\x01\n" +
+	"\fpoint_result\x18\x03 \x01(\v2\x12.proto.PointResultR\vpointResult\"\x83\x02\n" +
 	"\fUpdateFinish\x121\n" +
 	"\aresults\x18\x01 \x03(\v2\x17.proto.ComparisonResultR\aresults\x12*\n" +
-	"\abonuses\x18\x02 \x03(\v2\x10.proto.HandBonusR\abonuses\x12(\n" +
-	"\ajackpot\x18\x03 \x01(\v2\x0e.proto.JackpotR\ajackpot\x12/\n" +
-	"\vjp_treasure\x18\x04 \x01(\v2\x0e.proto.JackpotR\n" +
+	"\abonuses\x18\x02 \x03(\v2\x10.proto.HandBonusR\abonuses\x129\n" +
+	"\vresultWhots\x18\x03 \x03(\v2\x17.proto.WhotPlayerResultR\vresultWhots\x12(\n" +
+	"\ajackpot\x18\x04 \x01(\v2\x0e.proto.JackpotR\ajackpot\x12/\n" +
+	"\vjp_treasure\x18\x05 \x01(\v2\x0e.proto.JackpotR\n" +
 	"jpTreasure*0\n" +
 	"\n" +
 	"CardStatus\x12\x0f\n" +
@@ -1635,7 +1644,8 @@ var file_chinese_poker_proto_goTypes = []any{
 	nil,                      // 22: proto.UpdateDeal.CardEventEntry
 	(*WhotCard)(nil),         // 23: proto.WhotCard
 	(GameState)(0),           // 24: proto.GameState
-	(*Jackpot)(nil),          // 25: proto.Jackpot
+	(*WhotPlayerResult)(nil), // 25: proto.WhotPlayerResult
+	(*Jackpot)(nil),          // 26: proto.Jackpot
 }
 var file_chinese_poker_proto_depIdxs = []int32{
 	2,  // 0: proto.Card.rank:type_name -> proto.CardRank
@@ -1664,14 +1674,15 @@ var file_chinese_poker_proto_depIdxs = []int32{
 	18, // 23: proto.ComparisonResult.point_result:type_name -> proto.PointResult
 	20, // 24: proto.UpdateFinish.results:type_name -> proto.ComparisonResult
 	16, // 25: proto.UpdateFinish.bonuses:type_name -> proto.HandBonus
-	25, // 26: proto.UpdateFinish.jackpot:type_name -> proto.Jackpot
-	25, // 27: proto.UpdateFinish.jp_treasure:type_name -> proto.Jackpot
-	4,  // 28: proto.UpdateDeal.CardEventEntry.value:type_name -> proto.CardEvent
-	29, // [29:29] is the sub-list for method output_type
-	29, // [29:29] is the sub-list for method input_type
-	29, // [29:29] is the sub-list for extension type_name
-	29, // [29:29] is the sub-list for extension extendee
-	0,  // [0:29] is the sub-list for field type_name
+	25, // 26: proto.UpdateFinish.resultWhots:type_name -> proto.WhotPlayerResult
+	26, // 27: proto.UpdateFinish.jackpot:type_name -> proto.Jackpot
+	26, // 28: proto.UpdateFinish.jp_treasure:type_name -> proto.Jackpot
+	4,  // 29: proto.UpdateDeal.CardEventEntry.value:type_name -> proto.CardEvent
+	30, // [30:30] is the sub-list for method output_type
+	30, // [30:30] is the sub-list for method input_type
+	30, // [30:30] is the sub-list for extension type_name
+	30, // [30:30] is the sub-list for extension extendee
+	0,  // [0:30] is the sub-list for field type_name
 }
 
 func init() { file_chinese_poker_proto_init() }
