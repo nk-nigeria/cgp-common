@@ -46,7 +46,10 @@ message Card {
   CardStatus status = 3;
 }
 
-message ListCard { repeated Card cards = 1; }
+message ListCard { 
+  repeated Card cards = 1;
+  repeated WhotCard whotCards = 2;
+}
 
 enum ChoiceCode {
   // No choice specified. Unused.

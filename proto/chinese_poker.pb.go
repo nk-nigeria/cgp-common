@@ -592,6 +592,7 @@ func (x *Card) GetStatus() CardStatus {
 type ListCard struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Cards         []*Card                `protobuf:"bytes,1,rep,name=cards,proto3" json:"cards,omitempty"`
+	WhotCards     []*WhotCard            `protobuf:"bytes,2,rep,name=whotCards,proto3" json:"whotCards,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -629,6 +630,13 @@ func (*ListCard) Descriptor() ([]byte, []int) {
 func (x *ListCard) GetCards() []*Card {
 	if x != nil {
 		return x.Cards
+	}
+	return nil
+}
+
+func (x *ListCard) GetWhotCards() []*WhotCard {
+	if x != nil {
+		return x.WhotCards
 	}
 	return nil
 }
@@ -1426,9 +1434,10 @@ const file_chinese_poker_proto_rawDesc = "" +
 	"\x04Card\x12#\n" +
 	"\x04rank\x18\x01 \x01(\x0e2\x0f.proto.CardRankR\x04rank\x12#\n" +
 	"\x04suit\x18\x02 \x01(\x0e2\x0f.proto.CardSuitR\x04suit\x12)\n" +
-	"\x06status\x18\x03 \x01(\x0e2\x11.proto.CardStatusR\x06status\"-\n" +
+	"\x06status\x18\x03 \x01(\x0e2\x11.proto.CardStatusR\x06status\"\\\n" +
 	"\bListCard\x12!\n" +
-	"\x05cards\x18\x01 \x03(\v2\v.proto.CardR\x05cards\"\t\n" +
+	"\x05cards\x18\x01 \x03(\v2\v.proto.CardR\x05cards\x12-\n" +
+	"\twhotCards\x18\x02 \x03(\v2\x0f.proto.WhotCardR\twhotCards\"\t\n" +
 	"\aNewGame\"1\n" +
 	"\bOrganize\x12%\n" +
 	"\x05cards\x18\x01 \x01(\v2\x0f.proto.ListCardR\x05cards\"}\n" +
@@ -1633,35 +1642,36 @@ var file_chinese_poker_proto_depIdxs = []int32{
 	1,  // 1: proto.Card.suit:type_name -> proto.CardSuit
 	0,  // 2: proto.Card.status:type_name -> proto.CardStatus
 	8,  // 3: proto.ListCard.cards:type_name -> proto.Card
-	9,  // 4: proto.Organize.cards:type_name -> proto.ListCard
-	8,  // 5: proto.PresenceCards.cards:type_name -> proto.Card
-	23, // 6: proto.PresenceCards.whotCards:type_name -> proto.WhotCard
-	12, // 7: proto.UpdateDeal.presence_card:type_name -> proto.PresenceCards
-	22, // 8: proto.UpdateDeal.card_event:type_name -> proto.UpdateDeal.CardEventEntry
-	23, // 9: proto.UpdateDeal.top_card:type_name -> proto.WhotCard
-	24, // 10: proto.UpdateGameState.state:type_name -> proto.GameState
-	15, // 11: proto.UpdateGameState.arrange_card:type_name -> proto.ArrangeCard
-	12, // 12: proto.UpdateGameState.presenceCards:type_name -> proto.PresenceCards
-	4,  // 13: proto.ArrangeCard.card_event:type_name -> proto.CardEvent
-	6,  // 14: proto.HandBonus.type:type_name -> proto.HandBonusType
-	5,  // 15: proto.HandResult.ranking:type_name -> proto.HandRanking
-	17, // 16: proto.PointResult.front:type_name -> proto.HandResult
-	17, // 17: proto.PointResult.middle:type_name -> proto.HandResult
-	17, // 18: proto.PointResult.back:type_name -> proto.HandResult
-	17, // 19: proto.PointResult.natural:type_name -> proto.HandResult
-	7,  // 20: proto.PointResult.type:type_name -> proto.PointType
-	19, // 21: proto.ComparisonResult.score_result:type_name -> proto.ScoreResult
-	18, // 22: proto.ComparisonResult.point_result:type_name -> proto.PointResult
-	20, // 23: proto.UpdateFinish.results:type_name -> proto.ComparisonResult
-	16, // 24: proto.UpdateFinish.bonuses:type_name -> proto.HandBonus
-	25, // 25: proto.UpdateFinish.jackpot:type_name -> proto.Jackpot
-	25, // 26: proto.UpdateFinish.jp_treasure:type_name -> proto.Jackpot
-	4,  // 27: proto.UpdateDeal.CardEventEntry.value:type_name -> proto.CardEvent
-	28, // [28:28] is the sub-list for method output_type
-	28, // [28:28] is the sub-list for method input_type
-	28, // [28:28] is the sub-list for extension type_name
-	28, // [28:28] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	23, // 4: proto.ListCard.whotCards:type_name -> proto.WhotCard
+	9,  // 5: proto.Organize.cards:type_name -> proto.ListCard
+	8,  // 6: proto.PresenceCards.cards:type_name -> proto.Card
+	23, // 7: proto.PresenceCards.whotCards:type_name -> proto.WhotCard
+	12, // 8: proto.UpdateDeal.presence_card:type_name -> proto.PresenceCards
+	22, // 9: proto.UpdateDeal.card_event:type_name -> proto.UpdateDeal.CardEventEntry
+	23, // 10: proto.UpdateDeal.top_card:type_name -> proto.WhotCard
+	24, // 11: proto.UpdateGameState.state:type_name -> proto.GameState
+	15, // 12: proto.UpdateGameState.arrange_card:type_name -> proto.ArrangeCard
+	12, // 13: proto.UpdateGameState.presenceCards:type_name -> proto.PresenceCards
+	4,  // 14: proto.ArrangeCard.card_event:type_name -> proto.CardEvent
+	6,  // 15: proto.HandBonus.type:type_name -> proto.HandBonusType
+	5,  // 16: proto.HandResult.ranking:type_name -> proto.HandRanking
+	17, // 17: proto.PointResult.front:type_name -> proto.HandResult
+	17, // 18: proto.PointResult.middle:type_name -> proto.HandResult
+	17, // 19: proto.PointResult.back:type_name -> proto.HandResult
+	17, // 20: proto.PointResult.natural:type_name -> proto.HandResult
+	7,  // 21: proto.PointResult.type:type_name -> proto.PointType
+	19, // 22: proto.ComparisonResult.score_result:type_name -> proto.ScoreResult
+	18, // 23: proto.ComparisonResult.point_result:type_name -> proto.PointResult
+	20, // 24: proto.UpdateFinish.results:type_name -> proto.ComparisonResult
+	16, // 25: proto.UpdateFinish.bonuses:type_name -> proto.HandBonus
+	25, // 26: proto.UpdateFinish.jackpot:type_name -> proto.Jackpot
+	25, // 27: proto.UpdateFinish.jp_treasure:type_name -> proto.Jackpot
+	4,  // 28: proto.UpdateDeal.CardEventEntry.value:type_name -> proto.CardEvent
+	29, // [29:29] is the sub-list for method output_type
+	29, // [29:29] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_chinese_poker_proto_init() }
