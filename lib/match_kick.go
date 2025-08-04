@@ -7,12 +7,10 @@ import (
 	"github.com/heroiclabs/nakama-common/runtime"
 	pb "github.com/nk-nigeria/cgp-common/proto"
 	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
 )
 
-var marshaler = &protojson.MarshalOptions{
-	UseEnumNumbers:  true,
-	EmitUnpopulated: true,
-}
+var marshaler = &proto.MarshalOptions{}
 
 func MatchKick(ctx context.Context,
 	logger runtime.Logger,
