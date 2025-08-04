@@ -716,6 +716,7 @@ type BaccaratUpdateDesk struct {
 	UserBet             *BaccaratPlayerBet     `protobuf:"bytes,5,opt,name=user_bet,json=userBet,proto3" json:"user_bet,omitempty"`
 	DeskCells           []*BaccaratBetCellInfo `protobuf:"bytes,6,rep,name=desk_cells,json=deskCells,proto3" json:"desk_cells,omitempty"`
 	History             *BaccaratSimpleHistory `protobuf:"bytes,7,opt,name=history,proto3" json:"history,omitempty"`
+	Error               *Error                 `protobuf:"bytes,8,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -795,6 +796,13 @@ func (x *BaccaratUpdateDesk) GetDeskCells() []*BaccaratBetCellInfo {
 func (x *BaccaratUpdateDesk) GetHistory() *BaccaratSimpleHistory {
 	if x != nil {
 		return x.History
+	}
+	return nil
+}
+
+func (x *BaccaratUpdateDesk) GetError() *Error {
+	if x != nil {
+		return x.Error
 	}
 	return nil
 }
@@ -910,7 +918,7 @@ var File_baccarat_proto protoreflect.FileDescriptor
 
 const file_baccarat_proto_rawDesc = "" +
 	"\n" +
-	"\x0ebaccarat.proto\x12\x05proto\x1a\x13chinese_poker.proto\"O\n" +
+	"\x0ebaccarat.proto\x12\x05proto\x1a\x13chinese_poker.proto\x1a\fcommon.proto\"O\n" +
 	"\vBaccaratBet\x12\x14\n" +
 	"\x05chips\x18\x02 \x01(\x03R\x05chips\x12*\n" +
 	"\x04cell\x18\x03 \x01(\x0e2\x16.proto.BaccaratBetCellR\x04cell\"P\n" +
@@ -950,7 +958,7 @@ const file_baccarat_proto_rawDesc = "" +
 	"\vbanker_pair\x18\x04 \x01(\x05R\n" +
 	"bankerPair\x12\x1f\n" +
 	"\vplayer_pair\x18\x05 \x01(\x05R\n" +
-	"playerPair\"\xea\x02\n" +
+	"playerPair\"\x8e\x03\n" +
 	"\x12BaccaratUpdateDesk\x12\x1b\n" +
 	"\tn_players\x18\x01 \x01(\x05R\bnPlayers\x12+\n" +
 	"\x12is_update_user_bet\x18\x02 \x01(\bR\x0fisUpdateUserBet\x12-\n" +
@@ -959,7 +967,8 @@ const file_baccarat_proto_rawDesc = "" +
 	"\buser_bet\x18\x05 \x01(\v2\x18.proto.BaccaratPlayerBetR\auserBet\x129\n" +
 	"\n" +
 	"desk_cells\x18\x06 \x03(\v2\x1a.proto.BaccaratBetCellInfoR\tdeskCells\x126\n" +
-	"\ahistory\x18\a \x01(\v2\x1c.proto.BaccaratSimpleHistoryR\ahistory\"S\n" +
+	"\ahistory\x18\a \x01(\v2\x1c.proto.BaccaratSimpleHistoryR\ahistory\x12\"\n" +
+	"\x05error\x18\b \x01(\v2\f.proto.ErrorR\x05error\"S\n" +
 	"\x17BaccaratBetActionReject\x128\n" +
 	"\x06reason\x18\x01 \x01(\x0e2 .proto.BaccaratBetRejectedReasonR\x06reason\"\x80\x01\n" +
 	"\x12BaccaratUpdateDeal\x12\x1b\n" +
@@ -1015,6 +1024,7 @@ var file_baccarat_proto_goTypes = []any{
 	(*BaccaratBetActionReject)(nil), // 13: proto.BaccaratBetActionReject
 	(*BaccaratUpdateDeal)(nil),      // 14: proto.BaccaratUpdateDeal
 	(*Card)(nil),                    // 15: proto.Card
+	(*Error)(nil),                   // 16: proto.Error
 }
 var file_baccarat_proto_depIdxs = []int32{
 	0,  // 0: proto.BaccaratBet.cell:type_name -> proto.BaccaratBetCell
@@ -1032,14 +1042,15 @@ var file_baccarat_proto_depIdxs = []int32{
 	5,  // 12: proto.BaccaratUpdateDesk.user_bet:type_name -> proto.BaccaratPlayerBet
 	10, // 13: proto.BaccaratUpdateDesk.desk_cells:type_name -> proto.BaccaratBetCellInfo
 	11, // 14: proto.BaccaratUpdateDesk.history:type_name -> proto.BaccaratSimpleHistory
-	2,  // 15: proto.BaccaratBetActionReject.reason:type_name -> proto.BaccaratBetRejectedReason
-	15, // 16: proto.BaccaratUpdateDeal.cards:type_name -> proto.Card
-	8,  // 17: proto.BaccaratUpdateDeal.hands:type_name -> proto.BaccaratHands
-	18, // [18:18] is the sub-list for method output_type
-	18, // [18:18] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	16, // 15: proto.BaccaratUpdateDesk.error:type_name -> proto.Error
+	2,  // 16: proto.BaccaratBetActionReject.reason:type_name -> proto.BaccaratBetRejectedReason
+	15, // 17: proto.BaccaratUpdateDeal.cards:type_name -> proto.Card
+	8,  // 18: proto.BaccaratUpdateDeal.hands:type_name -> proto.BaccaratHands
+	19, // [19:19] is the sub-list for method output_type
+	19, // [19:19] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_baccarat_proto_init() }
@@ -1048,6 +1059,7 @@ func file_baccarat_proto_init() {
 		return
 	}
 	file_chinese_poker_proto_init()
+	file_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
