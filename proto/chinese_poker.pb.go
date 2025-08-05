@@ -21,52 +21,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type CardStatus int32
-
-const (
-	CardStatus_STATUS_HOLD   CardStatus = 0
-	CardStatus_STATUS_UNHOLD CardStatus = 1
-)
-
-// Enum value maps for CardStatus.
-var (
-	CardStatus_name = map[int32]string{
-		0: "STATUS_HOLD",
-		1: "STATUS_UNHOLD",
-	}
-	CardStatus_value = map[string]int32{
-		"STATUS_HOLD":   0,
-		"STATUS_UNHOLD": 1,
-	}
-)
-
-func (x CardStatus) Enum() *CardStatus {
-	p := new(CardStatus)
-	*p = x
-	return p
-}
-
-func (x CardStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (CardStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[0].Descriptor()
-}
-
-func (CardStatus) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[0]
-}
-
-func (x CardStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use CardStatus.Descriptor instead.
-func (CardStatus) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{0}
-}
-
 type CardSuit int32
 
 const (
@@ -106,11 +60,11 @@ func (x CardSuit) String() string {
 }
 
 func (CardSuit) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[1].Descriptor()
+	return file_chinese_poker_proto_enumTypes[0].Descriptor()
 }
 
 func (CardSuit) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[1]
+	return &file_chinese_poker_proto_enumTypes[0]
 }
 
 func (x CardSuit) Number() protoreflect.EnumNumber {
@@ -119,7 +73,7 @@ func (x CardSuit) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardSuit.Descriptor instead.
 func (CardSuit) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{1}
+	return file_chinese_poker_proto_rawDescGZIP(), []int{0}
 }
 
 type CardRank int32
@@ -188,11 +142,11 @@ func (x CardRank) String() string {
 }
 
 func (CardRank) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[2].Descriptor()
+	return file_chinese_poker_proto_enumTypes[1].Descriptor()
 }
 
 func (CardRank) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[2]
+	return &file_chinese_poker_proto_enumTypes[1]
 }
 
 func (x CardRank) Number() protoreflect.EnumNumber {
@@ -201,7 +155,7 @@ func (x CardRank) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardRank.Descriptor instead.
 func (CardRank) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{2}
+	return file_chinese_poker_proto_rawDescGZIP(), []int{1}
 }
 
 type ChoiceCode int32
@@ -238,11 +192,11 @@ func (x ChoiceCode) String() string {
 }
 
 func (ChoiceCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[3].Descriptor()
+	return file_chinese_poker_proto_enumTypes[2].Descriptor()
 }
 
 func (ChoiceCode) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[3]
+	return &file_chinese_poker_proto_enumTypes[2]
 }
 
 func (x ChoiceCode) Number() protoreflect.EnumNumber {
@@ -251,7 +205,7 @@ func (x ChoiceCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ChoiceCode.Descriptor instead.
 func (ChoiceCode) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{3}
+	return file_chinese_poker_proto_rawDescGZIP(), []int{2}
 }
 
 type CardEvent int32
@@ -290,11 +244,11 @@ func (x CardEvent) String() string {
 }
 
 func (CardEvent) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[4].Descriptor()
+	return file_chinese_poker_proto_enumTypes[3].Descriptor()
 }
 
 func (CardEvent) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[4]
+	return &file_chinese_poker_proto_enumTypes[3]
 }
 
 func (x CardEvent) Number() protoreflect.EnumNumber {
@@ -303,7 +257,7 @@ func (x CardEvent) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CardEvent.Descriptor instead.
 func (CardEvent) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{4}
+	return file_chinese_poker_proto_rawDescGZIP(), []int{3}
 }
 
 type HandRanking int32
@@ -375,11 +329,11 @@ func (x HandRanking) String() string {
 }
 
 func (HandRanking) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[5].Descriptor()
+	return file_chinese_poker_proto_enumTypes[4].Descriptor()
 }
 
 func (HandRanking) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[5]
+	return &file_chinese_poker_proto_enumTypes[4]
 }
 
 func (x HandRanking) Number() protoreflect.EnumNumber {
@@ -388,7 +342,7 @@ func (x HandRanking) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HandRanking.Descriptor instead.
 func (HandRanking) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{5}
+	return file_chinese_poker_proto_rawDescGZIP(), []int{4}
 }
 
 type HandBonusType int32
@@ -463,11 +417,11 @@ func (x HandBonusType) String() string {
 }
 
 func (HandBonusType) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[6].Descriptor()
+	return file_chinese_poker_proto_enumTypes[5].Descriptor()
 }
 
 func (HandBonusType) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[6]
+	return &file_chinese_poker_proto_enumTypes[5]
 }
 
 func (x HandBonusType) Number() protoreflect.EnumNumber {
@@ -476,7 +430,7 @@ func (x HandBonusType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HandBonusType.Descriptor instead.
 func (HandBonusType) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{6}
+	return file_chinese_poker_proto_rawDescGZIP(), []int{5}
 }
 
 type PointType int32
@@ -512,11 +466,11 @@ func (x PointType) String() string {
 }
 
 func (PointType) Descriptor() protoreflect.EnumDescriptor {
-	return file_chinese_poker_proto_enumTypes[7].Descriptor()
+	return file_chinese_poker_proto_enumTypes[6].Descriptor()
 }
 
 func (PointType) Type() protoreflect.EnumType {
-	return &file_chinese_poker_proto_enumTypes[7]
+	return &file_chinese_poker_proto_enumTypes[6]
 }
 
 func (x PointType) Number() protoreflect.EnumNumber {
@@ -525,7 +479,7 @@ func (x PointType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PointType.Descriptor instead.
 func (PointType) EnumDescriptor() ([]byte, []int) {
-	return file_chinese_poker_proto_rawDescGZIP(), []int{7}
+	return file_chinese_poker_proto_rawDescGZIP(), []int{6}
 }
 
 // The card
@@ -1514,11 +1468,7 @@ const file_chinese_poker_proto_rawDesc = "" +
 	"\vresultWhots\x18\x03 \x03(\v2\x17.proto.WhotPlayerResultR\vresultWhots\x12(\n" +
 	"\ajackpot\x18\x04 \x01(\v2\x0e.proto.JackpotR\ajackpot\x12/\n" +
 	"\vjp_treasure\x18\x05 \x01(\v2\x0e.proto.JackpotR\n" +
-	"jpTreasure*0\n" +
-	"\n" +
-	"CardStatus\x12\x0f\n" +
-	"\vSTATUS_HOLD\x10\x00\x12\x11\n" +
-	"\rSTATUS_UNHOLD\x10\x01*e\n" +
+	"jpTreasure*e\n" +
 	"\bCardSuit\x12\x14\n" +
 	"\x10SUIT_UNSPECIFIED\x10\x00\x12\x0f\n" +
 	"\vSUIT_HEARTS\x10\x01\x12\x11\n" +
@@ -1616,68 +1566,68 @@ func file_chinese_poker_proto_rawDescGZIP() []byte {
 	return file_chinese_poker_proto_rawDescData
 }
 
-var file_chinese_poker_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
+var file_chinese_poker_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
 var file_chinese_poker_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_chinese_poker_proto_goTypes = []any{
-	(CardStatus)(0),          // 0: proto.CardStatus
-	(CardSuit)(0),            // 1: proto.CardSuit
-	(CardRank)(0),            // 2: proto.CardRank
-	(ChoiceCode)(0),          // 3: proto.ChoiceCode
-	(CardEvent)(0),           // 4: proto.CardEvent
-	(HandRanking)(0),         // 5: proto.HandRanking
-	(HandBonusType)(0),       // 6: proto.HandBonusType
-	(PointType)(0),           // 7: proto.PointType
-	(*Card)(nil),             // 8: proto.Card
-	(*ListCard)(nil),         // 9: proto.ListCard
-	(*NewGame)(nil),          // 10: proto.NewGame
-	(*Organize)(nil),         // 11: proto.Organize
-	(*PresenceCards)(nil),    // 12: proto.PresenceCards
-	(*UpdateDeal)(nil),       // 13: proto.UpdateDeal
-	(*UpdateGameState)(nil),  // 14: proto.UpdateGameState
-	(*ArrangeCard)(nil),      // 15: proto.ArrangeCard
-	(*HandBonus)(nil),        // 16: proto.HandBonus
-	(*HandResult)(nil),       // 17: proto.HandResult
-	(*PointResult)(nil),      // 18: proto.PointResult
-	(*ScoreResult)(nil),      // 19: proto.ScoreResult
-	(*ComparisonResult)(nil), // 20: proto.ComparisonResult
-	(*UpdateFinish)(nil),     // 21: proto.UpdateFinish
-	nil,                      // 22: proto.UpdateDeal.CardEventEntry
+	(CardSuit)(0),            // 0: proto.CardSuit
+	(CardRank)(0),            // 1: proto.CardRank
+	(ChoiceCode)(0),          // 2: proto.ChoiceCode
+	(CardEvent)(0),           // 3: proto.CardEvent
+	(HandRanking)(0),         // 4: proto.HandRanking
+	(HandBonusType)(0),       // 5: proto.HandBonusType
+	(PointType)(0),           // 6: proto.PointType
+	(*Card)(nil),             // 7: proto.Card
+	(*ListCard)(nil),         // 8: proto.ListCard
+	(*NewGame)(nil),          // 9: proto.NewGame
+	(*Organize)(nil),         // 10: proto.Organize
+	(*PresenceCards)(nil),    // 11: proto.PresenceCards
+	(*UpdateDeal)(nil),       // 12: proto.UpdateDeal
+	(*UpdateGameState)(nil),  // 13: proto.UpdateGameState
+	(*ArrangeCard)(nil),      // 14: proto.ArrangeCard
+	(*HandBonus)(nil),        // 15: proto.HandBonus
+	(*HandResult)(nil),       // 16: proto.HandResult
+	(*PointResult)(nil),      // 17: proto.PointResult
+	(*ScoreResult)(nil),      // 18: proto.ScoreResult
+	(*ComparisonResult)(nil), // 19: proto.ComparisonResult
+	(*UpdateFinish)(nil),     // 20: proto.UpdateFinish
+	nil,                      // 21: proto.UpdateDeal.CardEventEntry
+	(CardStatus)(0),          // 22: proto.CardStatus
 	(*WhotCard)(nil),         // 23: proto.WhotCard
 	(GameState)(0),           // 24: proto.GameState
 	(*WhotPlayerResult)(nil), // 25: proto.WhotPlayerResult
 	(*Jackpot)(nil),          // 26: proto.Jackpot
 }
 var file_chinese_poker_proto_depIdxs = []int32{
-	2,  // 0: proto.Card.rank:type_name -> proto.CardRank
-	1,  // 1: proto.Card.suit:type_name -> proto.CardSuit
-	0,  // 2: proto.Card.status:type_name -> proto.CardStatus
-	8,  // 3: proto.ListCard.cards:type_name -> proto.Card
+	1,  // 0: proto.Card.rank:type_name -> proto.CardRank
+	0,  // 1: proto.Card.suit:type_name -> proto.CardSuit
+	22, // 2: proto.Card.status:type_name -> proto.CardStatus
+	7,  // 3: proto.ListCard.cards:type_name -> proto.Card
 	23, // 4: proto.ListCard.whotCards:type_name -> proto.WhotCard
-	9,  // 5: proto.Organize.cards:type_name -> proto.ListCard
-	8,  // 6: proto.PresenceCards.cards:type_name -> proto.Card
+	8,  // 5: proto.Organize.cards:type_name -> proto.ListCard
+	7,  // 6: proto.PresenceCards.cards:type_name -> proto.Card
 	23, // 7: proto.PresenceCards.whotCards:type_name -> proto.WhotCard
-	12, // 8: proto.UpdateDeal.presence_card:type_name -> proto.PresenceCards
-	22, // 9: proto.UpdateDeal.card_event:type_name -> proto.UpdateDeal.CardEventEntry
+	11, // 8: proto.UpdateDeal.presence_card:type_name -> proto.PresenceCards
+	21, // 9: proto.UpdateDeal.card_event:type_name -> proto.UpdateDeal.CardEventEntry
 	23, // 10: proto.UpdateDeal.top_card:type_name -> proto.WhotCard
 	24, // 11: proto.UpdateGameState.state:type_name -> proto.GameState
-	15, // 12: proto.UpdateGameState.arrange_card:type_name -> proto.ArrangeCard
-	12, // 13: proto.UpdateGameState.presenceCards:type_name -> proto.PresenceCards
-	4,  // 14: proto.ArrangeCard.card_event:type_name -> proto.CardEvent
-	6,  // 15: proto.HandBonus.type:type_name -> proto.HandBonusType
-	5,  // 16: proto.HandResult.ranking:type_name -> proto.HandRanking
-	17, // 17: proto.PointResult.front:type_name -> proto.HandResult
-	17, // 18: proto.PointResult.middle:type_name -> proto.HandResult
-	17, // 19: proto.PointResult.back:type_name -> proto.HandResult
-	17, // 20: proto.PointResult.natural:type_name -> proto.HandResult
-	7,  // 21: proto.PointResult.type:type_name -> proto.PointType
-	19, // 22: proto.ComparisonResult.score_result:type_name -> proto.ScoreResult
-	18, // 23: proto.ComparisonResult.point_result:type_name -> proto.PointResult
-	20, // 24: proto.UpdateFinish.results:type_name -> proto.ComparisonResult
-	16, // 25: proto.UpdateFinish.bonuses:type_name -> proto.HandBonus
+	14, // 12: proto.UpdateGameState.arrange_card:type_name -> proto.ArrangeCard
+	11, // 13: proto.UpdateGameState.presenceCards:type_name -> proto.PresenceCards
+	3,  // 14: proto.ArrangeCard.card_event:type_name -> proto.CardEvent
+	5,  // 15: proto.HandBonus.type:type_name -> proto.HandBonusType
+	4,  // 16: proto.HandResult.ranking:type_name -> proto.HandRanking
+	16, // 17: proto.PointResult.front:type_name -> proto.HandResult
+	16, // 18: proto.PointResult.middle:type_name -> proto.HandResult
+	16, // 19: proto.PointResult.back:type_name -> proto.HandResult
+	16, // 20: proto.PointResult.natural:type_name -> proto.HandResult
+	6,  // 21: proto.PointResult.type:type_name -> proto.PointType
+	18, // 22: proto.ComparisonResult.score_result:type_name -> proto.ScoreResult
+	17, // 23: proto.ComparisonResult.point_result:type_name -> proto.PointResult
+	19, // 24: proto.UpdateFinish.results:type_name -> proto.ComparisonResult
+	15, // 25: proto.UpdateFinish.bonuses:type_name -> proto.HandBonus
 	25, // 26: proto.UpdateFinish.resultWhots:type_name -> proto.WhotPlayerResult
 	26, // 27: proto.UpdateFinish.jackpot:type_name -> proto.Jackpot
 	26, // 28: proto.UpdateFinish.jp_treasure:type_name -> proto.Jackpot
-	4,  // 29: proto.UpdateDeal.CardEventEntry.value:type_name -> proto.CardEvent
+	3,  // 29: proto.UpdateDeal.CardEventEntry.value:type_name -> proto.CardEvent
 	30, // [30:30] is the sub-list for method output_type
 	30, // [30:30] is the sub-list for method input_type
 	30, // [30:30] is the sub-list for extension type_name
@@ -1697,7 +1647,7 @@ func file_chinese_poker_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chinese_poker_proto_rawDesc), len(file_chinese_poker_proto_rawDesc)),
-			NumEnums:      8,
+			NumEnums:      7,
 			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   0,

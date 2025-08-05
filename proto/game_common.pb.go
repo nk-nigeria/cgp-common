@@ -21,6 +21,52 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type CardStatus int32
+
+const (
+	CardStatus_STATUS_HOLD   CardStatus = 0
+	CardStatus_STATUS_UNHOLD CardStatus = 1
+)
+
+// Enum value maps for CardStatus.
+var (
+	CardStatus_name = map[int32]string{
+		0: "STATUS_HOLD",
+		1: "STATUS_UNHOLD",
+	}
+	CardStatus_value = map[string]int32{
+		"STATUS_HOLD":   0,
+		"STATUS_UNHOLD": 1,
+	}
+)
+
+func (x CardStatus) Enum() *CardStatus {
+	p := new(CardStatus)
+	*p = x
+	return p
+}
+
+func (x CardStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CardStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_game_common_proto_enumTypes[0].Descriptor()
+}
+
+func (CardStatus) Type() protoreflect.EnumType {
+	return &file_game_common_proto_enumTypes[0]
+}
+
+func (x CardStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CardStatus.Descriptor instead.
+func (CardStatus) EnumDescriptor() ([]byte, []int) {
+	return file_game_common_proto_rawDescGZIP(), []int{0}
+}
+
 type GameState int32
 
 const (
@@ -66,11 +112,11 @@ func (x GameState) String() string {
 }
 
 func (GameState) Descriptor() protoreflect.EnumDescriptor {
-	return file_game_common_proto_enumTypes[0].Descriptor()
+	return file_game_common_proto_enumTypes[1].Descriptor()
 }
 
 func (GameState) Type() protoreflect.EnumType {
-	return &file_game_common_proto_enumTypes[0]
+	return &file_game_common_proto_enumTypes[1]
 }
 
 func (x GameState) Number() protoreflect.EnumNumber {
@@ -79,7 +125,7 @@ func (x GameState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use GameState.Descriptor instead.
 func (GameState) EnumDescriptor() ([]byte, []int) {
-	return file_game_common_proto_rawDescGZIP(), []int{0}
+	return file_game_common_proto_rawDescGZIP(), []int{1}
 }
 
 type OpCodeRequest int32
@@ -161,11 +207,11 @@ func (x OpCodeRequest) String() string {
 }
 
 func (OpCodeRequest) Descriptor() protoreflect.EnumDescriptor {
-	return file_game_common_proto_enumTypes[1].Descriptor()
+	return file_game_common_proto_enumTypes[2].Descriptor()
 }
 
 func (OpCodeRequest) Type() protoreflect.EnumType {
-	return &file_game_common_proto_enumTypes[1]
+	return &file_game_common_proto_enumTypes[2]
 }
 
 func (x OpCodeRequest) Number() protoreflect.EnumNumber {
@@ -174,7 +220,7 @@ func (x OpCodeRequest) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OpCodeRequest.Descriptor instead.
 func (OpCodeRequest) EnumDescriptor() ([]byte, []int) {
-	return file_game_common_proto_rawDescGZIP(), []int{1}
+	return file_game_common_proto_rawDescGZIP(), []int{2}
 }
 
 type OpCodeUpdate int32
@@ -261,11 +307,11 @@ func (x OpCodeUpdate) String() string {
 }
 
 func (OpCodeUpdate) Descriptor() protoreflect.EnumDescriptor {
-	return file_game_common_proto_enumTypes[2].Descriptor()
+	return file_game_common_proto_enumTypes[3].Descriptor()
 }
 
 func (OpCodeUpdate) Type() protoreflect.EnumType {
-	return &file_game_common_proto_enumTypes[2]
+	return &file_game_common_proto_enumTypes[3]
 }
 
 func (x OpCodeUpdate) Number() protoreflect.EnumNumber {
@@ -274,7 +320,7 @@ func (x OpCodeUpdate) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OpCodeUpdate.Descriptor instead.
 func (OpCodeUpdate) EnumDescriptor() ([]byte, []int) {
-	return file_game_common_proto_rawDescGZIP(), []int{2}
+	return file_game_common_proto_rawDescGZIP(), []int{3}
 }
 
 type Player struct {
@@ -287,6 +333,7 @@ type Player struct {
 	AvatarId      string                 `protobuf:"bytes,7,opt,name=avatar_id,json=avatarId,proto3" json:"avatar_id,omitempty"`
 	Sid           int64                  `protobuf:"varint,8,opt,name=sid,proto3" json:"sid,omitempty"`
 	Order         int32                  `protobuf:"varint,9,opt,name=order,proto3" json:"order,omitempty"`
+	CardStatus    CardStatus             `protobuf:"varint,10,opt,name=card_status,json=cardStatus,proto3,enum=proto.CardStatus" json:"card_status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -375,6 +422,13 @@ func (x *Player) GetOrder() int32 {
 		return x.Order
 	}
 	return 0
+}
+
+func (x *Player) GetCardStatus() CardStatus {
+	if x != nil {
+		return x.CardStatus
+	}
+	return CardStatus_STATUS_HOLD
 }
 
 type Jackpot struct {
@@ -785,7 +839,7 @@ var File_game_common_proto protoreflect.FileDescriptor
 
 const file_game_common_proto_rawDesc = "" +
 	"\n" +
-	"\x11game_common.proto\x12\x05proto\"\xce\x01\n" +
+	"\x11game_common.proto\x12\x05proto\"\x82\x02\n" +
 	"\x06Player\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\tuser_name\x18\x02 \x01(\tR\buserName\x12\x16\n" +
@@ -795,7 +849,10 @@ const file_game_common_proto_rawDesc = "" +
 	"\tvip_level\x18\x06 \x01(\x03R\bvipLevel\x12\x1b\n" +
 	"\tavatar_id\x18\a \x01(\tR\bavatarId\x12\x10\n" +
 	"\x03sid\x18\b \x01(\x03R\x03sid\x12\x14\n" +
-	"\x05order\x18\t \x01(\x05R\x05order\"\x8f\x01\n" +
+	"\x05order\x18\t \x01(\x05R\x05order\x122\n" +
+	"\vcard_status\x18\n" +
+	" \x01(\x0e2\x11.proto.CardStatusR\n" +
+	"cardStatus\"\x8f\x01\n" +
 	"\aJackpot\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1b\n" +
@@ -832,7 +889,11 @@ const file_game_common_proto_rawDesc = "" +
 	"game_state\x18\t \x01(\x0e2\x10.proto.GameStateR\tgameState\x12/\n" +
 	"\vjp_treasure\x18\n" +
 	" \x01(\v2\x0e.proto.JackpotR\n" +
-	"jpTreasure*\xae\x01\n" +
+	"jpTreasure*0\n" +
+	"\n" +
+	"CardStatus\x12\x0f\n" +
+	"\vSTATUS_HOLD\x10\x00\x12\x11\n" +
+	"\rSTATUS_UNHOLD\x10\x01*\xae\x01\n" +
 	"\tGameState\x12\x16\n" +
 	"\x12GAME_STATE_UNKNOWN\x10\x00\x12\x13\n" +
 	"\x0fGAME_STATE_IDLE\x10\x01\x12\x17\n" +
@@ -896,33 +957,35 @@ func file_game_common_proto_rawDescGZIP() []byte {
 	return file_game_common_proto_rawDescData
 }
 
-var file_game_common_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_game_common_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
 var file_game_common_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_game_common_proto_goTypes = []any{
-	(GameState)(0),            // 0: proto.GameState
-	(OpCodeRequest)(0),        // 1: proto.OpCodeRequest
-	(OpCodeUpdate)(0),         // 2: proto.OpCodeUpdate
-	(*Player)(nil),            // 3: proto.Player
-	(*Jackpot)(nil),           // 4: proto.Jackpot
-	(*BalanceUpdate)(nil),     // 5: proto.BalanceUpdate
-	(*BalanceResult)(nil),     // 6: proto.BalanceResult
-	(*HitJackpotHistory)(nil), // 7: proto.HitJackpotHistory
-	(*UpdateTable)(nil),       // 8: proto.UpdateTable
+	(CardStatus)(0),           // 0: proto.CardStatus
+	(GameState)(0),            // 1: proto.GameState
+	(OpCodeRequest)(0),        // 2: proto.OpCodeRequest
+	(OpCodeUpdate)(0),         // 3: proto.OpCodeUpdate
+	(*Player)(nil),            // 4: proto.Player
+	(*Jackpot)(nil),           // 5: proto.Jackpot
+	(*BalanceUpdate)(nil),     // 6: proto.BalanceUpdate
+	(*BalanceResult)(nil),     // 7: proto.BalanceResult
+	(*HitJackpotHistory)(nil), // 8: proto.HitJackpotHistory
+	(*UpdateTable)(nil),       // 9: proto.UpdateTable
 }
 var file_game_common_proto_depIdxs = []int32{
-	5, // 0: proto.BalanceResult.updates:type_name -> proto.BalanceUpdate
-	4, // 1: proto.BalanceResult.jackpot:type_name -> proto.Jackpot
-	3, // 2: proto.UpdateTable.players:type_name -> proto.Player
-	3, // 3: proto.UpdateTable.playing_players:type_name -> proto.Player
-	3, // 4: proto.UpdateTable.join_players:type_name -> proto.Player
-	3, // 5: proto.UpdateTable.leave_players:type_name -> proto.Player
-	0, // 6: proto.UpdateTable.game_state:type_name -> proto.GameState
-	4, // 7: proto.UpdateTable.jp_treasure:type_name -> proto.Jackpot
-	8, // [8:8] is the sub-list for method output_type
-	8, // [8:8] is the sub-list for method input_type
-	8, // [8:8] is the sub-list for extension type_name
-	8, // [8:8] is the sub-list for extension extendee
-	0, // [0:8] is the sub-list for field type_name
+	0, // 0: proto.Player.card_status:type_name -> proto.CardStatus
+	6, // 1: proto.BalanceResult.updates:type_name -> proto.BalanceUpdate
+	5, // 2: proto.BalanceResult.jackpot:type_name -> proto.Jackpot
+	4, // 3: proto.UpdateTable.players:type_name -> proto.Player
+	4, // 4: proto.UpdateTable.playing_players:type_name -> proto.Player
+	4, // 5: proto.UpdateTable.join_players:type_name -> proto.Player
+	4, // 6: proto.UpdateTable.leave_players:type_name -> proto.Player
+	1, // 7: proto.UpdateTable.game_state:type_name -> proto.GameState
+	5, // 8: proto.UpdateTable.jp_treasure:type_name -> proto.Jackpot
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_game_common_proto_init() }
@@ -935,7 +998,7 @@ func file_game_common_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_game_common_proto_rawDesc), len(file_game_common_proto_rawDesc)),
-			NumEnums:      3,
+			NumEnums:      4,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
