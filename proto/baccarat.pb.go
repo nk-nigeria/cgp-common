@@ -79,6 +79,85 @@ func (BaccaratBetCell) EnumDescriptor() ([]byte, []int) {
 	return file_baccarat_proto_rawDescGZIP(), []int{0}
 }
 
+type TypeWinBaccarat int32
+
+const (
+	TypeWinBaccarat_TYPEWIN_BACCARAT_NONE TypeWinBaccarat = 0
+	TypeWinBaccarat_BANKER                TypeWinBaccarat = 1
+	TypeWinBaccarat_PLAYER                TypeWinBaccarat = 2
+	TypeWinBaccarat_TIE                   TypeWinBaccarat = 3
+	TypeWinBaccarat_PLAYER_P              TypeWinBaccarat = 102 // Player win + Banker pair
+	TypeWinBaccarat_PLAYER_B              TypeWinBaccarat = 12  // Player win + Player pair
+	TypeWinBaccarat_PLAYER_PB             TypeWinBaccarat = 112 // Player win + Both pair
+	TypeWinBaccarat_BANKER_P              TypeWinBaccarat = 101 // Banker win + Banker pair
+	TypeWinBaccarat_BANKER_B              TypeWinBaccarat = 11  // Banker win + Player pair
+	TypeWinBaccarat_BANKER_PB             TypeWinBaccarat = 111 // Banker win + Both pair
+	TypeWinBaccarat_TIE_P                 TypeWinBaccarat = 103 // Tie + Banker pair
+	TypeWinBaccarat_TIE_B                 TypeWinBaccarat = 13  // Tie + Player pair
+	TypeWinBaccarat_TIE_PB                TypeWinBaccarat = 113 // Tie + Both pair
+)
+
+// Enum value maps for TypeWinBaccarat.
+var (
+	TypeWinBaccarat_name = map[int32]string{
+		0:   "TYPEWIN_BACCARAT_NONE",
+		1:   "BANKER",
+		2:   "PLAYER",
+		3:   "TIE",
+		102: "PLAYER_P",
+		12:  "PLAYER_B",
+		112: "PLAYER_PB",
+		101: "BANKER_P",
+		11:  "BANKER_B",
+		111: "BANKER_PB",
+		103: "TIE_P",
+		13:  "TIE_B",
+		113: "TIE_PB",
+	}
+	TypeWinBaccarat_value = map[string]int32{
+		"TYPEWIN_BACCARAT_NONE": 0,
+		"BANKER":                1,
+		"PLAYER":                2,
+		"TIE":                   3,
+		"PLAYER_P":              102,
+		"PLAYER_B":              12,
+		"PLAYER_PB":             112,
+		"BANKER_P":              101,
+		"BANKER_B":              11,
+		"BANKER_PB":             111,
+		"TIE_P":                 103,
+		"TIE_B":                 13,
+		"TIE_PB":                113,
+	}
+)
+
+func (x TypeWinBaccarat) Enum() *TypeWinBaccarat {
+	p := new(TypeWinBaccarat)
+	*p = x
+	return p
+}
+
+func (x TypeWinBaccarat) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TypeWinBaccarat) Descriptor() protoreflect.EnumDescriptor {
+	return file_baccarat_proto_enumTypes[1].Descriptor()
+}
+
+func (TypeWinBaccarat) Type() protoreflect.EnumType {
+	return &file_baccarat_proto_enumTypes[1]
+}
+
+func (x TypeWinBaccarat) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TypeWinBaccarat.Descriptor instead.
+func (TypeWinBaccarat) EnumDescriptor() ([]byte, []int) {
+	return file_baccarat_proto_rawDescGZIP(), []int{1}
+}
+
 type BaccaratBetActionType int32
 
 const (
@@ -112,11 +191,11 @@ func (x BaccaratBetActionType) String() string {
 }
 
 func (BaccaratBetActionType) Descriptor() protoreflect.EnumDescriptor {
-	return file_baccarat_proto_enumTypes[1].Descriptor()
+	return file_baccarat_proto_enumTypes[2].Descriptor()
 }
 
 func (BaccaratBetActionType) Type() protoreflect.EnumType {
-	return &file_baccarat_proto_enumTypes[1]
+	return &file_baccarat_proto_enumTypes[2]
 }
 
 func (x BaccaratBetActionType) Number() protoreflect.EnumNumber {
@@ -125,7 +204,7 @@ func (x BaccaratBetActionType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BaccaratBetActionType.Descriptor instead.
 func (BaccaratBetActionType) EnumDescriptor() ([]byte, []int) {
-	return file_baccarat_proto_rawDescGZIP(), []int{1}
+	return file_baccarat_proto_rawDescGZIP(), []int{2}
 }
 
 type BaccaratBetRejectedReason int32
@@ -167,11 +246,11 @@ func (x BaccaratBetRejectedReason) String() string {
 }
 
 func (BaccaratBetRejectedReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_baccarat_proto_enumTypes[2].Descriptor()
+	return file_baccarat_proto_enumTypes[3].Descriptor()
 }
 
 func (BaccaratBetRejectedReason) Type() protoreflect.EnumType {
-	return &file_baccarat_proto_enumTypes[2]
+	return &file_baccarat_proto_enumTypes[3]
 }
 
 func (x BaccaratBetRejectedReason) Number() protoreflect.EnumNumber {
@@ -180,7 +259,7 @@ func (x BaccaratBetRejectedReason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BaccaratBetRejectedReason.Descriptor instead.
 func (BaccaratBetRejectedReason) EnumDescriptor() ([]byte, []int) {
-	return file_baccarat_proto_rawDescGZIP(), []int{2}
+	return file_baccarat_proto_rawDescGZIP(), []int{3}
 }
 
 type BaccaratBet struct {
@@ -715,7 +794,7 @@ type BaccaratUpdateDesk struct {
 	IsUpdateGameHistory bool                   `protobuf:"varint,4,opt,name=is_update_game_history,json=isUpdateGameHistory,proto3" json:"is_update_game_history,omitempty"`
 	UserBet             *BaccaratPlayerBet     `protobuf:"bytes,5,opt,name=user_bet,json=userBet,proto3" json:"user_bet,omitempty"`
 	DeskCells           []*BaccaratBetCellInfo `protobuf:"bytes,6,rep,name=desk_cells,json=deskCells,proto3" json:"desk_cells,omitempty"`
-	History             *BaccaratSimpleHistory `protobuf:"bytes,7,opt,name=history,proto3" json:"history,omitempty"`
+	History             []TypeWinBaccarat      `protobuf:"varint,7,rep,packed,name=history,proto3,enum=proto.TypeWinBaccarat" json:"history,omitempty"`
 	Error               *Error                 `protobuf:"bytes,8,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -793,7 +872,7 @@ func (x *BaccaratUpdateDesk) GetDeskCells() []*BaccaratBetCellInfo {
 	return nil
 }
 
-func (x *BaccaratUpdateDesk) GetHistory() *BaccaratSimpleHistory {
+func (x *BaccaratUpdateDesk) GetHistory() []TypeWinBaccarat {
 	if x != nil {
 		return x.History
 	}
@@ -958,7 +1037,7 @@ const file_baccarat_proto_rawDesc = "" +
 	"\vbanker_pair\x18\x04 \x01(\x05R\n" +
 	"bankerPair\x12\x1f\n" +
 	"\vplayer_pair\x18\x05 \x01(\x05R\n" +
-	"playerPair\"\x8e\x03\n" +
+	"playerPair\"\x88\x03\n" +
 	"\x12BaccaratUpdateDesk\x12\x1b\n" +
 	"\tn_players\x18\x01 \x01(\x05R\bnPlayers\x12+\n" +
 	"\x12is_update_user_bet\x18\x02 \x01(\bR\x0fisUpdateUserBet\x12-\n" +
@@ -966,8 +1045,8 @@ const file_baccarat_proto_rawDesc = "" +
 	"\x16is_update_game_history\x18\x04 \x01(\bR\x13isUpdateGameHistory\x123\n" +
 	"\buser_bet\x18\x05 \x01(\v2\x18.proto.BaccaratPlayerBetR\auserBet\x129\n" +
 	"\n" +
-	"desk_cells\x18\x06 \x03(\v2\x1a.proto.BaccaratBetCellInfoR\tdeskCells\x126\n" +
-	"\ahistory\x18\a \x01(\v2\x1c.proto.BaccaratSimpleHistoryR\ahistory\x12\"\n" +
+	"desk_cells\x18\x06 \x03(\v2\x1a.proto.BaccaratBetCellInfoR\tdeskCells\x120\n" +
+	"\ahistory\x18\a \x03(\x0e2\x16.proto.TypeWinBaccaratR\ahistory\x12\"\n" +
 	"\x05error\x18\b \x01(\v2\f.proto.ErrorR\x05error\"S\n" +
 	"\x17BaccaratBetActionReject\x128\n" +
 	"\x06reason\x18\x01 \x01(\x0e2 .proto.BaccaratBetRejectedReasonR\x06reason\"\x80\x01\n" +
@@ -981,7 +1060,24 @@ const file_baccarat_proto_rawDesc = "" +
 	"&BACCARAT_BET_CELL_BACCARAT_CELL_BANKER\x10\x02\x12'\n" +
 	"#BACCARAT_BET_CELL_BACCARAT_CELL_TIE\x10\x03\x12/\n" +
 	"+BACCARAT_BET_CELL_BACCARAT_CELL_PLAYER_PAIR\x10\x04\x12/\n" +
-	"+BACCARAT_BET_CELL_BACCARAT_CELL_BANKER_PAIR\x10\x05*\xb8\x01\n" +
+	"+BACCARAT_BET_CELL_BACCARAT_CELL_BANKER_PAIR\x10\x05*\xc5\x01\n" +
+	"\x0fTypeWinBaccarat\x12\x19\n" +
+	"\x15TYPEWIN_BACCARAT_NONE\x10\x00\x12\n" +
+	"\n" +
+	"\x06BANKER\x10\x01\x12\n" +
+	"\n" +
+	"\x06PLAYER\x10\x02\x12\a\n" +
+	"\x03TIE\x10\x03\x12\f\n" +
+	"\bPLAYER_P\x10f\x12\f\n" +
+	"\bPLAYER_B\x10\f\x12\r\n" +
+	"\tPLAYER_PB\x10p\x12\f\n" +
+	"\bBANKER_P\x10e\x12\f\n" +
+	"\bBANKER_B\x10\v\x12\r\n" +
+	"\tBANKER_PB\x10o\x12\t\n" +
+	"\x05TIE_P\x10g\x12\t\n" +
+	"\x05TIE_B\x10\r\x12\n" +
+	"\n" +
+	"\x06TIE_PB\x10q*\xb8\x01\n" +
 	"\x15BaccaratBetActionType\x12<\n" +
 	"8BACCARAT_BET_ACTION_TYPE_BACCARAT_BET_NORMAL_UNSPECIFIED\x10\x00\x12/\n" +
 	"+BACCARAT_BET_ACTION_TYPE_BACCARAT_BET_REBET\x10\x01\x120\n" +
@@ -1005,47 +1101,48 @@ func file_baccarat_proto_rawDescGZIP() []byte {
 	return file_baccarat_proto_rawDescData
 }
 
-var file_baccarat_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_baccarat_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
 var file_baccarat_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_baccarat_proto_goTypes = []any{
 	(BaccaratBetCell)(0),            // 0: proto.BaccaratBetCell
-	(BaccaratBetActionType)(0),      // 1: proto.BaccaratBetActionType
-	(BaccaratBetRejectedReason)(0),  // 2: proto.BaccaratBetRejectedReason
-	(*BaccaratBet)(nil),             // 3: proto.BaccaratBet
-	(*BaccaratBetResult)(nil),       // 4: proto.BaccaratBetResult
-	(*BaccaratPlayerBet)(nil),       // 5: proto.BaccaratPlayerBet
-	(*BaccaratPlayerBetResult)(nil), // 6: proto.BaccaratPlayerBetResult
-	(*BaccaratHand)(nil),            // 7: proto.BaccaratHand
-	(*BaccaratHands)(nil),           // 8: proto.BaccaratHands
-	(*BaccaratGameFinish)(nil),      // 9: proto.BaccaratGameFinish
-	(*BaccaratBetCellInfo)(nil),     // 10: proto.BaccaratBetCellInfo
-	(*BaccaratSimpleHistory)(nil),   // 11: proto.BaccaratSimpleHistory
-	(*BaccaratUpdateDesk)(nil),      // 12: proto.BaccaratUpdateDesk
-	(*BaccaratBetActionReject)(nil), // 13: proto.BaccaratBetActionReject
-	(*BaccaratUpdateDeal)(nil),      // 14: proto.BaccaratUpdateDeal
-	(*Card)(nil),                    // 15: proto.Card
-	(*Error)(nil),                   // 16: proto.Error
+	(TypeWinBaccarat)(0),            // 1: proto.TypeWinBaccarat
+	(BaccaratBetActionType)(0),      // 2: proto.BaccaratBetActionType
+	(BaccaratBetRejectedReason)(0),  // 3: proto.BaccaratBetRejectedReason
+	(*BaccaratBet)(nil),             // 4: proto.BaccaratBet
+	(*BaccaratBetResult)(nil),       // 5: proto.BaccaratBetResult
+	(*BaccaratPlayerBet)(nil),       // 6: proto.BaccaratPlayerBet
+	(*BaccaratPlayerBetResult)(nil), // 7: proto.BaccaratPlayerBetResult
+	(*BaccaratHand)(nil),            // 8: proto.BaccaratHand
+	(*BaccaratHands)(nil),           // 9: proto.BaccaratHands
+	(*BaccaratGameFinish)(nil),      // 10: proto.BaccaratGameFinish
+	(*BaccaratBetCellInfo)(nil),     // 11: proto.BaccaratBetCellInfo
+	(*BaccaratSimpleHistory)(nil),   // 12: proto.BaccaratSimpleHistory
+	(*BaccaratUpdateDesk)(nil),      // 13: proto.BaccaratUpdateDesk
+	(*BaccaratBetActionReject)(nil), // 14: proto.BaccaratBetActionReject
+	(*BaccaratUpdateDeal)(nil),      // 15: proto.BaccaratUpdateDeal
+	(*Card)(nil),                    // 16: proto.Card
+	(*Error)(nil),                   // 17: proto.Error
 }
 var file_baccarat_proto_depIdxs = []int32{
 	0,  // 0: proto.BaccaratBet.cell:type_name -> proto.BaccaratBetCell
-	3,  // 1: proto.BaccaratBetResult.bet:type_name -> proto.BaccaratBet
-	1,  // 2: proto.BaccaratPlayerBet.action_type:type_name -> proto.BaccaratBetActionType
-	3,  // 3: proto.BaccaratPlayerBet.bets:type_name -> proto.BaccaratBet
-	4,  // 4: proto.BaccaratPlayerBetResult.lists:type_name -> proto.BaccaratBetResult
-	15, // 5: proto.BaccaratHand.cards:type_name -> proto.Card
-	7,  // 6: proto.BaccaratHands.banker:type_name -> proto.BaccaratHand
-	7,  // 7: proto.BaccaratHands.player:type_name -> proto.BaccaratHand
-	8,  // 8: proto.BaccaratGameFinish.hand:type_name -> proto.BaccaratHands
+	4,  // 1: proto.BaccaratBetResult.bet:type_name -> proto.BaccaratBet
+	2,  // 2: proto.BaccaratPlayerBet.action_type:type_name -> proto.BaccaratBetActionType
+	4,  // 3: proto.BaccaratPlayerBet.bets:type_name -> proto.BaccaratBet
+	5,  // 4: proto.BaccaratPlayerBetResult.lists:type_name -> proto.BaccaratBetResult
+	16, // 5: proto.BaccaratHand.cards:type_name -> proto.Card
+	8,  // 6: proto.BaccaratHands.banker:type_name -> proto.BaccaratHand
+	8,  // 7: proto.BaccaratHands.player:type_name -> proto.BaccaratHand
+	9,  // 8: proto.BaccaratGameFinish.hand:type_name -> proto.BaccaratHands
 	0,  // 9: proto.BaccaratGameFinish.win_cells:type_name -> proto.BaccaratBetCell
-	6,  // 10: proto.BaccaratGameFinish.list_bet_results:type_name -> proto.BaccaratPlayerBetResult
+	7,  // 10: proto.BaccaratGameFinish.list_bet_results:type_name -> proto.BaccaratPlayerBetResult
 	0,  // 11: proto.BaccaratBetCellInfo.cell:type_name -> proto.BaccaratBetCell
-	5,  // 12: proto.BaccaratUpdateDesk.user_bet:type_name -> proto.BaccaratPlayerBet
-	10, // 13: proto.BaccaratUpdateDesk.desk_cells:type_name -> proto.BaccaratBetCellInfo
-	11, // 14: proto.BaccaratUpdateDesk.history:type_name -> proto.BaccaratSimpleHistory
-	16, // 15: proto.BaccaratUpdateDesk.error:type_name -> proto.Error
-	2,  // 16: proto.BaccaratBetActionReject.reason:type_name -> proto.BaccaratBetRejectedReason
-	15, // 17: proto.BaccaratUpdateDeal.cards:type_name -> proto.Card
-	8,  // 18: proto.BaccaratUpdateDeal.hands:type_name -> proto.BaccaratHands
+	6,  // 12: proto.BaccaratUpdateDesk.user_bet:type_name -> proto.BaccaratPlayerBet
+	11, // 13: proto.BaccaratUpdateDesk.desk_cells:type_name -> proto.BaccaratBetCellInfo
+	1,  // 14: proto.BaccaratUpdateDesk.history:type_name -> proto.TypeWinBaccarat
+	17, // 15: proto.BaccaratUpdateDesk.error:type_name -> proto.Error
+	3,  // 16: proto.BaccaratBetActionReject.reason:type_name -> proto.BaccaratBetRejectedReason
+	16, // 17: proto.BaccaratUpdateDeal.cards:type_name -> proto.Card
+	9,  // 18: proto.BaccaratUpdateDeal.hands:type_name -> proto.BaccaratHands
 	19, // [19:19] is the sub-list for method output_type
 	19, // [19:19] is the sub-list for method input_type
 	19, // [19:19] is the sub-list for extension type_name
@@ -1065,7 +1162,7 @@ func file_baccarat_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_baccarat_proto_rawDesc), len(file_baccarat_proto_rawDesc)),
-			NumEnums:      3,
+			NumEnums:      4,
 			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
