@@ -794,8 +794,9 @@ type BaccaratUpdateDesk struct {
 	IsUpdateGameHistory bool                   `protobuf:"varint,4,opt,name=is_update_game_history,json=isUpdateGameHistory,proto3" json:"is_update_game_history,omitempty"`
 	UserBet             *BaccaratPlayerBet     `protobuf:"bytes,5,opt,name=user_bet,json=userBet,proto3" json:"user_bet,omitempty"`
 	DeskCells           []*BaccaratBetCellInfo `protobuf:"bytes,6,rep,name=desk_cells,json=deskCells,proto3" json:"desk_cells,omitempty"`
-	History             []TypeWinBaccarat      `protobuf:"varint,7,rep,packed,name=history,proto3,enum=proto.TypeWinBaccarat" json:"history,omitempty"`
-	Error               *Error                 `protobuf:"bytes,8,opt,name=error,proto3" json:"error,omitempty"`
+	History             *BaccaratSimpleHistory `protobuf:"bytes,7,opt,name=history,proto3" json:"history,omitempty"`
+	DetailedHistory     []TypeWinBaccarat      `protobuf:"varint,8,rep,packed,name=detailed_history,json=detailedHistory,proto3,enum=proto.TypeWinBaccarat" json:"detailed_history,omitempty"`
+	Error               *Error                 `protobuf:"bytes,9,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -872,9 +873,16 @@ func (x *BaccaratUpdateDesk) GetDeskCells() []*BaccaratBetCellInfo {
 	return nil
 }
 
-func (x *BaccaratUpdateDesk) GetHistory() []TypeWinBaccarat {
+func (x *BaccaratUpdateDesk) GetHistory() *BaccaratSimpleHistory {
 	if x != nil {
 		return x.History
+	}
+	return nil
+}
+
+func (x *BaccaratUpdateDesk) GetDetailedHistory() []TypeWinBaccarat {
+	if x != nil {
+		return x.DetailedHistory
 	}
 	return nil
 }
@@ -1037,7 +1045,7 @@ const file_baccarat_proto_rawDesc = "" +
 	"\vbanker_pair\x18\x04 \x01(\x05R\n" +
 	"bankerPair\x12\x1f\n" +
 	"\vplayer_pair\x18\x05 \x01(\x05R\n" +
-	"playerPair\"\x88\x03\n" +
+	"playerPair\"\xd1\x03\n" +
 	"\x12BaccaratUpdateDesk\x12\x1b\n" +
 	"\tn_players\x18\x01 \x01(\x05R\bnPlayers\x12+\n" +
 	"\x12is_update_user_bet\x18\x02 \x01(\bR\x0fisUpdateUserBet\x12-\n" +
@@ -1045,9 +1053,10 @@ const file_baccarat_proto_rawDesc = "" +
 	"\x16is_update_game_history\x18\x04 \x01(\bR\x13isUpdateGameHistory\x123\n" +
 	"\buser_bet\x18\x05 \x01(\v2\x18.proto.BaccaratPlayerBetR\auserBet\x129\n" +
 	"\n" +
-	"desk_cells\x18\x06 \x03(\v2\x1a.proto.BaccaratBetCellInfoR\tdeskCells\x120\n" +
-	"\ahistory\x18\a \x03(\x0e2\x16.proto.TypeWinBaccaratR\ahistory\x12\"\n" +
-	"\x05error\x18\b \x01(\v2\f.proto.ErrorR\x05error\"S\n" +
+	"desk_cells\x18\x06 \x03(\v2\x1a.proto.BaccaratBetCellInfoR\tdeskCells\x126\n" +
+	"\ahistory\x18\a \x01(\v2\x1c.proto.BaccaratSimpleHistoryR\ahistory\x12A\n" +
+	"\x10detailed_history\x18\b \x03(\x0e2\x16.proto.TypeWinBaccaratR\x0fdetailedHistory\x12\"\n" +
+	"\x05error\x18\t \x01(\v2\f.proto.ErrorR\x05error\"S\n" +
 	"\x17BaccaratBetActionReject\x128\n" +
 	"\x06reason\x18\x01 \x01(\x0e2 .proto.BaccaratBetRejectedReasonR\x06reason\"\x80\x01\n" +
 	"\x12BaccaratUpdateDeal\x12\x1b\n" +
@@ -1138,16 +1147,17 @@ var file_baccarat_proto_depIdxs = []int32{
 	0,  // 11: proto.BaccaratBetCellInfo.cell:type_name -> proto.BaccaratBetCell
 	6,  // 12: proto.BaccaratUpdateDesk.user_bet:type_name -> proto.BaccaratPlayerBet
 	11, // 13: proto.BaccaratUpdateDesk.desk_cells:type_name -> proto.BaccaratBetCellInfo
-	1,  // 14: proto.BaccaratUpdateDesk.history:type_name -> proto.TypeWinBaccarat
-	17, // 15: proto.BaccaratUpdateDesk.error:type_name -> proto.Error
-	3,  // 16: proto.BaccaratBetActionReject.reason:type_name -> proto.BaccaratBetRejectedReason
-	16, // 17: proto.BaccaratUpdateDeal.cards:type_name -> proto.Card
-	9,  // 18: proto.BaccaratUpdateDeal.hands:type_name -> proto.BaccaratHands
-	19, // [19:19] is the sub-list for method output_type
-	19, // [19:19] is the sub-list for method input_type
-	19, // [19:19] is the sub-list for extension type_name
-	19, // [19:19] is the sub-list for extension extendee
-	0,  // [0:19] is the sub-list for field type_name
+	12, // 14: proto.BaccaratUpdateDesk.history:type_name -> proto.BaccaratSimpleHistory
+	1,  // 15: proto.BaccaratUpdateDesk.detailed_history:type_name -> proto.TypeWinBaccarat
+	17, // 16: proto.BaccaratUpdateDesk.error:type_name -> proto.Error
+	3,  // 17: proto.BaccaratBetActionReject.reason:type_name -> proto.BaccaratBetRejectedReason
+	16, // 18: proto.BaccaratUpdateDeal.cards:type_name -> proto.Card
+	9,  // 19: proto.BaccaratUpdateDeal.hands:type_name -> proto.BaccaratHands
+	20, // [20:20] is the sub-list for method output_type
+	20, // [20:20] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_baccarat_proto_init() }
