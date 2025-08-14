@@ -113,7 +113,8 @@ func (l *ConfigLoader) SaveConfigToFile(filePath string, config *BotConfig) erro
 // loadBotJoinRules loads bot join rules from database
 func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([]BotJoinRule, error) {
 	query := `
-		SELECT min_bet, max_bet, min_users, max_users, random_time_min, random_time_max, join_percent
+		SELECT min_bet, max_bet, min_users, max_users, random_time_min, random_time_max, join_percent,
+		       add_bot_min, add_bot_max
 		FROM bot_join_rules 
 		WHERE game_code = $1 
 		ORDER BY min_bet ASC
@@ -128,6 +129,7 @@ func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([
 	var rules []BotJoinRule
 	for rows.Next() {
 		var rule BotJoinRule
+		var addBotMin, addBotMax sql.NullInt64
 		err := rows.Scan(
 			&rule.MinBet,
 			&rule.MaxBet,
@@ -136,10 +138,23 @@ func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([
 			&rule.RandomTimeMin,
 			&rule.RandomTimeMax,
 			&rule.JoinPercent,
+			&addBotMin,
+			&addBotMax,
 		)
 		if err != nil {
 			return nil, err
 		}
+
+		// Set optional Baccarat/Blackjack properties
+		if addBotMin.Valid {
+			addBotMinInt := int(addBotMin.Int64)
+			rule.AddBotMin = &addBotMinInt
+		}
+		if addBotMax.Valid {
+			addBotMaxInt := int(addBotMax.Int64)
+			rule.AddBotMax = &addBotMaxInt
+		}
+
 		rules = append(rules, rule)
 	}
 
@@ -149,7 +164,8 @@ func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([
 // loadBotLeaveRules loads bot leave rules from database
 func (l *ConfigLoader) loadBotLeaveRules(ctx context.Context, gameCode string) ([]BotLeaveRule, error) {
 	query := `
-		SELECT min_bet, max_bet, last_result, leave_percent
+		SELECT min_bet, max_bet, last_result, leave_percent,
+		       min_users, max_users, bot_count_min, bot_count_max, leave_bot_min, leave_bot_max, leave_rate
 		FROM bot_leave_rules 
 		WHERE game_code = $1 
 		ORDER BY min_bet ASC
@@ -164,15 +180,46 @@ func (l *ConfigLoader) loadBotLeaveRules(ctx context.Context, gameCode string) (
 	var rules []BotLeaveRule
 	for rows.Next() {
 		var rule BotLeaveRule
+		var botCountMin, botCountMax, leaveBotMin, leaveBotMax, leaveRate sql.NullInt64
 		err := rows.Scan(
 			&rule.MinBet,
 			&rule.MaxBet,
 			&rule.LastResult,
 			&rule.LeavePercent,
+			&rule.MinUsers,
+			&rule.MaxUsers,
+			&botCountMin,
+			&botCountMax,
+			&leaveBotMin,
+			&leaveBotMax,
+			&leaveRate,
 		)
 		if err != nil {
 			return nil, err
 		}
+
+		// Set optional Baccarat/Blackjack properties
+		if botCountMin.Valid {
+			botCountMinInt := int(botCountMin.Int64)
+			rule.BotCountMin = &botCountMinInt
+		}
+		if botCountMax.Valid {
+			botCountMaxInt := int(botCountMax.Int64)
+			rule.BotCountMax = &botCountMaxInt
+		}
+		if leaveBotMin.Valid {
+			leaveBotMinInt := int(leaveBotMin.Int64)
+			rule.LeaveBotMin = &leaveBotMinInt
+		}
+		if leaveBotMax.Valid {
+			leaveBotMaxInt := int(leaveBotMax.Int64)
+			rule.LeaveBotMax = &leaveBotMaxInt
+		}
+		if leaveRate.Valid {
+			leaveRateInt := int(leaveRate.Int64)
+			rule.LeaveRate = &leaveRateInt
+		}
+
 		rules = append(rules, rule)
 	}
 
@@ -183,7 +230,8 @@ func (l *ConfigLoader) loadBotLeaveRules(ctx context.Context, gameCode string) (
 func (l *ConfigLoader) loadBotCreateTableRules(ctx context.Context, gameCode string) ([]BotCreateTableRule, error) {
 	query := `
 		SELECT min_bet, max_bet, min_active_tables, max_active_tables, 
-		       wait_time_min, wait_time_max, retry_wait_min, retry_wait_max
+		       wait_time_min, wait_time_max, retry_wait_min, retry_wait_max,
+		       random_table_min, random_table_max, time_check, add_table_min, add_table_max
 		FROM bot_create_table_rules 
 		WHERE game_code = $1 
 		ORDER BY min_bet ASC
@@ -198,6 +246,7 @@ func (l *ConfigLoader) loadBotCreateTableRules(ctx context.Context, gameCode str
 	var rules []BotCreateTableRule
 	for rows.Next() {
 		var rule BotCreateTableRule
+		var randomTableMin, randomTableMax, timeCheck, addTableMin, addTableMax sql.NullInt64
 		err := rows.Scan(
 			&rule.MinBet,
 			&rule.MaxBet,
@@ -207,10 +256,38 @@ func (l *ConfigLoader) loadBotCreateTableRules(ctx context.Context, gameCode str
 			&rule.WaitTimeMax,
 			&rule.RetryWaitMin,
 			&rule.RetryWaitMax,
+			&randomTableMin,
+			&randomTableMax,
+			&timeCheck,
+			&addTableMin,
+			&addTableMax,
 		)
 		if err != nil {
 			return nil, err
 		}
+
+		// Set optional Baccarat/Blackjack properties
+		if randomTableMin.Valid {
+			randomTableMinInt := int(randomTableMin.Int64)
+			rule.RandomTableMin = &randomTableMinInt
+		}
+		if randomTableMax.Valid {
+			randomTableMaxInt := int(randomTableMax.Int64)
+			rule.RandomTableMax = &randomTableMaxInt
+		}
+		if timeCheck.Valid {
+			timeCheckInt := int(timeCheck.Int64)
+			rule.TimeCheck = &timeCheckInt
+		}
+		if addTableMin.Valid {
+			addTableMinInt := int(addTableMin.Int64)
+			rule.AddTableMin = &addTableMinInt
+		}
+		if addTableMax.Valid {
+			addTableMaxInt := int(addTableMax.Int64)
+			rule.AddTableMax = &addTableMaxInt
+		}
+
 		rules = append(rules, rule)
 	}
 
@@ -261,12 +338,26 @@ func (l *ConfigLoader) saveBotJoinRules(ctx context.Context, gameCode string, ru
 
 	// Then insert new rules
 	insertQuery := `
-		INSERT INTO bot_join_rules (game_code, min_bet, max_bet, min_users, max_users, 
-		                           random_time_min, random_time_max, join_percent, created_at)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+		INSERT INTO bot_join_rules (game_code, min_bet, max_bet, min_users, max_users,
+		                           random_time_min, random_time_max, join_percent,
+		                           add_bot_min, add_bot_max, created_at)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
 	`
 
 	for _, rule := range rules {
+		// Handle optional Baccarat/Blackjack properties
+		var addBotMin, addBotMax interface{}
+		if rule.AddBotMin != nil {
+			addBotMin = *rule.AddBotMin
+		} else {
+			addBotMin = nil
+		}
+		if rule.AddBotMax != nil {
+			addBotMax = *rule.AddBotMax
+		} else {
+			addBotMax = nil
+		}
+
 		_, err := l.db.ExecContext(ctx, insertQuery,
 			gameCode,
 			rule.MinBet,
@@ -276,6 +367,8 @@ func (l *ConfigLoader) saveBotJoinRules(ctx context.Context, gameCode string, ru
 			rule.RandomTimeMin,
 			rule.RandomTimeMax,
 			rule.JoinPercent,
+			addBotMin,
+			addBotMax,
 			time.Now(),
 		)
 		if err != nil {
@@ -297,17 +390,53 @@ func (l *ConfigLoader) saveBotLeaveRules(ctx context.Context, gameCode string, r
 
 	// Then insert new rules
 	insertQuery := `
-		INSERT INTO bot_leave_rules (game_code, min_bet, max_bet, last_result, leave_percent, created_at)
-		VALUES ($1, $2, $3, $4, $5, $6)
+		INSERT INTO bot_leave_rules (game_code, min_bet, max_bet, last_result, leave_percent,
+		                           min_users, max_users, bot_count_min, bot_count_max, leave_bot_min, leave_bot_max, leave_rate, created_at)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
 	`
 
 	for _, rule := range rules {
+		// Handle optional Baccarat/Blackjack properties
+		var botCountMin, botCountMax, leaveBotMin, leaveBotMax, leaveRate interface{}
+		if rule.BotCountMin != nil {
+			botCountMin = *rule.BotCountMin
+		} else {
+			botCountMin = nil
+		}
+		if rule.BotCountMax != nil {
+			botCountMax = *rule.BotCountMax
+		} else {
+			botCountMax = nil
+		}
+		if rule.LeaveBotMin != nil {
+			leaveBotMin = *rule.LeaveBotMin
+		} else {
+			leaveBotMin = nil
+		}
+		if rule.LeaveBotMax != nil {
+			leaveBotMax = *rule.LeaveBotMax
+		} else {
+			leaveBotMax = nil
+		}
+		if rule.LeaveRate != nil {
+			leaveRate = *rule.LeaveRate
+		} else {
+			leaveRate = nil
+		}
+
 		_, err := l.db.ExecContext(ctx, insertQuery,
 			gameCode,
 			rule.MinBet,
 			rule.MaxBet,
 			rule.LastResult,
 			rule.LeavePercent,
+			rule.MinUsers,
+			rule.MaxUsers,
+			botCountMin,
+			botCountMax,
+			leaveBotMin,
+			leaveBotMax,
+			leaveRate,
 			time.Now(),
 		)
 		if err != nil {
@@ -330,11 +459,40 @@ func (l *ConfigLoader) saveBotCreateTableRules(ctx context.Context, gameCode str
 	// Then insert new rules
 	insertQuery := `
 		INSERT INTO bot_create_table_rules (game_code, min_bet, max_bet, min_active_tables, max_active_tables,
-		                                   wait_time_min, wait_time_max, retry_wait_min, retry_wait_max, created_at)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+		                                   wait_time_min, wait_time_max, retry_wait_min, retry_wait_max,
+		                                   random_table_min, random_table_max, time_check, add_table_min, add_table_max, created_at)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
 	`
 
 	for _, rule := range rules {
+		// Handle optional Baccarat/Blackjack properties
+		var randomTableMin, randomTableMax, timeCheck, addTableMin, addTableMax interface{}
+		if rule.RandomTableMin != nil {
+			randomTableMin = *rule.RandomTableMin
+		} else {
+			randomTableMin = nil
+		}
+		if rule.RandomTableMax != nil {
+			randomTableMax = *rule.RandomTableMax
+		} else {
+			randomTableMax = nil
+		}
+		if rule.TimeCheck != nil {
+			timeCheck = *rule.TimeCheck
+		} else {
+			timeCheck = nil
+		}
+		if rule.AddTableMin != nil {
+			addTableMin = *rule.AddTableMin
+		} else {
+			addTableMin = nil
+		}
+		if rule.AddTableMax != nil {
+			addTableMax = *rule.AddTableMax
+		} else {
+			addTableMax = nil
+		}
+
 		_, err := l.db.ExecContext(ctx, insertQuery,
 			gameCode,
 			rule.MinBet,
@@ -345,6 +503,11 @@ func (l *ConfigLoader) saveBotCreateTableRules(ctx context.Context, gameCode str
 			rule.WaitTimeMax,
 			rule.RetryWaitMin,
 			rule.RetryWaitMax,
+			randomTableMin,
+			randomTableMax,
+			timeCheck,
+			addTableMin,
+			addTableMax,
 			time.Now(),
 		)
 		if err != nil {

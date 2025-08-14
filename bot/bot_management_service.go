@@ -34,9 +34,13 @@ type BotJoinRule struct {
 	MaxBet        int64 `json:"max_bet"`
 	MinUsers      int   `json:"min_users"`
 	MaxUsers      int   `json:"max_users"`
-	RandomTimeMin int   `json:"random_time_min"`
-	RandomTimeMax int   `json:"random_time_max"`
-	JoinPercent   int   `json:"join_percent"`
+	RandomTimeMin int   `json:"random_time_min"` // WHOT & Baccarat/Blackjack: random time range for joining
+	RandomTimeMax int   `json:"random_time_max"` // WHOT & Baccarat/Blackjack: random time range for joining
+	JoinPercent   int   `json:"join_percent"`    // WHOT & Baccarat/Blackjack: percentage chance to join
+
+	// Additional properties for Baccarat/Blackjack
+	AddBotMin *int `json:"add_bot_min,omitempty"` // Min number of bots to add
+	AddBotMax *int `json:"add_bot_max,omitempty"` // Max number of bots to add
 }
 
 // BotLeaveRule represents bot leave configuration
@@ -45,6 +49,15 @@ type BotLeaveRule struct {
 	MaxBet       int64 `json:"max_bet"`
 	LastResult   int   `json:"last_result"`
 	LeavePercent int   `json:"leave_percent"`
+
+	// Additional properties for Baccarat/Blackjack
+	MinUsers    int  `json:"min_users"`               // Min number of users in table (including bots)
+	MaxUsers    int  `json:"max_users"`               // Max number of users in table (including bots)
+	BotCountMin *int `json:"bot_count_min,omitempty"` // Min number of bots in table
+	BotCountMax *int `json:"bot_count_max,omitempty"` // Max number of bots in table
+	LeaveBotMin *int `json:"leave_bot_min,omitempty"` // Min number of bots leaving
+	LeaveBotMax *int `json:"leave_bot_max,omitempty"` // Max number of bots leaving
+	LeaveRate   *int `json:"leave_rate,omitempty"`    // Bot leaving rate percentage
 }
 
 // BotCreateTableRule represents bot create table configuration
@@ -57,6 +70,13 @@ type BotCreateTableRule struct {
 	WaitTimeMax     int   `json:"wait_time_max"`
 	RetryWaitMin    int   `json:"retry_wait_min"`
 	RetryWaitMax    int   `json:"retry_wait_max"`
+
+	// Additional properties for Baccarat/Blackjack
+	RandomTableMin *int `json:"random_table_min,omitempty"` // Min random number for table comparison
+	RandomTableMax *int `json:"random_table_max,omitempty"` // Max random number for table comparison
+	TimeCheck      *int `json:"time_check,omitempty"`       // Time check interval (seconds)
+	AddTableMin    *int `json:"add_table_min,omitempty"`    // Min number of tables to add
+	AddTableMax    *int `json:"add_table_max,omitempty"`    // Max number of tables to add
 }
 
 // BotGroupRule represents bot group configuration
@@ -146,6 +166,19 @@ func (s *BotManagementService) FindBotJoinRule(betAmount int64, userCount int) *
 	return nil
 }
 
+// FindBotJoinRuleWithBotCount finds appropriate join rule with bot count consideration (for Baccarat/Blackjack)
+func (s *BotManagementService) FindBotJoinRuleWithBotCount(betAmount int64, userCount int, botCount int) *BotJoinRule {
+	for _, rule := range s.config.BotJoinRules {
+		if betAmount >= rule.MinBet && betAmount < rule.MaxBet &&
+			userCount >= rule.MinUsers && userCount <= rule.MaxUsers {
+			// For Baccarat/Blackjack, we can add additional bot count logic here if needed
+			// For now, just return the rule if it matches basic criteria
+			return &rule
+		}
+	}
+	return nil
+}
+
 // FindBotLeaveRule finds appropriate leave rule
 func (s *BotManagementService) FindBotLeaveRule(betAmount int64, lastResult int) *BotLeaveRule {
 	for _, rule := range s.config.BotLeaveRules {
@@ -157,12 +190,50 @@ func (s *BotManagementService) FindBotLeaveRule(betAmount int64, lastResult int)
 	return nil
 }
 
+// FindBotLeaveRuleWithBotCount finds appropriate leave rule with bot count consideration (for Baccarat/Blackjack)
+func (s *BotManagementService) FindBotLeaveRuleWithBotCount(betAmount int64, lastResult int, botCount int) *BotLeaveRule {
+	for _, rule := range s.config.BotLeaveRules {
+		if betAmount >= rule.MinBet && betAmount < rule.MaxBet &&
+			(rule.LastResult == 0 || rule.LastResult == lastResult) {
+			// Check bot count constraints if they exist (Baccarat/Blackjack specific)
+			if rule.BotCountMin != nil && rule.BotCountMax != nil {
+				if botCount >= *rule.BotCountMin && botCount <= *rule.BotCountMax {
+					return &rule
+				}
+			} else {
+				// For WHOT, use the rule without bot count constraints
+				return &rule
+			}
+		}
+	}
+	return nil
+}
+
 // FindBotCreateTableRule finds appropriate create table rule
 func (s *BotManagementService) FindBotCreateTableRule(betAmount int64, activeTables int) *BotCreateTableRule {
 	for _, rule := range s.config.BotCreateTableRules {
 		if betAmount >= rule.MinBet && betAmount < rule.MaxBet &&
 			activeTables >= rule.MinActiveTables && activeTables <= rule.MaxActiveTables {
 			return &rule
+		}
+	}
+	return nil
+}
+
+// FindBotCreateTableRuleWithRandom finds appropriate create table rule with random table comparison (for Baccarat/Blackjack)
+func (s *BotManagementService) FindBotCreateTableRuleWithRandom(betAmount int64, activeTables int, randomNumber int) *BotCreateTableRule {
+	for _, rule := range s.config.BotCreateTableRules {
+		if betAmount >= rule.MinBet && betAmount < rule.MaxBet &&
+			activeTables >= rule.MinActiveTables && activeTables <= rule.MaxActiveTables {
+			// Check random table constraints if they exist (Baccarat/Blackjack specific)
+			if rule.RandomTableMin != nil && rule.RandomTableMax != nil {
+				if randomNumber >= *rule.RandomTableMin && randomNumber <= *rule.RandomTableMax {
+					return &rule
+				}
+			} else {
+				// For WHOT, use the rule without random table constraints
+				return &rule
+			}
 		}
 	}
 	return nil
@@ -693,4 +764,81 @@ func (s *BotManagementService) ClearBotLeaveDecision(matchID, botUserID string) 
 	delete(s.botLeaveDecisions, decisionKey)
 	s.decisionsMux.Unlock()
 	fmt.Printf("[DEBUG] Cleared bot leave decision for match %s, bot %s\n", matchID, botUserID)
+}
+
+// Helper methods for Baccarat/Blackjack specific properties
+
+// GetBotJoinTimeRange returns the time range for bot joining (common for both WHOT and Baccarat/Blackjack)
+func (s *BotManagementService) GetBotJoinTimeRange(rule *BotJoinRule) (int, int) {
+	// Both WHOT and Baccarat/Blackjack use random_time_min/max
+	return rule.RandomTimeMin, rule.RandomTimeMax
+}
+
+// GetBotAddCount returns the number of bots to add (Baccarat/Blackjack specific)
+func (s *BotManagementService) GetBotAddCount(rule *BotJoinRule) (int, int) {
+	if rule.AddBotMin != nil && rule.AddBotMax != nil {
+		return *rule.AddBotMin, *rule.AddBotMax
+	}
+	// Default to 1 bot for WHOT
+	return 1, 1
+}
+
+// GetBotLeaveCount returns the number of bots leaving (Baccarat/Blackjack specific)
+func (s *BotManagementService) GetBotLeaveCount(rule *BotLeaveRule) (int, int) {
+	if rule.LeaveBotMin != nil && rule.LeaveBotMax != nil {
+		return *rule.LeaveBotMin, *rule.LeaveBotMax
+	}
+	// Default to 1 bot for WHOT
+	return 1, 1
+}
+
+// GetBotLeaveRate returns the bot leaving rate percentage (Baccarat/Blackjack specific)
+func (s *BotManagementService) GetBotLeaveRate(rule *BotLeaveRule) int {
+	if rule.LeaveRate != nil {
+		return *rule.LeaveRate
+	}
+	// Fallback to WHOT leave percent
+	return rule.LeavePercent
+}
+
+// GetTableCreationRandomRange returns the random range for table creation (Baccarat/Blackjack specific)
+func (s *BotManagementService) GetTableCreationRandomRange(rule *BotCreateTableRule) (int, int) {
+	if rule.RandomTableMin != nil && rule.RandomTableMax != nil {
+		return *rule.RandomTableMin, *rule.RandomTableMax
+	}
+	// Default range for WHOT
+	return 1, 10
+}
+
+// GetTableCreationTimeCheck returns the time check interval (Baccarat/Blackjack specific)
+func (s *BotManagementService) GetTableCreationTimeCheck(rule *BotCreateTableRule) int {
+	if rule.TimeCheck != nil {
+		return *rule.TimeCheck
+	}
+	// Default to 60 seconds for WHOT
+	return 60
+}
+
+// GetTableCreationAddCount returns the number of tables to add (Baccarat/Blackjack specific)
+func (s *BotManagementService) GetTableCreationAddCount(rule *BotCreateTableRule) (int, int) {
+	if rule.AddTableMin != nil && rule.AddTableMax != nil {
+		return *rule.AddTableMin, *rule.AddTableMax
+	}
+	// Default to 1 table for WHOT
+	return 1, 1
+}
+
+// IsBaccaratBlackjackRule checks if a rule has Baccarat/Blackjack specific properties
+func (s *BotManagementService) IsBaccaratBlackjackRule(rule *BotJoinRule) bool {
+	return rule.AddBotMin != nil && rule.AddBotMax != nil
+}
+
+// IsBaccaratBlackjackLeaveRule checks if a leave rule has Baccarat/Blackjack specific properties
+func (s *BotManagementService) IsBaccaratBlackjackLeaveRule(rule *BotLeaveRule) bool {
+	return rule.BotCountMin != nil && rule.BotCountMax != nil && rule.LeaveBotMin != nil && rule.LeaveBotMax != nil && rule.LeaveRate != nil
+}
+
+// IsBaccaratBlackjackCreateTableRule checks if a create table rule has Baccarat/Blackjack specific properties
+func (s *BotManagementService) IsBaccaratBlackjackCreateTableRule(rule *BotCreateTableRule) bool {
+	return rule.RandomTableMin != nil && rule.RandomTableMax != nil && rule.TimeCheck != nil && rule.AddTableMin != nil && rule.AddTableMax != nil
 }
