@@ -23,35 +23,52 @@ func NewConfigLoader(db *sql.DB) *ConfigLoader {
 
 // LoadConfigFromDatabase loads bot configuration from database
 func (l *ConfigLoader) LoadConfigFromDatabase(ctx context.Context, gameCode string) (*BotConfig, error) {
+	fmt.Printf("[DEBUG] [ConfigLoader] LoadConfigFromDatabase called for gameCode: %s\n", gameCode)
+
 	config := &BotConfig{}
 
 	// Load bot join rules
+	fmt.Printf("[DEBUG] [ConfigLoader] Loading bot join rules...\n")
 	joinRules, err := l.loadBotJoinRules(ctx, gameCode)
 	if err != nil {
+		fmt.Printf("[ERROR] [ConfigLoader] Failed to load bot join rules: %v\n", err)
 		return nil, fmt.Errorf("failed to load bot join rules: %w", err)
 	}
+	fmt.Printf("[DEBUG] [ConfigLoader] Loaded %d bot join rules\n", len(joinRules))
 	config.BotJoinRules = joinRules
 
 	// Load bot leave rules
+	fmt.Printf("[DEBUG] [ConfigLoader] Loading bot leave rules...\n")
 	leaveRules, err := l.loadBotLeaveRules(ctx, gameCode)
 	if err != nil {
+		fmt.Printf("[ERROR] [ConfigLoader] Failed to load bot leave rules: %v\n", err)
 		return nil, fmt.Errorf("failed to load bot leave rules: %w", err)
 	}
+	fmt.Printf("[DEBUG] [ConfigLoader] Loaded %d bot leave rules\n", len(leaveRules))
 	config.BotLeaveRules = leaveRules
 
 	// Load bot create table rules
+	fmt.Printf("[DEBUG] [ConfigLoader] Loading bot create table rules...\n")
 	createTableRules, err := l.loadBotCreateTableRules(ctx, gameCode)
 	if err != nil {
+		fmt.Printf("[ERROR] [ConfigLoader] Failed to load bot create table rules: %v\n", err)
 		return nil, fmt.Errorf("failed to load bot create table rules: %w", err)
 	}
+	fmt.Printf("[DEBUG] [ConfigLoader] Loaded %d bot create table rules\n", len(createTableRules))
 	config.BotCreateTableRules = createTableRules
 
 	// Load bot group rules
+	fmt.Printf("[DEBUG] [ConfigLoader] Loading bot group rules...\n")
 	groupRules, err := l.loadBotGroupRules(ctx, gameCode)
 	if err != nil {
+		fmt.Printf("[ERROR] [ConfigLoader] Failed to load bot group rules: %v\n", err)
 		return nil, fmt.Errorf("failed to load bot group rules: %w", err)
 	}
+	fmt.Printf("[DEBUG] [ConfigLoader] Loaded %d bot group rules\n", len(groupRules))
 	config.BotGroupRules = groupRules
+
+	fmt.Printf("[DEBUG] [ConfigLoader] Successfully loaded config with %d total rules\n",
+		len(joinRules)+len(leaveRules)+len(createTableRules)+len(groupRules))
 
 	return config, nil
 }
@@ -112,6 +129,8 @@ func (l *ConfigLoader) SaveConfigToFile(filePath string, config *BotConfig) erro
 
 // loadBotJoinRules loads bot join rules from database
 func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([]BotJoinRule, error) {
+	fmt.Printf("[DEBUG] [ConfigLoader] loadBotJoinRules called for gameCode: %s\n", gameCode)
+
 	query := `
 		SELECT min_bet, max_bet, min_users, max_users, random_time_min, random_time_max, join_percent,
 		       add_bot_min, add_bot_max
@@ -120,14 +139,20 @@ func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([
 		ORDER BY min_bet ASC
 	`
 
+	fmt.Printf("[DEBUG] [ConfigLoader] Executing query: %s\n", query)
+	fmt.Printf("[DEBUG] [ConfigLoader] Query parameter: gameCode = %s\n", gameCode)
+
 	rows, err := l.db.QueryContext(ctx, query, gameCode)
 	if err != nil {
+		fmt.Printf("[ERROR] [ConfigLoader] Database query failed: %v\n", err)
 		return nil, err
 	}
 	defer rows.Close()
 
 	var rules []BotJoinRule
+	ruleCount := 0
 	for rows.Next() {
+		ruleCount++
 		var rule BotJoinRule
 		var addBotMin, addBotMax sql.NullInt64
 		err := rows.Scan(
@@ -142,6 +167,7 @@ func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([
 			&addBotMax,
 		)
 		if err != nil {
+			fmt.Printf("[ERROR] [ConfigLoader] Failed to scan row %d: %v\n", ruleCount, err)
 			return nil, err
 		}
 
@@ -155,9 +181,13 @@ func (l *ConfigLoader) loadBotJoinRules(ctx context.Context, gameCode string) ([
 			rule.AddBotMax = &addBotMaxInt
 		}
 
+		fmt.Printf("[DEBUG] [ConfigLoader] Loaded rule[%d]: minBet=%d, maxBet=%d, minUsers=%d, maxUsers=%d, joinPercent=%d\n",
+			ruleCount, rule.MinBet, rule.MaxBet, rule.MinUsers, rule.MaxUsers, rule.JoinPercent)
+
 		rules = append(rules, rule)
 	}
 
+	fmt.Printf("[DEBUG] [ConfigLoader] Total bot join rules loaded: %d\n", len(rules))
 	return rules, nil
 }
 
