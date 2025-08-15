@@ -7,6 +7,8 @@ import (
 	"math/rand"
 	"sync"
 	"time"
+
+	"github.com/nk-nigeria/cgp-common/define"
 )
 
 // BotJoinRequest represents a pending bot join request with timer
@@ -279,15 +281,6 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 		return false // Don't create new request, let the existing one be processed
 	}
 
-	// Check join probability
-	randomValue := rand.Intn(100)
-	if randomValue >= rule.JoinPercent {
-		fmt.Printf("[DEBUG] Bot join failed probability check: random=%d >= joinPercent=%d\n", randomValue, rule.JoinPercent)
-		return false
-	}
-
-	fmt.Printf("[DEBUG] Bot join passed probability check: random=%d < joinPercent=%d\n", randomValue, rule.JoinPercent)
-
 	// Check if there's already a pending request for this match
 	s.joinRequestsMux.RLock()
 	if existing, exists := s.joinRequests[matchID]; exists {
@@ -304,41 +297,98 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 		s.joinRequestsMux.RUnlock()
 	}
 
-	// Calculate random delay (considering total game time: matching 10s + preparing 10s = 20s max)
-	fmt.Printf("[DEBUG] RandomTimeMin=%d, RandomTimeMax=%d\n", rule.RandomTimeMin, rule.RandomTimeMax)
-	if rule.RandomTimeMax > rule.RandomTimeMin {
-		delay := rand.Intn(rule.RandomTimeMax-rule.RandomTimeMin+1) + rule.RandomTimeMin
-		expireTime := time.Now().Add(time.Duration(delay) * time.Second)
+	// Determine game type and apply appropriate logic
+	if s.IsWhotGame(rule) {
+		// WHOT: Use join_percent for single bot join
+		fmt.Printf("[DEBUG] WHOT rule detected, using join_percent for single bot\n")
 
-		fmt.Printf("[DEBUG] Creating delayed bot join request: matchID=%s, delay=%ds, expires=%v\n", matchID, delay, expireTime)
-
-		// Create pending request
-		request := &BotJoinRequest{
-			MatchID:    matchID,
-			BetAmount:  betAmount,
-			UserCount:  userCount,
-			ExpireTime: expireTime,
-			Rule:       rule,
+		// Check join probability
+		randomValue := rand.Intn(100)
+		if randomValue >= rule.JoinPercent {
+			fmt.Printf("[DEBUG] Bot join failed probability check: random=%d >= joinPercent=%d\n", randomValue, rule.JoinPercent)
+			return false
 		}
 
-		// Store the request
-		s.joinRequestsMux.Lock()
-		s.joinRequests[matchID] = request
-		s.joinRequestsMux.Unlock()
+		fmt.Printf("[DEBUG] Bot join passed probability check: random=%d < joinPercent=%d\n", randomValue, rule.JoinPercent)
 
-		// Mark that a decision has been made for this match
-		s.decisionsMux.Lock()
-		s.botJoinDecisions[matchID] = true
-		s.decisionsMux.Unlock()
+		// Calculate random delay using random_time_min/max
+		fmt.Printf("[DEBUG] RandomTimeMin=%d, RandomTimeMax=%d\n", rule.RandomTimeMin, rule.RandomTimeMax)
+		if rule.RandomTimeMax > rule.RandomTimeMin {
+			delay := rand.Intn(rule.RandomTimeMax-rule.RandomTimeMin+1) + rule.RandomTimeMin
+			expireTime := time.Now().Add(time.Duration(delay) * time.Second)
 
-		fmt.Printf("[DEBUG] Stored pending request for matchID=%s, total pending requests: %d\n",
-			matchID, len(s.joinRequests))
+			fmt.Printf("[DEBUG] Creating delayed bot join request: matchID=%s, delay=%ds, expires=%v\n", matchID, delay, expireTime)
 
-		return false // Don't join immediately
+			// Create pending request
+			request := &BotJoinRequest{
+				MatchID:    matchID,
+				BetAmount:  betAmount,
+				UserCount:  userCount,
+				ExpireTime: expireTime,
+				Rule:       rule,
+			}
+
+			// Store the request
+			s.joinRequestsMux.Lock()
+			s.joinRequests[matchID] = request
+			s.joinRequestsMux.Unlock()
+
+			// Mark that a decision has been made for this match
+			s.decisionsMux.Lock()
+			s.botJoinDecisions[matchID] = true
+			s.decisionsMux.Unlock()
+
+			fmt.Printf("[DEBUG] Stored pending request for matchID=%s, total pending requests: %d\n",
+				matchID, len(s.joinRequests))
+
+			return false // Don't join immediately
+		}
+
+		fmt.Printf("[DEBUG] Bot join approved immediately for WHOT\n")
+		return true // Join immediately if no random delay
+	} else {
+		// Baccarat/Blackjack: IGNORE join_percent, only use add_bot_min/max and random_time_min/max
+		fmt.Printf("[DEBUG] Baccarat/Blackjack rule detected, IGNORING join_percent, using add_bot_min/max and random_time_min/max\n")
+
+		// For Baccarat/Blackjack, we don't check join_percent - bots will always join
+		fmt.Printf("[DEBUG] Baccarat/Blackjack: Skipping join_percent check, bots will join based on timing only\n")
+
+		// Calculate random delay using random_time_min/max
+		fmt.Printf("[DEBUG] RandomTimeMin=%d, RandomTimeMax=%d\n", rule.RandomTimeMin, rule.RandomTimeMax)
+		if rule.RandomTimeMax > rule.RandomTimeMin {
+			delay := rand.Intn(rule.RandomTimeMax-rule.RandomTimeMin+1) + rule.RandomTimeMin
+			expireTime := time.Now().Add(time.Duration(delay) * time.Second)
+
+			fmt.Printf("[DEBUG] Creating delayed bot join request: matchID=%s, delay=%ds, expires=%v\n", matchID, delay, expireTime)
+
+			// Create pending request
+			request := &BotJoinRequest{
+				MatchID:    matchID,
+				BetAmount:  betAmount,
+				UserCount:  userCount,
+				ExpireTime: expireTime,
+				Rule:       rule,
+			}
+
+			// Store the request
+			s.joinRequestsMux.Lock()
+			s.joinRequests[matchID] = request
+			s.joinRequestsMux.Unlock()
+
+			// Mark that a decision has been made for this match
+			s.decisionsMux.Lock()
+			s.botJoinDecisions[matchID] = true
+			s.decisionsMux.Unlock()
+
+			fmt.Printf("[DEBUG] Stored pending request for matchID=%s, total pending requests: %d\n",
+				matchID, len(s.joinRequests))
+
+			return false // Don't join immediately
+		}
+
+		fmt.Printf("[DEBUG] Bot join approved immediately for Baccarat/Blackjack\n")
+		return true // Join immediately if no random delay
 	}
-
-	fmt.Printf("[DEBUG] Bot join approved immediately\n")
-	return true // Join immediately if no random delay
 }
 
 // ShouldBotJoinNow checks if bot should join based on time (without random)
@@ -829,8 +879,8 @@ func (s *BotManagementService) GetTableCreationAddCount(rule *BotCreateTableRule
 }
 
 // IsBaccaratBlackjackRule checks if a rule has Baccarat/Blackjack specific properties
-func (s *BotManagementService) IsBaccaratBlackjackRule(rule *BotJoinRule) bool {
-	return rule.AddBotMin != nil && rule.AddBotMax != nil
+func (s *BotManagementService) IsWhotGame(rule *BotJoinRule) bool {
+	return s.botLoader.gameCode == define.WhotGame.String()
 }
 
 // IsBaccaratBlackjackLeaveRule checks if a leave rule has Baccarat/Blackjack specific properties
@@ -841,4 +891,29 @@ func (s *BotManagementService) IsBaccaratBlackjackLeaveRule(rule *BotLeaveRule) 
 // IsBaccaratBlackjackCreateTableRule checks if a create table rule has Baccarat/Blackjack specific properties
 func (s *BotManagementService) IsBaccaratBlackjackCreateTableRule(rule *BotCreateTableRule) bool {
 	return rule.RandomTableMin != nil && rule.RandomTableMax != nil && rule.TimeCheck != nil && rule.AddTableMin != nil && rule.AddTableMax != nil
+}
+
+// GetBotJoinCount returns the number of bots to join based on game type
+func (s *BotManagementService) GetBotJoinCount(rule *BotJoinRule) int {
+	if s.IsWhotGame(rule) {
+		// WHOT: Always add 1 bot
+		fmt.Printf("[DEBUG] WHOT: Adding 1 bot (single bot join)\n")
+		return 1
+	} else {
+		// Baccarat/Blackjack: Random between add_bot_min and add_bot_max
+		if rule.AddBotMin != nil && rule.AddBotMax != nil {
+			if *rule.AddBotMax > *rule.AddBotMin {
+				count := rand.Intn(*rule.AddBotMax-*rule.AddBotMin+1) + *rule.AddBotMin
+				fmt.Printf("[DEBUG] Baccarat/Blackjack: Random bot count between %d-%d, selected: %d\n",
+					*rule.AddBotMin, *rule.AddBotMax, count)
+				return count
+			} else {
+				fmt.Printf("[DEBUG] Baccarat/Blackjack: Using fixed bot count: %d\n", *rule.AddBotMin)
+				return *rule.AddBotMin
+			}
+		}
+		// Fallback to 1 if add_bot_min/max not set
+		fmt.Printf("[DEBUG] Baccarat/Blackjack: add_bot_min/max not set, using default: 1\n")
+		return 1
+	}
 }
