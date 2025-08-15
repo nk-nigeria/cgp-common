@@ -179,7 +179,7 @@ func (h *BotIntegrationHelper) DebugPendingRequests() {
 }
 
 // ShouldBotBeKicked checks if a bot should be kicked based on time (without random)
-func (h *BotIntegrationHelper) ShouldBotBeKicked(ctx context.Context, botUserID string) bool {
+func (h *BotIntegrationHelper) ShouldBotBeKicked(ctx context.Context, botUserID string) (bool, int) {
 	matchInfo := h.integration.GetMatchInfo(ctx)
 	ctxWithMatchID := context.WithValue(ctx, "match_id", matchInfo.MatchID)
 	return h.botService.ShouldBotBeKicked(ctxWithMatchID, botUserID)
@@ -201,8 +201,9 @@ func (h *BotIntegrationHelper) GetBotLeaveRemainingTime(ctx context.Context, bot
 // CheckAndKickExpiredBots checks if any bots should be kicked based on their leave time
 func (h *BotIntegrationHelper) CheckAndKickExpiredBots(ctx context.Context, botUserID string) (bool, error) {
 	// Check if bot should be kicked based on time (without random)
-	if h.ShouldBotBeKicked(ctx, botUserID) {
+	if kicked, botLeftCount := h.ShouldBotBeKicked(ctx, botUserID); kicked {
 		fmt.Printf("[DEBUG] Bot %s should be kicked based on time\n", botUserID)
+		ctx = context.WithValue(ctx, "bot_left_count", botLeftCount)
 		// Remove bot from match immediately
 		err := h.integration.RemoveBotFromMatch(ctx, botUserID)
 		if err != nil {

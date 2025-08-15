@@ -22,12 +22,13 @@ type BotJoinRequest struct {
 
 // BotLeaveRequest represents a pending bot leave request with timer
 type BotLeaveRequest struct {
-	MatchID    string
-	BetAmount  int64
-	LastResult int
-	BotUserID  string
-	ExpireTime time.Time
-	Rule       *BotLeaveRule
+	MatchID      string
+	BetAmount    int64
+	LastResult   int
+	BotLeftCount int
+	BotUserID    string
+	ExpireTime   time.Time
+	Rule         *BotLeaveRule
 }
 
 // BotJoinRule represents bot join configuration
@@ -537,12 +538,13 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 			matchID, botUserID, delay, expireTime)
 
 		request := &BotLeaveRequest{
-			MatchID:    matchID,
-			BetAmount:  betAmount,
-			LastResult: lastResult,
-			BotUserID:  botUserID,
-			ExpireTime: expireTime,
-			Rule:       rule,
+			MatchID:      matchID,
+			BetAmount:    betAmount,
+			LastResult:   lastResult,
+			BotLeftCount: 1,
+			BotUserID:    botUserID,
+			ExpireTime:   expireTime,
+			Rule:         rule,
 		}
 
 		// Store the request
@@ -629,12 +631,12 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 			matchID, botUserID, leaveBotCount, delay, expireTime)
 
 		request := &BotLeaveRequest{
-			MatchID:    matchID,
-			BetAmount:  betAmount,
-			LastResult: lastResult,
-			BotUserID:  botUserID,
-			ExpireTime: expireTime,
-			Rule:       rule,
+			MatchID:      matchID,
+			BetAmount:    betAmount,
+			BotLeftCount: leaveBotCount,
+			BotUserID:    botUserID,
+			ExpireTime:   expireTime,
+			Rule:         rule,
 		}
 
 		// Store the request
@@ -845,10 +847,10 @@ func (s *BotManagementService) GetBotJoinRemainingTime(ctx context.Context) (tim
 }
 
 // ShouldBotBeKicked checks if a bot should be kicked based on time (without random)
-func (s *BotManagementService) ShouldBotBeKicked(ctx context.Context, botUserID string) bool {
+func (s *BotManagementService) ShouldBotBeKicked(ctx context.Context, botUserID string) (bool, int) {
 	matchID, ok := ctx.Value("match_id").(string)
 	if !ok {
-		return false
+		return false, 0
 	}
 
 	// Check if there's a pending leave request for this match
@@ -857,21 +859,21 @@ func (s *BotManagementService) ShouldBotBeKicked(ctx context.Context, botUserID 
 	s.leaveRequestsMux.RUnlock()
 
 	if !exists {
-		return false
+		return false, 0
 	}
 
 	// Check if this request is for the specific bot
 	if request.BotUserID != botUserID {
-		return false
+		return false, 0
 	}
 
 	// Check if the request has expired
 	if time.Now().After(request.ExpireTime) {
 		fmt.Printf("[DEBUG] Bot leave request expired for match %s, bot %s, should be kicked\n", matchID, botUserID)
-		return true
+		return true, request.BotLeftCount
 	}
 
-	return false
+	return false, 0
 }
 
 // GetBotLeaveDecisionKey generates the key for tracking bot leave decisions
