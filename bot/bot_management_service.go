@@ -168,19 +168,6 @@ func (s *BotManagementService) FindBotJoinRule(betAmount int64, userCount int) *
 	return nil
 }
 
-// FindBotJoinRuleWithBotCount finds appropriate join rule with bot count consideration (for Baccarat/Blackjack)
-func (s *BotManagementService) FindBotJoinRuleWithBotCount(betAmount int64, userCount int, botCount int) *BotJoinRule {
-	for _, rule := range s.config.BotJoinRules {
-		if betAmount >= rule.MinBet && betAmount < rule.MaxBet &&
-			userCount >= rule.MinUsers && userCount <= rule.MaxUsers {
-			// For Baccarat/Blackjack, we can add additional bot count logic here if needed
-			// For now, just return the rule if it matches basic criteria
-			return &rule
-		}
-	}
-	return nil
-}
-
 // FindBotLeaveRule finds appropriate leave rule
 func (s *BotManagementService) FindBotLeaveRule(betAmount int64, lastResult int) *BotLeaveRule {
 	for _, rule := range s.config.BotLeaveRules {

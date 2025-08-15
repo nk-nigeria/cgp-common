@@ -51,6 +51,7 @@ type MatchInfo struct {
 	MatchID           string
 	BetAmount         int64
 	PlayerCount       int
+	BotCount          int
 	MaxPlayers        int
 	MinPlayers        int
 	IsFull            bool
@@ -138,11 +139,12 @@ func (h *BotIntegrationHelper) ExecutePendingBotLeave(ctx context.Context, pendi
 // ShouldBotLeave checks if bot should leave the current match
 func (h *BotIntegrationHelper) ShouldBotLeave(ctx context.Context) bool {
 	matchInfo := h.integration.GetMatchInfo(ctx)
-
 	// Add match_id to context
-	ctxWithMatchID := context.WithValue(ctx, "match_id", matchInfo.MatchID)
+	ctxNew := context.WithValue(ctx, "match_id", matchInfo.MatchID)
+	ctxNew = context.WithValue(ctxNew, "user_count", matchInfo.PlayerCount)
+	ctxNew = context.WithValue(ctxNew, "bot_count", matchInfo.BotCount)
 
-	return h.botService.ShouldBotLeave(ctxWithMatchID, matchInfo.BetAmount, matchInfo.LastGameResult)
+	return h.botService.ShouldBotLeave(ctxNew, matchInfo.BetAmount, matchInfo.LastGameResult)
 }
 
 // ShouldBotCreateTable checks if bot should create a new table
