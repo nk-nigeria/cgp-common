@@ -193,19 +193,12 @@ func (s *BotManagementService) FindBotLeaveRule(betAmount int64, lastResult int)
 }
 
 // FindBotLeaveRuleWithBotCount finds appropriate leave rule with bot count consideration (for Baccarat/Blackjack)
-func (s *BotManagementService) FindBotLeaveRuleWithBotCount(betAmount int64, lastResult int, botCount int) *BotLeaveRule {
+func (s *BotManagementService) FindBotLeaveRuleWithBotCount(betAmount int64, userCount int, botCount int) *BotLeaveRule {
 	for _, rule := range s.config.BotLeaveRules {
 		if betAmount >= rule.MinBet && betAmount < rule.MaxBet &&
-			(rule.LastResult == 0 || rule.LastResult == lastResult) {
+			(userCount >= rule.MinUsers && userCount <= rule.MaxUsers) {
 			// Check bot count constraints if they exist (Baccarat/Blackjack specific)
-			if rule.BotCountMin != nil && rule.BotCountMax != nil {
-				if botCount >= *rule.BotCountMin && botCount <= *rule.BotCountMax {
-					return &rule
-				}
-			} else {
-				// For WHOT, use the rule without bot count constraints
-				return &rule
-			}
+			return &rule
 		}
 	}
 	return nil
@@ -298,7 +291,7 @@ func (s *BotManagementService) ShouldBotJoin(ctx context.Context, betAmount int6
 	}
 
 	// Determine game type and apply appropriate logic
-	if s.IsWhotGame(rule) {
+	if s.IsWhotGame() {
 		// WHOT: Use join_percent for single bot join
 		fmt.Printf("[DEBUG] WHOT rule detected, using join_percent for single bot\n")
 
@@ -504,37 +497,17 @@ func (s *BotManagementService) RemovePendingLeaveRequest(matchID string) {
 
 // ShouldBotLeave determines if bot should leave match
 func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int64, lastResult int) bool {
-	rule := s.FindBotLeaveRule(betAmount, lastResult)
-	if rule == nil {
-		fmt.Printf("[DEBUG] No bot leave rule found for betAmount=%d, lastResult=%d\n", betAmount, lastResult)
-		return false
-	}
-
-	fmt.Printf("[DEBUG] Found bot leave rule: betRange=[%d,%d), lastResult=%d, leavePercent=%d\n",
-		rule.MinBet, rule.MaxBet, rule.LastResult, rule.LeavePercent)
-
-	// Check leave probability
-	randomValue := rand.Intn(100)
-	if randomValue >= rule.LeavePercent {
-		fmt.Printf("[DEBUG] Bot leave failed probability check: random=%d >= leavePercent=%d\n", randomValue, rule.LeavePercent)
-		return false
-	}
-
-	fmt.Printf("[DEBUG] Bot leave passed probability check: random=%d < leavePercent=%d\n", randomValue, rule.LeavePercent)
-
-	// Get match ID from context
+	// Get match ID and bot user ID from context
 	matchID, ok := ctx.Value("match_id").(string)
 	if !ok {
-		// If no match ID, use immediate leave (fallback)
 		fmt.Printf("[DEBUG] No match ID in context, using immediate leave\n")
 		return true
 	}
 
-	// For leave requests, we need to get a bot user ID from context
 	botUserID, ok := ctx.Value("bot_user_id").(string)
 	if !ok {
 		fmt.Printf("[DEBUG] No bot user ID in context, using immediate leave\n")
-		return true // Immediate leave if no bot user ID
+		return true
 	}
 
 	// Check if a decision has already been made for this bot in this match
@@ -545,41 +518,153 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 
 	if alreadyDecided {
 		fmt.Printf("[DEBUG] Bot leave decision already made for match %s, bot user %s, skipping new decision\n", matchID, botUserID)
-		return false // Don't create new request, let the previous one be executed
+		return false
 	}
 
-	// Calculate random delay (using join rule timing as reference)
-	// You can add specific leave timing rules if needed
-	delay := rand.Intn(9) + 1 // 1-9 seconds default
-	expireTime := time.Now().Add(time.Duration(delay) * time.Second)
+	// Determine game type and apply appropriate logic
+	if s.IsWhotGame() {
+		// WHOT: Find rule by lastResult (kết quả trận trước)
+		rule := s.FindBotLeaveRule(betAmount, lastResult)
+		if rule == nil {
+			fmt.Printf("[DEBUG] No WHOT bot leave rule found for betAmount=%d, lastResult=%d\n", betAmount, lastResult)
+			return false
+		}
 
-	fmt.Printf("[DEBUG] Creating delayed bot leave request: matchID=%s, botUserID=%s, delay=%ds, expires=%v\n",
-		matchID, botUserID, delay, expireTime)
+		fmt.Printf("[DEBUG] Found WHOT bot leave rule: betRange=[%d,%d), lastResult=%d, leavePercent=%d\n",
+			rule.MinBet, rule.MaxBet, rule.LastResult, rule.LeavePercent)
 
-	// Create pending leave request
-	request := &BotLeaveRequest{
-		MatchID:    matchID,
-		BetAmount:  betAmount,
-		LastResult: lastResult,
-		BotUserID:  botUserID,
-		ExpireTime: expireTime,
-		Rule:       rule,
+		// Check leave probability using leavePercent
+		randomValue := rand.Intn(100)
+		if randomValue >= rule.LeavePercent {
+			fmt.Printf("[DEBUG] WHOT bot leave failed probability check: random=%d >= leavePercent=%d\n", randomValue, rule.LeavePercent)
+			return false
+		}
+
+		fmt.Printf("[DEBUG] WHOT bot leave passed probability check: random=%d < leavePercent=%d\n", randomValue, rule.LeavePercent)
+
+		// Create delayed leave request for WHOT
+		delay := rand.Intn(9) + 1 // 1-9 seconds default
+		expireTime := time.Now().Add(time.Duration(delay) * time.Second)
+
+		fmt.Printf("[DEBUG] Creating delayed WHOT bot leave request: matchID=%s, botUserID=%s, delay=%ds, expires=%v\n",
+			matchID, botUserID, delay, expireTime)
+
+		request := &BotLeaveRequest{
+			MatchID:    matchID,
+			BetAmount:  betAmount,
+			LastResult: lastResult,
+			BotUserID:  botUserID,
+			ExpireTime: expireTime,
+			Rule:       rule,
+		}
+
+		// Store the request
+		s.leaveRequestsMux.Lock()
+		s.leaveRequests[matchID] = request
+		s.leaveRequestsMux.Unlock()
+
+		// Mark that a decision has been made for this bot in this match
+		s.decisionsMux.Lock()
+		s.botLeaveDecisions[decisionKey] = true
+		s.decisionsMux.Unlock()
+
+		fmt.Printf("[DEBUG] Stored pending WHOT leave request for matchID=%s, total pending leave requests: %d\n",
+			matchID, len(s.leaveRequests))
+
+		return false // Don't leave immediately
+
+	} else {
+		// Baccarat/Blackjack: Find rule by userCount and botCount
+		// We need to get userCount and botCount from context
+		userCount, ok := ctx.Value("user_count").(int)
+		if !ok {
+			fmt.Printf("[DEBUG] No user_count in context for Baccarat/Blackjack, using immediate leave\n")
+			return true
+		}
+
+		botCount, ok := ctx.Value("bot_count").(int)
+		if !ok {
+			fmt.Printf("[DEBUG] No bot_count in context for Baccarat/Blackjack, using immediate leave\n")
+			return true
+		}
+
+		rule := s.FindBotLeaveRuleWithBotCount(betAmount, userCount, botCount)
+		if rule == nil {
+			fmt.Printf("[DEBUG] No Baccarat/Blackjack bot leave rule found for betAmount=%d, userCount=%d, botCount=%d\n",
+				betAmount, userCount, botCount)
+			return false
+		}
+
+		fmt.Printf("[DEBUG] Found Baccarat/Blackjack bot leave rule: betRange=[%d,%d), userRange=[%d,%d], botRange=[%d,%d], leaveRate=%d\n",
+			rule.MinBet, rule.MaxBet, rule.MinUsers, rule.MaxUsers,
+			rule.BotCountMin, rule.BotCountMax, rule.LeaveRate)
+
+		if rule.BotCountMin != nil && rule.BotCountMax != nil {
+			if botCount < *rule.BotCountMin || botCount > *rule.BotCountMax {
+				fmt.Printf("[DEBUG] Baccarat/Blackjack: botCount=%d not in range [%d,%d]\n",
+					botCount, *rule.BotCountMin, *rule.BotCountMax)
+				return false
+			}
+		}
+
+		// Check leave probability using leaveRate (not leavePercent)
+		if rule.LeaveRate == nil {
+			fmt.Printf("[DEBUG] Baccarat/Blackjack: leaveRate is nil, using default 50%%\n")
+			rule.LeaveRate = new(int)
+			*rule.LeaveRate = 50
+		}
+
+		randomValue := rand.Intn(100)
+		if randomValue >= *rule.LeaveRate {
+			fmt.Printf("[DEBUG] Baccarat/Blackjack bot leave failed probability check: random=%d >= leaveRate=%d\n",
+				randomValue, *rule.LeaveRate)
+			return false
+		}
+
+		fmt.Printf("[DEBUG] Baccarat/Blackjack bot leave passed probability check: random=%d < leaveRate=%d\n",
+			randomValue, *rule.LeaveRate)
+
+		// Random number of bots to leave
+		leaveBotCount := s.GetBotLeaveCount(rule)
+
+		if leaveBotCount == 0 {
+			fmt.Printf("[DEBUG] Baccarat/Blackjack: leaveBotCount is 0, using immediate leave\n")
+			return false
+		}
+
+		fmt.Printf("[DEBUG] Baccarat/Blackjack: Random bot leave count: %d\n", leaveBotCount)
+
+		// Create delayed leave request for Baccarat/Blackjack
+		delay := rand.Intn(3) + 1 // 1-3 seconds default
+		expireTime := time.Now().Add(time.Duration(delay) * time.Second)
+
+		fmt.Printf("[DEBUG] Creating delayed Baccarat/Blackjack bot leave request: matchID=%s, botUserID=%s, leaveCount=%d, delay=%ds, expires=%v\n",
+			matchID, botUserID, leaveBotCount, delay, expireTime)
+
+		request := &BotLeaveRequest{
+			MatchID:    matchID,
+			BetAmount:  betAmount,
+			LastResult: lastResult,
+			BotUserID:  botUserID,
+			ExpireTime: expireTime,
+			Rule:       rule,
+		}
+
+		// Store the request
+		s.leaveRequestsMux.Lock()
+		s.leaveRequests[matchID] = request
+		s.leaveRequestsMux.Unlock()
+
+		// Mark that a decision has been made for this bot in this match
+		s.decisionsMux.Lock()
+		s.botLeaveDecisions[decisionKey] = true
+		s.decisionsMux.Unlock()
+
+		fmt.Printf("[DEBUG] Stored pending Baccarat/Blackjack leave request for matchID=%s, total pending leave requests: %d\n",
+			matchID, len(s.leaveRequests))
+
+		return false // Don't leave immediately
 	}
-
-	// Store the request
-	s.leaveRequestsMux.Lock()
-	s.leaveRequests[matchID] = request
-	s.leaveRequestsMux.Unlock()
-
-	// Mark that a decision has been made for this bot in this match
-	s.decisionsMux.Lock()
-	s.botLeaveDecisions[decisionKey] = true
-	s.decisionsMux.Unlock()
-
-	fmt.Printf("[DEBUG] Stored pending leave request for matchID=%s, total pending leave requests: %d\n",
-		matchID, len(s.leaveRequests))
-
-	return false // Don't leave immediately
 }
 
 // ShouldBotCreateTable determines if bot should create table
@@ -834,12 +919,21 @@ func (s *BotManagementService) GetBotAddCount(rule *BotJoinRule) (int, int) {
 }
 
 // GetBotLeaveCount returns the number of bots leaving (Baccarat/Blackjack specific)
-func (s *BotManagementService) GetBotLeaveCount(rule *BotLeaveRule) (int, int) {
+func (s *BotManagementService) GetBotLeaveCount(rule *BotLeaveRule) int {
 	if rule.LeaveBotMin != nil && rule.LeaveBotMax != nil {
-		return *rule.LeaveBotMin, *rule.LeaveBotMax
+		if *rule.LeaveBotMax > *rule.LeaveBotMin {
+			count := rand.Intn(*rule.LeaveBotMax-*rule.LeaveBotMin+1) + *rule.LeaveBotMin
+			fmt.Printf("[DEBUG] Baccarat/Blackjack: Random leave bot count between %d-%d, selected: %d\n",
+				*rule.LeaveBotMin, *rule.LeaveBotMax, count)
+			return count
+		} else {
+			fmt.Printf("[DEBUG] Baccarat/Blackjack: Using fixed leave bot count: %d\n", *rule.LeaveBotMin)
+			return *rule.LeaveBotMin
+		}
 	}
-	// Default to 1 bot for WHOT
-	return 1, 1
+	// Fallback to 1 if leave_bot_min/max not set
+	fmt.Printf("[DEBUG] Baccarat/Blackjack: leave_bot_min/max not set, using default: 1\n")
+	return 1
 }
 
 // GetBotLeaveRate returns the bot leaving rate percentage (Baccarat/Blackjack specific)
@@ -879,7 +973,7 @@ func (s *BotManagementService) GetTableCreationAddCount(rule *BotCreateTableRule
 }
 
 // IsBaccaratBlackjackRule checks if a rule has Baccarat/Blackjack specific properties
-func (s *BotManagementService) IsWhotGame(rule *BotJoinRule) bool {
+func (s *BotManagementService) IsWhotGame() bool {
 	return s.botLoader.gameCode == define.WhotGame.String()
 }
 
@@ -895,7 +989,7 @@ func (s *BotManagementService) IsBaccaratBlackjackCreateTableRule(rule *BotCreat
 
 // GetBotJoinCount returns the number of bots to join based on game type
 func (s *BotManagementService) GetBotJoinCount(rule *BotJoinRule) int {
-	if s.IsWhotGame(rule) {
+	if s.IsWhotGame() {
 		// WHOT: Always add 1 bot
 		fmt.Printf("[DEBUG] WHOT: Adding 1 bot (single bot join)\n")
 		return 1
