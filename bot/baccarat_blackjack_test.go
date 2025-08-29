@@ -79,7 +79,6 @@ func TestBaccaratBlackjackProperties(t *testing.T) {
 			BotCountMax:  intPtr(5),
 			LeaveBotMin:  intPtr(1),
 			LeaveBotMax:  intPtr(2),
-			LeaveRate:    intPtr(50),
 		}
 
 		// Test helper methods
@@ -226,9 +225,6 @@ func getBotLeaveCount(rule *BotLeaveRule) (int, int) {
 }
 
 func getBotLeaveRate(rule *BotLeaveRule) int {
-	if rule.LeaveRate != nil {
-		return *rule.LeaveRate
-	}
 	return rule.LeavePercent
 }
 

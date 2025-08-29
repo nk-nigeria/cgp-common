@@ -60,7 +60,6 @@ type BotLeaveRule struct {
 	BotCountMax *int `json:"bot_count_max,omitempty"` // Max number of bots in table
 	LeaveBotMin *int `json:"leave_bot_min,omitempty"` // Min number of bots leaving
 	LeaveBotMax *int `json:"leave_bot_max,omitempty"` // Max number of bots leaving
-	LeaveRate   *int `json:"leave_rate,omitempty"`    // Bot leaving rate percentage
 }
 
 // BotCreateTableRule represents bot create table configuration
@@ -586,7 +585,7 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 
 		fmt.Printf("[DEBUG] Found Baccarat/Blackjack bot leave rule: betRange=[%d,%d), userRange=[%d,%d], botRange=[%d,%d], leaveRate=%d\n",
 			rule.MinBet, rule.MaxBet, rule.MinUsers, rule.MaxUsers,
-			rule.BotCountMin, rule.BotCountMax, rule.LeaveRate)
+			rule.BotCountMin, rule.BotCountMax, rule.LeavePercent)
 
 		if rule.BotCountMin != nil && rule.BotCountMax != nil {
 			if botCount < *rule.BotCountMin || botCount > *rule.BotCountMax {
@@ -596,22 +595,15 @@ func (s *BotManagementService) ShouldBotLeave(ctx context.Context, betAmount int
 			}
 		}
 
-		// Check leave probability using leaveRate (not leavePercent)
-		if rule.LeaveRate == nil {
-			fmt.Printf("[DEBUG] Baccarat/Blackjack: leaveRate is nil, using default 50%%\n")
-			rule.LeaveRate = new(int)
-			*rule.LeaveRate = 50
-		}
-
 		randomValue := rand.Intn(100)
-		if randomValue >= *rule.LeaveRate {
+		if randomValue >= rule.LeavePercent {
 			fmt.Printf("[DEBUG] Baccarat/Blackjack bot leave failed probability check: random=%d >= leaveRate=%d\n",
-				randomValue, *rule.LeaveRate)
+				randomValue, rule.LeavePercent)
 			return false
 		}
 
 		fmt.Printf("[DEBUG] Baccarat/Blackjack bot leave passed probability check: random=%d < leaveRate=%d\n",
-			randomValue, *rule.LeaveRate)
+			randomValue, rule.LeavePercent)
 
 		// Random number of bots to leave
 		leaveBotCount := s.GetBotLeaveCount(rule)
@@ -927,9 +919,6 @@ func (s *BotManagementService) GetBotLeaveCount(rule *BotLeaveRule) int {
 
 // GetBotLeaveRate returns the bot leaving rate percentage (Baccarat/Blackjack specific)
 func (s *BotManagementService) GetBotLeaveRate(rule *BotLeaveRule) int {
-	if rule.LeaveRate != nil {
-		return *rule.LeaveRate
-	}
 	// Fallback to WHOT leave percent
 	return rule.LeavePercent
 }
@@ -968,7 +957,7 @@ func (s *BotManagementService) IsWhotGame() bool {
 
 // IsBaccaratBlackjackLeaveRule checks if a leave rule has Baccarat/Blackjack specific properties
 func (s *BotManagementService) IsBaccaratBlackjackLeaveRule(rule *BotLeaveRule) bool {
-	return rule.BotCountMin != nil && rule.BotCountMax != nil && rule.LeaveBotMin != nil && rule.LeaveBotMax != nil && rule.LeaveRate != nil
+	return rule.BotCountMin != nil && rule.BotCountMax != nil && rule.LeaveBotMin != nil && rule.LeaveBotMax != nil
 }
 
 // IsBaccaratBlackjackCreateTableRule checks if a create table rule has Baccarat/Blackjack specific properties
