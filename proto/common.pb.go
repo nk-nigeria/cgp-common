@@ -1944,6 +1944,7 @@ type Reward struct {
 	ReachMaxStreak bool                   `protobuf:"varint,13,opt,name=reach_max_streak,json=reachMaxStreak,proto3" json:"reach_max_streak,omitempty"`
 	LastSpinNumber int64                  `protobuf:"varint,14,opt,name=last_spin_number,json=lastSpinNumber,proto3" json:"last_spin_number,omitempty"`
 	LastOnlineUnix int64                  `protobuf:"varint,15,opt,name=last_online_unix,json=lastOnlineUnix,proto3" json:"last_online_unix,omitempty"`
+	DeviceAllowed  bool                   `protobuf:"varint,16,opt,name=device_allowed,json=deviceAllowed,proto3" json:"device_allowed,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -2081,6 +2082,13 @@ func (x *Reward) GetLastOnlineUnix() int64 {
 		return x.LastOnlineUnix
 	}
 	return 0
+}
+
+func (x *Reward) GetDeviceAllowed() bool {
+	if x != nil {
+		return x.DeviceAllowed
+	}
+	return false
 }
 
 type RewardTemplate struct {
@@ -4712,7 +4720,7 @@ const file_common_proto_rawDesc = "" +
 	"\x04from\x18\x04 \x01(\x03R\x04from\x12\x0e\n" +
 	"\x02to\x18\x05 \x01(\x03R\x02to\x12\x14\n" +
 	"\x05cusor\x18\x06 \x01(\tR\x05cusor\x12\x1b\n" +
-	"\tcash_type\x18\t \x01(\tR\bcashType\"\x90\x04\n" +
+	"\tcash_type\x18\t \x01(\tR\bcashType\"\xb7\x04\n" +
 	"\x06Reward\x12\x1d\n" +
 	"\n" +
 	"basic_chip\x18\x01 \x01(\x03R\tbasicChip\x12#\n" +
@@ -4734,7 +4742,8 @@ const file_common_proto_rawDesc = "" +
 	"\x0enext_claim_sec\x18\f \x01(\x03R\fnextClaimSec\x12(\n" +
 	"\x10reach_max_streak\x18\r \x01(\bR\x0ereachMaxStreak\x12(\n" +
 	"\x10last_spin_number\x18\x0e \x01(\x03R\x0elastSpinNumber\x12(\n" +
-	"\x10last_online_unix\x18\x0f \x01(\x03R\x0elastOnlineUnix\"\xac\x01\n" +
+	"\x10last_online_unix\x18\x0f \x01(\x03R\x0elastOnlineUnix\x12%\n" +
+	"\x0edevice_allowed\x18\x10 \x01(\bR\rdeviceAllowed\"\xac\x01\n" +
 	"\x0eRewardTemplate\x12\x1f\n" +
 	"\vbasic_chips\x18\x01 \x03(\x03R\n" +
 	"basicChips\x12!\n" +
