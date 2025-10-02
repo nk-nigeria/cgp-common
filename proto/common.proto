@@ -517,3 +517,13 @@ message RulesLucky {
   int64 offset = 3;
   int64 total = 4;
 }
+
+// Weekly Bonus messages
+message WeeklyRewardTemplate {
+  int64 vip_level = 1;
+  repeated int64 rewards = 2; // 7 days rewards
+}
+
+message WeeklyBonusTemplate {
+  repeated WeeklyRewardTemplate reward_templates = 1;
+}

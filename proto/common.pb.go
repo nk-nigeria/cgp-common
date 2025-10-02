@@ -4597,6 +4597,103 @@ func (x *RulesLucky) GetTotal() int64 {
 	return 0
 }
 
+// Weekly Bonus messages
+type WeeklyRewardTemplate struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	VipLevel      int64                  `protobuf:"varint,1,opt,name=vip_level,json=vipLevel,proto3" json:"vip_level,omitempty"`
+	Rewards       []int64                `protobuf:"varint,2,rep,packed,name=rewards,proto3" json:"rewards,omitempty"` // 7 days rewards
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WeeklyRewardTemplate) Reset() {
+	*x = WeeklyRewardTemplate{}
+	mi := &file_common_proto_msgTypes[53]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WeeklyRewardTemplate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WeeklyRewardTemplate) ProtoMessage() {}
+
+func (x *WeeklyRewardTemplate) ProtoReflect() protoreflect.Message {
+	mi := &file_common_proto_msgTypes[53]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WeeklyRewardTemplate.ProtoReflect.Descriptor instead.
+func (*WeeklyRewardTemplate) Descriptor() ([]byte, []int) {
+	return file_common_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *WeeklyRewardTemplate) GetVipLevel() int64 {
+	if x != nil {
+		return x.VipLevel
+	}
+	return 0
+}
+
+func (x *WeeklyRewardTemplate) GetRewards() []int64 {
+	if x != nil {
+		return x.Rewards
+	}
+	return nil
+}
+
+type WeeklyBonusTemplate struct {
+	state           protoimpl.MessageState  `protogen:"open.v1"`
+	RewardTemplates []*WeeklyRewardTemplate `protobuf:"bytes,1,rep,name=reward_templates,json=rewardTemplates,proto3" json:"reward_templates,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *WeeklyBonusTemplate) Reset() {
+	*x = WeeklyBonusTemplate{}
+	mi := &file_common_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WeeklyBonusTemplate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WeeklyBonusTemplate) ProtoMessage() {}
+
+func (x *WeeklyBonusTemplate) ProtoReflect() protoreflect.Message {
+	mi := &file_common_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WeeklyBonusTemplate.ProtoReflect.Descriptor instead.
+func (*WeeklyBonusTemplate) Descriptor() ([]byte, []int) {
+	return file_common_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *WeeklyBonusTemplate) GetRewardTemplates() []*WeeklyRewardTemplate {
+	if x != nil {
+		return x.RewardTemplates
+	}
+	return nil
+}
+
 var File_common_proto protoreflect.FileDescriptor
 
 const file_common_proto_rawDesc = "" +
@@ -4975,7 +5072,12 @@ const file_common_proto_rawDesc = "" +
 	"\x05rules\x18\x01 \x03(\v2\x10.proto.RuleLuckyR\x05rules\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x03R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x03 \x01(\x03R\x06offset\x12\x14\n" +
-	"\x05total\x18\x04 \x01(\x03R\x05total*h\n" +
+	"\x05total\x18\x04 \x01(\x03R\x05total\"M\n" +
+	"\x14WeeklyRewardTemplate\x12\x1b\n" +
+	"\tvip_level\x18\x01 \x01(\x03R\bvipLevel\x12\x18\n" +
+	"\arewards\x18\x02 \x03(\x03R\arewards\"]\n" +
+	"\x13WeeklyBonusTemplate\x12F\n" +
+	"\x10reward_templates\x18\x01 \x03(\v2\x1b.proto.WeeklyRewardTemplateR\x0frewardTemplates*h\n" +
 	"\bTypeChat\x12\x19\n" +
 	"\x15TYPE_CHAT_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eTYPE_CHAT_ROOM\x10\x01\x12\x17\n" +
@@ -5033,7 +5135,7 @@ func file_common_proto_rawDescGZIP() []byte {
 }
 
 var file_common_proto_enumTypes = make([]protoimpl.EnumInfo, 10)
-var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 54)
+var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
 var file_common_proto_goTypes = []any{
 	(TypeChat)(0),                    // 0: proto.TypeChat
 	(ExchangeStatus)(0),              // 1: proto.ExchangeStatus
@@ -5098,7 +5200,9 @@ var file_common_proto_goTypes = []any{
 	(*Range)(nil),                    // 60: proto.Range
 	(*RuleLucky)(nil),                // 61: proto.RuleLucky
 	(*RulesLucky)(nil),               // 62: proto.RulesLucky
-	nil,                              // 63: proto.InAppMessageData.ParamsEntry
+	(*WeeklyRewardTemplate)(nil),     // 63: proto.WeeklyRewardTemplate
+	(*WeeklyBonusTemplate)(nil),      // 64: proto.WeeklyBonusTemplate
+	nil,                              // 65: proto.InAppMessageData.ParamsEntry
 }
 var file_common_proto_depIdxs = []int32{
 	11, // 0: proto.Game.layout:type_name -> proto.Layout
@@ -5123,7 +5227,7 @@ var file_common_proto_depIdxs = []int32{
 	4,  // 19: proto.NotificationRequest.type:type_name -> proto.TypeNotification
 	38, // 20: proto.ListNotification.notifications:type_name -> proto.Notification
 	6,  // 21: proto.InAppMessageData.action:type_name -> proto.InAppMessageAction
-	63, // 22: proto.InAppMessageData.params:type_name -> proto.InAppMessageData.ParamsEntry
+	65, // 22: proto.InAppMessageData.params:type_name -> proto.InAppMessageData.ParamsEntry
 	41, // 23: proto.InAppMessageData.showTimes:type_name -> proto.RangeTime
 	5,  // 24: proto.InAppMessage.type:type_name -> proto.TypeInAppMessage
 	42, // 25: proto.InAppMessage.data:type_name -> proto.InAppMessageData
@@ -5140,11 +5244,12 @@ var file_common_proto_depIdxs = []int32{
 	60, // 36: proto.RuleLucky.vip:type_name -> proto.Range
 	60, // 37: proto.RuleLucky.win_mark_ratio:type_name -> proto.Range
 	61, // 38: proto.RulesLucky.rules:type_name -> proto.RuleLucky
-	39, // [39:39] is the sub-list for method output_type
-	39, // [39:39] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	63, // 39: proto.WeeklyBonusTemplate.reward_templates:type_name -> proto.WeeklyRewardTemplate
+	40, // [40:40] is the sub-list for method output_type
+	40, // [40:40] is the sub-list for method input_type
+	40, // [40:40] is the sub-list for extension type_name
+	40, // [40:40] is the sub-list for extension extendee
+	0,  // [0:40] is the sub-list for field type_name
 }
 
 func init() { file_common_proto_init() }
@@ -5158,7 +5263,7 @@ func file_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_common_proto_rawDesc), len(file_common_proto_rawDesc)),
 			NumEnums:      10,
-			NumMessages:   54,
+			NumMessages:   56,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
