@@ -4694,6 +4694,75 @@ func (x *WeeklyBonusTemplate) GetRewardTemplates() []*WeeklyRewardTemplate {
 	return nil
 }
 
+// Weekly Bonus messages
+type WeeklyBonusClaim struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	LastClaimDay  string                 `protobuf:"bytes,1,opt,name=last_claim_day,json=lastClaimDay,proto3" json:"last_claim_day,omitempty"`
+	CurrentDay    int64                  `protobuf:"varint,2,opt,name=current_day,json=currentDay,proto3" json:"current_day,omitempty"` // 1-7
+	UserId        string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	DeviceId      string                 `protobuf:"bytes,4,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WeeklyBonusClaim) Reset() {
+	*x = WeeklyBonusClaim{}
+	mi := &file_common_proto_msgTypes[55]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WeeklyBonusClaim) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WeeklyBonusClaim) ProtoMessage() {}
+
+func (x *WeeklyBonusClaim) ProtoReflect() protoreflect.Message {
+	mi := &file_common_proto_msgTypes[55]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WeeklyBonusClaim.ProtoReflect.Descriptor instead.
+func (*WeeklyBonusClaim) Descriptor() ([]byte, []int) {
+	return file_common_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *WeeklyBonusClaim) GetLastClaimDay() string {
+	if x != nil {
+		return x.LastClaimDay
+	}
+	return ""
+}
+
+func (x *WeeklyBonusClaim) GetCurrentDay() int64 {
+	if x != nil {
+		return x.CurrentDay
+	}
+	return 0
+}
+
+func (x *WeeklyBonusClaim) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *WeeklyBonusClaim) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
 var File_common_proto protoreflect.FileDescriptor
 
 const file_common_proto_rawDesc = "" +
@@ -5077,7 +5146,13 @@ const file_common_proto_rawDesc = "" +
 	"\tvip_level\x18\x01 \x01(\x03R\bvipLevel\x12\x18\n" +
 	"\arewards\x18\x02 \x03(\x03R\arewards\"]\n" +
 	"\x13WeeklyBonusTemplate\x12F\n" +
-	"\x10reward_templates\x18\x01 \x03(\v2\x1b.proto.WeeklyRewardTemplateR\x0frewardTemplates*h\n" +
+	"\x10reward_templates\x18\x01 \x03(\v2\x1b.proto.WeeklyRewardTemplateR\x0frewardTemplates\"\x8f\x01\n" +
+	"\x10WeeklyBonusClaim\x12$\n" +
+	"\x0elast_claim_day\x18\x01 \x01(\tR\flastClaimDay\x12\x1f\n" +
+	"\vcurrent_day\x18\x02 \x01(\x03R\n" +
+	"currentDay\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\tR\x06userId\x12\x1b\n" +
+	"\tdevice_id\x18\x04 \x01(\tR\bdeviceId*h\n" +
 	"\bTypeChat\x12\x19\n" +
 	"\x15TYPE_CHAT_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eTYPE_CHAT_ROOM\x10\x01\x12\x17\n" +
@@ -5135,7 +5210,7 @@ func file_common_proto_rawDescGZIP() []byte {
 }
 
 var file_common_proto_enumTypes = make([]protoimpl.EnumInfo, 10)
-var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
+var file_common_proto_msgTypes = make([]protoimpl.MessageInfo, 57)
 var file_common_proto_goTypes = []any{
 	(TypeChat)(0),                    // 0: proto.TypeChat
 	(ExchangeStatus)(0),              // 1: proto.ExchangeStatus
@@ -5202,7 +5277,8 @@ var file_common_proto_goTypes = []any{
 	(*RulesLucky)(nil),               // 62: proto.RulesLucky
 	(*WeeklyRewardTemplate)(nil),     // 63: proto.WeeklyRewardTemplate
 	(*WeeklyBonusTemplate)(nil),      // 64: proto.WeeklyBonusTemplate
-	nil,                              // 65: proto.InAppMessageData.ParamsEntry
+	(*WeeklyBonusClaim)(nil),         // 65: proto.WeeklyBonusClaim
+	nil,                              // 66: proto.InAppMessageData.ParamsEntry
 }
 var file_common_proto_depIdxs = []int32{
 	11, // 0: proto.Game.layout:type_name -> proto.Layout
@@ -5227,7 +5303,7 @@ var file_common_proto_depIdxs = []int32{
 	4,  // 19: proto.NotificationRequest.type:type_name -> proto.TypeNotification
 	38, // 20: proto.ListNotification.notifications:type_name -> proto.Notification
 	6,  // 21: proto.InAppMessageData.action:type_name -> proto.InAppMessageAction
-	65, // 22: proto.InAppMessageData.params:type_name -> proto.InAppMessageData.ParamsEntry
+	66, // 22: proto.InAppMessageData.params:type_name -> proto.InAppMessageData.ParamsEntry
 	41, // 23: proto.InAppMessageData.showTimes:type_name -> proto.RangeTime
 	5,  // 24: proto.InAppMessage.type:type_name -> proto.TypeInAppMessage
 	42, // 25: proto.InAppMessage.data:type_name -> proto.InAppMessageData
@@ -5263,7 +5339,7 @@ func file_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_common_proto_rawDesc), len(file_common_proto_rawDesc)),
 			NumEnums:      10,
-			NumMessages:   56,
+			NumMessages:   57,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
