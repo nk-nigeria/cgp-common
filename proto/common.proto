@@ -527,3 +527,11 @@ message WeeklyRewardTemplate {
 message WeeklyBonusTemplate {
   repeated WeeklyRewardTemplate reward_templates = 1;
 }
+
+// Weekly Bonus messages
+message WeeklyBonusClaim {
+  string last_claim_day = 1;
+  int64 current_day = 2; // 1-7
+  string user_id = 3;
+  string device_id = 4;
+}
