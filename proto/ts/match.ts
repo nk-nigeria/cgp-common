@@ -2,15 +2,15 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: match_api.proto
+// source: match.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
-import { Profile, SimpleProfile } from "./auth_api";
-import { GameState, gameStateFromJSON, gameStateToJSON } from "./chinese_poker_game_api";
+import { Profile, SimpleProfile } from "./auth";
+import { GameState, gameStateFromJSON, gameStateToJSON } from "./game_common";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 /** The complete set of rpc used for communication between clients and server. */
 export enum RPCCode {
@@ -126,6 +126,7 @@ export interface Match {
   gameState: GameState;
   playingPlayers: string[];
   gameStateDuration: { [key: number]: number };
+  pot: number;
 }
 
 export interface Match_GameStateDurationEntry {
@@ -406,6 +407,7 @@ function createBaseMatch(): Match {
     gameState: 0,
     playingPlayers: [],
     gameStateDuration: {},
+    pot: 0,
   };
 }
 
@@ -465,6 +467,9 @@ export const Match = {
     Object.entries(message.gameStateDuration).forEach(([key, value]) => {
       Match_GameStateDurationEntry.encode({ key: key as any, value }, writer.uint32(154).fork()).ldelim();
     });
+    if (message.pot !== 0) {
+      writer.uint32(160).int64(message.pot);
+    }
     return writer;
   },
 
@@ -604,6 +609,13 @@ export const Match = {
             message.gameStateDuration[entry19.key] = entry19.value;
           }
           continue;
+        case 20:
+          if (tag !== 160) {
+            break;
+          }
+
+          message.pot = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -642,6 +654,7 @@ export const Match = {
           return acc;
         }, {})
         : {},
+      pot: isSet(object.pot) ? globalThis.Number(object.pot) : 0,
     };
   },
 
@@ -707,6 +720,9 @@ export const Match = {
         });
       }
     }
+    if (message.pot !== 0) {
+      obj.pot = Math.round(message.pot);
+    }
     return obj;
   },
 
@@ -743,6 +759,7 @@ export const Match = {
       },
       {},
     );
+    message.pot = object.pot ?? 0;
     return message;
   },
 };

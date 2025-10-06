@@ -2,13 +2,13 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: common_api.proto
+// source: common.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export enum TypeChat {
   TYPE_CHAT_UNSPECIFIED = 0,
@@ -244,6 +244,7 @@ export function typeNotificationToJSON(object: TypeNotification): string {
 export enum TypeInAppMessage {
   HOT_NEWS = 0,
   BANNER = 1,
+  EVENT = 2,
   UNRECOGNIZED = -1,
 }
 
@@ -255,6 +256,9 @@ export function typeInAppMessageFromJSON(object: any): TypeInAppMessage {
     case 1:
     case "BANNER":
       return TypeInAppMessage.BANNER;
+    case 2:
+    case "EVENT":
+      return TypeInAppMessage.EVENT;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -268,6 +272,8 @@ export function typeInAppMessageToJSON(object: TypeInAppMessage): string {
       return "HOT_NEWS";
     case TypeInAppMessage.BANNER:
       return "BANNER";
+    case TypeInAppMessage.EVENT:
+      return "EVENT";
     case TypeInAppMessage.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -422,6 +428,18 @@ export interface BetListRequest {
 
 export interface BetListResponse {
   bets: number[];
+}
+
+export interface BetPlayerCount {
+  betId: number;
+  markUnit: number;
+  playerCount: number;
+}
+
+export interface PlayerCountByBetResponse {
+  gameCode: string;
+  betCounts: BetPlayerCount[];
+  totalPlayers: number;
 }
 
 export interface Chat {
@@ -597,6 +615,8 @@ export interface Reward {
   reachMaxStreak: boolean;
   lastSpinNumber: number;
   lastOnlineUnix: number;
+  lastLoginUnix: number;
+  deviceAllowed: boolean;
 }
 
 export interface RewardTemplate {
@@ -869,6 +889,26 @@ export interface RulesLucky {
   limit: number;
   offset: number;
   total: number;
+}
+
+/** Weekly Bonus messages */
+export interface WeeklyRewardTemplate {
+  vipLevel: number;
+  /** 7 days rewards */
+  rewards: number[];
+}
+
+export interface WeeklyBonusTemplate {
+  rewardTemplates: WeeklyRewardTemplate[];
+}
+
+/** Weekly Bonus messages */
+export interface WeeklyBonusClaim {
+  lastClaimDay: string;
+  /** 1-7 */
+  currentDay: number;
+  userId: string;
+  deviceId: string;
 }
 
 function createBaseGame(): Game {
@@ -1275,6 +1315,186 @@ export const BetListResponse = {
   fromPartial<I extends Exact<DeepPartial<BetListResponse>, I>>(object: I): BetListResponse {
     const message = createBaseBetListResponse();
     message.bets = object.bets?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseBetPlayerCount(): BetPlayerCount {
+  return { betId: 0, markUnit: 0, playerCount: 0 };
+}
+
+export const BetPlayerCount = {
+  encode(message: BetPlayerCount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.betId !== 0) {
+      writer.uint32(8).int64(message.betId);
+    }
+    if (message.markUnit !== 0) {
+      writer.uint32(21).float(message.markUnit);
+    }
+    if (message.playerCount !== 0) {
+      writer.uint32(24).int32(message.playerCount);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): BetPlayerCount {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseBetPlayerCount();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.betId = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 21) {
+            break;
+          }
+
+          message.markUnit = reader.float();
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.playerCount = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): BetPlayerCount {
+    return {
+      betId: isSet(object.betId) ? globalThis.Number(object.betId) : 0,
+      markUnit: isSet(object.markUnit) ? globalThis.Number(object.markUnit) : 0,
+      playerCount: isSet(object.playerCount) ? globalThis.Number(object.playerCount) : 0,
+    };
+  },
+
+  toJSON(message: BetPlayerCount): unknown {
+    const obj: any = {};
+    if (message.betId !== 0) {
+      obj.betId = Math.round(message.betId);
+    }
+    if (message.markUnit !== 0) {
+      obj.markUnit = message.markUnit;
+    }
+    if (message.playerCount !== 0) {
+      obj.playerCount = Math.round(message.playerCount);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<BetPlayerCount>, I>>(base?: I): BetPlayerCount {
+    return BetPlayerCount.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<BetPlayerCount>, I>>(object: I): BetPlayerCount {
+    const message = createBaseBetPlayerCount();
+    message.betId = object.betId ?? 0;
+    message.markUnit = object.markUnit ?? 0;
+    message.playerCount = object.playerCount ?? 0;
+    return message;
+  },
+};
+
+function createBasePlayerCountByBetResponse(): PlayerCountByBetResponse {
+  return { gameCode: "", betCounts: [], totalPlayers: 0 };
+}
+
+export const PlayerCountByBetResponse = {
+  encode(message: PlayerCountByBetResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.gameCode !== "") {
+      writer.uint32(10).string(message.gameCode);
+    }
+    for (const v of message.betCounts) {
+      BetPlayerCount.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.totalPlayers !== 0) {
+      writer.uint32(24).int32(message.totalPlayers);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PlayerCountByBetResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePlayerCountByBetResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.gameCode = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.betCounts.push(BetPlayerCount.decode(reader, reader.uint32()));
+          continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.totalPlayers = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PlayerCountByBetResponse {
+    return {
+      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
+      betCounts: globalThis.Array.isArray(object?.betCounts)
+        ? object.betCounts.map((e: any) => BetPlayerCount.fromJSON(e))
+        : [],
+      totalPlayers: isSet(object.totalPlayers) ? globalThis.Number(object.totalPlayers) : 0,
+    };
+  },
+
+  toJSON(message: PlayerCountByBetResponse): unknown {
+    const obj: any = {};
+    if (message.gameCode !== "") {
+      obj.gameCode = message.gameCode;
+    }
+    if (message.betCounts?.length) {
+      obj.betCounts = message.betCounts.map((e) => BetPlayerCount.toJSON(e));
+    }
+    if (message.totalPlayers !== 0) {
+      obj.totalPlayers = Math.round(message.totalPlayers);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PlayerCountByBetResponse>, I>>(base?: I): PlayerCountByBetResponse {
+    return PlayerCountByBetResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<PlayerCountByBetResponse>, I>>(object: I): PlayerCountByBetResponse {
+    const message = createBasePlayerCountByBetResponse();
+    message.gameCode = object.gameCode ?? "";
+    message.betCounts = object.betCounts?.map((e) => BetPlayerCount.fromPartial(e)) || [];
+    message.totalPlayers = object.totalPlayers ?? 0;
     return message;
   },
 };
@@ -2908,6 +3128,8 @@ function createBaseReward(): Reward {
     reachMaxStreak: false,
     lastSpinNumber: 0,
     lastOnlineUnix: 0,
+    lastLoginUnix: 0,
+    deviceAllowed: false,
   };
 }
 
@@ -2957,6 +3179,12 @@ export const Reward = {
     }
     if (message.lastOnlineUnix !== 0) {
       writer.uint32(120).int64(message.lastOnlineUnix);
+    }
+    if (message.lastLoginUnix !== 0) {
+      writer.uint32(128).int64(message.lastLoginUnix);
+    }
+    if (message.deviceAllowed !== false) {
+      writer.uint32(136).bool(message.deviceAllowed);
     }
     return writer;
   },
@@ -3073,6 +3301,20 @@ export const Reward = {
 
           message.lastOnlineUnix = longToNumber(reader.int64() as Long);
           continue;
+        case 16:
+          if (tag !== 128) {
+            break;
+          }
+
+          message.lastLoginUnix = longToNumber(reader.int64() as Long);
+          continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.deviceAllowed = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3099,6 +3341,8 @@ export const Reward = {
       reachMaxStreak: isSet(object.reachMaxStreak) ? globalThis.Boolean(object.reachMaxStreak) : false,
       lastSpinNumber: isSet(object.lastSpinNumber) ? globalThis.Number(object.lastSpinNumber) : 0,
       lastOnlineUnix: isSet(object.lastOnlineUnix) ? globalThis.Number(object.lastOnlineUnix) : 0,
+      lastLoginUnix: isSet(object.lastLoginUnix) ? globalThis.Number(object.lastLoginUnix) : 0,
+      deviceAllowed: isSet(object.deviceAllowed) ? globalThis.Boolean(object.deviceAllowed) : false,
     };
   },
 
@@ -3149,6 +3393,12 @@ export const Reward = {
     if (message.lastOnlineUnix !== 0) {
       obj.lastOnlineUnix = Math.round(message.lastOnlineUnix);
     }
+    if (message.lastLoginUnix !== 0) {
+      obj.lastLoginUnix = Math.round(message.lastLoginUnix);
+    }
+    if (message.deviceAllowed !== false) {
+      obj.deviceAllowed = message.deviceAllowed;
+    }
     return obj;
   },
 
@@ -3172,6 +3422,8 @@ export const Reward = {
     message.reachMaxStreak = object.reachMaxStreak ?? false;
     message.lastSpinNumber = object.lastSpinNumber ?? 0;
     message.lastOnlineUnix = object.lastOnlineUnix ?? 0;
+    message.lastLoginUnix = object.lastLoginUnix ?? 0;
+    message.deviceAllowed = object.deviceAllowed ?? false;
     return message;
   },
 };
@@ -7271,6 +7523,257 @@ export const RulesLucky = {
     message.limit = object.limit ?? 0;
     message.offset = object.offset ?? 0;
     message.total = object.total ?? 0;
+    return message;
+  },
+};
+
+function createBaseWeeklyRewardTemplate(): WeeklyRewardTemplate {
+  return { vipLevel: 0, rewards: [] };
+}
+
+export const WeeklyRewardTemplate = {
+  encode(message: WeeklyRewardTemplate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.vipLevel !== 0) {
+      writer.uint32(8).int64(message.vipLevel);
+    }
+    writer.uint32(18).fork();
+    for (const v of message.rewards) {
+      writer.int64(v);
+    }
+    writer.ldelim();
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): WeeklyRewardTemplate {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWeeklyRewardTemplate();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.vipLevel = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag === 16) {
+            message.rewards.push(longToNumber(reader.int64() as Long));
+
+            continue;
+          }
+
+          if (tag === 18) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.rewards.push(longToNumber(reader.int64() as Long));
+            }
+
+            continue;
+          }
+
+          break;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): WeeklyRewardTemplate {
+    return {
+      vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
+      rewards: globalThis.Array.isArray(object?.rewards) ? object.rewards.map((e: any) => globalThis.Number(e)) : [],
+    };
+  },
+
+  toJSON(message: WeeklyRewardTemplate): unknown {
+    const obj: any = {};
+    if (message.vipLevel !== 0) {
+      obj.vipLevel = Math.round(message.vipLevel);
+    }
+    if (message.rewards?.length) {
+      obj.rewards = message.rewards.map((e) => Math.round(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<WeeklyRewardTemplate>, I>>(base?: I): WeeklyRewardTemplate {
+    return WeeklyRewardTemplate.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<WeeklyRewardTemplate>, I>>(object: I): WeeklyRewardTemplate {
+    const message = createBaseWeeklyRewardTemplate();
+    message.vipLevel = object.vipLevel ?? 0;
+    message.rewards = object.rewards?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseWeeklyBonusTemplate(): WeeklyBonusTemplate {
+  return { rewardTemplates: [] };
+}
+
+export const WeeklyBonusTemplate = {
+  encode(message: WeeklyBonusTemplate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.rewardTemplates) {
+      WeeklyRewardTemplate.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): WeeklyBonusTemplate {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWeeklyBonusTemplate();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.rewardTemplates.push(WeeklyRewardTemplate.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): WeeklyBonusTemplate {
+    return {
+      rewardTemplates: globalThis.Array.isArray(object?.rewardTemplates)
+        ? object.rewardTemplates.map((e: any) => WeeklyRewardTemplate.fromJSON(e))
+        : [],
+    };
+  },
+
+  toJSON(message: WeeklyBonusTemplate): unknown {
+    const obj: any = {};
+    if (message.rewardTemplates?.length) {
+      obj.rewardTemplates = message.rewardTemplates.map((e) => WeeklyRewardTemplate.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<WeeklyBonusTemplate>, I>>(base?: I): WeeklyBonusTemplate {
+    return WeeklyBonusTemplate.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<WeeklyBonusTemplate>, I>>(object: I): WeeklyBonusTemplate {
+    const message = createBaseWeeklyBonusTemplate();
+    message.rewardTemplates = object.rewardTemplates?.map((e) => WeeklyRewardTemplate.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseWeeklyBonusClaim(): WeeklyBonusClaim {
+  return { lastClaimDay: "", currentDay: 0, userId: "", deviceId: "" };
+}
+
+export const WeeklyBonusClaim = {
+  encode(message: WeeklyBonusClaim, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.lastClaimDay !== "") {
+      writer.uint32(10).string(message.lastClaimDay);
+    }
+    if (message.currentDay !== 0) {
+      writer.uint32(16).int64(message.currentDay);
+    }
+    if (message.userId !== "") {
+      writer.uint32(26).string(message.userId);
+    }
+    if (message.deviceId !== "") {
+      writer.uint32(34).string(message.deviceId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): WeeklyBonusClaim {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseWeeklyBonusClaim();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.lastClaimDay = reader.string();
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.currentDay = longToNumber(reader.int64() as Long);
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.deviceId = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): WeeklyBonusClaim {
+    return {
+      lastClaimDay: isSet(object.lastClaimDay) ? globalThis.String(object.lastClaimDay) : "",
+      currentDay: isSet(object.currentDay) ? globalThis.Number(object.currentDay) : 0,
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      deviceId: isSet(object.deviceId) ? globalThis.String(object.deviceId) : "",
+    };
+  },
+
+  toJSON(message: WeeklyBonusClaim): unknown {
+    const obj: any = {};
+    if (message.lastClaimDay !== "") {
+      obj.lastClaimDay = message.lastClaimDay;
+    }
+    if (message.currentDay !== 0) {
+      obj.currentDay = Math.round(message.currentDay);
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.deviceId !== "") {
+      obj.deviceId = message.deviceId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<WeeklyBonusClaim>, I>>(base?: I): WeeklyBonusClaim {
+    return WeeklyBonusClaim.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<WeeklyBonusClaim>, I>>(object: I): WeeklyBonusClaim {
+    const message = createBaseWeeklyBonusClaim();
+    message.lastClaimDay = object.lastClaimDay ?? "";
+    message.currentDay = object.currentDay ?? 0;
+    message.userId = object.userId ?? "";
+    message.deviceId = object.deviceId ?? "";
     return message;
   },
 };

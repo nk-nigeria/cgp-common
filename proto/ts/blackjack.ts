@@ -2,15 +2,16 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: blackjack_api.proto
+// source: blackjack.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
-import { BalanceUpdate, Card } from "./chinese_poker_game_api";
-import { Error } from "./common_api";
+import { Card } from "./chinese_poker";
+import { Error } from "./common";
+import { BalanceUpdate } from "./game_common";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 /** status for each hand, user can have maximum 2 hand ( by spliting ) */
 export enum BlackjackHandType {

@@ -2,14 +2,15 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: dragontiger_api.proto
+// source: dragontiger.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
-import { Card, GameState, gameStateFromJSON, gameStateToJSON } from "./chinese_poker_game_api";
+import { Card } from "./chinese_poker";
+import { GameState, gameStateFromJSON, gameStateToJSON } from "./game_common";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export enum DragonTigerBetCell {
   /** CELL_UNSPECIFIED - unuse */

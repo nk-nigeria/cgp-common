@@ -2,15 +2,15 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: gaple_api.proto
+// source: gaple.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
-import { Domino } from "./bandarqq_api";
-import { BalanceUpdate } from "./chinese_poker_game_api";
+import { Domino } from "./bandarqq";
+import { BalanceUpdate } from "./game_common";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export enum GapleDominoChainPosition {
   GAPLE_DOMINO_CHAIN_POSITION_GAPLE_DOMINO_CHAIN_UNSPECIFIED = 0,

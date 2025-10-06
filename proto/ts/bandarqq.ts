@@ -2,13 +2,13 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: bandarqq_api.proto
+// source: bandarqq.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export enum QQBetCell {
   CELL_RED = 0,

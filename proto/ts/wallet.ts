@@ -8,7 +8,7 @@
 import * as _m0 from "protobufjs/minimal";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export interface Bank {
   senderId: string;

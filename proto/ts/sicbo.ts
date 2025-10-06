@@ -2,13 +2,13 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: sicbo_api.proto
+// source: sicbo.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export enum Dice {
   DICE_UNSPECTIFIED = 0,

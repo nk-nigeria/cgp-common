@@ -2,14 +2,15 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: baccarat_api.proto
+// source: baccarat.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
-import { Card } from "./chinese_poker_game_api";
+import { Card } from "./chinese_poker";
+import { Error } from "./common";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export enum BaccaratBetCell {
   BACCARAT_BET_CELL_BACCARAT_CELL_UNSPECIFIED = 0,
@@ -63,6 +64,114 @@ export function baccaratBetCellToJSON(object: BaccaratBetCell): string {
     case BaccaratBetCell.BACCARAT_BET_CELL_BACCARAT_CELL_BANKER_PAIR:
       return "BACCARAT_BET_CELL_BACCARAT_CELL_BANKER_PAIR";
     case BaccaratBetCell.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
+export enum TypeWinBaccarat {
+  TYPEWIN_BACCARAT_NONE = 0,
+  BANKER = 1,
+  PLAYER = 2,
+  TIE = 3,
+  /** PLAYER_P - Player win + Banker pair */
+  PLAYER_P = 102,
+  /** PLAYER_B - Player win + Player pair */
+  PLAYER_B = 12,
+  /** PLAYER_PB - Player win + Both pair */
+  PLAYER_PB = 112,
+  /** BANKER_P - Banker win + Banker pair */
+  BANKER_P = 101,
+  /** BANKER_B - Banker win + Player pair */
+  BANKER_B = 11,
+  /** BANKER_PB - Banker win + Both pair */
+  BANKER_PB = 111,
+  /** TIE_P - Tie + Banker pair */
+  TIE_P = 103,
+  /** TIE_B - Tie + Player pair */
+  TIE_B = 13,
+  /** TIE_PB - Tie + Both pair */
+  TIE_PB = 113,
+  UNRECOGNIZED = -1,
+}
+
+export function typeWinBaccaratFromJSON(object: any): TypeWinBaccarat {
+  switch (object) {
+    case 0:
+    case "TYPEWIN_BACCARAT_NONE":
+      return TypeWinBaccarat.TYPEWIN_BACCARAT_NONE;
+    case 1:
+    case "BANKER":
+      return TypeWinBaccarat.BANKER;
+    case 2:
+    case "PLAYER":
+      return TypeWinBaccarat.PLAYER;
+    case 3:
+    case "TIE":
+      return TypeWinBaccarat.TIE;
+    case 102:
+    case "PLAYER_P":
+      return TypeWinBaccarat.PLAYER_P;
+    case 12:
+    case "PLAYER_B":
+      return TypeWinBaccarat.PLAYER_B;
+    case 112:
+    case "PLAYER_PB":
+      return TypeWinBaccarat.PLAYER_PB;
+    case 101:
+    case "BANKER_P":
+      return TypeWinBaccarat.BANKER_P;
+    case 11:
+    case "BANKER_B":
+      return TypeWinBaccarat.BANKER_B;
+    case 111:
+    case "BANKER_PB":
+      return TypeWinBaccarat.BANKER_PB;
+    case 103:
+    case "TIE_P":
+      return TypeWinBaccarat.TIE_P;
+    case 13:
+    case "TIE_B":
+      return TypeWinBaccarat.TIE_B;
+    case 113:
+    case "TIE_PB":
+      return TypeWinBaccarat.TIE_PB;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return TypeWinBaccarat.UNRECOGNIZED;
+  }
+}
+
+export function typeWinBaccaratToJSON(object: TypeWinBaccarat): string {
+  switch (object) {
+    case TypeWinBaccarat.TYPEWIN_BACCARAT_NONE:
+      return "TYPEWIN_BACCARAT_NONE";
+    case TypeWinBaccarat.BANKER:
+      return "BANKER";
+    case TypeWinBaccarat.PLAYER:
+      return "PLAYER";
+    case TypeWinBaccarat.TIE:
+      return "TIE";
+    case TypeWinBaccarat.PLAYER_P:
+      return "PLAYER_P";
+    case TypeWinBaccarat.PLAYER_B:
+      return "PLAYER_B";
+    case TypeWinBaccarat.PLAYER_PB:
+      return "PLAYER_PB";
+    case TypeWinBaccarat.BANKER_P:
+      return "BANKER_P";
+    case TypeWinBaccarat.BANKER_B:
+      return "BANKER_B";
+    case TypeWinBaccarat.BANKER_PB:
+      return "BANKER_PB";
+    case TypeWinBaccarat.TIE_P:
+      return "TIE_P";
+    case TypeWinBaccarat.TIE_B:
+      return "TIE_B";
+    case TypeWinBaccarat.TIE_PB:
+      return "TIE_PB";
+    case TypeWinBaccarat.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
@@ -218,6 +327,8 @@ export interface BaccaratUpdateDesk {
   userBet: BaccaratPlayerBet | undefined;
   deskCells: BaccaratBetCellInfo[];
   history: BaccaratSimpleHistory | undefined;
+  detailedHistory: TypeWinBaccarat[];
+  error: Error | undefined;
 }
 
 export interface BaccaratBetActionReject {
@@ -1037,6 +1148,8 @@ function createBaseBaccaratUpdateDesk(): BaccaratUpdateDesk {
     userBet: undefined,
     deskCells: [],
     history: undefined,
+    detailedHistory: [],
+    error: undefined,
   };
 }
 
@@ -1062,6 +1175,14 @@ export const BaccaratUpdateDesk = {
     }
     if (message.history !== undefined) {
       BaccaratSimpleHistory.encode(message.history, writer.uint32(58).fork()).ldelim();
+    }
+    writer.uint32(66).fork();
+    for (const v of message.detailedHistory) {
+      writer.int32(v);
+    }
+    writer.ldelim();
+    if (message.error !== undefined) {
+      Error.encode(message.error, writer.uint32(74).fork()).ldelim();
     }
     return writer;
   },
@@ -1122,6 +1243,30 @@ export const BaccaratUpdateDesk = {
 
           message.history = BaccaratSimpleHistory.decode(reader, reader.uint32());
           continue;
+        case 8:
+          if (tag === 64) {
+            message.detailedHistory.push(reader.int32() as any);
+
+            continue;
+          }
+
+          if (tag === 66) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.detailedHistory.push(reader.int32() as any);
+            }
+
+            continue;
+          }
+
+          break;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.error = Error.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1142,6 +1287,10 @@ export const BaccaratUpdateDesk = {
         ? object.deskCells.map((e: any) => BaccaratBetCellInfo.fromJSON(e))
         : [],
       history: isSet(object.history) ? BaccaratSimpleHistory.fromJSON(object.history) : undefined,
+      detailedHistory: globalThis.Array.isArray(object?.detailedHistory)
+        ? object.detailedHistory.map((e: any) => typeWinBaccaratFromJSON(e))
+        : [],
+      error: isSet(object.error) ? Error.fromJSON(object.error) : undefined,
     };
   },
 
@@ -1168,6 +1317,12 @@ export const BaccaratUpdateDesk = {
     if (message.history !== undefined) {
       obj.history = BaccaratSimpleHistory.toJSON(message.history);
     }
+    if (message.detailedHistory?.length) {
+      obj.detailedHistory = message.detailedHistory.map((e) => typeWinBaccaratToJSON(e));
+    }
+    if (message.error !== undefined) {
+      obj.error = Error.toJSON(message.error);
+    }
     return obj;
   },
 
@@ -1187,6 +1342,8 @@ export const BaccaratUpdateDesk = {
     message.history = (object.history !== undefined && object.history !== null)
       ? BaccaratSimpleHistory.fromPartial(object.history)
       : undefined;
+    message.detailedHistory = object.detailedHistory?.map((e) => e) || [];
+    message.error = (object.error !== undefined && object.error !== null) ? Error.fromPartial(object.error) : undefined;
     return message;
   },
 };

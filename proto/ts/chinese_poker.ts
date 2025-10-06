@@ -2,46 +2,23 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: chinese_poker_game_api.proto
+// source: chinese_poker.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
+import {
+  CardStatus,
+  cardStatusFromJSON,
+  cardStatusToJSON,
+  GameState,
+  gameStateFromJSON,
+  gameStateToJSON,
+  Jackpot,
+} from "./game_common";
+import { WhotCard, WhotPlayerResult } from "./whot_game";
 import Long = require("long");
 
-export const protobufPackage = "api";
-
-export enum CardStatus {
-  STATUS_HOLD = 0,
-  STATUS_UNHOLD = 1,
-  UNRECOGNIZED = -1,
-}
-
-export function cardStatusFromJSON(object: any): CardStatus {
-  switch (object) {
-    case 0:
-    case "STATUS_HOLD":
-      return CardStatus.STATUS_HOLD;
-    case 1:
-    case "STATUS_UNHOLD":
-      return CardStatus.STATUS_UNHOLD;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return CardStatus.UNRECOGNIZED;
-  }
-}
-
-export function cardStatusToJSON(object: CardStatus): string {
-  switch (object) {
-    case CardStatus.STATUS_HOLD:
-      return "STATUS_HOLD";
-    case CardStatus.STATUS_UNHOLD:
-      return "STATUS_UNHOLD";
-    case CardStatus.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
+export const protobufPackage = "proto";
 
 export enum CardSuit {
   SUIT_UNSPECIFIED = 0,
@@ -234,320 +211,6 @@ export function choiceCodeToJSON(object: ChoiceCode): string {
     case ChoiceCode.CHOICE_HIT:
       return "CHOICE_HIT";
     case ChoiceCode.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-/**
- * The complete set of opcodes used for communication between clients and
- * server.
- */
-export enum OpCodeRequest {
-  /** OPCODE_UNSPECIFIED - No opcode specified. Unused. */
-  OPCODE_UNSPECIFIED = 0,
-  /** OPCODE_REQUEST_NEW_GAME - New game round starting. */
-  OPCODE_REQUEST_NEW_GAME = 1,
-  /** OPCODE_REQUEST_LEAVE_GAME - Request leave game */
-  OPCODE_REQUEST_LEAVE_GAME = 3,
-  OPCODE_REQUEST_COMBINE_CARDS = 4,
-  /** OPCODE_REQUEST_SHOW_CARDS - message Organize */
-  OPCODE_REQUEST_SHOW_CARDS = 5,
-  /** OPCODE_REQUEST_DECLARE_CARDS - message Organize */
-  OPCODE_REQUEST_DECLARE_CARDS = 6,
-  /** OPCODE_USER_INTERACT_CARDS - message noti user move card */
-  OPCODE_USER_INTERACT_CARDS = 7,
-  OPCODE_REQUEST_BET = 8,
-  /** OPCODE_REQUEST_USER_IN_TABLE - get table info */
-  OPCODE_REQUEST_USER_IN_TABLE = 9,
-  /** OPCODE_REQUEST_INFO_TABLE -  */
-  OPCODE_REQUEST_INFO_TABLE = 10,
-  /** OPCODE_REQUEST_HISTORY_RESULT -  */
-  OPCODE_REQUEST_HISTORY_RESULT = 11,
-  OPCODE_REQUEST_SPIN = 12,
-  OPCODE_REQUEST_BUY_SIXIANG_GEM = 13,
-  OPCODE_REQUEST_TIP_INGAME = 14,
-  OPCODE_REQUEST_SYNC_TABLE = 15,
-  UNRECOGNIZED = -1,
-}
-
-export function opCodeRequestFromJSON(object: any): OpCodeRequest {
-  switch (object) {
-    case 0:
-    case "OPCODE_UNSPECIFIED":
-      return OpCodeRequest.OPCODE_UNSPECIFIED;
-    case 1:
-    case "OPCODE_REQUEST_NEW_GAME":
-      return OpCodeRequest.OPCODE_REQUEST_NEW_GAME;
-    case 3:
-    case "OPCODE_REQUEST_LEAVE_GAME":
-      return OpCodeRequest.OPCODE_REQUEST_LEAVE_GAME;
-    case 4:
-    case "OPCODE_REQUEST_COMBINE_CARDS":
-      return OpCodeRequest.OPCODE_REQUEST_COMBINE_CARDS;
-    case 5:
-    case "OPCODE_REQUEST_SHOW_CARDS":
-      return OpCodeRequest.OPCODE_REQUEST_SHOW_CARDS;
-    case 6:
-    case "OPCODE_REQUEST_DECLARE_CARDS":
-      return OpCodeRequest.OPCODE_REQUEST_DECLARE_CARDS;
-    case 7:
-    case "OPCODE_USER_INTERACT_CARDS":
-      return OpCodeRequest.OPCODE_USER_INTERACT_CARDS;
-    case 8:
-    case "OPCODE_REQUEST_BET":
-      return OpCodeRequest.OPCODE_REQUEST_BET;
-    case 9:
-    case "OPCODE_REQUEST_USER_IN_TABLE":
-      return OpCodeRequest.OPCODE_REQUEST_USER_IN_TABLE;
-    case 10:
-    case "OPCODE_REQUEST_INFO_TABLE":
-      return OpCodeRequest.OPCODE_REQUEST_INFO_TABLE;
-    case 11:
-    case "OPCODE_REQUEST_HISTORY_RESULT":
-      return OpCodeRequest.OPCODE_REQUEST_HISTORY_RESULT;
-    case 12:
-    case "OPCODE_REQUEST_SPIN":
-      return OpCodeRequest.OPCODE_REQUEST_SPIN;
-    case 13:
-    case "OPCODE_REQUEST_BUY_SIXIANG_GEM":
-      return OpCodeRequest.OPCODE_REQUEST_BUY_SIXIANG_GEM;
-    case 14:
-    case "OPCODE_REQUEST_TIP_INGAME":
-      return OpCodeRequest.OPCODE_REQUEST_TIP_INGAME;
-    case 15:
-    case "OPCODE_REQUEST_SYNC_TABLE":
-      return OpCodeRequest.OPCODE_REQUEST_SYNC_TABLE;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return OpCodeRequest.UNRECOGNIZED;
-  }
-}
-
-export function opCodeRequestToJSON(object: OpCodeRequest): string {
-  switch (object) {
-    case OpCodeRequest.OPCODE_UNSPECIFIED:
-      return "OPCODE_UNSPECIFIED";
-    case OpCodeRequest.OPCODE_REQUEST_NEW_GAME:
-      return "OPCODE_REQUEST_NEW_GAME";
-    case OpCodeRequest.OPCODE_REQUEST_LEAVE_GAME:
-      return "OPCODE_REQUEST_LEAVE_GAME";
-    case OpCodeRequest.OPCODE_REQUEST_COMBINE_CARDS:
-      return "OPCODE_REQUEST_COMBINE_CARDS";
-    case OpCodeRequest.OPCODE_REQUEST_SHOW_CARDS:
-      return "OPCODE_REQUEST_SHOW_CARDS";
-    case OpCodeRequest.OPCODE_REQUEST_DECLARE_CARDS:
-      return "OPCODE_REQUEST_DECLARE_CARDS";
-    case OpCodeRequest.OPCODE_USER_INTERACT_CARDS:
-      return "OPCODE_USER_INTERACT_CARDS";
-    case OpCodeRequest.OPCODE_REQUEST_BET:
-      return "OPCODE_REQUEST_BET";
-    case OpCodeRequest.OPCODE_REQUEST_USER_IN_TABLE:
-      return "OPCODE_REQUEST_USER_IN_TABLE";
-    case OpCodeRequest.OPCODE_REQUEST_INFO_TABLE:
-      return "OPCODE_REQUEST_INFO_TABLE";
-    case OpCodeRequest.OPCODE_REQUEST_HISTORY_RESULT:
-      return "OPCODE_REQUEST_HISTORY_RESULT";
-    case OpCodeRequest.OPCODE_REQUEST_SPIN:
-      return "OPCODE_REQUEST_SPIN";
-    case OpCodeRequest.OPCODE_REQUEST_BUY_SIXIANG_GEM:
-      return "OPCODE_REQUEST_BUY_SIXIANG_GEM";
-    case OpCodeRequest.OPCODE_REQUEST_TIP_INGAME:
-      return "OPCODE_REQUEST_TIP_INGAME";
-    case OpCodeRequest.OPCODE_REQUEST_SYNC_TABLE:
-      return "OPCODE_REQUEST_SYNC_TABLE";
-    case OpCodeRequest.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-/**
- * The complete set of opcodes used for communication between clients and
- * server.
- */
-export enum OpCodeUpdate {
-  OPCODE_UPDATE_UNSPECIFIED = 0,
-  /** OPCODE_UPDATE_TABLE - message UpdateTable */
-  OPCODE_UPDATE_TABLE = 1,
-  /** OPCODE_UPDATE_DEAL - message UpdateDeal */
-  OPCODE_UPDATE_DEAL = 2,
-  /** OPCODE_UPDATE_FINISH - message UpdateFinish */
-  OPCODE_UPDATE_FINISH = 3,
-  /** OPCODE_UPDATE_REJECTED - Request was rejected. */
-  OPCODE_UPDATE_REJECTED = 4,
-  /** OPCODE_UPDATE_GAME_STATE - Update game state */
-  OPCODE_UPDATE_GAME_STATE = 5,
-  /** OPCODE_UPDATE_CARD_STATE - update card state/combine, show, declare */
-  OPCODE_UPDATE_CARD_STATE = 6,
-  OPCODE_UPDATE_WALLET = 7,
-  OPCODE_KICK_OFF_THE_TABLE = 8,
-  OPCODE_UPDATE_USER_INFO = 9,
-  OPCODE_USER_IN_TABLE_INFO = 10,
-  OPCODE_ERROR = 11,
-  OPCODE_BUY_SIXIANG_GEM = 13,
-  OPCODE_PLAYER_CHANGE = 14,
-  OPCODE_RESPONSE_TIP_INGAME = 15,
-  OPCODE_RESPONSE_SYNC_TABLE = 16,
-  UNRECOGNIZED = -1,
-}
-
-export function opCodeUpdateFromJSON(object: any): OpCodeUpdate {
-  switch (object) {
-    case 0:
-    case "OPCODE_UPDATE_UNSPECIFIED":
-      return OpCodeUpdate.OPCODE_UPDATE_UNSPECIFIED;
-    case 1:
-    case "OPCODE_UPDATE_TABLE":
-      return OpCodeUpdate.OPCODE_UPDATE_TABLE;
-    case 2:
-    case "OPCODE_UPDATE_DEAL":
-      return OpCodeUpdate.OPCODE_UPDATE_DEAL;
-    case 3:
-    case "OPCODE_UPDATE_FINISH":
-      return OpCodeUpdate.OPCODE_UPDATE_FINISH;
-    case 4:
-    case "OPCODE_UPDATE_REJECTED":
-      return OpCodeUpdate.OPCODE_UPDATE_REJECTED;
-    case 5:
-    case "OPCODE_UPDATE_GAME_STATE":
-      return OpCodeUpdate.OPCODE_UPDATE_GAME_STATE;
-    case 6:
-    case "OPCODE_UPDATE_CARD_STATE":
-      return OpCodeUpdate.OPCODE_UPDATE_CARD_STATE;
-    case 7:
-    case "OPCODE_UPDATE_WALLET":
-      return OpCodeUpdate.OPCODE_UPDATE_WALLET;
-    case 8:
-    case "OPCODE_KICK_OFF_THE_TABLE":
-      return OpCodeUpdate.OPCODE_KICK_OFF_THE_TABLE;
-    case 9:
-    case "OPCODE_UPDATE_USER_INFO":
-      return OpCodeUpdate.OPCODE_UPDATE_USER_INFO;
-    case 10:
-    case "OPCODE_USER_IN_TABLE_INFO":
-      return OpCodeUpdate.OPCODE_USER_IN_TABLE_INFO;
-    case 11:
-    case "OPCODE_ERROR":
-      return OpCodeUpdate.OPCODE_ERROR;
-    case 13:
-    case "OPCODE_BUY_SIXIANG_GEM":
-      return OpCodeUpdate.OPCODE_BUY_SIXIANG_GEM;
-    case 14:
-    case "OPCODE_PLAYER_CHANGE":
-      return OpCodeUpdate.OPCODE_PLAYER_CHANGE;
-    case 15:
-    case "OPCODE_RESPONSE_TIP_INGAME":
-      return OpCodeUpdate.OPCODE_RESPONSE_TIP_INGAME;
-    case 16:
-    case "OPCODE_RESPONSE_SYNC_TABLE":
-      return OpCodeUpdate.OPCODE_RESPONSE_SYNC_TABLE;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return OpCodeUpdate.UNRECOGNIZED;
-  }
-}
-
-export function opCodeUpdateToJSON(object: OpCodeUpdate): string {
-  switch (object) {
-    case OpCodeUpdate.OPCODE_UPDATE_UNSPECIFIED:
-      return "OPCODE_UPDATE_UNSPECIFIED";
-    case OpCodeUpdate.OPCODE_UPDATE_TABLE:
-      return "OPCODE_UPDATE_TABLE";
-    case OpCodeUpdate.OPCODE_UPDATE_DEAL:
-      return "OPCODE_UPDATE_DEAL";
-    case OpCodeUpdate.OPCODE_UPDATE_FINISH:
-      return "OPCODE_UPDATE_FINISH";
-    case OpCodeUpdate.OPCODE_UPDATE_REJECTED:
-      return "OPCODE_UPDATE_REJECTED";
-    case OpCodeUpdate.OPCODE_UPDATE_GAME_STATE:
-      return "OPCODE_UPDATE_GAME_STATE";
-    case OpCodeUpdate.OPCODE_UPDATE_CARD_STATE:
-      return "OPCODE_UPDATE_CARD_STATE";
-    case OpCodeUpdate.OPCODE_UPDATE_WALLET:
-      return "OPCODE_UPDATE_WALLET";
-    case OpCodeUpdate.OPCODE_KICK_OFF_THE_TABLE:
-      return "OPCODE_KICK_OFF_THE_TABLE";
-    case OpCodeUpdate.OPCODE_UPDATE_USER_INFO:
-      return "OPCODE_UPDATE_USER_INFO";
-    case OpCodeUpdate.OPCODE_USER_IN_TABLE_INFO:
-      return "OPCODE_USER_IN_TABLE_INFO";
-    case OpCodeUpdate.OPCODE_ERROR:
-      return "OPCODE_ERROR";
-    case OpCodeUpdate.OPCODE_BUY_SIXIANG_GEM:
-      return "OPCODE_BUY_SIXIANG_GEM";
-    case OpCodeUpdate.OPCODE_PLAYER_CHANGE:
-      return "OPCODE_PLAYER_CHANGE";
-    case OpCodeUpdate.OPCODE_RESPONSE_TIP_INGAME:
-      return "OPCODE_RESPONSE_TIP_INGAME";
-    case OpCodeUpdate.OPCODE_RESPONSE_SYNC_TABLE:
-      return "OPCODE_RESPONSE_SYNC_TABLE";
-    case OpCodeUpdate.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export enum GameState {
-  GameStateUnknown = 0,
-  GameStateIdle = 1,
-  GameStateMatching = 2,
-  GameStatePreparing = 3,
-  GameStatePlay = 4,
-  GameStateReward = 5,
-  GameStateFinish = 6,
-  UNRECOGNIZED = -1,
-}
-
-export function gameStateFromJSON(object: any): GameState {
-  switch (object) {
-    case 0:
-    case "GameStateUnknown":
-      return GameState.GameStateUnknown;
-    case 1:
-    case "GameStateIdle":
-      return GameState.GameStateIdle;
-    case 2:
-    case "GameStateMatching":
-      return GameState.GameStateMatching;
-    case 3:
-    case "GameStatePreparing":
-      return GameState.GameStatePreparing;
-    case 4:
-    case "GameStatePlay":
-      return GameState.GameStatePlay;
-    case 5:
-    case "GameStateReward":
-      return GameState.GameStateReward;
-    case 6:
-    case "GameStateFinish":
-      return GameState.GameStateFinish;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return GameState.UNRECOGNIZED;
-  }
-}
-
-export function gameStateToJSON(object: GameState): string {
-  switch (object) {
-    case GameState.GameStateUnknown:
-      return "GameStateUnknown";
-    case GameState.GameStateIdle:
-      return "GameStateIdle";
-    case GameState.GameStateMatching:
-      return "GameStateMatching";
-    case GameState.GameStatePreparing:
-      return "GameStatePreparing";
-    case GameState.GameStatePlay:
-      return "GameStatePlay";
-    case GameState.GameStateReward:
-      return "GameStateReward";
-    case GameState.GameStateFinish:
-      return "GameStateFinish";
-    case GameState.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
@@ -870,48 +533,28 @@ export interface Card {
 
 export interface ListCard {
   cards: Card[];
+  whotCards: WhotCard[];
 }
 
-/** Message data sent by client to server representing the cards was organize. */
 export interface NewGame {
 }
 
-/** Message data sent by client to server representing the cards was organize. */
 export interface Organize {
   /** The current state of the cards. */
   cards: ListCard | undefined;
 }
 
-/**
- * Message data sent by server to clients representing the joining or leaving of
- * presence
- */
-export interface UpdateTable {
-  players: Player[];
-  playingPlayers: Player[];
-  joinPlayers: Player[];
-  leavePlayers: Player[];
-  /** chip bet info */
-  bet: number;
-  /** min level vip require join room */
-  vip: number;
-  /** timestamp play game */
-  timePlay: number;
-  /** remain time to end game */
-  remainTime: number;
-  gameState: GameState;
-  jpTreasure: Jackpot | undefined;
-}
-
 export interface PresenceCards {
   presence: string;
   cards: Card[];
+  whotCards: WhotCard[];
 }
 
-/** Complete game round with winner announcement. */
 export interface UpdateDeal {
   presenceCard: PresenceCards | undefined;
   cardEvent: { [key: string]: CardEvent };
+  topCard: WhotCard | undefined;
+  idDealer: string;
 }
 
 export interface UpdateDeal_CardEventEntry {
@@ -976,45 +619,9 @@ export interface ComparisonResult {
 export interface UpdateFinish {
   results: ComparisonResult[];
   bonuses: HandBonus[];
+  resultWhots: WhotPlayerResult[];
   jackpot: Jackpot | undefined;
   jpTreasure: Jackpot | undefined;
-}
-
-export interface BalanceUpdate {
-  userId: string;
-  amountChipBefore: number;
-  amountChipCurrent: number;
-  amountChipAdd: number;
-  amoutChipBet: number;
-  amoutChipFee: number;
-  amoutChipAddPrefee: number;
-  totalChipInMatch: number;
-}
-
-export interface BalanceResult {
-  updates: BalanceUpdate[];
-  jackpot: Jackpot | undefined;
-}
-
-export interface Player {
-  id: string;
-  userName: string;
-  wallet: string;
-  isPlaying: boolean;
-  cardStatus: CardStatus;
-  cards: ListCard | undefined;
-  vipLevel: number;
-  avatarId: string;
-  sid: number;
-  order: number;
-}
-
-export interface Jackpot {
-  id: number;
-  userId: string;
-  gameCode: string;
-  chips: number;
-  createTimeUnix: number;
 }
 
 function createBaseCard(): Card {
@@ -1107,13 +714,16 @@ export const Card = {
 };
 
 function createBaseListCard(): ListCard {
-  return { cards: [] };
+  return { cards: [], whotCards: [] };
 }
 
 export const ListCard = {
   encode(message: ListCard, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.cards) {
       Card.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.whotCards) {
+      WhotCard.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -1132,6 +742,13 @@ export const ListCard = {
 
           message.cards.push(Card.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.whotCards.push(WhotCard.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1142,13 +759,21 @@ export const ListCard = {
   },
 
   fromJSON(object: any): ListCard {
-    return { cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [] };
+    return {
+      cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
+      whotCards: globalThis.Array.isArray(object?.whotCards)
+        ? object.whotCards.map((e: any) => WhotCard.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: ListCard): unknown {
     const obj: any = {};
     if (message.cards?.length) {
       obj.cards = message.cards.map((e) => Card.toJSON(e));
+    }
+    if (message.whotCards?.length) {
+      obj.whotCards = message.whotCards.map((e) => WhotCard.toJSON(e));
     }
     return obj;
   },
@@ -1159,6 +784,7 @@ export const ListCard = {
   fromPartial<I extends Exact<DeepPartial<ListCard>, I>>(object: I): ListCard {
     const message = createBaseListCard();
     message.cards = object.cards?.map((e) => Card.fromPartial(e)) || [];
+    message.whotCards = object.whotCards?.map((e) => WhotCard.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1265,221 +891,8 @@ export const Organize = {
   },
 };
 
-function createBaseUpdateTable(): UpdateTable {
-  return {
-    players: [],
-    playingPlayers: [],
-    joinPlayers: [],
-    leavePlayers: [],
-    bet: 0,
-    vip: 0,
-    timePlay: 0,
-    remainTime: 0,
-    gameState: 0,
-    jpTreasure: undefined,
-  };
-}
-
-export const UpdateTable = {
-  encode(message: UpdateTable, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.players) {
-      Player.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    for (const v of message.playingPlayers) {
-      Player.encode(v!, writer.uint32(18).fork()).ldelim();
-    }
-    for (const v of message.joinPlayers) {
-      Player.encode(v!, writer.uint32(26).fork()).ldelim();
-    }
-    for (const v of message.leavePlayers) {
-      Player.encode(v!, writer.uint32(34).fork()).ldelim();
-    }
-    if (message.bet !== 0) {
-      writer.uint32(40).int64(message.bet);
-    }
-    if (message.vip !== 0) {
-      writer.uint32(48).int64(message.vip);
-    }
-    if (message.timePlay !== 0) {
-      writer.uint32(56).int64(message.timePlay);
-    }
-    if (message.remainTime !== 0) {
-      writer.uint32(64).int64(message.remainTime);
-    }
-    if (message.gameState !== 0) {
-      writer.uint32(72).int32(message.gameState);
-    }
-    if (message.jpTreasure !== undefined) {
-      Jackpot.encode(message.jpTreasure, writer.uint32(82).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateTable {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUpdateTable();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.players.push(Player.decode(reader, reader.uint32()));
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.playingPlayers.push(Player.decode(reader, reader.uint32()));
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.joinPlayers.push(Player.decode(reader, reader.uint32()));
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
-          message.leavePlayers.push(Player.decode(reader, reader.uint32()));
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
-
-          message.bet = longToNumber(reader.int64() as Long);
-          continue;
-        case 6:
-          if (tag !== 48) {
-            break;
-          }
-
-          message.vip = longToNumber(reader.int64() as Long);
-          continue;
-        case 7:
-          if (tag !== 56) {
-            break;
-          }
-
-          message.timePlay = longToNumber(reader.int64() as Long);
-          continue;
-        case 8:
-          if (tag !== 64) {
-            break;
-          }
-
-          message.remainTime = longToNumber(reader.int64() as Long);
-          continue;
-        case 9:
-          if (tag !== 72) {
-            break;
-          }
-
-          message.gameState = reader.int32() as any;
-          continue;
-        case 10:
-          if (tag !== 82) {
-            break;
-          }
-
-          message.jpTreasure = Jackpot.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UpdateTable {
-    return {
-      players: globalThis.Array.isArray(object?.players) ? object.players.map((e: any) => Player.fromJSON(e)) : [],
-      playingPlayers: globalThis.Array.isArray(object?.playingPlayers)
-        ? object.playingPlayers.map((e: any) => Player.fromJSON(e))
-        : [],
-      joinPlayers: globalThis.Array.isArray(object?.joinPlayers)
-        ? object.joinPlayers.map((e: any) => Player.fromJSON(e))
-        : [],
-      leavePlayers: globalThis.Array.isArray(object?.leavePlayers)
-        ? object.leavePlayers.map((e: any) => Player.fromJSON(e))
-        : [],
-      bet: isSet(object.bet) ? globalThis.Number(object.bet) : 0,
-      vip: isSet(object.vip) ? globalThis.Number(object.vip) : 0,
-      timePlay: isSet(object.timePlay) ? globalThis.Number(object.timePlay) : 0,
-      remainTime: isSet(object.remainTime) ? globalThis.Number(object.remainTime) : 0,
-      gameState: isSet(object.gameState) ? gameStateFromJSON(object.gameState) : 0,
-      jpTreasure: isSet(object.jpTreasure) ? Jackpot.fromJSON(object.jpTreasure) : undefined,
-    };
-  },
-
-  toJSON(message: UpdateTable): unknown {
-    const obj: any = {};
-    if (message.players?.length) {
-      obj.players = message.players.map((e) => Player.toJSON(e));
-    }
-    if (message.playingPlayers?.length) {
-      obj.playingPlayers = message.playingPlayers.map((e) => Player.toJSON(e));
-    }
-    if (message.joinPlayers?.length) {
-      obj.joinPlayers = message.joinPlayers.map((e) => Player.toJSON(e));
-    }
-    if (message.leavePlayers?.length) {
-      obj.leavePlayers = message.leavePlayers.map((e) => Player.toJSON(e));
-    }
-    if (message.bet !== 0) {
-      obj.bet = Math.round(message.bet);
-    }
-    if (message.vip !== 0) {
-      obj.vip = Math.round(message.vip);
-    }
-    if (message.timePlay !== 0) {
-      obj.timePlay = Math.round(message.timePlay);
-    }
-    if (message.remainTime !== 0) {
-      obj.remainTime = Math.round(message.remainTime);
-    }
-    if (message.gameState !== 0) {
-      obj.gameState = gameStateToJSON(message.gameState);
-    }
-    if (message.jpTreasure !== undefined) {
-      obj.jpTreasure = Jackpot.toJSON(message.jpTreasure);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UpdateTable>, I>>(base?: I): UpdateTable {
-    return UpdateTable.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<UpdateTable>, I>>(object: I): UpdateTable {
-    const message = createBaseUpdateTable();
-    message.players = object.players?.map((e) => Player.fromPartial(e)) || [];
-    message.playingPlayers = object.playingPlayers?.map((e) => Player.fromPartial(e)) || [];
-    message.joinPlayers = object.joinPlayers?.map((e) => Player.fromPartial(e)) || [];
-    message.leavePlayers = object.leavePlayers?.map((e) => Player.fromPartial(e)) || [];
-    message.bet = object.bet ?? 0;
-    message.vip = object.vip ?? 0;
-    message.timePlay = object.timePlay ?? 0;
-    message.remainTime = object.remainTime ?? 0;
-    message.gameState = object.gameState ?? 0;
-    message.jpTreasure = (object.jpTreasure !== undefined && object.jpTreasure !== null)
-      ? Jackpot.fromPartial(object.jpTreasure)
-      : undefined;
-    return message;
-  },
-};
-
 function createBasePresenceCards(): PresenceCards {
-  return { presence: "", cards: [] };
+  return { presence: "", cards: [], whotCards: [] };
 }
 
 export const PresenceCards = {
@@ -1489,6 +902,9 @@ export const PresenceCards = {
     }
     for (const v of message.cards) {
       Card.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    for (const v of message.whotCards) {
+      WhotCard.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
@@ -1514,6 +930,13 @@ export const PresenceCards = {
 
           message.cards.push(Card.decode(reader, reader.uint32()));
           continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.whotCards.push(WhotCard.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1527,6 +950,9 @@ export const PresenceCards = {
     return {
       presence: isSet(object.presence) ? globalThis.String(object.presence) : "",
       cards: globalThis.Array.isArray(object?.cards) ? object.cards.map((e: any) => Card.fromJSON(e)) : [],
+      whotCards: globalThis.Array.isArray(object?.whotCards)
+        ? object.whotCards.map((e: any) => WhotCard.fromJSON(e))
+        : [],
     };
   },
 
@@ -1538,6 +964,9 @@ export const PresenceCards = {
     if (message.cards?.length) {
       obj.cards = message.cards.map((e) => Card.toJSON(e));
     }
+    if (message.whotCards?.length) {
+      obj.whotCards = message.whotCards.map((e) => WhotCard.toJSON(e));
+    }
     return obj;
   },
 
@@ -1548,12 +977,13 @@ export const PresenceCards = {
     const message = createBasePresenceCards();
     message.presence = object.presence ?? "";
     message.cards = object.cards?.map((e) => Card.fromPartial(e)) || [];
+    message.whotCards = object.whotCards?.map((e) => WhotCard.fromPartial(e)) || [];
     return message;
   },
 };
 
 function createBaseUpdateDeal(): UpdateDeal {
-  return { presenceCard: undefined, cardEvent: {} };
+  return { presenceCard: undefined, cardEvent: {}, topCard: undefined, idDealer: "" };
 }
 
 export const UpdateDeal = {
@@ -1564,6 +994,12 @@ export const UpdateDeal = {
     Object.entries(message.cardEvent).forEach(([key, value]) => {
       UpdateDeal_CardEventEntry.encode({ key: key as any, value }, writer.uint32(18).fork()).ldelim();
     });
+    if (message.topCard !== undefined) {
+      WhotCard.encode(message.topCard, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.idDealer !== "") {
+      writer.uint32(34).string(message.idDealer);
+    }
     return writer;
   },
 
@@ -1591,6 +1027,20 @@ export const UpdateDeal = {
             message.cardEvent[entry2.key] = entry2.value;
           }
           continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.topCard = WhotCard.decode(reader, reader.uint32());
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.idDealer = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1609,6 +1059,8 @@ export const UpdateDeal = {
           return acc;
         }, {})
         : {},
+      topCard: isSet(object.topCard) ? WhotCard.fromJSON(object.topCard) : undefined,
+      idDealer: isSet(object.idDealer) ? globalThis.String(object.idDealer) : "",
     };
   },
 
@@ -1625,6 +1077,12 @@ export const UpdateDeal = {
           obj.cardEvent[k] = cardEventToJSON(v);
         });
       }
+    }
+    if (message.topCard !== undefined) {
+      obj.topCard = WhotCard.toJSON(message.topCard);
+    }
+    if (message.idDealer !== "") {
+      obj.idDealer = message.idDealer;
     }
     return obj;
   },
@@ -1646,6 +1104,10 @@ export const UpdateDeal = {
       },
       {},
     );
+    message.topCard = (object.topCard !== undefined && object.topCard !== null)
+      ? WhotCard.fromPartial(object.topCard)
+      : undefined;
+    message.idDealer = object.idDealer ?? "";
     return message;
   },
 };
@@ -2541,7 +2003,7 @@ export const ComparisonResult = {
 };
 
 function createBaseUpdateFinish(): UpdateFinish {
-  return { results: [], bonuses: [], jackpot: undefined, jpTreasure: undefined };
+  return { results: [], bonuses: [], resultWhots: [], jackpot: undefined, jpTreasure: undefined };
 }
 
 export const UpdateFinish = {
@@ -2552,11 +2014,14 @@ export const UpdateFinish = {
     for (const v of message.bonuses) {
       HandBonus.encode(v!, writer.uint32(18).fork()).ldelim();
     }
+    for (const v of message.resultWhots) {
+      WhotPlayerResult.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
     if (message.jackpot !== undefined) {
-      Jackpot.encode(message.jackpot, writer.uint32(26).fork()).ldelim();
+      Jackpot.encode(message.jackpot, writer.uint32(34).fork()).ldelim();
     }
     if (message.jpTreasure !== undefined) {
-      Jackpot.encode(message.jpTreasure, writer.uint32(34).fork()).ldelim();
+      Jackpot.encode(message.jpTreasure, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -2587,10 +2052,17 @@ export const UpdateFinish = {
             break;
           }
 
-          message.jackpot = Jackpot.decode(reader, reader.uint32());
+          message.resultWhots.push(WhotPlayerResult.decode(reader, reader.uint32()));
           continue;
         case 4:
           if (tag !== 34) {
+            break;
+          }
+
+          message.jackpot = Jackpot.decode(reader, reader.uint32());
+          continue;
+        case 5:
+          if (tag !== 42) {
             break;
           }
 
@@ -2611,6 +2083,9 @@ export const UpdateFinish = {
         ? object.results.map((e: any) => ComparisonResult.fromJSON(e))
         : [],
       bonuses: globalThis.Array.isArray(object?.bonuses) ? object.bonuses.map((e: any) => HandBonus.fromJSON(e)) : [],
+      resultWhots: globalThis.Array.isArray(object?.resultWhots)
+        ? object.resultWhots.map((e: any) => WhotPlayerResult.fromJSON(e))
+        : [],
       jackpot: isSet(object.jackpot) ? Jackpot.fromJSON(object.jackpot) : undefined,
       jpTreasure: isSet(object.jpTreasure) ? Jackpot.fromJSON(object.jpTreasure) : undefined,
     };
@@ -2623,6 +2098,9 @@ export const UpdateFinish = {
     }
     if (message.bonuses?.length) {
       obj.bonuses = message.bonuses.map((e) => HandBonus.toJSON(e));
+    }
+    if (message.resultWhots?.length) {
+      obj.resultWhots = message.resultWhots.map((e) => WhotPlayerResult.toJSON(e));
     }
     if (message.jackpot !== undefined) {
       obj.jackpot = Jackpot.toJSON(message.jackpot);
@@ -2640,589 +2118,13 @@ export const UpdateFinish = {
     const message = createBaseUpdateFinish();
     message.results = object.results?.map((e) => ComparisonResult.fromPartial(e)) || [];
     message.bonuses = object.bonuses?.map((e) => HandBonus.fromPartial(e)) || [];
+    message.resultWhots = object.resultWhots?.map((e) => WhotPlayerResult.fromPartial(e)) || [];
     message.jackpot = (object.jackpot !== undefined && object.jackpot !== null)
       ? Jackpot.fromPartial(object.jackpot)
       : undefined;
     message.jpTreasure = (object.jpTreasure !== undefined && object.jpTreasure !== null)
       ? Jackpot.fromPartial(object.jpTreasure)
       : undefined;
-    return message;
-  },
-};
-
-function createBaseBalanceUpdate(): BalanceUpdate {
-  return {
-    userId: "",
-    amountChipBefore: 0,
-    amountChipCurrent: 0,
-    amountChipAdd: 0,
-    amoutChipBet: 0,
-    amoutChipFee: 0,
-    amoutChipAddPrefee: 0,
-    totalChipInMatch: 0,
-  };
-}
-
-export const BalanceUpdate = {
-  encode(message: BalanceUpdate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.userId !== "") {
-      writer.uint32(10).string(message.userId);
-    }
-    if (message.amountChipBefore !== 0) {
-      writer.uint32(16).int64(message.amountChipBefore);
-    }
-    if (message.amountChipCurrent !== 0) {
-      writer.uint32(24).int64(message.amountChipCurrent);
-    }
-    if (message.amountChipAdd !== 0) {
-      writer.uint32(32).int64(message.amountChipAdd);
-    }
-    if (message.amoutChipBet !== 0) {
-      writer.uint32(40).int64(message.amoutChipBet);
-    }
-    if (message.amoutChipFee !== 0) {
-      writer.uint32(48).int64(message.amoutChipFee);
-    }
-    if (message.amoutChipAddPrefee !== 0) {
-      writer.uint32(56).int64(message.amoutChipAddPrefee);
-    }
-    if (message.totalChipInMatch !== 0) {
-      writer.uint32(64).int64(message.totalChipInMatch);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): BalanceUpdate {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseBalanceUpdate();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.userId = reader.string();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.amountChipBefore = longToNumber(reader.int64() as Long);
-          continue;
-        case 3:
-          if (tag !== 24) {
-            break;
-          }
-
-          message.amountChipCurrent = longToNumber(reader.int64() as Long);
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.amountChipAdd = longToNumber(reader.int64() as Long);
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
-
-          message.amoutChipBet = longToNumber(reader.int64() as Long);
-          continue;
-        case 6:
-          if (tag !== 48) {
-            break;
-          }
-
-          message.amoutChipFee = longToNumber(reader.int64() as Long);
-          continue;
-        case 7:
-          if (tag !== 56) {
-            break;
-          }
-
-          message.amoutChipAddPrefee = longToNumber(reader.int64() as Long);
-          continue;
-        case 8:
-          if (tag !== 64) {
-            break;
-          }
-
-          message.totalChipInMatch = longToNumber(reader.int64() as Long);
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): BalanceUpdate {
-    return {
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      amountChipBefore: isSet(object.amountChipBefore) ? globalThis.Number(object.amountChipBefore) : 0,
-      amountChipCurrent: isSet(object.amountChipCurrent) ? globalThis.Number(object.amountChipCurrent) : 0,
-      amountChipAdd: isSet(object.amountChipAdd) ? globalThis.Number(object.amountChipAdd) : 0,
-      amoutChipBet: isSet(object.amoutChipBet) ? globalThis.Number(object.amoutChipBet) : 0,
-      amoutChipFee: isSet(object.amoutChipFee) ? globalThis.Number(object.amoutChipFee) : 0,
-      amoutChipAddPrefee: isSet(object.amoutChipAddPrefee) ? globalThis.Number(object.amoutChipAddPrefee) : 0,
-      totalChipInMatch: isSet(object.totalChipInMatch) ? globalThis.Number(object.totalChipInMatch) : 0,
-    };
-  },
-
-  toJSON(message: BalanceUpdate): unknown {
-    const obj: any = {};
-    if (message.userId !== "") {
-      obj.userId = message.userId;
-    }
-    if (message.amountChipBefore !== 0) {
-      obj.amountChipBefore = Math.round(message.amountChipBefore);
-    }
-    if (message.amountChipCurrent !== 0) {
-      obj.amountChipCurrent = Math.round(message.amountChipCurrent);
-    }
-    if (message.amountChipAdd !== 0) {
-      obj.amountChipAdd = Math.round(message.amountChipAdd);
-    }
-    if (message.amoutChipBet !== 0) {
-      obj.amoutChipBet = Math.round(message.amoutChipBet);
-    }
-    if (message.amoutChipFee !== 0) {
-      obj.amoutChipFee = Math.round(message.amoutChipFee);
-    }
-    if (message.amoutChipAddPrefee !== 0) {
-      obj.amoutChipAddPrefee = Math.round(message.amoutChipAddPrefee);
-    }
-    if (message.totalChipInMatch !== 0) {
-      obj.totalChipInMatch = Math.round(message.totalChipInMatch);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<BalanceUpdate>, I>>(base?: I): BalanceUpdate {
-    return BalanceUpdate.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<BalanceUpdate>, I>>(object: I): BalanceUpdate {
-    const message = createBaseBalanceUpdate();
-    message.userId = object.userId ?? "";
-    message.amountChipBefore = object.amountChipBefore ?? 0;
-    message.amountChipCurrent = object.amountChipCurrent ?? 0;
-    message.amountChipAdd = object.amountChipAdd ?? 0;
-    message.amoutChipBet = object.amoutChipBet ?? 0;
-    message.amoutChipFee = object.amoutChipFee ?? 0;
-    message.amoutChipAddPrefee = object.amoutChipAddPrefee ?? 0;
-    message.totalChipInMatch = object.totalChipInMatch ?? 0;
-    return message;
-  },
-};
-
-function createBaseBalanceResult(): BalanceResult {
-  return { updates: [], jackpot: undefined };
-}
-
-export const BalanceResult = {
-  encode(message: BalanceResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.updates) {
-      BalanceUpdate.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.jackpot !== undefined) {
-      Jackpot.encode(message.jackpot, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): BalanceResult {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseBalanceResult();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.updates.push(BalanceUpdate.decode(reader, reader.uint32()));
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.jackpot = Jackpot.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): BalanceResult {
-    return {
-      updates: globalThis.Array.isArray(object?.updates)
-        ? object.updates.map((e: any) => BalanceUpdate.fromJSON(e))
-        : [],
-      jackpot: isSet(object.jackpot) ? Jackpot.fromJSON(object.jackpot) : undefined,
-    };
-  },
-
-  toJSON(message: BalanceResult): unknown {
-    const obj: any = {};
-    if (message.updates?.length) {
-      obj.updates = message.updates.map((e) => BalanceUpdate.toJSON(e));
-    }
-    if (message.jackpot !== undefined) {
-      obj.jackpot = Jackpot.toJSON(message.jackpot);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<BalanceResult>, I>>(base?: I): BalanceResult {
-    return BalanceResult.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<BalanceResult>, I>>(object: I): BalanceResult {
-    const message = createBaseBalanceResult();
-    message.updates = object.updates?.map((e) => BalanceUpdate.fromPartial(e)) || [];
-    message.jackpot = (object.jackpot !== undefined && object.jackpot !== null)
-      ? Jackpot.fromPartial(object.jackpot)
-      : undefined;
-    return message;
-  },
-};
-
-function createBasePlayer(): Player {
-  return {
-    id: "",
-    userName: "",
-    wallet: "",
-    isPlaying: false,
-    cardStatus: 0,
-    cards: undefined,
-    vipLevel: 0,
-    avatarId: "",
-    sid: 0,
-    order: 0,
-  };
-}
-
-export const Player = {
-  encode(message: Player, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.id !== "") {
-      writer.uint32(10).string(message.id);
-    }
-    if (message.userName !== "") {
-      writer.uint32(18).string(message.userName);
-    }
-    if (message.wallet !== "") {
-      writer.uint32(26).string(message.wallet);
-    }
-    if (message.isPlaying !== false) {
-      writer.uint32(32).bool(message.isPlaying);
-    }
-    if (message.cardStatus !== 0) {
-      writer.uint32(40).int32(message.cardStatus);
-    }
-    if (message.cards !== undefined) {
-      ListCard.encode(message.cards, writer.uint32(50).fork()).ldelim();
-    }
-    if (message.vipLevel !== 0) {
-      writer.uint32(56).int64(message.vipLevel);
-    }
-    if (message.avatarId !== "") {
-      writer.uint32(106).string(message.avatarId);
-    }
-    if (message.sid !== 0) {
-      writer.uint32(112).int64(message.sid);
-    }
-    if (message.order !== 0) {
-      writer.uint32(120).int32(message.order);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): Player {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBasePlayer();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.id = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.userName = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.wallet = reader.string();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.isPlaying = reader.bool();
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
-
-          message.cardStatus = reader.int32() as any;
-          continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.cards = ListCard.decode(reader, reader.uint32());
-          continue;
-        case 7:
-          if (tag !== 56) {
-            break;
-          }
-
-          message.vipLevel = longToNumber(reader.int64() as Long);
-          continue;
-        case 13:
-          if (tag !== 106) {
-            break;
-          }
-
-          message.avatarId = reader.string();
-          continue;
-        case 14:
-          if (tag !== 112) {
-            break;
-          }
-
-          message.sid = longToNumber(reader.int64() as Long);
-          continue;
-        case 15:
-          if (tag !== 120) {
-            break;
-          }
-
-          message.order = reader.int32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): Player {
-    return {
-      id: isSet(object.id) ? globalThis.String(object.id) : "",
-      userName: isSet(object.userName) ? globalThis.String(object.userName) : "",
-      wallet: isSet(object.wallet) ? globalThis.String(object.wallet) : "",
-      isPlaying: isSet(object.isPlaying) ? globalThis.Boolean(object.isPlaying) : false,
-      cardStatus: isSet(object.cardStatus) ? cardStatusFromJSON(object.cardStatus) : 0,
-      cards: isSet(object.cards) ? ListCard.fromJSON(object.cards) : undefined,
-      vipLevel: isSet(object.vipLevel) ? globalThis.Number(object.vipLevel) : 0,
-      avatarId: isSet(object.avatarId) ? globalThis.String(object.avatarId) : "",
-      sid: isSet(object.sid) ? globalThis.Number(object.sid) : 0,
-      order: isSet(object.order) ? globalThis.Number(object.order) : 0,
-    };
-  },
-
-  toJSON(message: Player): unknown {
-    const obj: any = {};
-    if (message.id !== "") {
-      obj.id = message.id;
-    }
-    if (message.userName !== "") {
-      obj.userName = message.userName;
-    }
-    if (message.wallet !== "") {
-      obj.wallet = message.wallet;
-    }
-    if (message.isPlaying !== false) {
-      obj.isPlaying = message.isPlaying;
-    }
-    if (message.cardStatus !== 0) {
-      obj.cardStatus = cardStatusToJSON(message.cardStatus);
-    }
-    if (message.cards !== undefined) {
-      obj.cards = ListCard.toJSON(message.cards);
-    }
-    if (message.vipLevel !== 0) {
-      obj.vipLevel = Math.round(message.vipLevel);
-    }
-    if (message.avatarId !== "") {
-      obj.avatarId = message.avatarId;
-    }
-    if (message.sid !== 0) {
-      obj.sid = Math.round(message.sid);
-    }
-    if (message.order !== 0) {
-      obj.order = Math.round(message.order);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<Player>, I>>(base?: I): Player {
-    return Player.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<Player>, I>>(object: I): Player {
-    const message = createBasePlayer();
-    message.id = object.id ?? "";
-    message.userName = object.userName ?? "";
-    message.wallet = object.wallet ?? "";
-    message.isPlaying = object.isPlaying ?? false;
-    message.cardStatus = object.cardStatus ?? 0;
-    message.cards = (object.cards !== undefined && object.cards !== null)
-      ? ListCard.fromPartial(object.cards)
-      : undefined;
-    message.vipLevel = object.vipLevel ?? 0;
-    message.avatarId = object.avatarId ?? "";
-    message.sid = object.sid ?? 0;
-    message.order = object.order ?? 0;
-    return message;
-  },
-};
-
-function createBaseJackpot(): Jackpot {
-  return { id: 0, userId: "", gameCode: "", chips: 0, createTimeUnix: 0 };
-}
-
-export const Jackpot = {
-  encode(message: Jackpot, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.id !== 0) {
-      writer.uint32(8).int64(message.id);
-    }
-    if (message.userId !== "") {
-      writer.uint32(18).string(message.userId);
-    }
-    if (message.gameCode !== "") {
-      writer.uint32(26).string(message.gameCode);
-    }
-    if (message.chips !== 0) {
-      writer.uint32(32).int64(message.chips);
-    }
-    if (message.createTimeUnix !== 0) {
-      writer.uint32(40).int64(message.createTimeUnix);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): Jackpot {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseJackpot();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.id = longToNumber(reader.int64() as Long);
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.userId = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.gameCode = reader.string();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.chips = longToNumber(reader.int64() as Long);
-          continue;
-        case 5:
-          if (tag !== 40) {
-            break;
-          }
-
-          message.createTimeUnix = longToNumber(reader.int64() as Long);
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): Jackpot {
-    return {
-      id: isSet(object.id) ? globalThis.Number(object.id) : 0,
-      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
-      gameCode: isSet(object.gameCode) ? globalThis.String(object.gameCode) : "",
-      chips: isSet(object.chips) ? globalThis.Number(object.chips) : 0,
-      createTimeUnix: isSet(object.createTimeUnix) ? globalThis.Number(object.createTimeUnix) : 0,
-    };
-  },
-
-  toJSON(message: Jackpot): unknown {
-    const obj: any = {};
-    if (message.id !== 0) {
-      obj.id = Math.round(message.id);
-    }
-    if (message.userId !== "") {
-      obj.userId = message.userId;
-    }
-    if (message.gameCode !== "") {
-      obj.gameCode = message.gameCode;
-    }
-    if (message.chips !== 0) {
-      obj.chips = Math.round(message.chips);
-    }
-    if (message.createTimeUnix !== 0) {
-      obj.createTimeUnix = Math.round(message.createTimeUnix);
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<Jackpot>, I>>(base?: I): Jackpot {
-    return Jackpot.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<Jackpot>, I>>(object: I): Jackpot {
-    const message = createBaseJackpot();
-    message.id = object.id ?? 0;
-    message.userId = object.userId ?? "";
-    message.gameCode = object.gameCode ?? "";
-    message.chips = object.chips ?? 0;
-    message.createTimeUnix = object.createTimeUnix ?? 0;
     return message;
   },
 };

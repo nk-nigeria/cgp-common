@@ -2,13 +2,13 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: lobby_common_api.proto
+// source: lobby_common.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export interface CommonApiLeaderBoardRecord {
   gameCode: string;

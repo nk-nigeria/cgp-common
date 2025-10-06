@@ -2,13 +2,13 @@
 // versions:
 //   protoc-gen-ts_proto  v1.178.0
 //   protoc               unknown
-// source: auth_api.proto
+// source: auth.proto
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export interface ChangePasswordRequest {
   oldPassword: string;

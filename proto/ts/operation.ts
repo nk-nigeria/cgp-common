@@ -6,10 +6,10 @@
 
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
-import { Profile } from "./auth_api";
+import { Profile } from "./auth";
 import Long = require("long");
 
-export const protobufPackage = "api";
+export const protobufPackage = "proto";
 
 export enum CurrencyUnitId {
   CURRENCY_UNIT_ID_UNSPECIFIED = 0,
