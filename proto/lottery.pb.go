@@ -1360,200 +1360,12 @@ func (x *TriggerDrawResponse) GetMessage() string {
 	return ""
 }
 
-// Import Profile from auth.proto for user balance updates
-type Profile struct {
-	state                  protoimpl.MessageState `protogen:"open.v1"`
-	UserId                 string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	UserName               string                 `protobuf:"bytes,2,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
-	DisplayName            string                 `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
-	AvatarUrl              string                 `protobuf:"bytes,4,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
-	Status                 string                 `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
-	AccountChip            int64                  `protobuf:"varint,6,opt,name=account_chip,json=accountChip,proto3" json:"account_chip,omitempty"`
-	BankChip               int64                  `protobuf:"varint,7,opt,name=bank_chip,json=bankChip,proto3" json:"bank_chip,omitempty"`
-	RefCode                string                 `protobuf:"bytes,8,opt,name=ref_code,json=refCode,proto3" json:"ref_code,omitempty"`
-	LangTag                string                 `protobuf:"bytes,9,opt,name=lang_tag,json=langTag,proto3" json:"lang_tag,omitempty"`
-	LinkGroup              string                 `protobuf:"bytes,10,opt,name=link_group,json=linkGroup,proto3" json:"link_group,omitempty"`
-	LinkFanpageFb          string                 `protobuf:"bytes,11,opt,name=link_fanpage_fb,json=linkFanpageFb,proto3" json:"link_fanpage_fb,omitempty"`
-	AppConfig              string                 `protobuf:"bytes,12,opt,name=app_config,json=appConfig,proto3" json:"app_config,omitempty"`
-	AvatarId               string                 `protobuf:"bytes,13,opt,name=avatar_id,json=avatarId,proto3" json:"avatar_id,omitempty"`
-	Registrable            bool                   `protobuf:"varint,14,opt,name=registrable,proto3" json:"registrable,omitempty"`
-	VipLevel               int64                  `protobuf:"varint,15,opt,name=vip_level,json=vipLevel,proto3" json:"vip_level,omitempty"`
-	LastOnlineTimeUnix     int64                  `protobuf:"varint,16,opt,name=last_online_time_unix,json=lastOnlineTimeUnix,proto3" json:"last_online_time_unix,omitempty"`
-	CreateTimeUnix         int64                  `protobuf:"varint,17,opt,name=create_time_unix,json=createTimeUnix,proto3" json:"create_time_unix,omitempty"`
-	RemainTimeInputRefCode int64                  `protobuf:"varint,18,opt,name=remain_time_input_ref_code,json=remainTimeInputRefCode,proto3" json:"remain_time_input_ref_code,omitempty"`
-	UserSid                int64                  `protobuf:"varint,29,opt,name=user_sid,json=userSid,proto3" json:"user_sid,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
-}
-
-func (x *Profile) Reset() {
-	*x = Profile{}
-	mi := &file_lottery_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Profile) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Profile) ProtoMessage() {}
-
-func (x *Profile) ProtoReflect() protoreflect.Message {
-	mi := &file_lottery_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Profile.ProtoReflect.Descriptor instead.
-func (*Profile) Descriptor() ([]byte, []int) {
-	return file_lottery_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *Profile) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-func (x *Profile) GetUserName() string {
-	if x != nil {
-		return x.UserName
-	}
-	return ""
-}
-
-func (x *Profile) GetDisplayName() string {
-	if x != nil {
-		return x.DisplayName
-	}
-	return ""
-}
-
-func (x *Profile) GetAvatarUrl() string {
-	if x != nil {
-		return x.AvatarUrl
-	}
-	return ""
-}
-
-func (x *Profile) GetStatus() string {
-	if x != nil {
-		return x.Status
-	}
-	return ""
-}
-
-func (x *Profile) GetAccountChip() int64 {
-	if x != nil {
-		return x.AccountChip
-	}
-	return 0
-}
-
-func (x *Profile) GetBankChip() int64 {
-	if x != nil {
-		return x.BankChip
-	}
-	return 0
-}
-
-func (x *Profile) GetRefCode() string {
-	if x != nil {
-		return x.RefCode
-	}
-	return ""
-}
-
-func (x *Profile) GetLangTag() string {
-	if x != nil {
-		return x.LangTag
-	}
-	return ""
-}
-
-func (x *Profile) GetLinkGroup() string {
-	if x != nil {
-		return x.LinkGroup
-	}
-	return ""
-}
-
-func (x *Profile) GetLinkFanpageFb() string {
-	if x != nil {
-		return x.LinkFanpageFb
-	}
-	return ""
-}
-
-func (x *Profile) GetAppConfig() string {
-	if x != nil {
-		return x.AppConfig
-	}
-	return ""
-}
-
-func (x *Profile) GetAvatarId() string {
-	if x != nil {
-		return x.AvatarId
-	}
-	return ""
-}
-
-func (x *Profile) GetRegistrable() bool {
-	if x != nil {
-		return x.Registrable
-	}
-	return false
-}
-
-func (x *Profile) GetVipLevel() int64 {
-	if x != nil {
-		return x.VipLevel
-	}
-	return 0
-}
-
-func (x *Profile) GetLastOnlineTimeUnix() int64 {
-	if x != nil {
-		return x.LastOnlineTimeUnix
-	}
-	return 0
-}
-
-func (x *Profile) GetCreateTimeUnix() int64 {
-	if x != nil {
-		return x.CreateTimeUnix
-	}
-	return 0
-}
-
-func (x *Profile) GetRemainTimeInputRefCode() int64 {
-	if x != nil {
-		return x.RemainTimeInputRefCode
-	}
-	return 0
-}
-
-func (x *Profile) GetUserSid() int64 {
-	if x != nil {
-		return x.UserSid
-	}
-	return 0
-}
-
 var File_lottery_proto protoreflect.FileDescriptor
 
 const file_lottery_proto_rawDesc = "" +
 	"\n" +
-	"\rlottery.proto\x12\x05proto\"L\n" +
+	"\rlottery.proto\x12\x05proto\x1a\n" +
+	"auth.proto\"L\n" +
 	"\x17BuyLotteryTicketRequest\x12\x18\n" +
 	"\anumbers\x18\x01 \x03(\x05R\anumbers\x12\x17\n" +
 	"\adraw_id\x18\x02 \x01(\x03R\x06drawId\"r\n" +
@@ -1637,31 +1449,7 @@ const file_lottery_proto_rawDesc = "" +
 	"\adraw_id\x18\x01 \x01(\x03R\x06drawId\"W\n" +
 	"\x13TriggerDrawResponse\x12&\n" +
 	"\x04draw\x18\x01 \x01(\v2\x12.proto.LotteryDrawR\x04draw\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\x85\x05\n" +
-	"\aProfile\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1b\n" +
-	"\tuser_name\x18\x02 \x01(\tR\buserName\x12!\n" +
-	"\fdisplay_name\x18\x03 \x01(\tR\vdisplayName\x12\x1d\n" +
-	"\n" +
-	"avatar_url\x18\x04 \x01(\tR\tavatarUrl\x12\x16\n" +
-	"\x06status\x18\x05 \x01(\tR\x06status\x12!\n" +
-	"\faccount_chip\x18\x06 \x01(\x03R\vaccountChip\x12\x1b\n" +
-	"\tbank_chip\x18\a \x01(\x03R\bbankChip\x12\x19\n" +
-	"\bref_code\x18\b \x01(\tR\arefCode\x12\x19\n" +
-	"\blang_tag\x18\t \x01(\tR\alangTag\x12\x1d\n" +
-	"\n" +
-	"link_group\x18\n" +
-	" \x01(\tR\tlinkGroup\x12&\n" +
-	"\x0flink_fanpage_fb\x18\v \x01(\tR\rlinkFanpageFb\x12\x1d\n" +
-	"\n" +
-	"app_config\x18\f \x01(\tR\tappConfig\x12\x1b\n" +
-	"\tavatar_id\x18\r \x01(\tR\bavatarId\x12 \n" +
-	"\vregistrable\x18\x0e \x01(\bR\vregistrable\x12\x1b\n" +
-	"\tvip_level\x18\x0f \x01(\x03R\bvipLevel\x121\n" +
-	"\x15last_online_time_unix\x18\x10 \x01(\x03R\x12lastOnlineTimeUnix\x12(\n" +
-	"\x10create_time_unix\x18\x11 \x01(\x03R\x0ecreateTimeUnix\x12:\n" +
-	"\x1aremain_time_input_ref_code\x18\x12 \x01(\x03R\x16remainTimeInputRefCode\x12\x19\n" +
-	"\buser_sid\x18\x1d \x01(\x03R\auserSid*w\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage*w\n" +
 	"\x13LotteryTicketStatus\x12!\n" +
 	"\x1dLOTTERY_TICKET_STATUS_WAITING\x10\x00\x12\x1d\n" +
 	"\x19LOTTERY_TICKET_STATUS_WIN\x10\x01\x12\x1e\n" +
@@ -1684,7 +1472,7 @@ func file_lottery_proto_rawDescGZIP() []byte {
 }
 
 var file_lottery_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_lottery_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_lottery_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_lottery_proto_goTypes = []any{
 	(LotteryTicketStatus)(0),                  // 0: proto.LotteryTicketStatus
 	(LotteryDrawStatus)(0),                    // 1: proto.LotteryDrawStatus
@@ -1740,13 +1528,14 @@ func file_lottery_proto_init() {
 	if File_lottery_proto != nil {
 		return
 	}
+	file_auth_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_lottery_proto_rawDesc), len(file_lottery_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   22,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

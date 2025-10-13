@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package proto;
+import "auth.proto";
 
 option go_package = "github.com/nk-nigeria/cgp-common/proto";
 
@@ -157,26 +158,4 @@ message TriggerDrawResponse {
   string message = 2;
 }
 
-// Import Profile from auth.proto for user balance updates
-message Profile {
-  string user_id = 1;
-  string user_name = 2;
-  string display_name = 3;
-  string avatar_url = 4;
-  string status = 5;
-  int64 account_chip = 6;
-  int64 bank_chip = 7;
-  string ref_code = 8;
-  string lang_tag = 9;
-  string link_group = 10;
-  string link_fanpage_fb = 11;
-  string app_config = 12;
-  string avatar_id = 13;
-  bool registrable = 14;
-  int64 vip_level = 15;
-  int64 last_online_time_unix = 16;
-  int64 create_time_unix = 17;
-  int64 remain_time_input_ref_code = 18;
-  int64 user_sid = 29;
-}
 
