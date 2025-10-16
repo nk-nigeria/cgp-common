@@ -19,6 +19,14 @@ func MaxIn64(a, b int64) int64 {
 	}
 	return b
 }
+
+func MinInt64(a, b int64) int64 {
+	if a < b {
+		return b
+	}
+	return a
+}
+
 func InterfaceToString(inf interface{}) string {
 	if inf == nil {
 		return ""
