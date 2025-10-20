@@ -61,7 +61,7 @@ func WriteVipFarmTemplate(ctx context.Context, marshaler *protojson.MarshalOptio
 	return err
 }
 
-func ReadUserVipFarm(ctx context.Context, unmarshaler *protojson.UnmarshalOptions, logger runtime.Logger, nk runtime.NakamaModule, userId string) (*pb.UserVipFarm, string, error) {
+func ReadUserVipFarm(ctx context.Context, unmarshaler *protojson.UnmarshalOptions, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, userId string) (*pb.UserVipFarm, string, error) {
 	results, err := nk.StorageRead(ctx, []*runtime.StorageRead{
 		{
 			Collection: kVipFarmCollection,
@@ -78,7 +78,14 @@ func ReadUserVipFarm(ctx context.Context, unmarshaler *protojson.UnmarshalOption
 			return nil, "", err
 		}
 	} else {
-		return data, "", nil
+		profile, _, err := GetProfileUser(ctx, db, userId)
+		if err != nil {
+			return data, "", nil
+		} else {
+			return &pb.UserVipFarm{
+				Level: profile.VipLevel,
+			}, "", nil
+		}
 	}
 	return data, results[0].Version, nil
 }
@@ -119,12 +126,12 @@ func AddUserVipFarmAccumulation(ctx context.Context, marshaler *protojson.Marsha
 		return err
 	}
 
-	userVipFarm, version, err := ReadUserVipFarm(ctx, unmarshaler, logger, nk, userId)
+	userVipFarm, version, err := ReadUserVipFarm(ctx, unmarshaler, logger, db, nk, userId)
 	if err != nil {
 		return err
 	}
 
-	if userVipFarm == nil {
+	if userVipFarm == nil || userVipFarm.Level == 0 {
 		userVipFarm = &pb.UserVipFarm{
 			Level: user.VipLevel,
 		}
@@ -158,7 +165,7 @@ func AddUserVipFarmAccumulation(ctx context.Context, marshaler *protojson.Marsha
 // return baseCoeff and current fillRate index
 func vipFarmGetBaseCoeff(progress int64, total int64, template *pb.VipFarmTemplate) (float64, int) {
 	v := float64(progress) / float64(total) * 100
-	for i := len(template.BaseCoeffs); i >= 0; i-- {
+	for i := len(template.BaseCoeffs) - 1; i >= 0; i-- {
 		if v > float64(template.BaseCoeffs[i].FillPercent) {
 			return float64(template.BaseCoeffs[i].Coeff) / float64(template.CoeffScale), i
 		}
@@ -172,7 +179,7 @@ func ReadUserVipFarmProgress(ctx context.Context, unmarshaler *protojson.Unmarsh
 		return nil, err
 	}
 
-	data, _, err := ReadUserVipFarm(ctx, unmarshaler, logger, nk, userId)
+	data, _, err := ReadUserVipFarm(ctx, unmarshaler, logger, db, nk, userId)
 	if err != nil {
 		return nil, err
 	}
