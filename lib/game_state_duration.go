@@ -83,6 +83,15 @@ func GetGameStateDurationByGameCode(gameCode define.GameName) GameStateDuration 
 			rewardTimeout    = time.Second * 30
 		)
 		return NewGameStateDuration(idleTimeout, preparingTimeout, matchingTimeout, playTimeout, rewardTimeout)
+	case define.HKPoker:
+		const (
+			idleTimeout      = time.Second * 30
+			preparingTimeout = time.Second * 5
+			playTimeout      = time.Second * 10 // 10s per player action
+			matchingTimeout  = time.Second * 10
+			rewardTimeout    = time.Second * 15 // 15s for showdown
+		)
+		return NewGameStateDuration(idleTimeout, preparingTimeout, matchingTimeout, playTimeout, rewardTimeout)
 	}
 	return nil
 }
