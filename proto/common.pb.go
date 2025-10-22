@@ -459,6 +459,7 @@ const (
 	ErrorType_ERROR_TYPE_UNSPECIFIED       ErrorType = 0
 	ErrorType_ERROR_TYPE_CHIP_NOT_ENOUGH   ErrorType = 1
 	ErrorType_ERROR_TYPE_CANNOT_LEAVE_GAME ErrorType = 2
+	ErrorType_ERROR_TYPE_INVALID_ACTION    ErrorType = 3
 )
 
 // Enum value maps for ErrorType.
@@ -467,11 +468,13 @@ var (
 		0: "ERROR_TYPE_UNSPECIFIED",
 		1: "ERROR_TYPE_CHIP_NOT_ENOUGH",
 		2: "ERROR_TYPE_CANNOT_LEAVE_GAME",
+		3: "ERROR_TYPE_INVALID_ACTION",
 	}
 	ErrorType_value = map[string]int32{
 		"ERROR_TYPE_UNSPECIFIED":       0,
 		"ERROR_TYPE_CHIP_NOT_ENOUGH":   1,
 		"ERROR_TYPE_CANNOT_LEAVE_GAME": 2,
+		"ERROR_TYPE_INVALID_ACTION":    3,
 	}
 )
 
@@ -5199,11 +5202,12 @@ const file_common_proto_rawDesc = "" +
 	"\x1dHISTORY_REWARD_TIME_THIS_WEEK\x10\x01\x12!\n" +
 	"\x1dHISTORY_REWARD_TIME_LAST_WEEK\x10\x02\x12\"\n" +
 	"\x1eHISTORY_REWARD_TIME_THIS_MONTH\x10\x03\x12\"\n" +
-	"\x1eHISTORY_REWARD_TIME_LAST_MONTH\x10\x04*i\n" +
+	"\x1eHISTORY_REWARD_TIME_LAST_MONTH\x10\x04*\x88\x01\n" +
 	"\tErrorType\x12\x1a\n" +
 	"\x16ERROR_TYPE_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aERROR_TYPE_CHIP_NOT_ENOUGH\x10\x01\x12 \n" +
-	"\x1cERROR_TYPE_CANNOT_LEAVE_GAME\x10\x02B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
+	"\x1cERROR_TYPE_CANNOT_LEAVE_GAME\x10\x02\x12\x1d\n" +
+	"\x19ERROR_TYPE_INVALID_ACTION\x10\x03B(Z&github.com/nk-nigeria/cgp-common/protob\x06proto3"
 
 var (
 	file_common_proto_rawDescOnce sync.Once
