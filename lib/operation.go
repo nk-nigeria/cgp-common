@@ -19,7 +19,7 @@ var DefaultHttpKey string = "defaulthttpkey"
 
 // dev http://103.226.250.195:8350
 // stg  http://103.226.250.195:7350
-var DefaultHostReport = "http://103.226.250.195:8350"
+var DefaultHostReport = "http://103.226.250.195:9350"
 
 func init() {
 	t := http.DefaultTransport.(*http.Transport).Clone()
